@@ -3,10 +3,10 @@ name: cicd-cezzis-nuget
 on:
   pull_request:
     branches: [main]
-    paths: [cocktails.common/**, .github/workflows/cocktails-nuget-cicd.yaml]
+    paths: [cocktails.common/**, .github/workflows/cezzis-nuget-cicd.yaml]
   push:
     branches: [main]
-    paths: [cocktails.common/**, .github/workflows/cocktails-nuget-cicd.yaml]
+    paths: [cocktails.common/**, .github/workflows/cezzis-nuget-cicd.yaml]
 
   workflow_dispatch:
 

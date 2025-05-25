@@ -3,10 +3,10 @@ name: cicd-cezzis-web
 on:
   pull_request:
     branches: [main]
-    paths: [cocktails.frontend/**, .github/workflows/cocktails-web-cicd.yaml]
+    paths: [cocktails.frontend/**, .github/workflows/cezzis-web-cicd.yaml]
   push:
     branches: [main]
-    paths: [cocktails.frontend/**, .github/workflows/cocktails-web-cicd.yaml]
+    paths: [cocktails.frontend/**, .github/workflows/cezzis-web-cicd.yaml]
 
   workflow_dispatch:
 

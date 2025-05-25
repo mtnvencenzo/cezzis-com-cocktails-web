@@ -3,10 +3,10 @@ name: cicd-cezzis-shared-infrastructure
 on:
   pull_request:
     branches: [main]
-    paths: [cocktails.sharedinfrastructure/**, .github/workflows/shared-infrastructure-cicd.yaml]
+    paths: [cocktails.sharedinfrastructure/**, .github/workflows/cezzis-shared-infrastructure-cicd.yaml]
   push:
     branches: [main]
-    paths: [cocktails.sharedinfrastructure/**, .github/workflows/shared-infrastructure-cicd.yaml]
+    paths: [cocktails.sharedinfrastructure/**, .github/workflows/cezzis-shared-infrastructure-cicd.yaml]
 
   workflow_dispatch:
 
