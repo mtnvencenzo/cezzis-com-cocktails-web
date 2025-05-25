@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cezzi.Applications" Version="1.0.6" />
+    <PackageReference Include="Cezzi.Applications" Version="1.0.4" />
     <PackageReference Include="Cezzi.Smtp" Version="1.0.4" />
     <PackageReference Include="Dapr.Client" Version="1.15.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.13.0">
