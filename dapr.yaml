@@ -1,0 +1,14 @@
+version: 1
+common:
+  resourcesPath: ./.dapr/
+apps:
+  - appID: cocktails-api
+    appDirPath: ./cocktails.api/src/Cocktails.Api/
+    appPort: 7176
+    appProtocol: https
+    command: ["dotnet", "run"]
+    
+  - appID: cocktails-frontend
+    appDirPath: ./cocktails.frontend/cocktails.web/
+    appPort: 4001
+    command: ["yarn", "loc"]

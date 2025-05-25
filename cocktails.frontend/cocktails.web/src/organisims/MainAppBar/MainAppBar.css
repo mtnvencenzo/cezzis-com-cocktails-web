@@ -1,0 +1,7 @@
+.custom-toast-container-w-appbar-offset {
+    top: 55px;
+}
+
+.custom-toast-container-wo-appbar-offset {
+    top: 0px;
+}

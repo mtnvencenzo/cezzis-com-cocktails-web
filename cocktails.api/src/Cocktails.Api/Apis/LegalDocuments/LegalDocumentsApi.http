@@ -1,0 +1,13 @@
+
+GET {{host}}/api/v1/legal/documents/privacy-policy
+X-Key: {{apimkey}}
+
+
+###
+
+
+GET {{host}}/api/v1/legal/documents/terms-of-service
+X-Key: {{apimkey}}
+
+
+###

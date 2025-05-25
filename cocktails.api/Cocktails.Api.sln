@@ -1,0 +1,139 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AFAA0540-3B03-4B1D-8083-2ECD66040C62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7FA43EF8-CE34-4259-A63B-040BACADC3DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{38E5D2CC-E6C2-4FCF-A3B8-F867D806DB88}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		..\dapr.yaml = ..\dapr.yaml
+		..\Docker-Compose.yml = ..\Docker-Compose.yml
+		..\docker-readme.md = ..\docker-readme.md
+		..\Nuget-Docker.Config = ..\Nuget-Docker.Config
+		..\Nuget.Config = ..\Nuget.Config
+		..\README.dapr.md = ..\README.dapr.md
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api", "src\Cocktails.Api\Cocktails.Api.csproj", "{837D3268-7F4F-4F42-8DDE-C9C1B3593D92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Unit.Tests", "test\Cocktails.Api.Unit.Tests\Cocktails.Api.Unit.Tests.csproj", "{8BFF9387-E9E3-4E8A-8217-AF702C726753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Domain", "src\Cocktails.Api.Domain\Cocktails.Api.Domain.csproj", "{D6E1E40C-716C-46D9-8A43-C32DF77EECBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Infrastructure", "src\Cocktails.Api.Infrastructure\Cocktails.Api.Infrastructure.csproj", "{1CA72614-07EE-4A13-8B8E-019078BD3189}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Domain.Unit.Tests", "test\Cocktails.Api.Domain.Unit.Tests\Cocktails.Api.Domain.Unit.Tests.csproj", "{56900880-BE16-4A19-8270-563F7809F862}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Infrastructure.Unit.Tests", "test\Cocktails.Api.Infrastructure.Unit.Tests\Cocktails.Api.Infrastructure.Unit.Tests.csproj", "{D505F8A2-7E75-406B-9D02-545CEBAF9CA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".deployment", ".deployment", "{66EDB835-244D-4AB9-A52B-CDAED296495E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{5588E7A4-79CB-41EE-AB1F-9A60EB0B5D34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ado", "ado", "{ECCF1AF6-9B5E-4CAD-8E5E-7F11A38EC2D5}"
+	ProjectSection(SolutionItems) = preProject
+		.deployment\pipelines\ado\api-build.yml = .deployment\pipelines\ado\api-build.yml
+		.deployment\pipelines\ado\cocktails-api-pipeline.yml = .deployment\pipelines\ado\cocktails-api-pipeline.yml
+		.deployment\pipelines\ado\docker-build-push.yml = .deployment\pipelines\ado\docker-build-push.yml
+		.deployment\pipelines\ado\list-file-changes.yml = .deployment\pipelines\ado\list-file-changes.yml
+		.deployment\pipelines\ado\terraform-plan-and-apply.yml = .deployment\pipelines\ado\terraform-plan-and-apply.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iac", "iac", "{C9265C64-B19C-4D63-8142-9F37275168C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{595452F4-28D0-46F9-BFCC-8B43042049B4}"
+	ProjectSection(SolutionItems) = preProject
+		.deployment\iac\terraform\aca.tf = .deployment\iac\terraform\aca.tf
+		.deployment\iac\terraform\apim-api-docs.tf = .deployment\iac\terraform\apim-api-docs.tf
+		.deployment\iac\terraform\apim-api.tf = .deployment\iac\terraform\apim-api.tf
+		.deployment\iac\terraform\b2c.tf = .deployment\iac\terraform\b2c.tf
+		.deployment\iac\terraform\cosmosdb.tf = .deployment\iac\terraform\cosmosdb.tf
+		.deployment\iac\terraform\datasources.tf = .deployment\iac\terraform\datasources.tf
+		.deployment\iac\terraform\keyvault-secrets.tf = .deployment\iac\terraform\keyvault-secrets.tf
+		.deployment\iac\terraform\locals.tf = .deployment\iac\terraform\locals.tf
+		.deployment\iac\terraform\providers.tf = .deployment\iac\terraform\providers.tf
+		.deployment\iac\terraform\servicebus-accounts-ratings.tf = .deployment\iac\terraform\servicebus-accounts-ratings.tf
+		.deployment\iac\terraform\servicebus-accounts.tf = .deployment\iac\terraform\servicebus-accounts.tf
+		.deployment\iac\terraform\servicebus-email.tf = .deployment\iac\terraform\servicebus-email.tf
+		.deployment\iac\terraform\storage_containers.tf = .deployment\iac\terraform\storage_containers.tf
+		.deployment\iac\terraform\variables.tf = .deployment\iac\terraform\variables.tf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "b2c_tenant", "b2c_tenant", "{F462EC1D-4B86-4038-8FF8-B6C64BF623B5}"
+	ProjectSection(SolutionItems) = preProject
+		.deployment\iac\terraform\b2c_tenant\api_app_registration.tf = .deployment\iac\terraform\b2c_tenant\api_app_registration.tf
+		.deployment\iac\terraform\b2c_tenant\outputs.tf = .deployment\iac\terraform\b2c_tenant\outputs.tf
+		.deployment\iac\terraform\b2c_tenant\providers.tf = .deployment\iac\terraform\b2c_tenant\providers.tf
+		.deployment\iac\terraform\b2c_tenant\variables.tf = .deployment\iac\terraform\b2c_tenant\variables.tf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environment_vars", "environment_vars", "{CC95BE20-6CBB-4B78-A30E-9BD2D4B6CA2D}"
+	ProjectSection(SolutionItems) = preProject
+		.deployment\iac\terraform\environment_vars\prd.tfvars = .deployment\iac\terraform\environment_vars\prd.tfvars
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dapr", ".dapr", "{EF592126-3004-4791-A69F-E6BE8768E5D8}"
+	ProjectSection(SolutionItems) = preProject
+		..\.dapr\pubsub-local.yaml = ..\.dapr\pubsub-local.yaml
+		..\.dapr\statestore-local-blob-account-avatars.yaml = ..\.dapr\statestore-local-blob-account-avatars.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{837D3268-7F4F-4F42-8DDE-C9C1B3593D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837D3268-7F4F-4F42-8DDE-C9C1B3593D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837D3268-7F4F-4F42-8DDE-C9C1B3593D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837D3268-7F4F-4F42-8DDE-C9C1B3593D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BFF9387-E9E3-4E8A-8217-AF702C726753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BFF9387-E9E3-4E8A-8217-AF702C726753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BFF9387-E9E3-4E8A-8217-AF702C726753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BFF9387-E9E3-4E8A-8217-AF702C726753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E1E40C-716C-46D9-8A43-C32DF77EECBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E1E40C-716C-46D9-8A43-C32DF77EECBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E1E40C-716C-46D9-8A43-C32DF77EECBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E1E40C-716C-46D9-8A43-C32DF77EECBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA72614-07EE-4A13-8B8E-019078BD3189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA72614-07EE-4A13-8B8E-019078BD3189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA72614-07EE-4A13-8B8E-019078BD3189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA72614-07EE-4A13-8B8E-019078BD3189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56900880-BE16-4A19-8270-563F7809F862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56900880-BE16-4A19-8270-563F7809F862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56900880-BE16-4A19-8270-563F7809F862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56900880-BE16-4A19-8270-563F7809F862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D505F8A2-7E75-406B-9D02-545CEBAF9CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D505F8A2-7E75-406B-9D02-545CEBAF9CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D505F8A2-7E75-406B-9D02-545CEBAF9CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D505F8A2-7E75-406B-9D02-545CEBAF9CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{837D3268-7F4F-4F42-8DDE-C9C1B3593D92} = {AFAA0540-3B03-4B1D-8083-2ECD66040C62}
+		{8BFF9387-E9E3-4E8A-8217-AF702C726753} = {7FA43EF8-CE34-4259-A63B-040BACADC3DF}
+		{D6E1E40C-716C-46D9-8A43-C32DF77EECBF} = {AFAA0540-3B03-4B1D-8083-2ECD66040C62}
+		{1CA72614-07EE-4A13-8B8E-019078BD3189} = {AFAA0540-3B03-4B1D-8083-2ECD66040C62}
+		{56900880-BE16-4A19-8270-563F7809F862} = {7FA43EF8-CE34-4259-A63B-040BACADC3DF}
+		{D505F8A2-7E75-406B-9D02-545CEBAF9CA1} = {7FA43EF8-CE34-4259-A63B-040BACADC3DF}
+		{5588E7A4-79CB-41EE-AB1F-9A60EB0B5D34} = {66EDB835-244D-4AB9-A52B-CDAED296495E}
+		{ECCF1AF6-9B5E-4CAD-8E5E-7F11A38EC2D5} = {5588E7A4-79CB-41EE-AB1F-9A60EB0B5D34}
+		{C9265C64-B19C-4D63-8142-9F37275168C5} = {66EDB835-244D-4AB9-A52B-CDAED296495E}
+		{595452F4-28D0-46F9-BFCC-8B43042049B4} = {C9265C64-B19C-4D63-8142-9F37275168C5}
+		{F462EC1D-4B86-4038-8FF8-B6C64BF623B5} = {595452F4-28D0-46F9-BFCC-8B43042049B4}
+		{CC95BE20-6CBB-4B78-A30E-9BD2D4B6CA2D} = {595452F4-28D0-46F9-BFCC-8B43042049B4}
+		{EF592126-3004-4791-A69F-E6BE8768E5D8} = {38E5D2CC-E6C2-4FCF-A3B8-F867D806DB88}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05F042D4-FED4-40A0-9D22-366A466429EC}
+	EndGlobalSection
+EndGlobal

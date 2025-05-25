@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /account
+Allow: /
+
+Sitemap: https://www.cezzis.com/sitemap.xml
+Sitemap: https://www.cezzis.com/sitemap_cocktails.xml
