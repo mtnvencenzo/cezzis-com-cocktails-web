@@ -4,10 +4,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Cezzi.Applications" Version="1.0.6" />
+    <PackageReference Include="Cezzi.Applications" Version="1.0.4" />
     <PackageReference Include="Cezzi.Security" Version="1.0.4" />
     <PackageReference Include="Cezzi.Security.Recaptcha" Version="1.0.4" />
-    <PackageReference Include="Cocktails.Common" Version="1.0.10" />
+    <PackageReference Include="Cocktails.Common" Version="1.0.1" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.13.0">
       <PrivateAssets>all</PrivateAssets>
@@ -19,5 +19,3 @@
   </ItemGroup>
   
 </Project>
-
-

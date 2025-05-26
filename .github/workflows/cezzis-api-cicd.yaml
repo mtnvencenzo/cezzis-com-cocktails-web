@@ -3,10 +3,10 @@ name: cicd-cezzis-api
 on:
   pull_request:
     branches: [main]
-    paths: [cocktails.api/**, .github/workflows/cocktails-api-cicd.yaml]
+    paths: [cocktails.api/**, .github/workflows/cezzis-api-cicd.yaml]
   push:
     branches: [main]
-    paths: [cocktails.api/**, .github/workflows/cocktails-api-cicd.yaml]
+    paths: [cocktails.api/**, .github/workflows/cezzis-api-cicd.yaml]
 
   workflow_dispatch:
 
