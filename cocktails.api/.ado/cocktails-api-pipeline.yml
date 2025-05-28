@@ -146,7 +146,7 @@ stages:
                 env: prd
                 image_tag: $(tag)
                 branchType: ${{ variables.branchType }}
-                workingDirectory: '$(System.DefaultWorkingDirectory)/cocktails.api/.deployment/iac/terraform'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/cocktails.api/.terraform'
                 serviceConnectionName: '$(serviceConnectionName)'
                 terraformStateResourceGroup: '$(terraformStateResourceGroup)'
                 terraformStateStorageAccount: '$(terraformStateStorageAccount)'
