@@ -71,7 +71,7 @@ stages:
               parameters:
                 env: prd
                 branchType: ${{ variables.branchType }}
-                workingDirectory: '$(System.DefaultWorkingDirectory)/cocktails.sharedinfrastructure/.deployment/iac/terraform'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/cocktails.sharedinfrastructure/.terraform'
                 serviceConnectionName: '$(serviceConnectionName)'
                 terraformStateResourceGroup: '$(terraformStateResourceGroup)'
                 terraformStateStorageAccount: '$(terraformStateStorageAccount)'

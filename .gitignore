@@ -59,7 +59,7 @@ node_modules/
 # Build
 /**/dist/**/*
 
-/**/*/.terraform
+#/**/*/.terraform
 /**/*/.terraform.lock.hcl
 
 /**/.coverage
