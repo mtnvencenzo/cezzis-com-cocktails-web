@@ -1,118 +1,185 @@
 # Cezzis.com - Modern Cocktail Recipe Platform
 
-**Visit the live site: [www.cezzis.com](https://www.cezzis.com)**
+**Live Site:** [www.cezzis.com](https://www.cezzis.com)
 
-Cezzis.com is a cutting-edge cocktail recipe website that provides quick, easy-to-follow cocktail recipes for both amateur and professional bartenders. Built entirely on modern cloud-native architecture, this platform showcases the latest in web development, infrastructure-as-code, and Azure cloud services.
+## 🍸 Platform Overview
 
-## 🍸 About the Platform
+Cezzis.com is a modern, cloud-native cocktail recipe platform that provides an intuitive interface for discovering and creating cocktails. The platform is designed with performance, scalability, and user experience at its core, serving both amateur enthusiasts and professional bartenders.
 
-Cezzis.com delivers a streamlined, user-friendly experience for discovering and creating cocktails. The platform emphasizes:
-- **Quick Access**: Fast, searchable cocktail recipes
-- **Modern UX**: Clean, responsive design optimized for all devices  
-- **Performance**: Lightning-fast load times with global CDN
-- **Scalability**: Cloud-native architecture that scales automatically
-- **Security**: Enterprise-grade authentication and data protection
+## 🛠️ Technology Stack
 
-## 🏗️ Technical Excellence
+### Frontend
+- **Framework**: React.js with TypeScript
+- **UI Components**: Material-UI (MUI)
+- **State Management**: React Hooks
+- **Build Tools**: Vite
+- **Testing**: 
+  - Vitest for unit testing
+  - Cypress for E2E testing
+- **Authentication**: MSAL (Microsoft Authentication Library)
 
-This repository demonstrates modern software engineering practices through:
-- **Microservices Architecture**: Containerized services with Azure Container Apps
-- **Infrastructure as Code**: Complete Terraform automation
-- **CI/CD Pipelines**: Automated testing, building, and deployment
-- **Modern Authentication**: Azure B2C integration
-- **Content Delivery**: Azure Front Door with global edge locations
-- **Monitoring & Observability**: Application Insights and comprehensive logging
+### Backend
+- **Framework**: .NET Core 9.0
+- **API**: RESTful with OpenAPI
+- **API Documentation**: [Scalar API Documentation](https://api.cezzis.com/prd/cocktails/api-docs/v1/scalar/v1)
+- **Database**: Azure Cosmos DB (SQL API)
+- **Authentication**: Azure B2C
+- **Messaging**: Dapr with Azure Service Bus
+- **Email**: Zoho SMTP
+- **Storage**: Azure Blob Storage
+- **Monitoring**: Application Insights
 
-## 🏗️ Architecture
+### Infrastructure
+- **Containerization**: Docker
+- **Orchestration**: Azure Container Apps
+- **CDN**: Azure Front Door
+- **IaC**: Terraform
+- **CI/CD**: GitHub Actions
+- **Service Mesh**: Dapr
 
-The project consists of several key components:
 
-- **ADO Terraform**: Infrastructure foundation and security management
-- **Shared Infrastructure**: Common resources and DNS configuration
-- **Cocktails API**: Backend services and business logic
-- **Cocktails Frontend**: User interface and client-side functionality
-- **Cocktails Images**: Image storage and content delivery
-- **B2C Integration**: Authentication and user management
+### Architectural Patterns
 
-## 📋 Deployment Process
+The platform follows several modern architectural patterns and practices:
 
-### 1. ADO Terraform Setup
-- Run the ADO Terraform pipeline to create resource groups and service principals
-- This establishes the security foundation for all other deployments
+1. **Domain-Driven Design (DDD)**
+   - Rich domain model with aggregates (Account, Cocktail, Ingredient)
+   - Domain events for cross-aggregate communication
+   - Value objects and entities with encapsulated business logic
+   - Ubiquitous language reflected in code structure
 
-### 2. B2C Tenant Configuration
-- Manually configure B2C tenant in target environments
-- Follow the [B2C setup guide](Readme-b2c.md)
+2. **CQRS (Command Query Responsibility Segregation)**
+   - Commands for state-changing operations
+   - Queries for read-only operations
+   - MediatR for command/query handling
+   - Separate command and query models
 
-### 3. Shared Infrastructure
-- Deploy shared resources and DNS zone for cezzis.com
-- Resources are shared across all environments and the organization
+3. **Repository Pattern**
+   - Generic repository interfaces
+   - Cosmos DB implementation
+   - Unit of Work pattern for transaction management
+   - Caching strategies for frequently accessed data
 
-### 4. Cocktails Shared Infrastructure
-- Sets up KeyVault for each environment
-- Configures container app environment subnet access
-- Creates container registry password secrets
+4. **Event-Driven Architecture**
+   - Domain events for internal communication
+   - Integration events for cross-service communication
+   - Dapr pub/sub for event distribution
+   - Event handlers for side effects
 
-### 5. Cocktails API Deployment
-- Review and update Terraform environment variable files
-- Deploy API and app registration resources
-- **Manual Steps Required:**
-  - Update Google reCAPTCHA site secret in KeyVault (default: 'na')
-  - Configure pipeline warmup stage with correct URL and KeyVault secret
-  - Grant Admin Consent in B2C tenant for API permissions
-  - Note API client_id and permission scope GUIDs for frontend configuration
+5. **Dependency Injection**
+   - Constructor injection throughout the codebase
+   - Interface-based design
+   - Service registration in startup
+   - Scoped lifetime management
 
-### 6. Cocktails Frontend Deployment
-- Update Terraform environment variable files
-- Deploy frontend application
-- **Manual Steps Required:**
-  - Update Google reCAPTCHA site key in KeyVault
-  - Update Zoho email app password in KeyVault
-  - Configure custom domain bindings with managed certificates
-  - Grant Admin Consent for B2C app registration
-  - Update pipeline `ui-cypress.yml` with B2C client_id
+6. **Clean Architecture**
+   - Clear separation of concerns
+   - Domain layer independence
+   - Infrastructure layer for external concerns
+   - Application layer for use cases
 
-### 7. Cocktails Images Deployment
-- Configure image storage and CDN
-- Review allowed origins for storage account and Front Door CDN
+7. **Validation and Error Handling**
+   - FluentValidation for command validation
+   - Custom exception types
+   - Global error handling
+   - Validation pipeline behavior
 
-### 8. Final Configuration
-- Register test account on the website
-- Update KeyVault with e2e test credentials
-- Configure Cypress pipeline parameters:
-  ```yaml
-  parameters:
-    baseUrl: 'https://www.cezzis.com'
-    b2cUrl: 'https://cezzis.b2clogin.com/'
-    b2cTenantId: 'your-tenant-id'
-    b2cClientId: 'your-client-id'
-    b2cUserObjectId: 'your-user-object-id'
-    b2cUserEmail: 'your-test-email'
-    b2cUserPassword: '$(e2e-cypress-user-password)'
-  ```
+### Microservices Architecture
+The platform is built using a microservices architecture with the following components:
 
-## 🔧 Development Tools
+1. **Cocktails API**
+   - RESTful API service
+   - Business logic and data access
+   - Authentication and authorization
+   - Event-driven messaging with Dapr
+   - Cosmos DB integration
 
-### Git Bash Integration
-- Configure Git Bash in Visual Studio Terminal
-- Add Git Bash to Visual Studio External Tools
+2. **Cocktails Frontend**
+   - Single Page Application (SPA)
+   - Material-UI components
+   - MSAL authentication
+   - Responsive design
+   - Progressive Web App (PWA) capabilities
 
-### Authentication Setup
-For projects requiring DevOps Artifacts access:
-```bash
-vsts-npm-auth -config .npmrc
-```
+3. **Supporting Services**
+   - Email service (Zoho SMTP)
+   - Image processing and storage
+   - User avatar management
+   - Rating system
 
-## 🌐 Live Website
+### Infrastructure Components
 
-Visit the live application at: [https://www.cezzis.com](https://www.cezzis.com)
+1. **Data Layer**
+   - Azure Cosmos DB for data storage
+   - Azure Blob Storage for images
+   - Dapr state management
 
-## 📚 Additional Documentation
+2. **Security Layer**
+   - Azure B2C for authentication
+   - Key Vault for secrets management
+   - SSL/TLS encryption
+   - DDoS protection via Front Door
 
-- [B2C Setup Guide](Readme-b2c.md)
-- [Terraform Configuration Guidelines](docs/terraform.md)
-- [API Documentation](docs/api.md)
-- [Frontend Development Guide](docs/frontend.md)
+3. **Messaging Layer**
+   - Dapr pub/sub
+   - Azure Service Bus
+   - Event-driven architecture
+
+4. **Monitoring & Observability**
+   - Application Insights
+   - OpenTelemetry integration
+   - Performance monitoring
+   - Error tracking
+
+## 🚀 Deployment Architecture
+
+The platform follows a multi-environment deployment strategy:
+
+1. **Development**: For active development and testing
+2. **Staging**: Pre-production environment
+3. **Production**: Live environment with high availability
+
+Each environment is provisioned using Terraform and follows infrastructure-as-code principles.
+
+## 🔒 Security Features
+
+- Azure B2C for enterprise-grade authentication
+- HTTPS everywhere with managed certificates
+- Key Vault for secrets management
+- Network security groups and firewalls
+- DDoS protection through Azure Front Door
+
+## 📈 Scalability
+
+- Container-based deployment for horizontal scaling
+- Global CDN for content delivery
+- Cosmos DB for scalable data storage
+- Dapr for service mesh capabilities
+- Event-driven architecture for loose coupling
+
+## 🛠️ Development Setup
+
+1. **Prerequisites**
+   - Node.js
+   - Yarn package manager
+   - .NET Core SDK 9.0
+   - Docker
+   - Azure CLI
+   - Terraform
+   - Dapr CLI
+   - Local Docker images:
+     - Azurite (Azure Storage Emulator)
+     - Redis (for local pubsub via Dapr)
+     - Cosmos (Cosmos Emulator)
+
+2. **Local Development**
+   ```bash
+   # Install dependencies
+   yarn install
+   
+   # Start development servers
+   yarn run loc
+   ```
 
 ## 🤝 Contributing
 
@@ -124,14 +191,7 @@ Visit the live application at: [https://www.cezzis.com](https://www.cezzis.com)
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For questions, issues, or contributions, please:
-- Open an issue in this repository
-- Contact the development team
-- Review the documentation in the `/docs` folder
+This project is proprietary software. All rights reserved. See the [LICENSE](LICENSE) file for details.
 
 ---
 
