@@ -13,6 +13,7 @@ Cezzis.com is a modern, cloud-native cocktail recipe platform that provides an i
 - **UI Components**: Material-UI (MUI)
 - **State Management**: React Hooks
 - **Build Tools**: Vite
+- **Web Server**: NGINX
 - **Testing**: 
   - Vitest for unit testing
   - Cypress for E2E testing
@@ -21,9 +22,14 @@ Cezzis.com is a modern, cloud-native cocktail recipe platform that provides an i
 ### Backend
 - **Framework**: .NET Core 9.0
 - **API**: RESTful with OpenAPI
+- **API Gateway**: Azure API Management
 - **API Documentation**: [Scalar API Documentation](https://api.cezzis.com/prd/cocktails/api-docs/v1/scalar/v1)
 - **Database**: Azure Cosmos DB (SQL API)
-- **Authentication**: Azure B2C
+- **Authentication**: 
+  - Azure B2C for user authentication
+  - Azure App Registrations for API security
+  - OAuth 2.0 for authorization framework
+  - OpenID Connect for identity layer
 - **Messaging**: Dapr with Azure Service Bus
 - **Email**: Zoho SMTP
 - **Storage**: Azure Blob Storage
@@ -63,7 +69,7 @@ The platform follows several modern architectural patterns and practices:
 4. **Event-Driven Architecture**
    - Domain events for internal communication
    - Integration events for cross-service communication
-   - Dapr pub/sub for event distribution
+   - Dapr pub/sub for event distribution via Azure Service Bus
    - Event handlers for side effects
 
 5. **Dependency Injection**
@@ -91,7 +97,7 @@ The platform is built using a microservices architecture with the following comp
    - RESTful API service
    - Business logic and data access
    - Authentication and authorization
-   - Event-driven messaging with Dapr
+   - Event-driven messaging with Dapr and Azure Service Bus
    - Cosmos DB integration
 
 2. **Cocktails Frontend**
@@ -121,7 +127,7 @@ The platform is built using a microservices architecture with the following comp
    - DDoS protection via Front Door
 
 3. **Messaging Layer**
-   - Dapr pub/sub
+   - Dapr pub/sub via Azure Service Bus
    - Azure Service Bus
    - Event-driven architecture
 
@@ -144,6 +150,9 @@ Each environment is provisioned using Terraform and follows infrastructure-as-co
 ## 🔒 Security Features
 
 - Azure B2C for enterprise-grade authentication
+- Azure App Registrations for API security
+- OAuth 2.0 authorization framework
+- OpenID Connect for identity layer
 - HTTPS everywhere with managed certificates
 - Key Vault for secrets management
 - Network security groups and firewalls
