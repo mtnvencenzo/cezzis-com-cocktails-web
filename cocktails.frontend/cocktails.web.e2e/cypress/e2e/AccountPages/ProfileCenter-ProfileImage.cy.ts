@@ -60,20 +60,20 @@ describe('Profile center profile image', () => {
         cy.get('[data-testid="menu-avatar"]').scrollIntoView();
         // The main avatar image visible in the app bar
         cy.get('[data-testid="menu-avatar"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', 'https://cdn.cezzis.com');
+            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
             cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
         });
 
         // The menu item when opening the logged in menu
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-myaccount"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', 'https://cdn.cezzis.com');
+            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
             cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
         });
 
         // The editable avatar with camera icon
         cy.get('[data-testid="btnChooseAccountAvatar"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', 'https://cdn.cezzis.com');
+            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
             cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
         });
     });

@@ -1,34 +1,53 @@
-### Azurite should use a cert
-https://github.com/Azure/Azurite/blob/main/README.md#https-setup
-https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage
+### Azurite Local Docker Setup (HTTP, No Cert Required)
 
-**Generate Certificate and Key with mkcert**
-1. Install mkcert: https://github.com/FiloSottile/mkcert#installation. We like to use choco choco install mkcert, but you can install with any mechanism you'd like.
-2. Run the following commands to install the Root CA and generate a cert for Azurite.
+This guide will help you set up Azurite in a Docker container and connect to it using Azure Storage Explorer.
 
-``` bash
-mkcert -install
-mkcert 127.0.0.1
+#### 1. Start Azurite Docker Container (HTTP)
+
+Open PowerShell (recommended for volume mapping on Windows) and run:
+
+```powershell
+docker run --restart=always -d --name azurite-cocktails -p 10000:10000 -v D:/Github/cezzis-com/.azurite:/workspace mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0
+```
+- Make sure the path `D:/Github/cezzis-com/.azurite` exists on your system.
+- This will start Azurite and persist data in the `.azurite` directory.
+
+#### 2. Connect with Azure Storage Explorer
+
+1. Open Azure Storage Explorer.
+2. Click **Connect to Azure Storage**.
+3. Select **Attach to a local emulator** or **Use a connection string**.
+4. Use the following connection string:
+
+```
+DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
 ```
 
-That will create two files. A certificate file: 127.0.0.1.pem and a key file: 127.0.0.1-key.pem.
+#### 3. Create Blob Containers
+- You can now create blob containers and manage blobs without certificate or HTTPS issues.
 
-**Start Azurite with HTTPS and PEM**
+#### 4. (Optional) Public Access
+- By default, blob containers are private. To set public access, right-click the container in Storage Explorer and set the desired access level.
 
-USE POWERSHELL! GIT BASH HAD ISSUES WITH VOLUMN MAPPING
+---
 
-docker run --restart=always -d --name azurite-cocktails -p 10000:10000 -v D:/Github/Cocktails/.azurite:/workspace mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0 --cert /workspace/127.0.0.1.pem --key /workspace/127.0.0.1-key.pem
+### Troubleshooting
+- If you need HTTPS/certificates, see the official Azurite docs, but note that certificate trust issues can cause problems with Storage Explorer.
+- If you get `net::ERR_EMPTY_RESPONSE` or similar errors, try using HTTP as above.
 
+---
 
-### Well-known storage account and key
+### Well-known Storage Account and Key
 Azurite accepts the same well-known account and key used by the legacy Azure Storage Emulator.
 
-```bash
+```
 Account name: devstoreaccount1
 Account key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
 ```
 
-You will need to set the blob container public access since it's private by default
-This can be done via downloading the Azure Storage Explorer and connecting to the local azurite instance
+---
 
-https://azure.microsoft.com/en-us/products/storage/storage-explorer
+For more info:
+- https://github.com/Azure/Azurite/blob/main/README.md
+- https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite
+- https://azure.microsoft.com/en-us/products/storage/storage-explorer

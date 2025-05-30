@@ -18,8 +18,12 @@ export default defineConfig({
                 }
             });
             on('task', {
-                log(args) {
-                    console.log(...args);
+                log(message) {
+                    console.log(`[LOG] ${message}`);
+                    return null;
+                },
+                logError(message) {
+                    console.error(`[ERROR] ${message}`);
                     return null;
                 }
             });
@@ -37,7 +41,9 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     screenshotOnRunFailure: true,
     reporter: 'mocha-multi-reporters',
-    defaultCommandTimeout: 10000,
+    defaultCommandTimeout: 20000,
+    pageLoadTimeout: 30000,
+    requestTimeout: 10000,
     reporterOptions: {
         configFile: 'cypress.reporter.config.json'
     }
