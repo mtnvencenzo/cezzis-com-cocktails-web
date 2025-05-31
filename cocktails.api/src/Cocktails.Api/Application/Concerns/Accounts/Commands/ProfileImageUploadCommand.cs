@@ -66,7 +66,7 @@ public class ProfileImageUploadCommandHandler(
         if (!string.IsNullOrWhiteSpace(previousAvatar))
         {
             var previousAvatarBlobName = new Uri(previousAvatar).AbsolutePath.TrimStart('/');
-            previousAvatarBlobName = previousAvatarBlobName[previousAvatarBlobName.IndexOf('/')..].TrimStart('/');
+            previousAvatarBlobName = new Uri(previousAvatar).AbsolutePath[previousAvatarBlobName.IndexOf(account.Id)..].TrimStart('/');
 
             try
             {

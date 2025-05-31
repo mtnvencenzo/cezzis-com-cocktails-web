@@ -11,7 +11,7 @@ using System.Linq;
 public class CocktailRepository(CocktailDbContext dbContext, IIngredientRepository ingredientRepository) : ICocktailRepository
 {
     private readonly static Lock loadSync = new();
-    private List<Cocktail> cachedCocktails;
+    private static List<Cocktail> cachedCocktails;
     private List<Ingredient> cachedIngredients;
 
     public IUnitOfWork UnitOfWork => dbContext;
@@ -20,27 +20,24 @@ public class CocktailRepository(CocktailDbContext dbContext, IIngredientReposito
     {
         get
         {
-            if (this.cachedCocktails == null)
+            if (cachedCocktails == null)
             {
                 using (loadSync.EnterScope())
                 {
-                    if (this.cachedCocktails == null)
+                    if (cachedCocktails == null)
                     {
-                        this.cachedCocktails ??= Task.Run(() => dbContext.Cocktails.AsNoTracking().ToListAsync()).Result;
-                        this.cachedIngredients = [.. ingredientRepository.CachedItems];
+                        cachedCocktails ??= Task.Run(() => dbContext.Cocktails.AsNoTracking().ToListAsync()).Result;
+                        cachedCocktails = [.. cachedCocktails.OrderBy(x => x.Title)];
 
-                        foreach (var cocktail in this.cachedCocktails)
+                        foreach (var cocktail in cachedCocktails)
                         {
-                            cocktail.Ingredients.ForEach(ci =>
-                            {
-                                ci.SetBaseIngredient(this.cachedIngredients.First(x => x.Id == ci.IngredientId));
-                            });
+                            _ = this.PrepareCocktail(cocktail);
                         }
                     }
                 }
             }
 
-            return this.cachedCocktails.AsQueryable();
+            return cachedCocktails.AsQueryable();
         }
     }
 
@@ -48,35 +45,52 @@ public class CocktailRepository(CocktailDbContext dbContext, IIngredientReposito
 
     public Cocktail Add(Cocktail cocktail) => dbContext.Cocktails.Add(cocktail).Entity;
 
-    public async Task<Cocktail> GetAsync(string cocktailId, CancellationToken cancellationToken) => await dbContext.Cocktails
-        .WithPartitionKey(cocktailId)
-        .FirstOrDefaultAsync(x => x.Id == cocktailId, cancellationToken);
+    public async Task<Cocktail> GetAsync(string cocktailId, CancellationToken cancellationToken)
+    {
+        var cocktail = await dbContext.Cocktails
+            .WithPartitionKey(cocktailId)
+            .FirstOrDefaultAsync(x => x.Id == cocktailId, cancellationToken);
+
+        return this.PrepareCocktail(cocktail);
+    }
 
     public void Update(Cocktail cocktail) => dbContext.Entry(cocktail).State = EntityState.Modified;
 
-    public void ClearCache() => this.cachedCocktails = null;
+    public void ClearCache() => cachedCocktails = null;
 
     public void UpdateCache(Cocktail cocktail)
     {
-        if (this.cachedCocktails == null)
+        if (cachedCocktails == null)
         {
             return;
         }
 
         using (loadSync.EnterScope())
         {
-            var existing = this.cachedCocktails.FirstOrDefault(x => x.Id == cocktail.Id);
+            var existing = cachedCocktails.FirstOrDefault(x => x.Id == cocktail.Id);
 
             if (existing != null)
             {
-                var index = this.cachedCocktails.IndexOf(existing);
-                this.cachedCocktails.Remove(existing);
-                this.cachedCocktails.Insert(index, cocktail);
+                var index = cachedCocktails.IndexOf(existing);
+                cachedCocktails.Remove(existing);
+                cachedCocktails.Insert(index, cocktail);
             }
             else
             {
-                this.cachedCocktails.Add(cocktail);
+                cachedCocktails.Add(cocktail);
             }
         }
+    }
+
+    private Cocktail PrepareCocktail(Cocktail cocktail)
+    {
+        this.cachedIngredients = [.. ingredientRepository.CachedItems];
+
+        cocktail.Ingredients.ForEach(ci =>
+        {
+            ci.SetBaseIngredient(this.cachedIngredients.First(x => x.Id == ci.IngredientId));
+        });
+
+        return cocktail;
     }
 }

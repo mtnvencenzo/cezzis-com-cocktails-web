@@ -46,9 +46,7 @@ public class CocktailRatingEventHandler(ICocktailRepository cocktailRepository) 
 {
     public async Task<bool> Handle(CocktailRatingEvent command, CancellationToken cancellationToken)
     {
-        var cocktail = await cocktailRepository.Items
-            .FirstOrDefaultAsync(x => x.Id == command.CocktailId, cancellationToken: cancellationToken);
-
+        var cocktail = await cocktailRepository.GetAsync(command.CocktailId, cancellationToken: cancellationToken);
         Guard.NotNull(cocktail);
 
         cocktail.IncrementRating(command.Stars);

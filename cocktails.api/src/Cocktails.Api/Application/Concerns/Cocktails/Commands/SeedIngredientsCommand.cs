@@ -35,12 +35,14 @@ public class SeedIngredientsCommandHandler(
         var availableIngredients = ingredientsDataStore.Ingredients.ToList();
         var availableIds = availableIngredients.Select(x => x.Id).ToList();
 
-        var toDelete = await ingredientRepository.Items.Where(a => !availableIds.Any(b => b == a.Id)).ToListAsync();
+        var allExisting = await ingredientRepository.Items.ToListAsync(cancellationToken);
+
+        var toDelete = allExisting.Where(a => !availableIds.Any(b => b == a.Id)).ToList();
         var hasChanges = false;
 
         foreach (var ingredient in availableIngredients)
         {
-            var existing = await ingredientRepository.Items.FirstOrDefaultAsync(x => x.Id == ingredient.Id);
+            var existing = allExisting.FirstOrDefault(x => x.Id == ingredient.Id);
 
             if (existing == null)
             {

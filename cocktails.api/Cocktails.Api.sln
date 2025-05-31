@@ -14,9 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{38E5D2CC-E
 		..\dapr.yaml = ..\dapr.yaml
 		..\Docker-Compose.yml = ..\Docker-Compose.yml
 		..\docker-readme.md = ..\docker-readme.md
-		..\Nuget-Docker.Config = ..\Nuget-Docker.Config
 		..\Nuget.Config = ..\Nuget.Config
-		..\README.dapr.md = ..\README.dapr.md
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject

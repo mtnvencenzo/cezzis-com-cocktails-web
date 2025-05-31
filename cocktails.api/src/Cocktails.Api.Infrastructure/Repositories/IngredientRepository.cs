@@ -9,7 +9,7 @@ using System.Linq;
 public class IngredientRepository(CocktailDbContext dbContext) : IIngredientRepository
 {
     private readonly static Lock loadSync = new();
-    private List<Ingredient> cachedIngredients;
+    private static List<Ingredient> cachedIngredients;
 
     public IUnitOfWork UnitOfWork => dbContext;
 
@@ -17,18 +17,18 @@ public class IngredientRepository(CocktailDbContext dbContext) : IIngredientRepo
     {
         get
         {
-            if (this.cachedIngredients == null)
+            if (cachedIngredients == null)
             {
                 using (loadSync.EnterScope())
                 {
-                    if (this.cachedIngredients == null)
+                    if (cachedIngredients == null)
                     {
-                        this.cachedIngredients ??= Task.Run(() => dbContext.Ingredients.AsNoTracking().ToListAsync()).Result;
+                        cachedIngredients ??= Task.Run(() => dbContext.Ingredients.AsNoTracking().ToListAsync()).Result;
                     }
                 }
             }
 
-            return this.cachedIngredients.AsQueryable();
+            return cachedIngredients.AsQueryable();
         }
     }
 
@@ -44,28 +44,28 @@ public class IngredientRepository(CocktailDbContext dbContext) : IIngredientRepo
 
     public void Delete(Ingredient ingredient) => dbContext.Ingredients.Remove(ingredient);
 
-    public void ClearCache() => this.cachedIngredients = null;
+    public void ClearCache() => cachedIngredients = null;
 
     public void UpdateCache(Ingredient ingredient)
     {
-        if (this.cachedIngredients == null)
+        if (cachedIngredients == null)
         {
             return;
         }
 
         using (loadSync.EnterScope())
         {
-            var existing = this.cachedIngredients.FirstOrDefault(x => x.Id == ingredient.Id);
+            var existing = cachedIngredients.FirstOrDefault(x => x.Id == ingredient.Id);
 
             if (existing != null)
             {
-                var index = this.cachedIngredients.IndexOf(existing);
-                this.cachedIngredients.Remove(existing);
-                this.cachedIngredients.Insert(index, ingredient);
+                var index = cachedIngredients.IndexOf(existing);
+                cachedIngredients.Remove(existing);
+                cachedIngredients.Insert(index, ingredient);
             }
             else
             {
-                this.cachedIngredients.Add(ingredient);
+                cachedIngredients.Add(ingredient);
             }
         }
     }

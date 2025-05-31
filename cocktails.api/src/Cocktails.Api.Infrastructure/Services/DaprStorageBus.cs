@@ -87,6 +87,7 @@ public class DaprStorageBus(
 
         var bindingRequest = new BindingRequest(bindingName, "delete");
         bindingRequest.Metadata.Add("blobName", blobName);
+        bindingRequest.Metadata.Add("deleteSnapshots", "include"); // required for azurite storage to delete blobs with snapshots (include or only)  Even though dapr says its optional, it appears azurite requires it
 
         var bindingResponse = await this.daprClient.InvokeBindingAsync(bindingRequest, cancellationToken);
     }
