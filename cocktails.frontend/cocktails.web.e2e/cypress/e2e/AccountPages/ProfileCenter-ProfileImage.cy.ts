@@ -32,15 +32,18 @@ describe('Profile center profile image', () => {
         cy.title().should('eq', "Cezzi's Cocktail Recipes");
         cy.url().should('eq', `${Cypress.config().baseUrl}/`);
 
+        // Store the original image source
         let existingImgSrc;
         cy.get('[data-testid="menu-avatar"]').within(() => {
             cy.get('img')
+                .should('be.visible')
                 .invoke('attr', 'src')
                 .then((src) => {
                     existingImgSrc = src;
                 });
         });
 
+        // Navigate to profile settings
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-usersettings"]').contains('Profile & settings');
         cy.get('[data-testid="l-menu-usersettings"]').click();
@@ -51,30 +54,64 @@ describe('Profile center profile image', () => {
         cy.title().should('eq', 'Profile Center - Edit Avatar');
         cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
 
+        // Upload new image
         cy.get('[data-testid="btnChooseAccountAvatar"]').click();
         cy.get('input[type=file]').selectFile(`./cypress/fixtures/cypress${randomInt(1, 4)}.jpg`, { force: true });
-        cy.wait(1000).then(() => {
-            cy.get('[data-testid="btnSaveAvatar"]').click();
+
+        // Wait for image preview to be visible and loaded
+        cy.get('[data-testid="btnChooseAccountAvatar"]').within(() => {
+            cy.get('img')
+                .should('be.visible')
+                .should(($img) => {
+                    expect($img[0].complete).to.be.true;
+                    expect($img[0].naturalWidth).to.be.greaterThan(0);
+                });
         });
 
+        // Save the new avatar
+        cy.get('[data-testid="btnSaveAvatar"]').click();
+
+        // Wait for save operation to complete and verify the new image is loaded
         cy.get('[data-testid="menu-avatar"]').scrollIntoView();
-        // The main avatar image visible in the app bar
+
+        // Verify main avatar in app bar
         cy.get('[data-testid="menu-avatar"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
-            cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
+            cy.get('img')
+                .should('be.visible')
+                .should(($img) => {
+                    expect($img[0].complete).to.be.true;
+                    expect($img[0].naturalWidth).to.be.greaterThan(0);
+                })
+                .invoke('attr', 'src')
+                .should('include', '/account-avatars/')
+                .should('not.equal', existingImgSrc);
         });
 
-        // The menu item when opening the logged in menu
+        // Verify menu avatar
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-myaccount"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
-            cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
+            cy.get('img')
+                .should('be.visible')
+                .should(($img) => {
+                    expect($img[0].complete).to.be.true;
+                    expect($img[0].naturalWidth).to.be.greaterThan(0);
+                })
+                .invoke('attr', 'src')
+                .should('include', '/account-avatars/')
+                .should('not.equal', existingImgSrc);
         });
 
-        // The editable avatar with camera icon
+        // Verify editable avatar
         cy.get('[data-testid="btnChooseAccountAvatar"]').within(() => {
-            cy.get('img').should('have.attr', 'src').should('include', '/account-avatars/');
-            cy.get('img').should('have.attr', 'src').should('not.equal', existingImgSrc);
+            cy.get('img')
+                .should('be.visible')
+                .should(($img) => {
+                    expect($img[0].complete).to.be.true;
+                    expect($img[0].naturalWidth).to.be.greaterThan(0);
+                })
+                .invoke('attr', 'src')
+                .should('include', '/account-avatars/')
+                .should('not.equal', existingImgSrc);
         });
     });
 });

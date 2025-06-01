@@ -6,7 +6,19 @@
 
 Cezzis.com is a modern, cloud-native cocktail recipe platform that provides an intuitive interface for discovering and creating cocktails. The platform is designed with performance, scalability, and user experience at its core, serving both amateur enthusiasts and professional bartenders.
 
-## 🛠️ Technology Stack
+## 📁 Project Structure
+
+| Project | Type | Description | Documentation |
+|---------|------|-------------|---------------|
+| [Cocktails Frontend](./cocktails.frontend/README.md) | Frontend | Main React application with Material-UI, MSAL auth, and user interface | [README](./cocktails.frontend/README.md) |
+| [Cocktails E2E Tests](./cocktails.frontend/cocktails.web.e2e/readme.md) | Testing | Cypress E2E test suite for user flows and integration testing | [README](./cocktails.frontend/cocktails.web.e2e/readme.md) |
+| [Cocktails API](./cocktails.api/README.md) | Backend | .NET Core REST API with business logic and data access | [README](./cocktails.api/README.md) |
+| [Cocktails Common (Nuget)](./cocktails.common/README.md) | Backend | .NET Core REST Nuget package with common models, interfaces, and utilities used across the Cocktails backend ecosystem | [README](./cocktails.common/README.md) |
+| [Shared Infrastructure](./cocktails.sharedinfrastructure/README.md) | Shared | Common azure infrastructure with cross-cutting concerns | [README](./cocktails.sharedinfrastructure/README.md) |
+
+Each project contains detailed documentation and setup instructions in its respective README file.
+
+## 🛠️ Technology Stack Overview
 
 ### Frontend
 - **Framework**: React.js with TypeScript
@@ -181,14 +193,8 @@ Each environment is provisioned using Terraform and follows infrastructure-as-co
      - Redis (for local pubsub via Dapr)
      - Cosmos (Cosmos Emulator)
 
-2. **Local Development**
-   ```bash
-   # Install dependencies
-   yarn install
-   
-   # Start development servers
-   yarn run loc
-   ```
+2. **Setup Instructions**
+   - Follow the detailed [Environment Setup Guide](./.readme/env-setup.md) for complete installation and configuration instructions.
 
 ## 🤝 Contributing
 
