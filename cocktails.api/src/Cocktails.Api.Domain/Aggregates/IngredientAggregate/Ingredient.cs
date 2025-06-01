@@ -1,6 +1,7 @@
 ﻿namespace Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 
 using Cezzi.Applications.Extensions;
+using Cezzi.Applications.Text;
 using Cocktails.Api.Domain.Common;
 using Cocktails.Api.Domain.Exceptions;
 using System.Collections.Generic;
@@ -207,7 +208,7 @@ public class Ingredient : Entity, IAggregateRoot
             this.ShelfDisplay +
             string.Join(',', this.variations.Select(x => x.Id + x.Name + string.Join(',', x.Applications ?? []))));
 
-        this.Hash = System.Text.Encoding.UTF8.GetString(Cezzi.Security.Hashing.GenerateHMACSHA256("2f033A(0924hIHhd2~!", bytes));
+        this.Hash = Base64.Encode(bytes);
         return this.Hash;
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Cocktails.Api.Domain.Aggregates.CocktailAggregate;
 
 using Cezzi.Applications.Extensions;
+using Cezzi.Applications.Text;
 using Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using Cocktails.Api.Domain.Common;
 using Cocktails.Api.Domain.Exceptions;
@@ -117,6 +118,10 @@ public class Cocktail : Entity, IAggregateRoot
     [JsonIgnore]
     public IReadOnlyCollection<CocktailImage> Images => this.images.AsReadOnly();
 
+    public override DateTimeOffset CreatedOn { get => this.PublishedOn; protected set => base.CreatedOn = value; }
+
+    public override DateTimeOffset UpdatedOn { get => this.ModifiedOn; protected set => base.UpdatedOn = value; }
+
     public Cocktail MergeUpdate(Cocktail from)
     {
         this.SetContent(from.Content)
@@ -137,7 +142,7 @@ public class Cocktail : Entity, IAggregateRoot
             .SetIngredients([.. from.ingredients])
             .SetHash(from.Hash);
 
-        this.UpdatedOn = DateTimeOffset.Now;
+        this.SetModifiedOn(DateTimeOffset.Now);
         return this;
     }
 
@@ -445,11 +450,11 @@ public class Cocktail : Entity, IAggregateRoot
             string.Join(',', this.searchableTitles) +
             this.Serves.ToString() +
             this.Title +
-            string.Join(',', this.ingredients.Select(x => x.UoM.ToString() + x.IngredientId + x.Requirement.ToString() + x.Units.ToString() + x.VariationId?.ToString() ?? string.Empty + x.Suggestions + x.Preparation.ToString() + string.Join(',', x.Applications ?? []))) +
+            string.Join(',', this.ingredients.Select(x => x.GenerateHash())) +
             string.Join(',', this.instructions.Select(x => x.Order.ToString() + x.DisplayValue)) +
             string.Join(',', this.images.Select(x => x.Type.ToString() + x.Height.ToString() + x.Width.ToString() + x.Uri.ToString())));
 
-        this.Hash = System.Text.Encoding.UTF8.GetString(Cezzi.Security.Hashing.GenerateHMACSHA256("hf09A(0923hIHhd$$2", bytes));
+        this.Hash = Base64.Encode(bytes);
         return this.Hash;
     }
 }
