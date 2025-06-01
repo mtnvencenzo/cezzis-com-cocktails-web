@@ -73,7 +73,7 @@ describe('Profile center profile image', () => {
 
         // Wait for save operation to complete and verify the new image is loaded
         cy.get('[data-testid="menu-avatar"]').scrollIntoView();
-        
+
         // Verify main avatar in app bar
         cy.get('[data-testid="menu-avatar"]').within(() => {
             cy.get('img')
