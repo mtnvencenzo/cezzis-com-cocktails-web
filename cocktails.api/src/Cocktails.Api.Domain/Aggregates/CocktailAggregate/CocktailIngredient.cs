@@ -1,6 +1,7 @@
 ﻿namespace Cocktails.Api.Domain.Aggregates.CocktailAggregate;
 
 using Cezzi.Applications.Extensions;
+using Cezzi.Applications.Text;
 using Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using Cocktails.Api.Domain.Common;
 using Cocktails.Api.Domain.Exceptions;
@@ -32,27 +33,20 @@ public class CocktailIngredient : ValueObject
     [JsonInclude]
     public IngredientRequirement Requirement { get; private set; }
 
-    [JsonIgnore]
-    public List<string> Types => this.BaseIngredient.Types;
+    [JsonInclude]
+    public IReadOnlyList<string> Types { get; private set; } = [];
 
-    [JsonIgnore]
-    public List<string> Applications => this.VariationId != null
-        ? this.BaseIngredient.Variations.First(x => x.Id == this.VariationId).Applications ?? this.BaseIngredient.Applications
-        : this.BaseIngredient.Applications;
+    [JsonInclude]
+    public IReadOnlyList<string> Applications { get; private set; } = [];
 
-    [JsonIgnore]
-    public string Name => this.VariationId != null
-        ? this.BaseIngredient.Variations.First(x => x.Id == this.VariationId).Name ?? this.BaseIngredient.Name
-        : this.BaseIngredient.Name;
+    [JsonInclude]
+    public string Name { get; private set; }
 
-    [JsonIgnore]
-    public string BaseName => this.BaseIngredient.Name;
+    [JsonInclude]
+    public string BaseName { get; private set; }
 
-    [JsonIgnore]
-    public string ParentIngredientId => this.BaseIngredient.ParentId;
-
-    [JsonIgnore]
-    private Ingredient BaseIngredient { get; set; }
+    [JsonInclude]
+    public string ParentIngredientId { get; private set; }
 
     [JsonConstructor]
     protected CocktailIngredient() { }
@@ -74,8 +68,6 @@ public class CocktailIngredient : ValueObject
         string suggestions = "",
         IngredientRequirement requirement = IngredientRequirement.Required) : this()
     {
-        this.BaseIngredient = ingredient ?? throw new CocktailsApiDomainException($"{nameof(ingredient)} cannot be null");
-
         this.IngredientId = ingredient.Id ?? throw new CocktailsApiDomainException($"{nameof(ingredient)} cannot be null");
 
         if (!string.IsNullOrWhiteSpace(variationId))
@@ -120,11 +112,26 @@ public class CocktailIngredient : ValueObject
         this.Units = units;
         this.Suggestions = suggestions;
         this.Preparation = prep;
+        this.SetBaseIngredient(ingredient);
     }
 
     public CocktailIngredient SetBaseIngredient(Ingredient ingredient)
     {
-        this.BaseIngredient = ingredient ?? throw new CocktailsApiDomainException($"{nameof(ingredient)} cannot be null");
+        ArgumentNullException.ThrowIfNull(ingredient, nameof(ingredient));
+
+        this.BaseName = ingredient.Name ?? throw new CocktailsApiDomainException($"{nameof(ingredient)} must have a name");
+        this.ParentIngredientId = ingredient.ParentId;
+
+        this.Name = this.VariationId != null
+            ? ingredient.Variations.First(x => x.Id == this.VariationId).Name ?? ingredient.Name
+            : ingredient.Name;
+
+        this.Applications = this.VariationId != null
+            ? ingredient.Variations.First(x => x.Id == this.VariationId).Applications ?? ingredient.Applications
+            : ingredient.Applications;
+
+        this.Types = ingredient.Types ?? [];
+
         return this;
     }
 
@@ -436,5 +443,24 @@ public class CocktailIngredient : ValueObject
         yield return this.Preparation;
         yield return this.Suggestions;
         yield return this.Requirement;
+    }
+
+    public string GenerateHash()
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes(
+            string.Join(',', this.Types) +
+            string.Join(',', this.Applications) +
+            this.IngredientId +
+            this.ParentIngredientId ?? "Na" +
+            this.Name +
+            this.BaseName +
+            this.UoM.ToString() +
+            this.Units.ToString() +
+            this.Suggestions ?? "Na" +
+            this.Requirement.ToString() +
+            this.Preparation ?? "Na" +
+            this.VariationId ?? "Na");
+
+        return Base64.Encode(bytes).GetHashCode().ToString();
     }
 }

@@ -8,11 +8,10 @@ using Cocktails.Api.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-public class CocktailRepository(CocktailDbContext dbContext, IIngredientRepository ingredientRepository) : ICocktailRepository
+public class CocktailRepository(CocktailDbContext dbContext) : ICocktailRepository
 {
     private readonly static Lock loadSync = new();
     private static List<Cocktail> cachedCocktails;
-    private List<Ingredient> cachedIngredients;
 
     public IUnitOfWork UnitOfWork => dbContext;
 
@@ -28,11 +27,6 @@ public class CocktailRepository(CocktailDbContext dbContext, IIngredientReposito
                     {
                         cachedCocktails ??= Task.Run(() => dbContext.Cocktails.AsNoTracking().ToListAsync()).Result;
                         cachedCocktails = [.. cachedCocktails.OrderBy(x => x.Title)];
-
-                        foreach (var cocktail in cachedCocktails)
-                        {
-                            _ = this.PrepareCocktail(cocktail);
-                        }
                     }
                 }
             }
@@ -51,7 +45,7 @@ public class CocktailRepository(CocktailDbContext dbContext, IIngredientReposito
             .WithPartitionKey(cocktailId)
             .FirstOrDefaultAsync(x => x.Id == cocktailId, cancellationToken);
 
-        return this.PrepareCocktail(cocktail);
+        return cocktail;
     }
 
     public void Update(Cocktail cocktail) => dbContext.Entry(cocktail).State = EntityState.Modified;
@@ -80,17 +74,5 @@ public class CocktailRepository(CocktailDbContext dbContext, IIngredientReposito
                 cachedCocktails.Add(cocktail);
             }
         }
-    }
-
-    private Cocktail PrepareCocktail(Cocktail cocktail)
-    {
-        this.cachedIngredients = [.. ingredientRepository.CachedItems];
-
-        cocktail.Ingredients.ForEach(ci =>
-        {
-            ci.SetBaseIngredient(this.cachedIngredients.First(x => x.Id == ci.IngredientId));
-        });
-
-        return cocktail;
     }
 }
