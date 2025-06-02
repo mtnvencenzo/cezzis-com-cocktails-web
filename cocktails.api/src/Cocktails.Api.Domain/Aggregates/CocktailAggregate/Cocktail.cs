@@ -118,9 +118,25 @@ public class Cocktail : Entity, IAggregateRoot
     [JsonIgnore]
     public IReadOnlyCollection<CocktailImage> Images => this.images.AsReadOnly();
 
-    public override DateTimeOffset CreatedOn { get => this.PublishedOn; protected set => base.CreatedOn = value; }
+    public override DateTimeOffset CreatedOn
+    {
+        get => this.PublishedOn;
+        protected set
+        {
+            base.CreatedOn = value;
+            this.PublishedOn = value;
+        }
+    }
 
-    public override DateTimeOffset UpdatedOn { get => this.ModifiedOn; protected set => base.UpdatedOn = value; }
+    public override DateTimeOffset UpdatedOn
+    {
+        get => this.ModifiedOn;
+        protected set
+        {
+            base.UpdatedOn = value;
+            this.ModifiedOn = value;
+        }
+    }
 
     public Cocktail MergeUpdate(Cocktail from)
     {
@@ -454,7 +470,7 @@ public class Cocktail : Entity, IAggregateRoot
             string.Join(',', this.instructions.Select(x => x.Order.ToString() + x.DisplayValue)) +
             string.Join(',', this.images.Select(x => x.Type.ToString() + x.Height.ToString() + x.Width.ToString() + x.Uri.ToString())));
 
-        this.Hash = Base64.Encode(bytes);
+        this.Hash = Base64.Encode(bytes).GetHashCode().ToString();
         return this.Hash;
     }
 }

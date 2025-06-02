@@ -1,6 +1,7 @@
 ﻿namespace Cocktails.Api.Domain.Aggregates.CocktailAggregate;
 
 using Cezzi.Applications.Extensions;
+using Cezzi.Applications.Text;
 using Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using Cocktails.Api.Domain.Common;
 using Cocktails.Api.Domain.Exceptions;
@@ -33,10 +34,10 @@ public class CocktailIngredient : ValueObject
     public IngredientRequirement Requirement { get; private set; }
 
     [JsonInclude]
-    public List<string> Types { get; private set; }
+    public IReadOnlyList<string> Types { get; private set; } = [];
 
     [JsonInclude]
-    public List<string> Applications { get; private set; }
+    public IReadOnlyList<string> Applications { get; private set; } = [];
 
     [JsonInclude]
     public string Name { get; private set; }
@@ -450,7 +451,7 @@ public class CocktailIngredient : ValueObject
             string.Join(',', this.Types) +
             string.Join(',', this.Applications) +
             this.IngredientId +
-            this.ParentIngredientId ?? string.Empty +
+            this.ParentIngredientId ?? "Na" +
             this.Name +
             this.BaseName +
             this.UoM.ToString() +
@@ -460,6 +461,6 @@ public class CocktailIngredient : ValueObject
             this.Preparation ?? "Na" +
             this.VariationId ?? "Na");
 
-        return System.Text.Encoding.UTF8.GetString(Cezzi.Security.Hashing.GenerateHMACSHA256("hf09A(0923hIHhd$$2", bytes));
+        return Base64.Encode(bytes).GetHashCode().ToString();
     }
 }

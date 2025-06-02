@@ -208,7 +208,7 @@ public class Ingredient : Entity, IAggregateRoot
             this.ShelfDisplay +
             string.Join(',', this.variations.Select(x => x.Id + x.Name + string.Join(',', x.Applications ?? []))));
 
-        this.Hash = Base64.Encode(bytes);
+        this.Hash = Base64.Encode(bytes).GetHashCode().ToString();
         return this.Hash;
     }
 }
