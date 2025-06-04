@@ -1,0 +1,16 @@
+{
+    "@odata.context": "https://srch-vec-eus-glo-shared-001.search.windows.net/$metadata#indexers/$entity",
+    "@odata.etag": "\"0x8DDA2F3F505AE18\"",
+    "name": "indexer-1748954707171",
+    "description": null,
+    "dataSourceName": "cosmosdb-1748826785517-datasource",
+    "skillsetName": null,
+    "targetIndexName": "idx-cocktails",
+    "disabled": null,
+    "schedule": null,
+    "parameters": null,
+    "fieldMappings": [],
+    "outputFieldMappings": [],
+    "cache": null,
+    "encryptionKey": null
+  }

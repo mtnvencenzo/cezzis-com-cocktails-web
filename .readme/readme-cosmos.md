@@ -63,10 +63,25 @@ Https is required - see the --protocol https argument.  Note that we are disabli
    - For detailed configuration and troubleshooting, see the [Cosmos DB Emulator Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/linux-emulator)
 
 
-## Random
+## Random Az Cli
+**Cosmos Control Plane Roles / Info**
+
+https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-grant-control-plane-access?tabs=built-in-definition%2Ccsharp&pivots=azure-interface-cli
+
 ``` bash
 az login
 az cosmosdb sql role definition list \
     --resource-group "rg-vec-eus-prd-cocktails-001" \
     --account-name "cosmos-vec-eus-prd-cocktails-001"
+
+# Standard Built in
+az cosmosdb sql role assignment remove --account-name cosmos-vec-eus-prd-cocktails-001 --resource-group 'rg-vec-eus-prd-cocktails-001' --role-definition-name 'Cosmos DB Built-in Data Reader' --scope '/subscriptions/1d9ecc00-242a-460d-8b08-b71db19f094e/resourceGroups/rg-vec-eus-prd-cocktails-001/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-vec-eus-prd-cocktails-001' --principal-id 'd532fa56-2a0d-4dc0-82e1-b35ca21a6709'
+
+
+# Custom Data Reader
+az cosmosdb sql role assignment create --account-name cosmos-vec-eus-prd-cocktails-001 --resource-group 'rg-vec-eus-prd-cocktails-001' --role-definition-name 'Cosmos DB Custom Data Reader' --scope '/subscriptions/1d9ecc00-242a-460d-8b08-b71db19f094e/resourceGroups/rg-vec-eus-prd-cocktails-001/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-vec-eus-prd-cocktails-001' --principal-id 'd532fa56-2a0d-4dc0-82e1-b35ca21a6709'
+
+
+az cosmosdb sql role assignment list --account-name cosmos-vec-eus-prd-cocktails-001 --resource-group rg-vec-eus-prd-cocktails-001
+
 ```

@@ -18,6 +18,13 @@ module "cocktails_cosmosdb_account" {
   enable_monitor_alerts   = false
   action_group_id         = ""
 
+  # Setting range of IP addresses that can access the Cosmos DB account from AzureCognitiveSearch.EastUS
+  # https://www.microsoft.com/en-us/download/details.aspx?id=56519
+  # When not using AzureCognitiveSearch free tier, comment out the ip_range_filter block
+  ip_range_filter = [
+    "9.169.0.0/17"
+  ]
+
   providers = {
     azurerm = azurerm
   }
