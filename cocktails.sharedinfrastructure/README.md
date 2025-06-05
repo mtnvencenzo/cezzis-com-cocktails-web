@@ -34,7 +34,7 @@ This directory contains the Terraform infrastructure code for managing shared Az
 ```
 cocktails.sharedinfrastructure/
 ├── .github/                # GitHub Workflow definitions
-├── .terraform/             # Terraform configuration files
+├── terraform/             # Terraform configuration files
 │   ├── environment_vars/   # Environment-specific variables
 │   ├── datasources.tf     # Data source definitions
 │   ├── keyvault.tf        # Key Vault configuration
@@ -65,7 +65,7 @@ The infrastructure is deployed using GitHub Workflows:
 3. **Tagging**: Creates Git tags for successful deployments
 
 ### Environment Variables
-Environment-specific configurations are stored in `.terraform/environment_vars/`:
+Environment-specific configurations are stored in `terraform/environment_vars/`:
 - `prd.tfvars`: Production environment settings
 - Additional environment files as needed
 
