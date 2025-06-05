@@ -7,11 +7,11 @@ resource "azurerm_role_assignment" "cosmos_search_account_reader_role_assignment
 module "ai_search_cocktails_index_simple" {
   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/ai-search-cosmos-index-simple"
 
-  tags = local.tags
-
   cosmosdb_account_id   = var.cosmosdb_account_id
   cosmos_database_name  = var.cosmos_database_name
   cosmos_container_name = var.cosmos_container_name
+
+  tags = var.tags
 
   cosmos_datasource_json = jsonencode({
     "name" : "ds-cosmos-cocktails",
@@ -23,7 +23,7 @@ module "ai_search_cocktails_index_simple" {
       "connectionString" : "ResourceId=${var.cosmosdb_account_id};Database=${var.cosmos_database_name};IdentityAuthType=AccessToken"
     },
     "container" : {
-      "name" : var.cosmos_cocktails_container_name,
+      "name" : var.cosmos_container_name,
       "query" : null
     },
     "dataChangeDetectionPolicy" : null,
@@ -186,7 +186,7 @@ module "ai_search_cocktails_index_simple" {
     ],
     "scoringProfiles" : [
       {
-        "name" : "sp-weghted-profile-1",
+        "name" : "sp-weighted-profile-1",
         "functionAggregation" : "sum",
         "text" : {
           "weights" : {
