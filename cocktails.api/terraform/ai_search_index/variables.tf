@@ -22,3 +22,8 @@ variable "search_service_principal_id" {
   type = string
 }
 
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+

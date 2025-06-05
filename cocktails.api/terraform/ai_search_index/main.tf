@@ -11,6 +11,8 @@ module "ai_search_cocktails_index_simple" {
   cosmos_database_name  = var.cosmos_database_name
   cosmos_container_name = var.cosmos_container_name
 
+  tags = var.tags
+
   cosmos_datasource_json = jsonencode({
     "name" : "ds-cosmos-cocktails",
     "description" : null,
