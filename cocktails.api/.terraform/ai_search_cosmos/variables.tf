@@ -9,17 +9,17 @@ variable "ai_search_service_key" {
 }
 
 variable "cosmosdb_account_id" {
-  type = string
+  type        = string
   description = "The ID of the Cosmos DB account"
 }
 
 variable "cosmos_cocktails_database_name" {
-  type = string
+  type        = string
   description = "The name of the database for the Cosmos DB account"
 }
 
 variable "cosmos_cocktails_container_name" {
-  type = string
+  type        = string
   description = "The name of the container for the Cosmos DB account"
 }
 
