@@ -20,7 +20,7 @@ resource "restapi_object" "cosmos_cocktails_standard_lucene_index" {
 resource "restapi_object" "cosmos_cocktails_standard_lucene_indexer" {
   path         = "/indexers"
   query_string = "api-version=2024-07-01"
-  data         = jsonencode(local.indexer_json)
+  data         = jsonencode(local.cosmos_cocktails_standard_lucene_indexer_json)
   id_attribute = "name" # The ID field on the response
   depends_on   = [restapi_object.cosmos_cocktails_datasource, restapi_object.cosmos_cocktails_standard_lucene_index]
 }
