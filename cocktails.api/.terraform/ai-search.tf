@@ -10,7 +10,7 @@
 # }
 
 resource "azurerm_role_assignment" "cosmos_assearch_account_reader_role_assignment" {
-  scope                = module.cocktails_cosmosdb_account.id
+  scope                = module.cocktails_cosmosdb_account.cosmosdb_account_id
   role_definition_name = "Cosmos DB Account Reader Role"
   principal_id         = data.azurerm_search_service.ai_search_service.identity[0].principal_id
 
