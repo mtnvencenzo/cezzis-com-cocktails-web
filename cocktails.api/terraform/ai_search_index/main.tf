@@ -1,9 +1,7 @@
-resource "azurerm_role_assignment" "cosmos_assearch_account_reader_role_assignment" {
+resource "azurerm_role_assignment" "cosmos_search_account_reader_role_assignment" {
   scope                = var.cosmosdb_account_id
   role_definition_name = "Cosmos DB Account Reader Role"
   principal_id         = var.search_service_principal_id
-
-  depends_on = [module.cocktails_cosmosdb_account]
 }
 
 module "ai_search_cocktails_index_simple" {
@@ -222,5 +220,5 @@ module "ai_search_cocktails_index_simple" {
     }
   })
 
-  depends_on = [azurerm_role_assignment.cosmos_assearch_account_reader_role_assignment]
+  depends_on = [azurerm_role_assignment.cosmos_search_account_reader_role_assignment]
 }
