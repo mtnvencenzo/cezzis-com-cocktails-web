@@ -1,7 +1,7 @@
 resource "azurerm_role_assignment" "cosmos_assearch_account_reader_role_assignment" {
-  scope                = module.cocktails_cosmosdb_account.cosmosdb_account_id
+  scope                = var.cosmosdb_account_id
   role_definition_name = "Cosmos DB Account Reader Role"
-  principal_id         = data.azurerm_search_service.ai_search_service.identity[0].principal_id
+  principal_id         = var.search_service_principal_id
 
   depends_on = [module.cocktails_cosmosdb_account]
 }
@@ -11,9 +11,9 @@ module "ai_search_cocktails_index_simple" {
 
   tags = local.tags
 
-  cosmosdb_account_id   = module.cocktails_cosmosdb_account.cosmosdb_account_id
-  cosmos_database_name  = var.cocktails_cosmosdb_database_name
-  cosmos_container_name = "cocktails-cocktail"
+  cosmosdb_account_id   = var.cosmosdb_account_id
+  cosmos_database_name  = var.cosmos_database_name
+  cosmos_container_name = var.cosmos_container_name
 
   cosmos_datasource_json = jsonencode({
     "name" : "ds-cosmos-cocktails",
@@ -22,7 +22,7 @@ module "ai_search_cocktails_index_simple" {
     "subtype" : null,
     "indexerPermissionOptions" : [],
     "credentials" : {
-      "connectionString" : "ResourceId=${var.cosmosdb_account_id};Database=${var.cosmos_cocktails_database_name};IdentityAuthType=AccessToken"
+      "connectionString" : "ResourceId=${var.cosmosdb_account_id};Database=${var.cosmos_database_name};IdentityAuthType=AccessToken"
     },
     "container" : {
       "name" : var.cosmos_cocktails_container_name,
@@ -222,5 +222,5 @@ module "ai_search_cocktails_index_simple" {
     }
   })
 
-  depends_on = [module.cocktails_cosmosdb_account, azurerm_role_assignment.cosmos_assearch_account_reader_role_assignment]
+  depends_on = [azurerm_role_assignment.cosmos_assearch_account_reader_role_assignment]
 }
