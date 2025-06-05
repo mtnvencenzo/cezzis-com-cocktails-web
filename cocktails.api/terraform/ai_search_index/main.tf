@@ -48,7 +48,7 @@ module "ai_search_cocktails_index_simple" {
   # To do https://learn.microsoft.com/en-us/rest/api/searchservice/create-index
   cosmos_standard_lucene_index_json = jsonencode({
     "name" : "idx-cosmos-cocktails-standard-lucene",
-    "defaultScoringProfile" : "sp-weghted-profile-1",
+    "defaultScoringProfile" : "sp-weighted-profile-1",
     "fields" : [
       {
         "name" : "id",
@@ -199,7 +199,6 @@ module "ai_search_cocktails_index_simple" {
       }
     ],
     "analyzers" : [],
-    "normalizers" : [],
     "tokenizers" : [],
     "tokenFilters" : [],
     "charFilters" : [],
