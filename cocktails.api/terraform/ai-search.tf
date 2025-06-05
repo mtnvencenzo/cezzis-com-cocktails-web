@@ -6,5 +6,4 @@ module "ai_search_cosmos_index" {
   cosmosdb_account_id         = module.cocktails_cosmosdb_account.cosmosdb_account_id
   cosmos_database_name        = var.cocktails_cosmosdb_database_name
   cosmos_container_name       = "cocktails-cocktail"
-  tags                        = local.tags
 }
