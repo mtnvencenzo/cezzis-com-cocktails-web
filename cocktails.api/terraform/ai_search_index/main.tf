@@ -13,12 +13,11 @@ module "ai_search_cocktails_index_simple" {
 
   tags = var.tags
 
+  # https://learn.microsoft.com/en-us/rest/api/searchservice/create-data-source
   cosmos_datasource_json = jsonencode({
     "name" : "ds-cosmos-cocktails",
     "description" : null,
     "type" : "cosmosdb",
-    "subtype" : null,
-    "indexerPermissionOptions" : [],
     "credentials" : {
       "connectionString" : "ResourceId=${var.cosmosdb_account_id};Database=${var.cosmos_database_name};IdentityAuthType=AccessToken"
     },
@@ -31,6 +30,7 @@ module "ai_search_cocktails_index_simple" {
     "encryptionKey" : null
   })
 
+  # https://learn.microsoft.com/en-us/rest/api/searchservice/create-indexer
   cosmos_standard_lucene_indexer_json = jsonencode({
     "name" : "idxer-cosmos-cocktails-standard-lucene",
     "description" : null,
@@ -42,10 +42,10 @@ module "ai_search_cocktails_index_simple" {
     "parameters" : null,
     "fieldMappings" : [],
     "outputFieldMappings" : [],
-    "cache" : null,
     "encryptionKey" : null
   })
 
+  # To do https://learn.microsoft.com/en-us/rest/api/searchservice/create-index
   cosmos_standard_lucene_index_json = jsonencode({
     "name" : "idx-cosmos-cocktails-standard-lucene",
     "defaultScoringProfile" : "sp-weghted-profile-1",
@@ -56,7 +56,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : false,
         "filterable" : false,
         "retrievable" : true,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : true,
@@ -68,7 +67,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : true,
         "filterable" : false,
         "retrievable" : false,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -81,7 +79,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : true,
         "filterable" : false,
         "retrievable" : true,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -94,7 +91,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : false,
         "filterable" : false,
         "retrievable" : true,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -106,7 +102,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : true,
         "filterable" : false,
         "retrievable" : false,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -119,7 +114,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : true,
         "filterable" : false,
         "retrievable" : true,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -132,7 +126,6 @@ module "ai_search_cocktails_index_simple" {
         "searchable" : true,
         "filterable" : false,
         "retrievable" : true,
-        "stored" : true,
         "sortable" : false,
         "facetable" : false,
         "key" : false,
@@ -149,7 +142,6 @@ module "ai_search_cocktails_index_simple" {
             "searchable" : true,
             "filterable" : false,
             "retrievable" : true,
-            "stored" : true,
             "sortable" : false,
             "facetable" : false,
             "key" : false,
@@ -162,7 +154,6 @@ module "ai_search_cocktails_index_simple" {
             "searchable" : false,
             "filterable" : false,
             "retrievable" : true,
-            "stored" : true,
             "sortable" : false,
             "facetable" : false,
             "key" : false,
@@ -174,7 +165,6 @@ module "ai_search_cocktails_index_simple" {
             "searchable" : false,
             "filterable" : false,
             "retrievable" : true,
-            "stored" : true,
             "sortable" : false,
             "facetable" : false,
             "key" : false,
@@ -186,10 +176,9 @@ module "ai_search_cocktails_index_simple" {
     "scoringProfiles" : [
       {
         "name" : "sp-weighted-profile-1",
-        "functionAggregation" : "sum",
         "text" : {
           "weights" : {
-            "Title" : 4,
+            "Title" : 5,
             "Description" : 2,
             "DescriptiveTitle" : 1
           }
