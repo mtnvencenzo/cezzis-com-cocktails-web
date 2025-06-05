@@ -28,8 +28,7 @@ module "ai_search_cocktails_index_simple" {
     },
     "dataChangeDetectionPolicy" : null,
     "dataDeletionDetectionPolicy" : null,
-    "encryptionKey" : null,
-    "identity" : null
+    "encryptionKey" : null
   })
 
   cosmos_standard_lucene_indexer_json = jsonencode({
