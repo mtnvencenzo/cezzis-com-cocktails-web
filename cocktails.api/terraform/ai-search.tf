@@ -9,14 +9,11 @@ resource "azurerm_role_assignment" "cosmos_assearch_account_reader_role_assignme
 module "ai_search_cocktails_index_simple" {
   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/ai-search-cosmos-index-simple"
 
-  ai_search_service_host_name = "srch-${var.sub}-${var.region}-${var.global_environment}-${var.global_domain}-${var.sequence}"
-  ai_search_service_key       = data.azurerm_search_service.ai_search_service.primary_key
-
   tags = local.tags
 
   cosmosdb_account_id             = module.cocktails_cosmosdb_account.cosmosdb_account_id
-  cosmos_cocktails_database_name  = var.cocktails_cosmosdb_database_name
-  cosmos_cocktails_container_name = "cocktails-cocktail"
+  cosmos_database_name  = var.cocktails_cosmosdb_database_name
+  cosmos_container_name = "cocktails-cocktail"
 
   cosmos_datasource_json = jsonencode({
     "name" : "ds-cosmos-cocktails",
