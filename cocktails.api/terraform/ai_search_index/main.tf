@@ -25,9 +25,9 @@ module "ai_search_cocktails_index_simple" {
       "name" : var.cosmos_container_name,
       "query" : "SELECT * FROM c WHERE c._ts >= @HighWaterMark ORDER BY c._ts"
     },
-    "dataChangeDetectionPolicy": {
-      "@odata.type": "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
-      "highWaterMarkColumnName": "_ts"
+    "dataChangeDetectionPolicy" : {
+      "@odata.type" : "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
+      "highWaterMarkColumnName" : "_ts"
     },
     "dataDeletionDetectionPolicy" : null,
     "encryptionKey" : null

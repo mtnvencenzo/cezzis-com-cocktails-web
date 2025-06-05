@@ -27,8 +27,8 @@ module "cocktails_cosmosdb_account" {
 
   account_reader_role_assignments = [
     {
-      name               = "7435b819-a0b0-4c0d-a180-79ec100f8929" # must be a uuid
-      principal_id       = data.azurerm_search_service.ai_search_service.identity[0].principal_id
+      name         = "7435b819-a0b0-4c0d-a180-79ec100f8929" # must be a uuid
+      principal_id = data.azurerm_search_service.ai_search_service.identity[0].principal_id
     }
   ]
 
