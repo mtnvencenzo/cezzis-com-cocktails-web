@@ -206,6 +206,4 @@ module "ai_search_cocktails_index_simple" {
       "@odata.type" : "#Microsoft.Azure.Search.BM25Similarity"
     }
   })
-
-  depends_on = [azurerm_role_assignment.cosmos_search_account_reader_role_assignment]
 }
