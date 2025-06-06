@@ -55,6 +55,11 @@ module "cocktails_cosmosdb_database" {
       name               = "37c0645e-bc81-43cd-9607-2377e2660d2a" # must be a uuid
       role_definition_id = module.cocktails_cosmosdb_account.cosmosdb_contributor_role_id
       principal_id       = module.aca_cocktails_api.managed_identity_principal_id
+    },
+    {
+      name               = "34d5c255-8508-4ea2-941e-7044fe5db968" # must be a uuid
+      role_definition_id = module.cocktails_cosmosdb_account.cosmosdb_reader_role_id
+      principal_id       = data.azurerm_search_service.ai_search_service.identity[0].principal_id
     }
   ]
 
