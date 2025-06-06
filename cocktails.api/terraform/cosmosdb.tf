@@ -18,25 +18,25 @@ module "cocktails_cosmosdb_account" {
   enable_monitor_alerts   = false
   action_group_id         = ""
 
-  # Setting range of IP addresses that can access the Cosmos DB account from AzureCognitiveSearch.EastUS
-  # https://www.microsoft.com/en-us/download/details.aspx?id=56519
-  # When not using AzureCognitiveSearch free tier, comment out the ip_range_filter block
+  # Enabling access from azure data centers (all of them)
+  # Needed current because using the free tier of ai search service
+  # TODO: remove this when not using the free tier
   ip_range_filter = [
     "0.0.0.0"
   ]
 
-  # custom_reader_role_assignments = [
-  #   {
-  #     name         = "3335b819-a0b0-4c0d-a180-79ec100f8930" # must be a uuid
-  #     principal_id = data.azurerm_search_service.ai_search_service.identity[0].principal_id
-  #   }
-  # ]
+  custom_reader_role_assignments = [
+    {
+      name         = "3335b819-a0b0-4c0d-a180-79ec100f8930" # must be a uuid
+      principal_id = data.azurerm_search_service.ai_search_service.identity[0].principal_id
+    }
+  ]
 
-  # cosmos_db_account_reader_role_assignments = [
-  #   {
-  #     principal_id = data.azurerm_search_service.ai_search_service.identity[0].principal_id
-  #   }
-  # ]
+  cosmos_db_account_reader_role_assignments = [
+    {
+      principal_id = data.azurerm_search_service.ai_search_service.identity[0].principal_id
+    }
+  ]
 
   providers = {
     azurerm = azurerm
