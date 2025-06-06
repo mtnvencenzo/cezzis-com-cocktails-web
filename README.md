@@ -37,6 +37,7 @@ Each project contains detailed documentation and setup instructions in its respe
 - **API Gateway**: Azure API Management
 - **API Documentation**: [Scalar API Documentation](https://api.cezzis.com/prd/cocktails/api-docs/v1/scalar/v1)
 - **Database**: Azure Cosmos DB (SQL API)
+- **Search**: [Azure AI Search](./.readme/readme-aisearch.md) with Cosmos DB integration
 - **Authentication**: 
   - Azure B2C for user authentication
   - Azure App Registrations for API security
@@ -54,7 +55,7 @@ Each project contains detailed documentation and setup instructions in its respe
 - **IaC**: Terraform
 - **CI/CD**: GitHub Actions
 - **Service Mesh**: Dapr
-
+- **Search**: [Azure AI Search](./.readme/readme-aisearch.md) with managed identity and Cosmos DB integration
 
 ### Architectural Patterns
 
