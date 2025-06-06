@@ -7,8 +7,4 @@ module "ai_search_cosmos_index" {
   cosmos_database_name        = var.cocktails_cosmosdb_database_name
   cosmos_container_name       = "cocktails-cocktail"
   tags                        = local.tags
-
-  depends_on = [
-    module.cocktails_cosmosdb_database
-  ]
 }
