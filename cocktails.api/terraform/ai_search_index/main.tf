@@ -35,9 +35,9 @@ module "ai_search_cocktails_index_simple" {
     "skillsetName" : null,
     "targetIndexName" : "idx-cosmos-cocktails-standard-lucene",
     "disabled" : null,
-    "schedule": {
-      "interval": "P1D",
-      "startTime": "2025-06-06T12:23:48.423Z"
+    "schedule" : {
+      "interval" : "P1D",
+      "startTime" : "2025-06-06T12:23:48.423Z"
     },
     "parameters" : null,
     "fieldMappings" : [],
