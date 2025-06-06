@@ -1,8 +1,8 @@
-# resource "azurerm_role_assignment" "cosmos_search_account_reader_role_assignment" {
-#   scope                = var.cosmosdb_account_id
-#   role_definition_name = "Cosmos DB Account Reader Role"
-#   principal_id         = var.search_service_principal_id
-# }
+resource "azurerm_role_assignment" "cosmos_search_account_reader_role_assignment" {
+  scope                = var.cosmosdb_account_id
+  role_definition_name = "Cosmos DB Account Reader Role"
+  principal_id         = var.search_service_principal_id
+}
 
 # module "ai_search_cocktails_index_simple" {
 #   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/ai-search-cosmos-index-simple"
