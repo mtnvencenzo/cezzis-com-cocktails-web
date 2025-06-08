@@ -6,8 +6,4 @@ module "ai_search_cosmos_index" {
   cosmos_database_name        = module.cocktails_cosmosdb_database.database_name
   cosmos_container_name       = "cocktails-cocktail"
   tags                        = local.tags
-
-  providers = {
-    restapi = aisearch_rest_api
-  }
 }
