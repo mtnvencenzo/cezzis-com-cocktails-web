@@ -11,4 +11,4 @@ spec:
   - name: redisPassword
     value: ""
   - name: enableTLS
-    value: "false" 
+    value: "false"

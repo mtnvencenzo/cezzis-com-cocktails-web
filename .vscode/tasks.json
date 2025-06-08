@@ -19,7 +19,7 @@
             "command": "cmd.exe",
             "args": [
                 "/c",
-                "D:\\ProgramData\\dapr\\dapr.exe run --app-id cocktails-api --resources-path ${workspaceFolder}\\.dapr\\ --app-port 7176 --app-protocol https --dapr-http-port 5295 --dapr-grpc-port 50001 --metrics-port 9090"
+                "dapr run --app-id cocktails-api --resources-path ${workspaceFolder}\\.dapr\\ --app-port 7176 --app-protocol https --dapr-http-port 5295 --dapr-grpc-port 50001 --metrics-port 9090"
             ],
             "isBackground": true,
             "problemMatcher": {

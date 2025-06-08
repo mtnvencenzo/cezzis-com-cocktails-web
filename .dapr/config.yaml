@@ -8,4 +8,4 @@ spec:
   metrics:
     enabled: true
   mtls:
-    enabled: false 
+    enabled: false
