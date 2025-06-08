@@ -10,6 +10,11 @@ terraform {
       source  = "hashicorp/azuread"
       version = "=3.1.0"
     }
+
+    aisearch_rest_api = {
+      source  = "Mastercard/restapi"
+      version = "=2.0.1"
+    }
   }
 
   backend "azurerm" {}
@@ -26,7 +31,7 @@ provider "azuread" {
   client_secret = var.b2c_terraform_app_registration_client_secret
 }
 
-provider "restapi" {
+provider "aisearch_rest_api" {
   uri                  = "https://${var.ai_search_service_host_name}.search.windows.net"
   write_returns_object = true
   debug                = true

@@ -5,6 +5,10 @@ module "ai_search_cocktails_index_simple" {
   cosmos_database_name  = var.cosmos_database_name
   cosmos_container_name = var.cosmos_container_name
 
+  providers = {
+    restapi = restapi
+  }
+
   tags = var.tags
 
   # https://learn.microsoft.com/en-us/rest/api/searchservice/create-data-source
