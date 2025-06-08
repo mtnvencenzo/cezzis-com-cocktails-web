@@ -16,7 +16,7 @@ using global::Cocktails.Api.Infrastructure;
 using global::Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using global::Cocktails.Api.Infrastructure.Resources.Ingredients;
 
-public record SeedCocktailsCommand() : IRequest<bool>;
+public record SeedCocktailsCommand(bool OnlyIfEmpty = false) : IRequest<bool>;
 
 public class SeedCocktailsCommandHandler(
     ICocktailRepository cocktailRepository,
@@ -41,10 +41,16 @@ public class SeedCocktailsCommandHandler(
     {
         var availableCocktails = cocktailsDataStore.Cocktails;
         var hasChanges = false;
+        var count = await cocktailRepository.Items.CountAsync(cancellationToken);
+
+        if (command.OnlyIfEmpty && count > 0)
+        {
+            return false;
+        }
 
         foreach (var cocktail in availableCocktails)
         {
-            var existing = await cocktailRepository.Items.FirstOrDefaultAsync(x => x.Id == cocktail.Id);
+            var existing = await cocktailRepository.Items.FirstOrDefaultAsync(x => x.Id == cocktail.Id, cancellationToken);
 
             if (existing == null)
             {

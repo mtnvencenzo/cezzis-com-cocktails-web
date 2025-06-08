@@ -12,6 +12,7 @@ internal static class CosmosExtensions
     {
         services.AddDbContext<AccountDbContext>();
         services.AddDbContext<CocktailDbContext>();
+        services.AddScoped<DatabaseInitializer>();
 
         return services;
     }

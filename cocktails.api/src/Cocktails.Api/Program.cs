@@ -2,11 +2,14 @@ using Asp.Versioning;
 using Cocktails.Api.Application.Behaviors.ExceptionHandling;
 using Cocktails.Api.Domain.Config;
 using Cocktails.Api.StartupExtensions;
+using Cocktails.Api.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using System.Diagnostics;
+using MediatR;
+using Cocktails.Api.Application.Concerns.Cocktails.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -33,6 +36,18 @@ var app = builder.Build();
 #if DEBUG
 Debugger.Launch();
 #endif
+
+// Initialize database if needed
+if (app.Environment.IsEnvironment("local"))
+{
+    using var scope = app.Services.CreateScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<DatabaseInitializer>();
+    await initializer.InitializeAsync();
+
+    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+    await mediator.Send(new SeedIngredientsCommand(OnlyIfEmpty: true));
+    await mediator.Send(new SeedCocktailsCommand(OnlyIfEmpty: true));
+}
 
 // Use cloud events to automatically unpack the message data
 // app.UseCloudEvents();

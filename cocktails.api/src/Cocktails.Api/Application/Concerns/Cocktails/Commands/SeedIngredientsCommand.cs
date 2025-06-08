@@ -10,7 +10,7 @@ using global::Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using Microsoft.EntityFrameworkCore;
 using global::Cocktails.Api.Infrastructure.Resources.Ingredients;
 
-public record SeedIngredientsCommand() : IRequest<bool>;
+public record SeedIngredientsCommand(bool OnlyIfEmpty = false) : IRequest<bool>;
 
 public class SeedIngredientsCommandHandler(
     IIngredientRepository ingredientRepository,
@@ -36,6 +36,11 @@ public class SeedIngredientsCommandHandler(
         var availableIds = availableIngredients.Select(x => x.Id).ToList();
 
         var allExisting = await ingredientRepository.Items.ToListAsync(cancellationToken);
+
+        if (command.OnlyIfEmpty && allExisting.Count != 0)
+        {
+            return false;
+        }
 
         var toDelete = allExisting.Where(a => !availableIds.Any(b => b == a.Id)).ToList();
         var hasChanges = false;

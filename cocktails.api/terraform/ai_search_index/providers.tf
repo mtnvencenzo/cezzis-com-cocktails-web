@@ -20,4 +20,9 @@ provider "restapi" {
   create_method  = "POST"
   update_method  = "PUT"
   destroy_method = "DELETE"
+
+  copy_keys = [
+    "@odata.context",
+    "@odata.etag"
+  ]
 }

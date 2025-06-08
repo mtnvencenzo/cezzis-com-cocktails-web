@@ -7,8 +7,3 @@ apps:
     appPort: 7176
     appProtocol: https
     command: ["dotnet", "run"]
-    
-  - appID: cocktails-frontend
-    appDirPath: ./cocktails.frontend/cocktails.web/
-    appPort: 4001
-    command: ["yarn", "loc"]

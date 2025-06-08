@@ -82,7 +82,7 @@ resource "azurerm_key_vault_secret" "zoho_email_cezzi_email_app_password" {
 }
 
 # ----------------------------------------
-# Zoho Email cezzi@cezzis.com App Password
+# Cocktails API App Registration Graph API Secret
 # ----------------------------------------
 
 resource "azurerm_key_vault_secret" "cocktails_api_app_registration_graph_api_secret" {
