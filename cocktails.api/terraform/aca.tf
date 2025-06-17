@@ -312,11 +312,11 @@ module "aca_cocktails_api" {
     },
     {
       name  = "Search__Endpoint"
-      value = module.ai_search_cocktails_index_simple.fqdn_host_name
+      value = module.ai_search_cosmos_index.fqdn_host_name
     },
     {
       name  = "Search__IndexName"
-      value = module.ai_search_cocktails_index_simple.index_name
+      value = module.ai_search_cosmos_index.index_name
     },
     {
       name  = "Search__QueryKey"
