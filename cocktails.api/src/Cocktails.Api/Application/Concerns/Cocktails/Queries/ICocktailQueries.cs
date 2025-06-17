@@ -17,6 +17,7 @@ public interface ICocktailQueries
         CocktailDataIncludeModel[] include = null,
         string[] matches = null,
         bool matchExclusive = false,
+        bool useSearchIndex = false,
         CancellationToken cancellationToken = default);
 
     Task<string> GetCocktailsSiteMap(CancellationToken cancellationToken = default);

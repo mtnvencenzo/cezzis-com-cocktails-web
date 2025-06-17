@@ -49,14 +49,8 @@ Https is required - see the --protocol https argument.  Note that we are disabli
 
 
 
-4. **Cosmos DB Emulator**
-   - Pull and run the Cosmos DB emulator:
-   ```bash
-   docker pull mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
-   docker run --name azure-cosmos-emulator -p 8081:8081 -p 10251:10251 -p 10252:10252 -p 10253:10253 -p 10254:10254 mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
-   ```
    
-   - Connection string:
+- Connection string:
    ```
    AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;
    ```

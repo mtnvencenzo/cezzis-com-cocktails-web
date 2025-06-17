@@ -1,6 +1,9 @@
 module "ai_search_cocktails_index_simple" {
   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/ai-search-cosmos-index-simple"
 
+  azureai_account_id                  = var.ai_search_service_id
+  search_index_reader_role_assignment = var.search_index_reader_role_assignment
+
   cosmosdb_account_id   = var.cosmosdb_account_id
   cosmos_database_name  = var.cosmos_database_name
   cosmos_container_name = var.cosmos_container_name
@@ -13,7 +16,7 @@ module "ai_search_cocktails_index_simple" {
 
   # https://learn.microsoft.com/en-us/rest/api/searchservice/create-data-source
   cosmos_datasource_json = jsonencode({
-    "name" : "ds-cosmos-cocktails",
+    "name" : "${var.datasource_name}",
     "description" : null,
     "type" : "cosmosdb",
     "credentials" : {
@@ -33,11 +36,11 @@ module "ai_search_cocktails_index_simple" {
 
   # https://learn.microsoft.com/en-us/rest/api/searchservice/create-indexer
   cosmos_standard_lucene_indexer_json = jsonencode({
-    "name" : "idxer-cosmos-cocktails-standard-lucene",
+    "name" : "${var.indexer_name}",
     "description" : null,
-    "dataSourceName" : "ds-cosmos-cocktails",
+    "dataSourceName" : "${var.datasource_name}",
     "skillsetName" : null,
-    "targetIndexName" : "idx-cosmos-cocktails-standard-lucene",
+    "targetIndexName" : "${var.index_name}",
     "disabled" : null,
     "schedule" : {
       "interval" : "P1D",
@@ -51,8 +54,8 @@ module "ai_search_cocktails_index_simple" {
 
   # To do https://learn.microsoft.com/en-us/rest/api/searchservice/create-index
   cosmos_standard_lucene_index_json = jsonencode({
-    "name" : "idx-cosmos-cocktails-standard-lucene",
-    "defaultScoringProfile" : "sp-weighted-profile-1",
+    "name" : "${var.index_name}",
+    "defaultScoringProfile" : "${var.index_scoring_profile_name}",
     "fields" : [
       {
         "name" : "id",
@@ -179,12 +182,13 @@ module "ai_search_cocktails_index_simple" {
     ],
     "scoringProfiles" : [
       {
-        "name" : "sp-weighted-profile-1",
+        "name" : "${var.index_scoring_profile_name}",
         "text" : {
           "weights" : {
-            "Title" : 5,
-            "Description" : 2,
-            "DescriptiveTitle" : 1
+            "Title" : 10,
+            "DescriptiveTitle" : 3,
+            "Description" : 1,
+            "Ingredients/Name" : 1
           }
         },
         "functions" : []
@@ -192,7 +196,7 @@ module "ai_search_cocktails_index_simple" {
     ],
     "suggesters" : [
       {
-        "name" : "ac-suggestor-1",
+        "name" : "${var.index_suggester_name}",
         "searchMode" : "analyzingInfixMatching",
         "sourceFields" : [
           "Title",
