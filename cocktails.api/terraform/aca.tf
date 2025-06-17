@@ -311,6 +311,22 @@ module "aca_cocktails_api" {
       value = module.cocktails_servicebus_cocktail_ratings_queue.name
     },
     {
+      name  = "Search__Endpoint"
+      value = module.ai_search_cocktails_index_simple.fqdn_host_name
+    },
+    {
+      name  = "Search__IndexName"
+      value = module.ai_search_cocktails_index_simple.index_name
+    },
+    {
+      name  = "Search__QueryKey"
+      value = ""
+    },
+    {
+      name  = "Search__UseSearchIndex"
+      value = "false"
+    },
+    {
       name  = "ZohoEmail__DefaultSender__EmailAddress"
       value = var.zoho_email_sender_address
     },
@@ -343,4 +359,3 @@ module "aca_cocktails_api" {
     }
   ]
 }
-

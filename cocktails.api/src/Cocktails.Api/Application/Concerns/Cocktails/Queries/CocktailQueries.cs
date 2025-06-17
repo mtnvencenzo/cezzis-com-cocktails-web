@@ -6,6 +6,7 @@ using global::Cocktails.Api.Application.Concerns.Cocktails.Models;
 using global::Cocktails.Api.Domain.Aggregates.CocktailAggregate;
 using global::Cocktails.Api.Domain.Aggregates.IngredientAggregate;
 using global::Cocktails.Api.Domain.Config;
+using global::Cocktails.Api.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.ComponentModel;
@@ -14,7 +15,10 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class CocktailQueries(ICocktailRepository cocktailRepository, IOptions<CocktailsWebConfig> cocktailWebConfig) : ICocktailQueries
+public class CocktailQueries(
+    ICocktailRepository cocktailRepository,
+    IOptions<CocktailsWebConfig> cocktailWebConfig,
+    ISearchClient searchClient) : ICocktailQueries
 {
     private readonly static Dictionary<string, GlasswareType> GlasswareDisplayNameMapping;
 
@@ -124,6 +128,7 @@ public class CocktailQueries(ICocktailRepository cocktailRepository, IOptions<Co
         CocktailDataIncludeModel[] include = null,
         string[] matches = null,
         bool matchExclusive = false,
+        bool useSearchIndex = false,
         CancellationToken cancellationToken = default)
     {
         var useMatches = matches;
@@ -137,7 +142,13 @@ public class CocktailQueries(ICocktailRepository cocktailRepository, IOptions<Co
             useMatches = null;
         }
 
-        var cocktails = await this.GetCocktails(freeText, skip, take, allowExcessiveTake, filters, useMatches, cancellationToken);
+        var cocktails = useSearchIndex && !string.IsNullOrWhiteSpace(freeText)
+            ? await this.GetCocktails(string.Empty, 0, 2000, true, filters, useMatches, cancellationToken)
+            : await this.GetCocktails(freeText, skip, take, allowExcessiveTake, filters, useMatches, cancellationToken);
+
+        cocktails = useSearchIndex && !string.IsNullOrWhiteSpace(freeText)
+            ? await this.FilterCocktailsWithSearchIndex(cocktails, freeText, skip, take, cancellationToken)
+            : cocktails;
 
         var glasswareConverter = TypeDescriptor.GetConverter(typeof(GlasswareTypeModel));
         var uomConverter = TypeDescriptor.GetConverter(typeof(UofMTypeModel));
@@ -180,6 +191,18 @@ public class CocktailQueries(ICocktailRepository cocktailRepository, IOptions<Co
                 ))]
             ))]
         );
+    }
+
+    private async Task<List<Cocktail>> FilterCocktailsWithSearchIndex(
+        List<Cocktail> cocktails,
+        string freeText,
+        int skip = 0,
+        int take = 20,
+        CancellationToken cancellationToken = default)
+    {
+        var searchResults = await searchClient.SearchAsync(cocktails, freeText, skip, take, cancellationToken: cancellationToken);
+
+        return searchResults;
     }
 
     public Task<string> GetCocktailsSiteMap(CancellationToken cancellationToken = default)

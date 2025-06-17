@@ -42,7 +42,7 @@ X-Key: {{apimkey}}
 // ------------------------------------------------------------
 
 
-GET {{host}}/api/v1/cocktails
+GET {{host}}/api/v1/cocktails?freeText=las
 X-Key: {{apimkey}}
 
 ###
@@ -63,28 +63,6 @@ X-Key: {{apimkey}}
 
 ###
 
-
-// ------------------------------------------------------------
-// Cocktails Search
-// ------------------------------------------------------------
-
-
-GET {{host}}/api/v1/cocktails/search
-X-Key: {{apimkey}}
-
-###
-
-
-GET {{host}}/api/v1/cocktails/search?skip=0&take=12
-X-Key: {{apimkey}}
-
-###
-
-
-GET {{host}}/api/v1/cocktails/search?skip=0&take=2&inc=mainImages
-X-Key: {{apimkey}}
-
-###
 
 
 // ------------------------------------------------------------

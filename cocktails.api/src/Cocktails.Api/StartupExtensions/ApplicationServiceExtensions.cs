@@ -42,6 +42,7 @@ internal static class ApplicationServiceExtensions
         builder.Services.Configure<CosmosDbConfig>(builder.Configuration.GetSection(CosmosDbConfig.SectionName));
         builder.Services.Configure<MsGraphConfig>(builder.Configuration.GetSection(MsGraphConfig.SectionName));
         builder.Services.Configure<ScalarConfig>(builder.Configuration.GetSection(ScalarConfig.SectionName));
+        builder.Services.Configure<SearchConfig>(builder.Configuration.GetSection(SearchConfig.SectionName));
 
         builder.Services.AddCosomsContexts();
 
@@ -82,6 +83,9 @@ internal static class ApplicationServiceExtensions
 
         // Add dapr blob storage to DI
         builder.Services.AddStorageBus();
+
+        // Add search client to DI
+        builder.Services.AddSearchClient();
 
         // Add mediator and commands to DI
         builder.Services.AddMediatR(cfg =>

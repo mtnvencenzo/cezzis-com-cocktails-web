@@ -114,6 +114,7 @@ public static class CocktailsApi
             include: include,
             matches: matches,
             matchExclusive: matchExclusive ?? false,
+            useSearchIndex: cocktailsServices.SearchConfig.Value.UseSearchIndex,
             cancellationToken: cocktailsServices.HttpContextAccessor.HttpContext.RequestAborted);
 
         return TypedResults.Ok(rs);

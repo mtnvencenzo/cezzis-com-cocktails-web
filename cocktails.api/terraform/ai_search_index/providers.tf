@@ -4,6 +4,10 @@ terraform {
       source  = "Mastercard/restapi"
       version = "=2.0.1"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=4.24.0"
+    }
   }
 }
 
