@@ -8,5 +8,5 @@ module "ai_search_cosmos_index" {
   cosmos_container_name       = "cocktails-cocktail"
   tags                        = local.tags
 
-  search_index_reader_role_assignment = [ module.aca_cocktails_api.managed_identity_principal_id ]
+  search_index_reader_role_assignment = [module.aca_cocktails_api.managed_identity_principal_id]
 }
