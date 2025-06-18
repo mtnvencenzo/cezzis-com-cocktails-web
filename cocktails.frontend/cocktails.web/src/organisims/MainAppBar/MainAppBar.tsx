@@ -86,7 +86,7 @@ const MainAppBar = ({ testId, isXs }: MainAppBarProps) => {
 
                             {isSearchPage() && (
                                 <Box sx={{ flexGrow: 1, display: 'ruby', alignItems: 'center !important', alignContent: 'center !important', textAlign: 'center !important' }}>
-                                    <SearchBox enableFiltering bannerEmbeded testId='search-box' replaceBreadcrumbOnSearch />
+                                    <SearchBox enableFiltering bannerEmbeded testId='search-box' replaceBreadcrumbOnSearch filterOptions />
                                 </Box>
                             )}
 

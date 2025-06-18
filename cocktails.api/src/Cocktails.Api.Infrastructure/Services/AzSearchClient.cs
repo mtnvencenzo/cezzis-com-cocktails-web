@@ -52,14 +52,12 @@ public class AzSearchClient : ISearchClient
         options.SearchFields.Add("Ingredients/Name");
 
         options.OrderBy.Add("search.score() desc");
-
         options.Skip = skip;
 
         var searchQuery = query
-            .Trim()
-            .Replace(" ", "~");
-
-        searchQuery += "~";
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Length > 4 ? $"{x}~2" : $"{x}~1")
+            .Aggregate((current, next) => $"{current} {next}");
 
         var response = await this.searchClient.SearchAsync<SearchDocument>(searchText: searchQuery, options: options, cancellationToken: cancellationToken);
 

@@ -25,6 +25,7 @@ interface SearchBoxProps {
     enableFiltering?: boolean;
     bannerEmbeded?: boolean;
     replaceBreadcrumbOnSearch?: boolean;
+    filterOptions?: boolean;
 }
 
 interface SearchState {
@@ -87,7 +88,7 @@ const filter = createFilterOptions<NonNullable<string | CocktailsListModel> | nu
 const retrievingOptionsText = 'Retrieving Cocktails List...';
 const noOptionsText = 'No matches found. Try reducing your search filters and search term';
 
-const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, replaceBreadcrumbOnSearch = false }: SearchBoxProps) => {
+const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, replaceBreadcrumbOnSearch = false, filterOptions = true }: SearchBoxProps) => {
     const navigate = useNavigate();
     const theme = useTheme();
     const screenContext = useScreenContext();
@@ -348,7 +349,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
                 options={searchState.options}
                 handleHomeEndKeys
                 filterOptions={(options, params) => {
-                    const filtered = filter(options, params);
+                    const filtered = filterOptions ? filter(options, params) : options;
 
                     if (enableFiltering) {
                         if (!searchState.hasRetrieved) {
