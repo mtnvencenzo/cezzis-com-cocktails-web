@@ -44,7 +44,7 @@ const WelcomePageContainer = () => {
                     xs: '0px'
                 }}
             >
-                <SearchBox enableFiltering testId='search-box' replaceBreadcrumbOnSearch={false} />
+                <SearchBox enableFiltering testId='search-box' replaceBreadcrumbOnSearch={false} filterOptions />
             </Grid>
         </>
     );

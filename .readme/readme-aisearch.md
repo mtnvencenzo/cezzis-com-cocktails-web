@@ -108,5 +108,10 @@ The AI Search integration is managed through Terraform in the following files:
 ## Resources
 
 - [Azure AI Search Documentation](https://docs.microsoft.com/en-us/azure/search/)
+- [Azure AI Search Partial Matching](https://learn.microsoft.com/en-us/azure/search/search-query-partial-matching)
+- [Azure AI Search Fuzzy](https://learn.microsoft.com/en-us/azure/search/search-query-fuzzy)
+- [Azure AI Search Synonymns](https://learn.microsoft.com/en-us/azure/search/search-synonyms)
 - [Cosmos DB Integration Guide](https://docs.microsoft.com/en-us/azure/search/search-howto-index-cosmosdb)
 - [Network Security Best Practices](https://docs.microsoft.com/en-us/azure/search/search-security-overview)
+
+

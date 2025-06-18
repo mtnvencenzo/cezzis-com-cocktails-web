@@ -47,7 +47,18 @@ module "ai_search_cocktails_index_simple" {
       "startTime" : "2025-06-06T12:23:48.423Z"
     },
     "parameters" : null,
-    "fieldMappings" : [],
+    "fieldMappings" : [
+      {
+        "sourceFieldName" : "Title",
+        "targetFieldName" : "TitlePrefix",
+        "mappingFunction" : null
+      },
+      {
+        "sourceFieldName" : "Title",
+        "targetFieldName" : "Title",
+        "mappingFunction" : null
+      }
+    ],
     "outputFieldMappings" : [],
     "encryptionKey" : null
   })
@@ -69,18 +80,6 @@ module "ai_search_cocktails_index_simple" {
         "synonymMaps" : []
       },
       {
-        "name" : "Content",
-        "type" : "Edm.String",
-        "searchable" : true,
-        "filterable" : false,
-        "retrievable" : false,
-        "sortable" : false,
-        "facetable" : false,
-        "key" : false,
-        "analyzer" : "standard.lucene",
-        "synonymMaps" : []
-      },
-      {
         "name" : "Title",
         "type" : "Edm.String",
         "searchable" : true,
@@ -90,6 +89,19 @@ module "ai_search_cocktails_index_simple" {
         "facetable" : false,
         "key" : false,
         "analyzer" : "standard.lucene",
+        "synonymMaps" : []
+      },
+      {
+        "name" : "TitlePrefix",
+        "type" : "Edm.String",
+        "searchable" : true,
+        "filterable" : false,
+        "retrievable" : false,
+        "sortable" : false,
+        "facetable" : false,
+        "key" : false,
+        "indexAnalyzer" : "ngram_front_analyzer",
+        "searchAnalyzer" : "keyword_v2",
         "synonymMaps" : []
       },
       {
@@ -206,9 +218,25 @@ module "ai_search_cocktails_index_simple" {
         ]
       }
     ],
-    "analyzers" : [],
+    "analyzers" : [
+      {
+        "@odata.type" : "#Microsoft.Azure.Search.CustomAnalyzer",
+        "name" : "ngram_front_analyzer",
+        "charFilters" : [],
+        "tokenizer" : "keyword_v2",
+        "tokenFilters" : ["lowercase", "front_edgeNGram"]
+      }
+    ],
     "tokenizers" : [],
-    "tokenFilters" : [],
+    "tokenFilters" : [
+      {
+        "@odata.type" : "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
+        "name" : "front_edgeNGram",
+        "minGram" : 3,
+        "maxGram" : 25,
+        "side" : "front"
+      }
+    ],
     "charFilters" : [],
     "similarity" : {
       "@odata.type" : "#Microsoft.Azure.Search.BM25Similarity"
