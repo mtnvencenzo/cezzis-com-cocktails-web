@@ -49,14 +49,14 @@ module "ai_search_cocktails_index_simple" {
     "parameters" : null,
     "fieldMappings" : [
       {
-        "sourceFieldName": "Title",
-        "targetFieldName": "TitlePrefix",
-        "mappingFunction": null
+        "sourceFieldName" : "Title",
+        "targetFieldName" : "TitlePrefix",
+        "mappingFunction" : null
       },
       {
-        "sourceFieldName": "Title",
-        "targetFieldName": "Title",
-        "mappingFunction": null
+        "sourceFieldName" : "Title",
+        "targetFieldName" : "Title",
+        "mappingFunction" : null
       }
     ],
     "outputFieldMappings" : [],
@@ -100,8 +100,8 @@ module "ai_search_cocktails_index_simple" {
         "sortable" : false,
         "facetable" : false,
         "key" : false,
-        "indexAnalyzer": "ngram_front_analyzer",
-        "searchAnalyzer": "keyword_v2",
+        "indexAnalyzer" : "ngram_front_analyzer",
+        "searchAnalyzer" : "keyword_v2",
         "synonymMaps" : []
       },
       {
@@ -220,21 +220,21 @@ module "ai_search_cocktails_index_simple" {
     ],
     "analyzers" : [
       {
-        "@odata.type":"#Microsoft.Azure.Search.CustomAnalyzer",
-        "name":"ngram_front_analyzer",
-        "charFilters":[],
-        "tokenizer":"keyword_v2",
-        "tokenFilters":["lowercase", "front_edgeNGram"]
+        "@odata.type" : "#Microsoft.Azure.Search.CustomAnalyzer",
+        "name" : "ngram_front_analyzer",
+        "charFilters" : [],
+        "tokenizer" : "keyword_v2",
+        "tokenFilters" : ["lowercase", "front_edgeNGram"]
       }
     ],
     "tokenizers" : [],
     "tokenFilters" : [
       {
-        "@odata.type":"#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
-        "name":"front_edgeNGram",
-        "minGram": 3,
-        "maxGram": 25,
-        "side": "front"
+        "@odata.type" : "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
+        "name" : "front_edgeNGram",
+        "minGram" : 3,
+        "maxGram" : 25,
+        "side" : "front"
       }
     ],
     "charFilters" : [],
