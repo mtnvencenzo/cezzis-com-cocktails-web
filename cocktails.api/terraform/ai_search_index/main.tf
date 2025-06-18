@@ -101,7 +101,7 @@ module "ai_search_cocktails_index_simple" {
         "facetable" : false,
         "key" : false,
         "indexAnalyzer" : "ngram_front_analyzer",
-        "searchAnalyzer" : "keyword_v2",
+        "searchAnalyzer" : "keyword",
         "synonymMaps" : []
       },
       {
