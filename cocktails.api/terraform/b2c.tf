@@ -7,6 +7,7 @@ module "api_b2c_tenant" {
   tenant_domain_name = var.b2c_tenant_domain_name
   sub                = var.sub
   sequence           = var.sequence
+  b2c_tenant_name    = var.b2c_tenant_name
 
   login_subdomain          = var.login_subdomain
   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.global_shared_cdn.id

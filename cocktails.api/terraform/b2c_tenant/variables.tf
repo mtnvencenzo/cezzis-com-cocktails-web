@@ -6,6 +6,10 @@ variable "tenant_domain_name" {
   type = string
 }
 
+variable "b2c_tenant_name" {
+  type = string
+}
+
 variable "domain" {
   type        = string
   description = "Domain name. Use only lowercase letters and numbers"
