@@ -71,3 +71,8 @@ data "azurerm_search_service" "ai_search_service" {
   name                = "srch-${var.sub}-${var.region}-${var.global_environment}-${var.global_domain}-${var.sequence}"
   resource_group_name = data.azurerm_resource_group.global_shared_resource_group.name
 }
+
+data "azurerm_cdn_frontdoor_profile" "global_shared_cdn" {
+  name                = "afd-${var.sub}-${var.region}-${var.global_environment}-shared-${var.sequence}"
+  resource_group_name = data.azurerm_resource_group.global_shared_resource_group.name
+}
