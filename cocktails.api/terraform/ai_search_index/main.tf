@@ -55,6 +55,11 @@ module "ai_search_cocktails_index_simple" {
       },
       {
         "sourceFieldName" : "Title",
+        "targetFieldName" : "TitleSuffix",
+        "mappingFunction" : null
+      },
+      {
+        "sourceFieldName" : "Title",
         "targetFieldName" : "Title",
         "mappingFunction" : null
       }
@@ -101,6 +106,19 @@ module "ai_search_cocktails_index_simple" {
         "facetable" : false,
         "key" : false,
         "indexAnalyzer" : "ngram_front_analyzer",
+        "searchAnalyzer" : "keyword",
+        "synonymMaps" : []
+      },
+      {
+        "name" : "TitleSuffix",
+        "type" : "Edm.String",
+        "searchable" : true,
+        "filterable" : false,
+        "retrievable" : false,
+        "sortable" : false,
+        "facetable" : false,
+        "key" : false,
+        "indexAnalyzer" : "ngram_back_analyzer",
         "searchAnalyzer" : "keyword",
         "synonymMaps" : []
       },
@@ -197,10 +215,12 @@ module "ai_search_cocktails_index_simple" {
         "name" : "${var.index_scoring_profile_name}",
         "text" : {
           "weights" : {
+            "TitlePrefix" : 10,
+            "TitleSuffix" : 10,
             "Title" : 10,
             "DescriptiveTitle" : 3,
+            "Ingredients/Name" : 3,
             "Description" : 1,
-            "Ingredients/Name" : 1
           }
         },
         "functions" : []
@@ -225,6 +245,13 @@ module "ai_search_cocktails_index_simple" {
         "charFilters" : [],
         "tokenizer" : "keyword_v2",
         "tokenFilters" : ["lowercase", "front_edgeNGram"]
+      },
+      {
+        "@odata.type":"#Microsoft.Azure.Search.CustomAnalyzer",
+        "name":"ngram_back_analyzer",
+        "charFilters":[],
+        "tokenizer":"keyword_v2",
+        "tokenFilters":["lowercase", "back_edgeNGram"]
       }
     ],
     "tokenizers" : [],
@@ -232,9 +259,16 @@ module "ai_search_cocktails_index_simple" {
       {
         "@odata.type" : "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
         "name" : "front_edgeNGram",
-        "minGram" : 3,
+        "minGram" : 2,
         "maxGram" : 25,
         "side" : "front"
+      },
+      {
+        "@odata.type":"#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
+        "name":"back_edgeNGram",
+        "minGram": 2,
+        "maxGram": 25,
+        "side": "back"
       }
     ],
     "charFilters" : [],

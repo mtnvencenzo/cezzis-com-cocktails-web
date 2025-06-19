@@ -46,7 +46,8 @@ public class AzSearchClient : ISearchClient
 
         options.Select.Add("id");
 
-        options.SearchFields.Add("Title");
+        options.SearchFields.Add("TitlePrefix");
+        options.SearchFields.Add("TitleSuffix");
         options.SearchFields.Add("Description");
         options.SearchFields.Add("DescriptiveTitle");
         options.SearchFields.Add("Ingredients/Name");
@@ -56,7 +57,7 @@ public class AzSearchClient : ISearchClient
 
         var searchQuery = query
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => x.Length > 4 ? $"{x}~2" : $"{x}~1")
+            .Select(x => x.Length > 8 ? $"{x}~2" : x.Length > 5 ? $"{x}~1" : x)
             .Aggregate((current, next) => $"{current} {next}");
 
         var response = await this.searchClient.SearchAsync<SearchDocument>(searchText: searchQuery, options: options, cancellationToken: cancellationToken);
