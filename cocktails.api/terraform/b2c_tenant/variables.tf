@@ -54,3 +54,8 @@ variable "dns_zone_resource_group" {
   type        = string
   description = "The resource group of the DNS zone to be used for the custom domain setup"
 }
+
+variable "allowed_origins" {
+  type    = list(string)
+  default = []
+}

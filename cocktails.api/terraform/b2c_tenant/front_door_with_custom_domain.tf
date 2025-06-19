@@ -13,7 +13,7 @@ module "frontdoor_endpoint_to_b2c_tenant" {
     disabled = true
   }
 
-  tags = local.tags
+  tags = var.tags
 
   custom_domain = {
     dns_zone_id             = var.dns_zone_id
