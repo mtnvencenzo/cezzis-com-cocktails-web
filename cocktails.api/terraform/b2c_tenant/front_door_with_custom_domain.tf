@@ -9,6 +9,10 @@ module "frontdoor_endpoint_to_b2c_tenant" {
   cdn_frontdoor_profile_id = var.cdn_frontdoor_profile_id
   origin_host_name         = "${var.tenant_domain_name}.b2clogin.com"
 
+  caching_rule = {
+    disabled = true
+  }
+
   tags = local.tags
 
   custom_domain = {
