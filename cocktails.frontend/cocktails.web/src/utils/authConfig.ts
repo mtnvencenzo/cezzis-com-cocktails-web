@@ -13,15 +13,15 @@ const b2cPolicies = {
     },
     authorities: {
         signIn: {
-            authority: `https://${getWindowEnv().VITE_B2C_TENANT}.b2clogin.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_POLICY}`
+            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_POLICY}`
         },
         passwordReset: {
-            authority: `https://${getWindowEnv().VITE_B2C_TENANT}.b2clogin.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY}`,
+            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY}`,
             scope: 'openid',
             redirectUri: getWindowEnv().VITE_RESET_PASSWORD_REDIRECT_URI
         }
     },
-    authorityDomain: `${getWindowEnv().VITE_B2C_TENANT}.b2clogin.com`
+    authorityDomain: `${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com`
 };
 
 const msalConfig = {

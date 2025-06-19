@@ -33,3 +33,5 @@ cocktail_images_route_hostname             = "https://cdn.cezzis.com"
 cocktail_images_cdn_default_hostname       = "afde-vec-eus-prd-cocktails-001-f3byc0hucse0escw.z02.azurefd.net"
 cezzis_cdn_custom_domain_verification_name = "_dnsauth.cdn"
 cezzis_cdn_custom_domain_verification_id   = "_z3zmtvfitsahmnzxz3ecspvxlszfot7"
+
+login_subdomain = "login"

@@ -30,7 +30,7 @@ export default defineConfig({
         }
     },
     env: {
-        b2cUrl: 'https://cezzis.b2clogin.com/',
+        b2cUrl: 'https://login.cezzis.com/',
         b2cTenantId: 'fb512a9c-5b44-41ab-8042-6465769f16c9',
         b2cClientId: '84744194-da27-410f-ae0e-74f5589d4c96',
         b2cUserObjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',

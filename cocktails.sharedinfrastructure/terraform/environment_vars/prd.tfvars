@@ -1,7 +1,7 @@
 environment = "prd"
 
 allowed_origins = [
-  "https://cezzis.b2clogin.com",
+  "https://login.cezzis.com",
   "https://www.cezzis.com",
   "https://cezzis.com",
   "https://localhost:4001",

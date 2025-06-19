@@ -20,6 +20,7 @@ services:
       - VITE_B2C_POLICY=B2C_1_SignInSignUp_Policy
       - VITE_COCKTAILS_API_URL=https://localhost:6001
       - VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY=383hudiudhUJK984jdus7HDY
+      - VITE_LOGIN_SUBDOMAIN=login
 
   api: 
     container_name: cocktails-api-cmp-local
