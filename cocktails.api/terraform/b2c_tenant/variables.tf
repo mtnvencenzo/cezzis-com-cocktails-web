@@ -36,17 +36,21 @@ variable "tags" {
 }
 
 variable "login_subdomain" {
-  type = string
+  type        = string
+  description = "The subdomain to be used for the custom domain"
 }
 
 variable "cdn_frontdoor_profile_id" {
-  type = string
+  type        = string
+  description = "The ID of the CDN frontdoor profile to be used for the custom domain"
 }
 
 variable "dns_zone_id" {
-  type = string
+  type        = string
+  description = "The ID of the DNS zone to be used for the custom domain"
 }
 
 variable "dns_zone_resource_group" {
-  type = string
+  type        = string
+  description = "The resource group of the DNS zone to be used for the custom domain"
 }
