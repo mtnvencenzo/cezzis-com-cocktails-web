@@ -247,11 +247,11 @@ module "ai_search_cocktails_index_simple" {
         "tokenFilters" : ["lowercase", "front_edgeNGram"]
       },
       {
-        "@odata.type":"#Microsoft.Azure.Search.CustomAnalyzer",
-        "name":"ngram_back_analyzer",
-        "charFilters":[],
-        "tokenizer":"keyword_v2",
-        "tokenFilters":["lowercase", "back_edgeNGram"]
+        "@odata.type" : "#Microsoft.Azure.Search.CustomAnalyzer",
+        "name" : "ngram_back_analyzer",
+        "charFilters" : [],
+        "tokenizer" : "keyword_v2",
+        "tokenFilters" : ["lowercase", "back_edgeNGram"]
       }
     ],
     "tokenizers" : [],
@@ -264,11 +264,11 @@ module "ai_search_cocktails_index_simple" {
         "side" : "front"
       },
       {
-        "@odata.type":"#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
-        "name":"back_edgeNGram",
-        "minGram": 2,
-        "maxGram": 25,
-        "side": "back"
+        "@odata.type" : "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
+        "name" : "back_edgeNGram",
+        "minGram" : 2,
+        "maxGram" : 25,
+        "side" : "back"
       }
     ],
     "charFilters" : [],
