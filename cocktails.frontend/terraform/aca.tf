@@ -104,6 +104,10 @@ module "aca_cocktails_web" {
     {
       name  = "VITE_COCKTAILS_IMAGE_URL"
       value = "${var.cocktail_images_route_hostname}/cocktails"
+    },
+    {
+      name  = "VITE_LOGIN_SUBDOMAIN"
+      value = "${var.login_subdomain}"
     }
   ]
 

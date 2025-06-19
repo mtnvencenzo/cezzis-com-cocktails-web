@@ -200,7 +200,7 @@ module "aca_cocktails_api" {
     },
     {
       name  = "AzureAdB2C__Instance"
-      value = "https://${var.b2c_tenant_name}.b2clogin.com"
+      value = "https://${var.login_subdomain}.cezzis.com"
     },
     {
       name  = "AzureAdB2C__Domain"

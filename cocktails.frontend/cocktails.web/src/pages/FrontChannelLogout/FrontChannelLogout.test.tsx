@@ -21,14 +21,14 @@ describe('Front channel logout', () => {
         msalTester.spyMsal();
 
         server.use(
-            http.get('https://cezzis.b2clogin.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/v2.0/.well-known/openid-configuration', () =>
+            http.get('https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/v2.0/.well-known/openid-configuration', () =>
                 HttpResponse.json(
                     {
-                        issuer: 'https://cezzis.b2clogin.com/fb512a9c-5b44-41ab-8042-6465769f16c9/v2.0/',
-                        authorization_endpoint: 'https://cezzis.b2clogin.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/authorize',
-                        token_endpoint: 'https://cezzis.b2clogin.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/token',
-                        end_session_endpoint: 'https://cezzis.b2clogin.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/logout',
-                        jwks_uri: 'https://cezzis.b2clogin.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/discovery/v2.0/keys',
+                        issuer: 'https://login.cezzis.com/fb512a9c-5b44-41ab-8042-6465769f16c9/v2.0/',
+                        authorization_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/authorize',
+                        token_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/token',
+                        end_session_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/logout',
+                        jwks_uri: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/discovery/v2.0/keys',
                         response_modes_supported: ['query', 'fragment', 'form_post'],
                         response_types_supported: ['code', 'code id_token', 'code token', 'code id_token token', 'id_token', 'id_token token', 'token', 'token id_token'],
                         scopes_supported: ['openid'],

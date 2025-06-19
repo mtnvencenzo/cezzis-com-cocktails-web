@@ -52,7 +52,7 @@ Cypress.Commands.addAll({
     validateSession: () => {
         cy.window()
             .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-cezzis.b2clogin.com-${Cypress.env('b2cTenantId')}`)
+            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-${Cypress.env('b2cTenantId')}`)
             .should('exist');
 
         cy.window().its('sessionStorage').invoke('getItem', `msal.account.keys`).should('exist');
@@ -61,7 +61,7 @@ Cypress.Commands.addAll({
             .its('sessionStorage')
             .invoke(
                 'getItem',
-                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-cezzis.b2clogin.com-idtoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy---`
+                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-idtoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy---`
             )
             .should('exist');
 
@@ -72,7 +72,7 @@ Cypress.Commands.addAll({
 
         cy.window()
             .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-cezzis.b2clogin.com-refreshtoken-${Cypress.env('b2cClientId')}----`)
+            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-refreshtoken-${Cypress.env('b2cClientId')}----`)
             .should('exist');
 
         cy.window()
@@ -84,7 +84,7 @@ Cypress.Commands.addAll({
             .its('sessionStorage')
             .invoke(
                 'getItem',
-                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-cezzis.b2clogin.com-accesstoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy-https://cezzis.onmicrosoft.com/cocktailsapi/account.read--`
+                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-accesstoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy-https://cezzis.onmicrosoft.com/cocktailsapi/account.read--`
             )
             .should('exist');
 
