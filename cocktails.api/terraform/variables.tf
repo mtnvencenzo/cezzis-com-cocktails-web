@@ -173,3 +173,7 @@ variable "custom_domain" {
     custom_domain_verification_id = string
   })
 }
+
+variable "login_subdomain" {
+  type = string
+}

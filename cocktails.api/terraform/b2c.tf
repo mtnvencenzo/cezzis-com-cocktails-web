@@ -8,9 +8,15 @@ module "api_b2c_tenant" {
   sub                = var.sub
   sequence           = var.sequence
 
+  login_subdomain          = var.login_subdomain
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.global_shared_cdn.id
+  dns_zone_id              = data.azurerm_dns_zone.cezzis_dns_zone.id
+  dns_zone_resource_group  = data.azurerm_resource_group.cocktails_global_resource_group.name
+
   tags = local.tags
 
   providers = {
     azuread = azuread
+    azurerm = azurerm
   }
 }

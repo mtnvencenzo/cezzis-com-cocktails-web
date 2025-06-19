@@ -34,3 +34,19 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "login_subdomain" {
+  type = string
+}
+
+variable "cdn_frontdoor_profile_id" {
+  type = string
+}
+
+variable "dns_zone_id" {
+  type = string
+}
+
+variable "dns_zone_resource_group" {
+  type = string
+}

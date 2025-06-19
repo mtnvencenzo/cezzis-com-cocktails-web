@@ -18,3 +18,5 @@ allowed_origins = [
   "http://localhost:4000",
   "https://localhost:4001"
 ]
+
+login_subdomain = "login"
