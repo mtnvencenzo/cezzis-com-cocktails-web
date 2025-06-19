@@ -57,7 +57,7 @@ public class AzSearchClient : ISearchClient
 
         var searchQuery = query
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => x.Length > 8 ? $"{x}~2" : x.Length > 5 ? $"{x}~1" : x)
+            .Select(x => x.Length > 8 ? $"{x}~2" : x.Length > 5 ? $"{x}~1" : $"{x}*")
             .Aggregate((current, next) => $"{current} {next}");
 
         var response = await this.searchClient.SearchAsync<SearchDocument>(searchText: searchQuery, options: options, cancellationToken: cancellationToken);
@@ -70,7 +70,7 @@ public class AzSearchClient : ISearchClient
         {
             foreach (var item in page.Values)
             {
-                if (item.Score <= 3.0)
+                if (item.Score <= 2.0)
                 {
                     continue;
                 }

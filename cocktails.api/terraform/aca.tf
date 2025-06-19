@@ -324,7 +324,7 @@ module "aca_cocktails_api" {
     },
     {
       name  = "Search__UseSearchIndex"
-      value = "false"
+      value = "true"
     },
     {
       name  = "ZohoEmail__DefaultSender__EmailAddress"
