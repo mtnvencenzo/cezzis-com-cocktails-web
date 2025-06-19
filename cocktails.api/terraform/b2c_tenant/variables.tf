@@ -52,5 +52,5 @@ variable "dns_zone_id" {
 
 variable "dns_zone_resource_group" {
   type        = string
-  description = "The resource group of the DNS zone to be used for the custom domain"
+  description = "The resource group of the DNS zone to be used for the custom domain setup"
 }
