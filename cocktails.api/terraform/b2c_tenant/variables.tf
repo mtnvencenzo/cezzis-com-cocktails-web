@@ -54,6 +54,11 @@ variable "dns_zone_id" {
   description = "The ID of the DNS zone to be used for the custom domain"
 }
 
+variable "dns_zone_name" {
+  type        = string
+  description = "The name of the DNS zone to be used for the custom domain"
+}
+
 variable "dns_zone_resource_group" {
   type        = string
   description = "The resource group of the DNS zone to be used for the custom domain setup"

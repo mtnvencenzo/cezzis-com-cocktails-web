@@ -17,10 +17,10 @@ module "frontdoor_endpoint_to_b2c_tenant" {
 
   custom_domain = {
     dns_zone_id             = var.dns_zone_id
-    dns_zone_name           = "cezzis.com"
+    dns_zone_name           = var.dns_zone_name
     dns_zone_resource_group = var.dns_zone_resource_group
     sub_domain              = var.login_subdomain
-    host_name               = "${var.login_subdomain}.cezzis.com"
+    host_name               = "${var.login_subdomain}.${var.dns_zone_name}"
   }
 
   allowed_origins = var.allowed_origins
