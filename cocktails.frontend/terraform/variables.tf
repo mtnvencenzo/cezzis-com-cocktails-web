@@ -190,3 +190,7 @@ variable "include_google_verification_txt_record" {
   type    = bool
   default = false
 }
+
+variable "login_subdomain" {
+  type = string
+}

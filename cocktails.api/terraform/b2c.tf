@@ -23,9 +23,3 @@ module "api_b2c_tenant" {
     azurerm = azurerm
   }
 }
-
-resource "azurerm_active_directory_domain_name" "custom_b2c_login_domain" {
-  domain_name         = "${var.login_subdomain}.${dns_zone_name}"
-  resource_group_name = data.azurerm_resource_group.cocktails_resource_group.name
-  azure_b2c_tenant_id = var.b2c_tenant_id
-}
