@@ -1,201 +1,151 @@
-# Cezzis.com - Modern Cocktail Recipe Platform
+# Cocktails Frontend
 
-**Live Site:** [www.cezzis.com](https://www.cezzis.com)
+## 🛠️ Technology Stack
 
-## 🍸 Platform Overview
+### Core Framework
+- **Framework**: React 19 with TypeScript
+- **UI Library**: Material-UI (MUI) v7
+- **State Management**: React Hooks and Context API
+- **Routing**: React Router v7
+- **Build Tool**: Vite v6
+- **Package Manager**: Yarn
 
-Cezzis.com is a modern, cloud-native cocktail recipe platform that provides an intuitive interface for discovering and creating cocktails. The platform is designed with performance, scalability, and user experience at its core, serving both amateur enthusiasts and professional bartenders.
+### UI Components
+- **Component Library**: Material-UI (MUI)
+- **Icons**: Material Icons
+- **Charts**: Recharts
+- **Markdown**: React Markdown
+- **Image Handling**: React Avatar Editor
+- **Infinite Scroll**: React Infinite Scroll Component
+- **Notifications**: React Toastify
+- **Tooltips**: React Tooltip
+- **Country Selection**: Countries List
 
-## 📁 Project Structure
+### Authentication & Security
+- **Authentication**: Microsoft Authentication Library (MSAL)
+- **Azure B2C**: User authentication and management
+- **reCAPTCHA**: Form protection
+- **Cookie Management**: Cookiebot integration
 
-| Project | Type | Description | Documentation |
-|---------|------|-------------|---------------|
-| [Cocktails Frontend](./cocktails.frontend/README.md) | Frontend | Main React application with Material-UI, MSAL auth, and user interface | [README](./cocktails.frontend/README.md) |
-| [Cocktails E2E Tests](./cocktails.frontend/cocktails.web.e2e/readme.md) | Testing | Cypress E2E test suite for user flows and integration testing | [README](./cocktails.frontend/cocktails.web.e2e/readme.md) |
-| [Cocktails API](./cocktails.api/README.md) | Backend | .NET Core REST API with business logic and data access | [README](./cocktails.api/README.md) |
-| [Cocktails Common (Nuget)](./cocktails.common/README.md) | Backend | .NET Core REST Nuget package with common models, interfaces, and utilities used across the Cocktails backend ecosystem | [README](./cocktails.common/README.md) |
-| [Shared Infrastructure](./cocktails.sharedinfrastructure/README.md) | Shared | Common azure infrastructure with cross-cutting concerns | [README](./cocktails.sharedinfrastructure/README.md) |
+### Testing
+- **Unit Testing**: Vitest with React Testing Library
+- **E2E Testing**: Cypress
+- **Test Coverage**: Istanbul
+- **Mock Service Worker**: API mocking
+- **MSAL Testing**: MSAL React Tester
 
-Each project contains detailed documentation and setup instructions in its respective README file.
+### Development Tools
+- **TypeScript**: Static type checking
+- **ESLint**: Code linting
+- **Prettier**: Code formatting
+- **NSwag**: API client generation (fetch and typescript)
+- **Vite Plugins**:
+  - ESLint
+  - TypeScript paths
+  - MKCert (HTTPS)
+  - Vendor chunk splitting
 
-## 🛠️ Technology Stack Overview
+## 🎨 Design System
 
-### Frontend
-- **Framework**: React.js with TypeScript
-- **UI Components**: Material-UI (MUI)
-- **State Management**: React Hooks
-- **Build Tools**: Vite
-- **Web Server**: NGINX
-- **Testing**: 
-  - Vitest for unit testing
-  - Cypress for E2E testing
-- **Authentication**: MSAL (Microsoft Authentication Library)
+The project follows Atomic Design principles, organizing components into a hierarchical structure:
 
-### Backend
-- **Framework**: .NET Core 9.0
-- **API**: RESTful with OpenAPI
-- **API Gateway**: Azure API Management
-- **API Documentation**: [Scalar API Documentation](https://api.cezzis.com/prd/cocktails/api-docs/v1/scalar/v1)
-- **Database**: Azure Cosmos DB (SQL API)
-- **Search**: [Azure AI Search](./.readme/readme-aisearch.md) with Cosmos DB integration
-- **Authentication**: 
-  - Azure B2C for user authentication
-  - Azure App Registrations for API security
-  - OAuth 2.0 for authorization framework
-  - OpenID Connect for identity layer
-- **Messaging**: Dapr with Azure Service Bus
-- **Email**: Zoho SMTP
-- **Storage**: Azure Blob Storage
-- **Monitoring**: Application Insights
+- **Atoms**: Basic building blocks (buttons, inputs, labels)
+- **Molecules**: Simple combinations of atoms (search forms, navigation items)
+- **Organisms**: Complex UI components (headers, footers, sidebars)
+- **Templates**: Page layouts and structure
+- **Pages**: Complete pages with real content
 
-### Infrastructure
-- **Containerization**: Docker
-- **Orchestration**: Azure Container Apps
-- **CDN**: Azure Front Door
-- **IaC**: Terraform
-- **CI/CD**: GitHub Actions
-- **Service Mesh**: Dapr
-- **Search**: [Azure AI Search](./.readme/readme-aisearch.md) with managed identity and Cosmos DB integration
+For more information about Atomic Design methodology, see [Atomic Design by Brad Frost](https://atomicdesign.bradfrost.com/chapter-2/).
 
-### Architectural Patterns
 
-The platform follows several modern architectural patterns and practices:
+## 🏗️ Project Structure
 
-1. **Domain-Driven Design (DDD)**
-   - Rich domain model with aggregates (Account, Cocktail, Ingredient)
-   - Domain events for cross-aggregate communication
-   - Value objects and entities with encapsulated business logic
-   - Ubiquitous language reflected in code structure
+```
+cocktails.frontend/
+├── cocktails.web/           # Main web application
+│   ├── src/
+│   │   ├── api/            # API clients and types
+│   │   ├── assets/         # Static assets
+│   │   ├── atoms/          # Basic UI components
+│   │   ├── components/     # Shared components
+│   │   ├── molecules/      # Composite components
+│   │   ├── organisms/      # Complex components
+│   │   ├── pages/          # Page components
+│   │   ├── services/       # Business logic
+│   │   ├── templates/      # Layout templates
+│   │   └── utils/          # Utility functions
+│   └── tests/              # Test setup and utilities
+└── cocktails.web.e2e/      # End-to-end tests
+```
 
-2. **CQRS (Command Query Responsibility Segregation)**
-   - Commands for state-changing operations
-   - Queries for read-only operations
-   - MediatR for command/query handling
-   - Separate command and query models
+## 🚀 Development Setup
 
-3. **Repository Pattern**
-   - Generic repository interfaces
-   - Cosmos DB implementation
-   - Unit of Work pattern for transaction management
-   - Caching strategies for frequently accessed data
+1. **Prerequisites**
+   - Node.js 23.5.x
+   - Yarn package manager
+   - .NET Core SDK 9.0 (for API)
+   - Azure CLI
+   - Dapr CLI
 
-4. **Event-Driven Architecture**
-   - Domain events for internal communication
-   - Integration events for cross-service communication
-   - Dapr pub/sub for event distribution via Azure Service Bus
-   - Event handlers for side effects
+2. **Environment Setup**
+   See [Environment Setup Guide](.readme/env-setup.md) for detailed instructions on configuring your development environment.
 
-5. **Dependency Injection**
-   - Constructor injection throughout the codebase
-   - Interface-based design
-   - Service registration in startup
-   - Scoped lifetime management
+3. **Local Development**
+   ```bash
+   # Install dependencies
+   yarn install
+   
+   # Start development server
+   yarn loc
+   ```
 
-6. **Clean Architecture**
-   - Clear separation of concerns
-   - Domain layer independence
-   - Infrastructure layer for external concerns
-   - Application layer for use cases
+4. **Testing**
+   ```bash
+   # Run unit tests
+   yarn test
+   
+   # Run unit tests with UI
+   yarn testui
+   
+   # Run E2E tests
+   yarn cy
+   ```
 
-7. **Validation and Error Handling**
-   - FluentValidation for command validation
-   - Custom exception types
-   - Global error handling
-   - Validation pipeline behavior
+## 📦 Build & Deployment
 
-### Microservices Architecture
-The platform is built using a microservices architecture with the following components:
+```bash
+# Build for production
+yarn build:prod
 
-1. **Cocktails API**
-   - RESTful API service
-   - Business logic and data access
-   - Authentication and authorization
-   - Event-driven messaging with Dapr and Azure Service Bus
-   - Cosmos DB integration
+# Preview production build
+yarn preview
+```
 
-2. **Cocktails Frontend**
-   - Single Page Application (SPA)
-   - Material-UI components
-   - MSAL authentication
-   - Responsive design
-   - Progressive Web App (PWA) capabilities
+## 🔍 Code Quality
 
-3. **Supporting Services**
-   - Email service (Zoho SMTP)
-   - Image processing and storage
-   - User avatar management
-   - Rating system
-
-### Infrastructure Components
-
-1. **Data Layer**
-   - Azure Cosmos DB for data storage
-   - Azure Blob Storage for images
-   - Dapr state management
-
-2. **Security Layer**
-   - Azure B2C for authentication
-   - Key Vault for secrets management
-   - SSL/TLS encryption
-   - DDoS protection via Front Door
-
-3. **Messaging Layer**
-   - Dapr pub/sub via Azure Service Bus
-   - Azure Service Bus
-   - Event-driven architecture
-
-4. **Monitoring & Observability**
-   - Application Insights
-   - OpenTelemetry integration
-   - Performance monitoring
-   - Error tracking
-
-## 🚀 Deployment Architecture
-
-The platform follows a multi-environment deployment strategy:
-
-1. **Development**: For active development and testing
-2. **Staging**: Pre-production environment
-3. **Production**: Live environment with high availability
-
-Each environment is provisioned using Terraform and follows infrastructure-as-code principles.
+- **Linting**: ESLint with Airbnb config
+- **Formatting**: Prettier
+- **Type Checking**: TypeScript strict mode
+- **Testing**: Vitest and Cypress
+- **Coverage**: Istanbul reports
 
 ## 🔒 Security Features
 
-- Azure B2C for enterprise-grade authentication
-- Azure App Registrations for API security
-- OAuth 2.0 authorization framework
-- OpenID Connect for identity layer
-- HTTPS everywhere with managed certificates
-- Key Vault for secrets management
-- Network security groups and firewalls
-- DDoS protection through Azure Front Door
+- Azure B2C authentication
+- HTTPS enforcement
+- reCAPTCHA integration
+- Cookie consent management
+- Secure API communication
+- XSS protection
+- CSRF protection
 
-## 📈 Scalability
+## 📈 Monitoring
 
-- Container-based deployment for horizontal scaling
-- Global CDN for content delivery
-- Cosmos DB for scalable data storage
-- Dapr for service mesh capabilities
-- Event-driven architecture for loose coupling
-
-## 🛠️ Development Setup
-
-1. **Prerequisites**
-   - Node.js
-   - Yarn package manager
-   - .NET Core SDK 9.0
-   - Docker
-   - Azure CLI
-   - Terraform
-   - Dapr CLI
-   - Local Docker images:
-     - Azurite (Azure Storage Emulator)
-     - Redis (for local pubsub via Dapr)
-     - Cosmos (Cosmos Emulator)
-
-2. **Setup Instructions**
-   - Follow the detailed [Environment Setup Guide](./.readme/env-setup.md) for complete installation and configuration instructions.
+- Application Insights integration
+- Error tracking
+- Performance monitoring
+- User analytics
+- Custom event tracking
 
 ## 🤝 Contributing
 
@@ -207,8 +157,4 @@ Each environment is provisioned using Terraform and follows infrastructure-as-co
 
 ## 📄 License
 
-This project is proprietary software. All rights reserved. See the [LICENSE](LICENSE) file for details.
-
----
-
-Built with ❤️ for cocktail enthusiasts everywhere!
+This project is proprietary software. All rights reserved. 
