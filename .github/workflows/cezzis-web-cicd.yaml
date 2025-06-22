@@ -3,10 +3,10 @@ name: cicd-cezzis-web
 on:
   pull_request:
     branches: [main]
-    paths: [cocktails.frontend/**, .github/workflows/cezzis-web-cicd.yaml]
+    paths: [cocktails.web/**, cocktails.web.e2e/**, terraform/**, .github/workflows/cezzis-web-cicd.yaml]
   push:
     branches: [main]
-    paths: [cocktails.frontend/**, .github/workflows/cezzis-web-cicd.yaml]
+    paths: [cocktails.web/**, cocktails.web.e2e/**, terraform/**, .github/workflows/cezzis-web-cicd.yaml]
 
   workflow_dispatch:
 
@@ -15,7 +15,7 @@ jobs:
     name: Build app
     uses: mtnvencenzo/workflows/.github/workflows/ui-build.yaml@main
     with:
-      working_directory: 'cocktails.frontend/cocktails.web'
+      working_directory: 'cocktails.web'
       node_version: '23.5.x'
       setup_files: '[".env", "env.sh", "nginx-default.conf", "Dockerfile-CI"]' # Must be a string representation of a json array with items separated by ', '
       upload_artifact: true
@@ -28,7 +28,7 @@ jobs:
     needs: [build]
     uses: mtnvencenzo/workflows/.github/workflows/docker-build-and-push.yaml@main
     with:
-      working_directory: 'cocktails.frontend/cocktails.web'
+      working_directory: 'cocktails.web'
       allow_build_and_push: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
       artifact_name: 'cocktails-web'
       docker_file_name: 'Dockerfile-CI'
@@ -44,7 +44,7 @@ jobs:
     uses: mtnvencenzo/workflows/.github/workflows/terraform-plan-and-apply.yaml@main
     needs: [docker]
     with:
-      working_directory: cocktails.frontend/terraform
+      working_directory: terraform
       environment_name: prd
       allow_deploy: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
       terraform_version: 1.11.4
@@ -67,7 +67,7 @@ jobs:
     needs: [terraform_deploy_prd]
     with:
       base_url: 'https://www.cezzis.com'
-      working_directory: cocktails.frontend/cocktails.web.e2e
+      working_directory: cocktails.web.e2e
       environment_name: prd
       allow_run: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
       command_line_args: '--env b2cUrl=https://login.cezzis.com/ --env b2cTenantId=fb512a9c-5b44-41ab-8042-6465769f16c9 --env b2cClientId=84744194-da27-410f-ae0e-74f5589d4c96 --env b2cUserObjectId=41598664-1466-4e3e-b28c-dfe9837e462e --env b2cUserEmail=rvecchi+cypress@gmail.com --env b2cUserPassword='

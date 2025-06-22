@@ -61,21 +61,22 @@ For more information about Atomic Design methodology, see [Atomic Design by Brad
 ## 🏗️ Project Structure
 
 ```
-cocktails.frontend/
-├── cocktails.web/           # Main web application
-│   ├── src/
-│   │   ├── api/            # API clients and types
-│   │   ├── assets/         # Static assets
-│   │   ├── atoms/          # Basic UI components
-│   │   ├── components/     # Shared components
-│   │   ├── molecules/      # Composite components
-│   │   ├── organisms/      # Complex components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # Business logic
-│   │   ├── templates/      # Layout templates
-│   │   └── utils/          # Utility functions
+
+cocktails.web/           # Main web application
+├── src/
+│   ├── api/            # API clients and types
+│   ├── assets/         # Static assets
+│   ├── atoms/          # Basic UI components
+│   ├── components/     # Shared components
+│   ├── molecules/      # Composite components
+│   ├── organisms/      # Complex components
+│   ├── pages/          # Page components
+│   ├── services/       # Business logic
+│   ├── templates/      # Layout templates
+│   └── utils/          # Utility functions
 │   └── tests/              # Test setup and utilities
-└── cocktails.web.e2e/      # End-to-end tests
+cocktails.web.e2e/      # End-to-end tests
+terraform/              # terraform for the projects infrastructure
 ```
 
 ## 🚀 Development Setup
