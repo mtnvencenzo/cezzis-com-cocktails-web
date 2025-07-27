@@ -13,8 +13,8 @@ while read -r line || [[ -n "$line" ]];
 do
   # Split env variables by character `=`
   if printf '%s\r\n' "$line" | grep -q -e '='; then
-    varname=$(printf '%s\r\n' "$line" | sed -e 's/=.*//')
-    varvalue=$(printf '%s\r\n' "$line" | sed -e 's/^[^=]*=//')
+    varname=$(printf '%s\n' "$line" | sed -e 's/=.*//')
+    varvalue=$(printf '%s\n' "$line" | sed -e 's/^[^=]*=//')
   fi
 
   # Read value of current variable if exists as Environment variable
