@@ -18,7 +18,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
         super();
         this.http = http ? http : window as any;
-        this.baseUrl = this.getBaseUrl("https://localhost:7176/", baseUrl);
+        this.baseUrl = this.getBaseUrl("http://localhost:7177/", baseUrl);
     }
 
     /**
@@ -32,7 +32,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getCocktailsList(freeText?: string | undefined, skip?: number | undefined, take?: number | undefined, m?: string[] | undefined, match_exclusive?: boolean | undefined, inc?: CocktailDataIncludeModel[] | undefined, sf?: string[] | undefined, x_Key?: any | undefined): Promise<CocktailsListRs> {
+    getCocktailsList(freeText?: string | undefined, skip?: number | undefined, take?: number | undefined, m?: string[] | undefined, match_exclusive?: boolean | undefined, inc?: CocktailDataIncludeModel[] | undefined, sf?: string[] | undefined, x_Key?: string | undefined): Promise<CocktailsListRs> {
         let url_ = this.baseUrl + "/api/v1/cocktails?";
         if (freeText === null)
             throw new Error("The parameter 'freeText' cannot be null.");
@@ -101,7 +101,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return No Content
      */
-    seedCocktails(x_Key?: any | undefined): Promise<void> {
+    seedCocktails(x_Key?: string | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/v1/cocktails";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -140,7 +140,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getCocktail(id: string, x_Key?: any | undefined): Promise<CocktailRs> {
+    getCocktail(id: string, x_Key?: string | undefined): Promise<CocktailRs> {
         let url_ = this.baseUrl + "/api/v1/cocktails/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -184,7 +184,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getCocktailIngredientFilters(x_Key?: any | undefined): Promise<CocktailIngredientFiltersRs> {
+    getCocktailIngredientFilters(x_Key?: string | undefined): Promise<CocktailIngredientFiltersRs> {
         let url_ = this.baseUrl + "/api/v1/cocktails/ingredients/filters";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -225,7 +225,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return No Content
      */
-    seedIngredients(x_Key?: any | undefined): Promise<void> {
+    seedIngredients(x_Key?: string | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/v1/cocktails/ingredients";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -263,7 +263,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getPrivacyPolicy(x_Key?: any | undefined): Promise<LegalDocumentRs> {
+    getPrivacyPolicy(x_Key?: string | undefined): Promise<LegalDocumentRs> {
         let url_ = this.baseUrl + "/api/v1/legal/documents/privacy-policy";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -304,7 +304,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getTermsOfService(x_Key?: any | undefined): Promise<LegalDocumentRs> {
+    getTermsOfService(x_Key?: string | undefined): Promise<LegalDocumentRs> {
         let url_ = this.baseUrl + "/api/v1/legal/documents/terms-of-service";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -345,7 +345,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getAccountOwnedProfile(x_Key?: any | undefined): Promise<AccountOwnedProfileRs> {
+    getAccountOwnedProfile(x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -387,7 +387,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedProfile(x_Key?: any | undefined, body?: UpdateAccountOwnedProfileRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedProfile(x_Key?: string | undefined, body?: UpdateAccountOwnedProfileRq | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -433,7 +433,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedProfileEmail(x_Key?: any | undefined, body?: UpdateAccountOwnedProfileEmailRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedProfileEmail(x_Key?: string | undefined, body?: UpdateAccountOwnedProfileEmailRq | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/email";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -479,7 +479,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedAccessibilitySettings(x_Key?: any | undefined, body?: UpdateAccountOwnedAccessibilitySettingsRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedAccessibilitySettings(x_Key?: string | undefined, body?: UpdateAccountOwnedAccessibilitySettingsRq | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/accessibility";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -524,7 +524,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return Created
      */
-    uploadProfileImage(body: Body, x_Key?: any | undefined): Promise<UploadProfileImageRs> {
+    uploadProfileImage(body: Body, x_Key?: string | undefined): Promise<UploadProfileImageRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/image";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -570,7 +570,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param body (optional) 
      * @return OK
      */
-    manageFavoriteCocktails(x_Key?: any | undefined, body?: ManageFavoriteCocktailsRq | undefined): Promise<AccountOwnedProfileRs> {
+    manageFavoriteCocktails(x_Key?: string | undefined, body?: ManageFavoriteCocktailsRq | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/favorites";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -616,7 +616,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param body (optional) 
      * @return Created
      */
-    rateCocktail(x_Key?: any | undefined, body?: RateCocktailRq | undefined): Promise<RateCocktailRs> {
+    rateCocktail(x_Key?: string | undefined, body?: RateCocktailRq | undefined): Promise<RateCocktailRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/ratings";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -667,7 +667,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    getCocktailRatings(x_Key?: any | undefined): Promise<AccountCocktailRatingsRs> {
+    getCocktailRatings(x_Key?: string | undefined): Promise<AccountCocktailRatingsRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/ratings";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -709,7 +709,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return Accepted
      */
-    sendCocktailRecommendation(body: CocktailRecommendationRq, x_Key?: any | undefined): Promise<void> {
+    sendCocktailRecommendation(body: CocktailRecommendationRq, x_Key?: string | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/recommendations";
         url_ = url_.replace(/[?&]$/, "");
 

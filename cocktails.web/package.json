@@ -12,7 +12,7 @@
         "build:prod": "tsc -p tsconfig.prod.json && vite build --mode prod",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=https://localhost:7176/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts"
+        "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=http://localhost:7177/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts"
     },
     "dependencies": {
         "@azure/msal-browser": "^4.12.0",
