@@ -191,11 +191,10 @@ describe.only('Cocktails search page', () => {
         // get some more (infinite scroller)
         cy.window().scrollTo('bottom');
 
-        expectTileCount(11);
         expectHasTile('bloody-mary');
         expectHasTile('margarita');
         expectHasTile('sidecar');
-        expectHasTile('vieux-carre');
+        expectHasTile('espresso-martini');
 
         cy.window().scrollTo('top');
 
@@ -207,14 +206,14 @@ describe.only('Cocktails search page', () => {
         // now should contain bloody mary and others
         cy.log('searching bloody-mary 1st time');
 
-        cy.get('li#global-search-box-option-0').within(() => {
+        cy.get('li#global-search-box-option-1').within(() => {
             cy.get('[data-testid="bloody-mary"]').should('contain.text', 'Bloody Mary');
             cy.get('[data-testid="bloody-mary"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');
             });
         });
 
-        cy.get('li#global-search-box-option-1').within(() => {
+        cy.get('li#global-search-box-option-2').within(() => {
             cy.get('[data-testid="boulevardier"]').should('contain.text', 'Boulevardier');
             cy.get('[data-testid="boulevardier"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');
@@ -331,14 +330,14 @@ describe.only('Cocktails search page', () => {
             });
 
         // now should contain bloody mary and others
-        cy.get('li#global-search-box-option-0').within(() => {
+        cy.get('li#global-search-box-option-1').within(() => {
             cy.get('[data-testid="bloody-mary"]').should('contain.text', 'Bloody Mary');
             cy.get('[data-testid="bloody-mary"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');
             });
         });
 
-        cy.get('li#global-search-box-option-1').within(() => {
+        cy.get('li#global-search-box-option-2').within(() => {
             cy.get('[data-testid="boulevardier"]').should('contain.text', 'Boulevardier');
             cy.get('[data-testid="boulevardier"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');

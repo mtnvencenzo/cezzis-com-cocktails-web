@@ -19,12 +19,12 @@ yarn install
 
 ### Run All Tests
 ```bash
-yarn cypress run -- --env b2cUserPassword=<your-password>
+yarn cypress run --env b2cUserPassword=<your-password>
 ```
 
 ### Run Specific Test File
 ```bash
-yarn cypress run -- --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env b2cUserPassword=<your-password>
+yarn cypress run --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env b2cUserPassword=<your-password>
 ```
 
 ### Run Tests in Interactive Mode
@@ -33,13 +33,13 @@ yarn cypress run -- --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --e
 yarn cypress open
 
 # Run specific test in interactive mode
-yarn cypress open -- --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts'
+yarn cypress open --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts'
 ```
 
 ### Run Tests with Specific Browser
 ```bash
 # Run tests in Chrome
-yarn cypress run --browser chrome -- --env b2cUserPassword=<your-password>
+yarn cypress run --browser chrome --env b2cUserPassword=<your-password>
 
 # Run tests in Firefox
 yarn cypress run --browser firefox -- --env b2cUserPassword=<your-password>
@@ -47,7 +47,7 @@ yarn cypress run --browser firefox -- --env b2cUserPassword=<your-password>
 
 ### Run Tests in Headless Mode
 ```bash
-yarn cypress run --headless -- --env b2cUserPassword=<your-password>
+yarn cypress run --headless --env b2cUserPassword=<your-password>
 ```
 
 ## Test Reports

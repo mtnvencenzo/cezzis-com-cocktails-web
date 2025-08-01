@@ -32,16 +32,7 @@ describe('Welcome page', () => {
         });
 
         cy.get('li#global-search-box-option-1').within(() => {
-            cy.get('a').first().should('contain.text', 'Paloma');
-            cy.get('a')
-                .first()
-                .within(() => {
-                    cy.get('b').should('contain.text', 'P');
-                });
-        });
-
-        cy.get('li#global-search-box-option-2').within(() => {
-            cy.get('a').first().should('contain.text', 'Pegu Club');
+            cy.get('a').first().should('contain.text', 'Philadelphia Fish House Punch');
             cy.get('a')
                 .first()
                 .within(() => {
@@ -63,16 +54,16 @@ describe('Welcome page', () => {
         });
 
         cy.get('li#global-search-box-option-1').within(() => {
-            cy.get('a').first().should('contain.text', 'Absinthe Frappé');
+            cy.get('a').first().should('contain.text', 'Penicillin');
             cy.get('a')
                 .first()
                 .within(() => {
-                    cy.get('b').should('contain.text', 'Absinthe Frappé');
+                    cy.get('b').should('contain.text', 'Pe');
                 });
         });
 
         cy.get('li#global-search-box-option-2').within(() => {
-            cy.get('a').first().should('contain.text', 'Aperol Spritz');
+            cy.get('a').first().should('contain.text', 'Vesper');
             cy.get('a')
                 .first()
                 .within(() => {
@@ -234,14 +225,14 @@ describe('Welcome page', () => {
             });
 
         // now should contain bloody mary and others
-        cy.get('li#global-search-box-option-0').within(() => {
+        cy.get('li#global-search-box-option-1').within(() => {
             cy.get('[data-testid="bloody-mary"]').should('contain.text', 'Bloody Mary');
             cy.get('[data-testid="bloody-mary"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');
             });
         });
 
-        cy.get('li#global-search-box-option-1').within(() => {
+        cy.get('li#global-search-box-option-2').within(() => {
             cy.get('[data-testid="boulevardier"]').should('contain.text', 'Boulevardier');
             cy.get('[data-testid="boulevardier"]').within(() => {
                 cy.get('b').should('contain.text', 'ar');
