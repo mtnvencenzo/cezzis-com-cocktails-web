@@ -28,6 +28,7 @@ const AccountAccessibilityPage = React.lazy(() => import('./pages/AccountPages/A
 const AccountFavoriteCocktailsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountFavoriteCocktailsPage/AccountFavoriteCocktailsPage'));
 const AccountTermsOfServicePage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountTermsOfServicePage/AccountTermsOfServicePage'));
 const AccountPrivacyPolicyPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountPrivacyPolicyPage/AccountPrivacyPolicyPage'));
+const AccountCocktailRatingsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountCocktailRatingsPage/AccountCocktailRatingsPage'));
 
 const CocktailPage = React.lazy(() => import('./pages/CocktailPage/CocktailPage'));
 const CocktailsSearchPage = React.lazy(() => import('./pages/CocktailsSearchPage/CocktailsSearchPage'));
@@ -166,10 +167,6 @@ const router = createBrowserRouter(
                             element: <PathNotFound />
                         }
                     ]
-                },
-                {
-                    path: '*',
-                    element: <PathNotFound />
                 }
             ]
         },
@@ -250,6 +247,14 @@ const router = createBrowserRouter(
                                     element: (
                                         <React.Suspense>
                                             <AccountFavoriteCocktailsPage />
+                                        </React.Suspense>
+                                    )
+                                },
+                                {
+                                    path: '/account/interactions/cocktail-ratings',
+                                    element: (
+                                        <React.Suspense>
+                                            <AccountCocktailRatingsPage />
                                         </React.Suspense>
                                     )
                                 },

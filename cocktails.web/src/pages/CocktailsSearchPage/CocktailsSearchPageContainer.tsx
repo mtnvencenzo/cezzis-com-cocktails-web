@@ -38,7 +38,7 @@ const CocktailsSearchPageContainer = () => {
     const [searchParams] = useSearchParams();
     const { setNoItems } = useCocktailSearch();
     const { filtersRevision } = useCocktailFiltering();
-    const { ownedAccount } = useOwnedAccount();
+    const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
     const fetchData = async (skip: number | undefined = undefined) => {
         const useSkip = skip ?? state.skip;
@@ -151,7 +151,13 @@ const CocktailsSearchPageContainer = () => {
                             }}
                         >
                             {state.cocktailSearchModels.map((x) => (
-                                <CocktailTile key={`tile-${x.id}`} cocktail={x} testId={`cocktailsearchtile-${x.id}`} isFavorite={ownedAccount?.favoriteCocktails?.includes(x.id) ?? false} />
+                                <CocktailTile
+                                    key={`tile-${x.id}`}
+                                    cocktail={x}
+                                    testId={`cocktailsearchtile-${x.id}`}
+                                    isFavorite={ownedAccount?.favoriteCocktails?.includes(x.id) ?? false}
+                                    indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === x.id)?.stars ?? 0}
+                                />
                             ))}
                         </Grid>
                     </InfiniteScroll>

@@ -23,7 +23,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -49,7 +49,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -91,7 +91,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -142,7 +142,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -217,7 +217,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -246,7 +246,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -271,7 +271,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 
@@ -301,7 +301,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} />
             </MemoryRouter>
         );
 

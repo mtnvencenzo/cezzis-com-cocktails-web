@@ -65,4 +65,5 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
     );
 };
 
+CocktailRater.displayName = 'CocktailRater';
 export default CocktailRater;

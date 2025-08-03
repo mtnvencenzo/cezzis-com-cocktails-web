@@ -1,18 +1,20 @@
-import { Card, Typography, CardContent, CardActions, CardMedia, CardActionArea, Rating } from '@mui/material';
+import { Card, Typography, CardContent, CardActions, CardMedia, CardActionArea } from '@mui/material';
 import './CocktailTile.css';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { CocktailsListModel, IngredientApplicationModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteCocktailButton';
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
+import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
 
 interface CocktailTileProps {
     cocktail: CocktailsListModel;
     isFavorite: boolean;
+    indicatorValue?: number;
     testId: string;
 }
 
-const CocktailTile = React.memo(({ cocktail, isFavorite, testId }: CocktailTileProps) => (
+const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue }: CocktailTileProps) => (
     <Card sx={{ width: '350px', maxWidth: '350px', textAlign: 'left' }} data-testid={testId}>
         <CardActionArea component={Link} to={`/cocktails/${cocktail.id}`}>
             {cocktail?.searchTiles && cocktail.searchTiles.length > 0 && (
@@ -22,7 +24,7 @@ const CocktailTile = React.memo(({ cocktail, isFavorite, testId }: CocktailTileP
                 <Typography color='text.primary' noWrap className='cocktailLink'>
                     {cocktail.title}
                 </Typography>
-                <Rating value={cocktail.rating} precision={1.0} max={5} readOnly size='small' />
+                <RatingExtended value={cocktail.rating} indicatorValue={indicatorValue ?? 0} precision={1.0} max={5} readOnly size='small' />
                 <Typography noWrap gutterBottom className='baseIngredientLink'>
                     BASE:{' '}
                     {cocktail.ingredients

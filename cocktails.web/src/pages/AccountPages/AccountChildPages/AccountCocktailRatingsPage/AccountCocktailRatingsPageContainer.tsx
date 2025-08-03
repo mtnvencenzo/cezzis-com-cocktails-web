@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
@@ -6,15 +6,13 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
-import { DEFAULT_TAKE, getCocktailFavorites } from '../../../../services/CocktailsService';
-import { CocktailDataIncludeModel, CocktailFavoritingActionModel, CocktailsListModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { DEFAULT_TAKE, getCocktailsWithRatings } from '../../../../services/CocktailsService';
+import { CocktailDataIncludeModel, CocktailsListModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
-import { manageOwnedAccountFavoriteCocktails } from '../../../../services/AccountService';
-import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 
-const AccountFavoriteCocktailsPageContainer = () => {
+const AccountCocktailRatingsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
     const [loading, setLoading] = useState<boolean>(true);
     const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -22,8 +20,6 @@ const AccountFavoriteCocktailsPageContainer = () => {
     const [cocktailListModels, setCocktailListModels] = useState<CocktailsListModel[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
-    const [clearedCount, setClearedCount] = useState<number>(1);
-    const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
     const fetchData = async () => {
@@ -33,8 +29,17 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
         try {
             setIsFetching(true);
-            const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
-            const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
+
+            const ratedCocktailIds = ownedAccountCocktailRatings?.ratings?.map((x) => x.cocktailId) ?? [];
+            const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ratedCocktailIds ?? [], true);
+            const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
+
+            // items.forEach((x) => {
+            //     const rating = ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === x.id);
+            //     if (rating) {
+            //         x.rating = rating.stars;
+            //     }
+            // });
 
             setSkip(skip + DEFAULT_TAKE);
             setApiCallFailed(false);
@@ -49,44 +54,15 @@ const AccountFavoriteCocktailsPageContainer = () => {
         setIsFetching(false);
     };
 
-    const confirmClearCocktailFavorites = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setOpenConfirmation(true);
-    };
-
-    const handleCancelCocktailFavorites = async () => {
-        setOpenConfirmation(false);
-    };
-
-    const handleClearCocktailFavorites = async () => {
-        if (ownedAccount && ownedAccount.favoriteCocktails && ownedAccount.favoriteCocktails.length > 0) {
-            await manageOwnedAccountFavoriteCocktails({
-                cocktailActions: ownedAccount.favoriteCocktails.map((x) => ({
-                    cocktailId: x,
-                    action: CocktailFavoritingActionModel.Remove
-                }))
-            });
-
-            setLoading(true);
-            setIsFetching(false);
-            setApiCallFailed(false);
-            setCocktailListModels([]);
-            setHasMore(true);
-            setSkip(0);
-            setOpenConfirmation(false);
-            setClearedCount((prev) => prev + 1);
-        }
-    };
-
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchData();
-    }, [clearedCount]);
+    }, []);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (
         <>
-            <title>Account Favorite Cocktail Recipes</title>
+            <title>Account Cocktail Ratings</title>
             <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/interactions/favorite-cocktails`} />
             <meta name='robots' content='noindex,follow' />
 
@@ -105,17 +81,8 @@ const AccountFavoriteCocktailsPageContainer = () => {
                 <Grid size={12} sx={{ pt: '5px' }}>
                     <Stack direction='row' spacing={3}>
                         <Typography variant='h6' display='inline-block'>
-                            Favorite Cocktail Recipes
+                            Cocktail Ratings
                         </Typography>
-                        <Button
-                            data-testid='btnClearCocktailFavorites'
-                            disabled={!cocktailListModels || cocktailListModels.length === 0}
-                            variant='outlined'
-                            color='primary'
-                            onClick={confirmClearCocktailFavorites}
-                        >
-                            Clear
-                        </Button>
                     </Stack>
                 </Grid>
                 <Grid>
@@ -180,17 +147,8 @@ const AccountFavoriteCocktailsPageContainer = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <AlertDialog
-                open={openConfirmation}
-                title='Clear your cocktail favorites?'
-                content='Are you sure you would like to clear your cocktail favorites?  This cannot be undone.'
-                cancelButtonText='Cancel'
-                confirmButtonText='Clear'
-                onCancel={handleCancelCocktailFavorites}
-                onConfirm={handleClearCocktailFavorites}
-            />
         </>
     );
 };
 
-export default AccountFavoriteCocktailsPageContainer;
+export default AccountCocktailRatingsPageContainer;
