@@ -171,6 +171,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
                                                 testId={`cocktailtile-${x.id}`}
                                                 isFavorite={ownedAccount?.favoriteCocktails?.includes(x.id) ?? false}
                                                 indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === x.id)?.stars ?? 0}
+                                                indicatorPosition='Top'
                                             />
                                         ))}
                                     </Grid>

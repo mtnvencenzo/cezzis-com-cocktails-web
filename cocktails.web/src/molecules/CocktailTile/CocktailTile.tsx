@@ -12,9 +12,10 @@ interface CocktailTileProps {
     isFavorite: boolean;
     indicatorValue?: number;
     testId: string;
+    indicatorPosition: 'Top' | 'Bottom';
 }
 
-const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue }: CocktailTileProps) => (
+const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue, indicatorPosition }: CocktailTileProps) => (
     <Card sx={{ width: '350px', maxWidth: '350px', textAlign: 'left' }} data-testid={testId}>
         <CardActionArea component={Link} to={`/cocktails/${cocktail.id}`}>
             {cocktail?.searchTiles && cocktail.searchTiles.length > 0 && (
@@ -24,7 +25,7 @@ const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue 
                 <Typography color='text.primary' noWrap className='cocktailLink'>
                     {cocktail.title}
                 </Typography>
-                <RatingExtended value={cocktail.rating} indicatorValue={indicatorValue ?? 0} precision={1.0} max={5} readOnly size='small' />
+                <RatingExtended value={cocktail.rating} indicatorValue={indicatorValue ?? 0} indicatorPosition={indicatorPosition} precision={1.0} max={5} readOnly size='small' />
                 <Typography noWrap gutterBottom className='baseIngredientLink'>
                     BASE:{' '}
                     {cocktail.ingredients
