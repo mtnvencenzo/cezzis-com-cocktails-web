@@ -55,7 +55,8 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
                     max={5}
                     size='medium'
                     indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === cocktail.id)?.stars ?? 0}
-                    indicatorPosition='Bottom' />
+                    indicatorPosition='Bottom'
+                />
                 <Typography sx={{ pl: '15px', fontWeight: 'bold' }}>{cocktail.rating?.ratingCount} Ratings</Typography>
             </IconButton>
             <CocktailRatingDialog

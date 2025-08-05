@@ -22,21 +22,18 @@ const RatingExtended = React.memo(({ indicatorValue, indicatorPosition, ...props
         } else if (props.size === 'large') {
             YMagnitude = 1.9;
 
-            if (indicatorValue === 1){
+            if (indicatorValue === 1) {
                 XMagnitude = 1.67;
-
             } else if (indicatorValue === 2) {
                 XMagnitude = 1.67;
-
             } else if (indicatorValue === 5) {
                 XMagnitude = 1.76;
-
             } else {
                 XMagnitude = 1.7;
             }
         }
 
-        setIndicatorOffsetX(((6 - indicatorValue) * 18.2 * -1) * XMagnitude);
+        setIndicatorOffsetX((6 - indicatorValue) * 18.2 * -1 * XMagnitude);
 
         if (indicatorPosition === 'Top') {
             setIndicatorOffsetY(-10 * YMagnitude);
