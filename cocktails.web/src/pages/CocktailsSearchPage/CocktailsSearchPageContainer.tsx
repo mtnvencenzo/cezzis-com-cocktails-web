@@ -88,7 +88,7 @@ const CocktailsSearchPageContainer = () => {
         // and react not hoisting the script and cert meta tag to the top
         setJsonLd(jsonld());
         setMetaItemProp('Cocktail Search');
-    }, [filtersRevision, searchParams]);
+    }, [filtersRevision, searchParams, ownedAccountCocktailRatings]);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (
