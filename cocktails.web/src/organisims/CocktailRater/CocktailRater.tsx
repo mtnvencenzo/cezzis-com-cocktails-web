@@ -50,6 +50,7 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
                 sx={{ pt: '0px', pb: '20px' }}
             >
                 <RatingExtended
+                    testId={`rating-${cocktail.id}-${cocktail.rating}`}
                     value={cocktail.rating.rating ?? 0}
                     precision={0.5}
                     max={5}

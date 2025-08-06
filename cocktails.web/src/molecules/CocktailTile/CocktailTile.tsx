@@ -25,7 +25,16 @@ const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue,
                 <Typography color='text.primary' noWrap className='cocktailLink'>
                     {cocktail.title}
                 </Typography>
-                <RatingExtended value={cocktail.rating} indicatorValue={indicatorValue ?? 0} indicatorPosition={indicatorPosition} precision={1.0} max={5} readOnly size='small' />
+                <RatingExtended
+                    testId={`rating-${cocktail.id}-${cocktail.rating}`}
+                    value={cocktail.rating}
+                    indicatorValue={indicatorValue ?? 0}
+                    indicatorPosition={indicatorPosition}
+                    precision={1.0}
+                    max={5}
+                    readOnly
+                    size='small'
+                />
                 <Typography noWrap gutterBottom className='baseIngredientLink'>
                     BASE:{' '}
                     {cocktail.ingredients

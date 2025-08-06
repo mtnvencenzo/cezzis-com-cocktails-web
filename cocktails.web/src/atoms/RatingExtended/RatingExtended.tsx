@@ -6,9 +6,10 @@ import React, { useLayoutEffect, useState } from 'react';
 interface RatingExtendedProps extends RatingOwnProps {
     indicatorValue: number;
     indicatorPosition: 'Top' | 'Bottom';
+    testId: string;
 }
 
-const RatingExtended = React.memo(({ indicatorValue, indicatorPosition, ...props }: RatingExtendedProps) => {
+const RatingExtended = React.memo(({ indicatorValue, indicatorPosition, testId, ...props }: RatingExtendedProps) => {
     const [indicatorOffsetX, setIndicatorOffsetX] = useState((6 - indicatorValue) * 91);
     const [indicatorOffsetY, setIndicatorOffsetY] = useState(-10);
 
@@ -44,7 +45,7 @@ const RatingExtended = React.memo(({ indicatorValue, indicatorPosition, ...props
 
     return (
         <>
-            <Rating {...props} />
+            <Rating {...props} data-testid={testId} />
             {indicatorValue > 0 && indicatorPosition === 'Top' && (
                 <ArrowDropDownIcon
                     data-testid={`rating-indicator-${indicatorValue.toLocaleString()}`}
