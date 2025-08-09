@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
-import { IconButton, Rating, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { Tooltip, TooltipRefProps } from 'react-tooltip';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import { CocktailModel, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import CocktailRatingDialog from '../../molecules/CocktailRatingDialog/CocktailRatingDialog';
+import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
 
 interface CocktailRaterProps {
     cocktail: CocktailModel;
@@ -12,7 +13,7 @@ interface CocktailRaterProps {
 
 const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
     const [openRatingDialog, setOpenRatingDialog] = useState<boolean>(false);
-    const { ownedAccount } = useOwnedAccount();
+    const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
     const tooltipRef = useRef<TooltipRefProps>(null);
 
     const handleRatingClick = async () => {
@@ -48,7 +49,15 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
                 disableRipple
                 sx={{ pt: '0px', pb: '20px' }}
             >
-                <Rating value={cocktail.rating.rating ?? 0} readOnly precision={0.5} max={5} size='medium' />
+                <RatingExtended
+                    testId={`rating-${cocktail.id}-${cocktail.rating}`}
+                    value={cocktail.rating.rating ?? 0}
+                    precision={0.5}
+                    max={5}
+                    size='medium'
+                    indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === cocktail.id)?.stars ?? 0}
+                    indicatorPosition='Bottom'
+                />
                 <Typography sx={{ pl: '15px', fontWeight: 'bold' }}>{cocktail.rating?.ratingCount} Ratings</Typography>
             </IconButton>
             <CocktailRatingDialog
@@ -65,4 +74,5 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
     );
 };
 
+CocktailRater.displayName = 'CocktailRater';
 export default CocktailRater;

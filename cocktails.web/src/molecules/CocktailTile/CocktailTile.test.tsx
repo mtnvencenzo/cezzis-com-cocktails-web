@@ -23,7 +23,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -49,7 +49,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -91,7 +91,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -142,7 +142,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -217,7 +217,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -246,7 +246,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -271,7 +271,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -284,7 +284,7 @@ describe('Cocktail List Tile', () => {
         expect(el.getAttribute('loading')).toBe('lazy');
     });
 
-    test('renders renders a surrounding link', async () => {
+    test('renders with a surrounding link', async () => {
         const model = {
             id: 'test-id',
             title: 'My Cocktail - 1029201',
@@ -301,7 +301,7 @@ describe('Cocktail List Tile', () => {
 
         render(
             <MemoryRouter>
-                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} />
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
             </MemoryRouter>
         );
 
@@ -309,5 +309,102 @@ describe('Cocktail List Tile', () => {
         expect(el).toBeTruthy();
         expect(el.firstChild).toBeInstanceOf(HTMLAnchorElement);
         expect((el.firstChild as HTMLAnchorElement).href).toBe(`http://localhost:3000/cocktails/${model.id}`);
+    });
+
+    test('renders as non-favorite', async () => {
+        const model = {
+            id: 'test-id',
+            title: 'My Cocktail - 1029201',
+            descriptiveTitle: 'My Cocktail - 1029201 - descriptive',
+            isIba: false,
+            searchTiles: ['https://cezzis.com/image-tile-1.webp', 'https://cezzis.com/image-tile-2.webp'],
+            ingredients: [],
+            glassware: [],
+            prepTimeMinutes: 10,
+            mainImages: [],
+            rating: 1,
+            serves: 1
+        } as CocktailsListModel;
+
+        render(
+            <MemoryRouter>
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={0} indicatorPosition='Top' />
+            </MemoryRouter>
+        );
+
+        const el = await screen.findByTestId('cocktail-title');
+        expect(el).toBeTruthy();
+        expect(el.firstChild).toBeInstanceOf(HTMLAnchorElement);
+        expect((el.firstChild as HTMLAnchorElement).href).toBe(`http://localhost:3000/cocktails/${model.id}`);
+
+        const favEl = await screen.findByTestId('fav-test-id');
+        expect(favEl).toBeTruthy();
+        expect(getComputedStyle(favEl).color).toBe('ButtonText');
+    });
+
+    test('renders as favorite', async () => {
+        const model = {
+            id: 'test-id',
+            title: 'My Cocktail - 1029201',
+            descriptiveTitle: 'My Cocktail - 1029201 - descriptive',
+            isIba: false,
+            searchTiles: ['https://cezzis.com/image-tile-1.webp', 'https://cezzis.com/image-tile-2.webp'],
+            ingredients: [],
+            glassware: [],
+            prepTimeMinutes: 10,
+            mainImages: [],
+            rating: 1,
+            serves: 1
+        } as CocktailsListModel;
+
+        render(
+            <MemoryRouter>
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite indicatorValue={0} indicatorPosition='Top' />
+            </MemoryRouter>
+        );
+
+        const el = await screen.findByTestId('cocktail-title');
+        expect(el).toBeTruthy();
+        expect(el.firstChild).toBeInstanceOf(HTMLAnchorElement);
+        expect((el.firstChild as HTMLAnchorElement).href).toBe(`http://localhost:3000/cocktails/${model.id}`);
+
+        const favEl = await screen.findByTestId('fav-test-id');
+        expect(favEl).toBeTruthy();
+        expect(getComputedStyle(favEl).color).toBe('rgb(191, 46, 46)');
+    });
+
+    test('renders with a rating indicator', async () => {
+        const model = {
+            id: 'test-id',
+            title: 'My Cocktail - 1029201',
+            descriptiveTitle: 'My Cocktail - 1029201 - descriptive',
+            isIba: false,
+            searchTiles: ['https://cezzis.com/image-tile-1.webp', 'https://cezzis.com/image-tile-2.webp'],
+            ingredients: [],
+            glassware: [],
+            prepTimeMinutes: 10,
+            mainImages: [],
+            rating: 3,
+            serves: 1
+        } as CocktailsListModel;
+
+        render(
+            <MemoryRouter>
+                <CocktailTile cocktail={model} testId='cocktail-title' isFavorite={false} indicatorValue={3} indicatorPosition='Top' />
+            </MemoryRouter>
+        );
+
+        const el = await screen.findByTestId('cocktail-title');
+        expect(el).toBeTruthy();
+        expect(el.firstChild).toBeInstanceOf(HTMLAnchorElement);
+        expect((el.firstChild as HTMLAnchorElement).href).toBe(`http://localhost:3000/cocktails/${model.id}`);
+
+        const ratingEl = await screen.findByTestId(`rating-indicator-3`);
+        expect(ratingEl).toBeDefined();
+        expect(ratingEl).not.toBeNull();
+
+        const ratingValEl = await screen.findByTestId(`rating-test-id-3`);
+        expect(ratingValEl).toBeDefined();
+        expect(ratingValEl).not.toBeNull();
     });
 });

@@ -19,7 +19,7 @@ const CocktailsListPageContainer = () => {
     const [cocktailListModels, setCocktailListModels] = useState<CocktailsListModel[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
-    const { ownedAccount } = useOwnedAccount();
+    const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
     const fetchData = async () => {
         if (isFetching) {
@@ -110,7 +110,14 @@ const CocktailsListPageContainer = () => {
                             }}
                         >
                             {cocktailListModels.map((x) => (
-                                <CocktailTile key={`tile-${x.id}`} cocktail={x} testId={`cocktailtile-${x.id}`} isFavorite={ownedAccount?.favoriteCocktails?.includes(x.id) ?? false} />
+                                <CocktailTile
+                                    key={`tile-${x.id}`}
+                                    cocktail={x}
+                                    testId={`cocktailtile-${x.id}`}
+                                    isFavorite={ownedAccount?.favoriteCocktails?.includes(x.id) ?? false}
+                                    indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === x.id)?.stars ?? 0}
+                                    indicatorPosition='Top'
+                                />
                             ))}
                         </Grid>
                     </InfiniteScroll>

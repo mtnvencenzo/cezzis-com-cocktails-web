@@ -51,7 +51,7 @@ const AccountNavigationBar = ({ testId, fullScreen = false }: AccountNavigationB
                         View and manage your interactions with content on Cezzis.com.
                     </Typography>
                     <ProfileSettingItemLink icon={<FavoriteIcon />} text='Favorite Cocktail Recipes' testId='p-settings-favorite-cocktails' navigatePath='/account/interactions/favorite-cocktails' />
-                    <ProfileSettingItemLink icon={<GradeIcon />} text='My Ratings' testId='p-settings-my-ratings' navigatePath='/account/interactions' />
+                    <ProfileSettingItemLink icon={<GradeIcon />} text='My Cocktail Ratings' testId='p-settings-my-ratings' navigatePath='/account/interactions/cocktail-ratings' />
                     <ProfileSettingItemLink icon={<NotificationsIcon />} text='Notification Settings' testId='p-settings-notifications' navigatePath='/account/interactions' />
                 </CardContent>
             </Card>
