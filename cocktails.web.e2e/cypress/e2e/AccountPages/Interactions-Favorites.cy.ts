@@ -26,10 +26,25 @@ describe('Interactions cocktailfavorites', () => {
         cy.url().should('eq', `${Cypress.config().baseUrl}/account/interactions/favorite-cocktails`);
     });
 
-    it('adds a couple favorites then clears them from the accounts favorites page', () => {
+    it('adds and removes a favorite', () => {
         cy.visit('/');
         cy.title().should('eq', "Cezzi's Cocktail Recipes");
         cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+
+        cy.get('[data-testid="search-box"]').within(() => {
+            cy.get('input').should('have.attr', 'placeholder', 'Search cocktails...');
+            cy.get('input').type('Pegu Club');
+        });
+
+        cy.get('[data-testid="pegu-club"]').click();
+        cy.title().should('eq', 'Pegu Club Cocktail Recipe');
+
+        cy.get('[data-testid="fav-pegu-club"]')
+            .click()
+            .then(() => {
+                cy.wait(3000);
+                cy.get('[data-testid="fav-pegu-club"]').should('have.css', 'color', 'rgb(191, 46, 46)');
+            });
 
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-myaccount"]').contains('Cypress User');
@@ -43,14 +58,12 @@ describe('Interactions cocktailfavorites', () => {
         cy.title().should('eq', 'Account Favorite Cocktail Recipes');
         cy.url().should('eq', `${Cypress.config().baseUrl}/account/interactions/favorite-cocktails`);
 
-        let isDisabled: boolean = false;
-        cy.get('[data-testid="p-settings-favorite-cocktails"]')
-            .invoke('attr', 'disabled')
-            .then((disabled) => {
-                cy.log(`${disabled}`);
-                isDisabled = disabled !== undefined;
-            });
+        cy.get('[data-testid="fav-pegu-club"]').should('have.css', 'color', 'rgb(191, 46, 46)');
 
-        cy.log(`${isDisabled}`);
+        cy.get('[data-testid="fav-pegu-club"]')
+            .click()
+            .then(() => {
+                cy.get('[data-testid="fav-pegu-club"]').should('have.css', 'color', 'rgba(0, 0, 0, 0.54)');
+            });
     });
 });

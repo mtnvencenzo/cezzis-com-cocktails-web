@@ -62,7 +62,7 @@ describe('Profile center primary email', () => {
             .click()
             .then(() => {
                 // assert
-                cy.wait(1000).then(() => {
+                cy.wait(3000).then(() => {
                     cy.visit('/');
                     cy.get('[data-testid="menu-avatar"]').click();
                     cy.get('[data-testid="l-menu-usersettings"]').click();

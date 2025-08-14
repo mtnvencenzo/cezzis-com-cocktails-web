@@ -95,6 +95,24 @@ const getCocktailFavorites = async (
     return undefined;
 };
 
+const getCocktailsWithRatings = async (
+    skip: number,
+    take: number,
+    include: CocktailDataIncludeModel[] | undefined,
+    matches: string[] | undefined,
+    matchExclusive: boolean = false
+): Promise<CocktailsListRs | undefined> => {
+    try {
+        const cocktailsApiClient = new CocktailsApiClient();
+        const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
+        return results;
+    } catch (e: unknown) {
+        logger.logException({ exception: e as Error });
+    }
+
+    return undefined;
+};
+
 const searchCocktails = async (freeText: string, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsListRs | undefined> => {
     const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
 
@@ -134,4 +152,4 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
     return undefined;
 };
 
-export { getCocktailsSearchResults, getCocktail, getCocktailsList, searchCocktails, getCocktailsSearchFilters, getCocktailFavorites, DEFAULT_TAKE };
+export { getCocktailsSearchResults, getCocktail, getCocktailsList, searchCocktails, getCocktailsSearchFilters, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };
