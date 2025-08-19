@@ -70,7 +70,13 @@ const AccountNotificationsPageContainer = () => {
                         </Grid>
                         <Grid size={{ md: 4, sm: 6 }} sx={{ pb: '15px' }}>
                             <FormControlLabel
-                                control={<Switch checked={onNewCocktailAdditions.value === CocktailUpdatedNotificationModel.Always} onChange={handleOnNewCocktailAdditionsChange} />}
+                                control={
+                                    <Switch
+                                        data-testid='chkNotifyNewCocktails'
+                                        checked={onNewCocktailAdditions.value === CocktailUpdatedNotificationModel.Always}
+                                        onChange={handleOnNewCocktailAdditionsChange}
+                                    />
+                                }
                                 label='Notify me when new cocktails are added'
                                 labelPlacement='start'
                                 sx={{ pl: '0px', pr: '10px' }}

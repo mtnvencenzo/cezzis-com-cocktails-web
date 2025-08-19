@@ -20,8 +20,8 @@ describe('Account Notifications Page', () => {
     });
 
     test('renders account notifications page', async () => {
-        const router = createMemoryRouter(createRoutesFromElements(<Route path='/account/profile-center/notifications' element={<AccountNotificationsPage />} />), {
-            initialEntries: ['/account/profile-center/notifications']
+        const router = createMemoryRouter(createRoutesFromElements(<Route path='/account/interactions/notifications' element={<AccountNotificationsPage />} />), {
+            initialEntries: ['/account/interactions/notifications']
         });
 
         await msalTester.isLogged();
@@ -47,9 +47,10 @@ describe('Account Notifications Page', () => {
             </MsalProvider>
         );
 
+        expect(document.title).toBe('Profile Center - Notification Settings');
+
         await screen.findByText('Profile Center');
         await screen.findByText('Notification Settings');
-
-        expect(document.title).toBe('Profile Center - Notification Settings');
+        await screen.findByText('Notify me when new cocktails are added');
     });
 });
