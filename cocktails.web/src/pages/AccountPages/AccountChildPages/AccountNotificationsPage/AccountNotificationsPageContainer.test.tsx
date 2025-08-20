@@ -5,36 +5,11 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountNotificationsPageContainer from './AccountNotificationsPageContainer';
-import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, DisplayThemeModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { getTestOwnedAccountProfile } from '../../../../../tests/setup';
 
 describe('Account Notifications Page Container', () => {
-    const getOwnedAccountProfile = (): AccountOwnedProfileRs => ({
-        subjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
-        loginEmail: 'test@test.com',
-        displayName: 'Test User',
-        email: 'test@tester.com',
-        givenName: 'Ron',
-        familyName: 'Vecchi',
-        avatarUri: 'https://cdn.cezzis.com/account-avatars/41598664-1466-4e3e-b28c-dfe9837e462e/1e4fc827-8e47-4ebb-9f48-a81c979b3686.webp',
-        primaryAddress: {
-            addressLine1: '123 Test St',
-            addressLine2: '',
-            city: 'Testville',
-            region: 'TS',
-            subRegion: 'Test Region',
-            postalCode: '12345',
-            country: 'Testland'
-        },
-        accessibility: {
-            theme: DisplayThemeModel.Light
-        },
-        notifications: {
-            onNewCocktailAdditions: CocktailUpdatedNotificationModel.Always
-        },
-        favoriteCocktails: []
-    });
-
     let msalTester: MsalReactTester;
 
     beforeEach(() => {
@@ -97,7 +72,7 @@ describe('Account Notifications Page Container', () => {
             }
         ];
 
-        const profile = getOwnedAccountProfile();
+        const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
@@ -144,7 +119,7 @@ describe('Account Notifications Page Container', () => {
             }
         ];
 
-        const profile = getOwnedAccountProfile();
+        const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
