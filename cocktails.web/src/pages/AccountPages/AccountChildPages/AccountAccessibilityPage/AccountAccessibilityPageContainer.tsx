@@ -70,7 +70,7 @@ const AccountAccessibilityPageContainer = () => {
                         </Grid>
                         <Grid size={{ md: 4, sm: 6 }} sx={{ pb: '15px' }}>
                             <FormControlLabel
-                                control={<Switch checked={displayTheme.value === DisplayThemeModel.Dark} onChange={handleDarkModeChange} />}
+                                control={<Switch data-testid='chkTheme' checked={displayTheme.value === DisplayThemeModel.Dark} onChange={handleDarkModeChange} />}
                                 label='Dark Mode'
                                 labelPlacement='start'
                                 sx={{ pl: '0px', pr: '10px' }}
