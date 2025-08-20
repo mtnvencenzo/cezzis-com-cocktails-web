@@ -7,7 +7,7 @@ import GlobalContext from '../../../../components/GlobalContexts';
 import AccountNotificationsPageContainer from './AccountNotificationsPageContainer';
 import { CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
-import { getTestOwnedAccountProfile } from '../../../../../tests/setup';
+import { getTestAccountInfo, getTestOwnedAccountProfile } from '../../../../../tests/setup';
 
 describe('Account Notifications Page Container', () => {
     let msalTester: MsalReactTester;
@@ -24,19 +24,7 @@ describe('Account Notifications Page Container', () => {
 
     test('renders account notifications page container', async () => {
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <MsalProvider instance={msalTester.client}>
@@ -57,20 +45,7 @@ describe('Account Notifications Page Container', () => {
 
     test('toggle > notify me when new cocktails are added > works when initially Always', async () => {
         await msalTester.isLogged();
-
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
@@ -104,20 +79,7 @@ describe('Account Notifications Page Container', () => {
 
     test('toggle > notify me when new cocktails are added > works when initially Never', async () => {
         await msalTester.isLogged();
-
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;

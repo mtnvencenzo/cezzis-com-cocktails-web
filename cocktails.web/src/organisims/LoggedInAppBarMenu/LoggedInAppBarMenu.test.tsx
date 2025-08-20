@@ -7,7 +7,7 @@ import { MsalProvider } from '@azure/msal-react';
 import LoggedInAppBarMenu from './LoggedInAppBarMenu';
 import GlobalContext from '../../components/GlobalContexts';
 import SessionStorageService from '../../services/SessionStorageService';
-import { getTestOwnedAccountProfile } from '../../../tests/setup';
+import { getTestAccountInfo, getTestOwnedAccountProfile } from '../../../tests/setup';
 
 describe('LoggedIn App Bar Menu', () => {
     let msalTester: MsalReactTester;
@@ -49,19 +49,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Ron',
-                        family_name: 'Vecchi'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -110,19 +98,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Ron',
-                        family_name: 'Vecchi'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -148,7 +124,7 @@ describe('LoggedIn App Bar Menu', () => {
 
         if (expectedDefined) {
             expect(el).toBeDefined();
-            expect(el).toHaveTextContent('Ron Vecchi');
+            expect(el).toHaveTextContent('Billy Simms');
 
             if (expectedVisible) {
                 expect(el).toBeVisible();
@@ -171,19 +147,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Ron',
-                        family_name: 'Vecchi'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -232,19 +196,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Ron',
-                        family_name: 'Vecchi'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -298,8 +250,8 @@ describe('LoggedIn App Bar Menu', () => {
     //                 environment: '',
     //                 tenantId: '',
     //                 idTokenClaims: {
-    //                     given_name: 'Ron',
-    //                     family_name: 'Vecchi'
+    //                     given_name: 'Billy',
+    //                     family_name: 'Simmy'
     //                 }
     //             }
     //         ];

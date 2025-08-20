@@ -5,6 +5,7 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import AccountCocktailRatingsPage from './AccountCocktailRatingsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
+import { getTestAccountInfo } from '../../../../../tests/setup';
 
 describe('Account Interactions Cocktail Ratings Page', () => {
     let msalTester: MsalReactTester;
@@ -21,19 +22,7 @@ describe('Account Interactions Cocktail Ratings Page', () => {
 
     test('renders account interactions cocktail ratings page', async () => {
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <MsalProvider instance={msalTester.client}>

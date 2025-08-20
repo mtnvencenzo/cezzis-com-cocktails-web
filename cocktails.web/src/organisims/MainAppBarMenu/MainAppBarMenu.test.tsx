@@ -7,7 +7,7 @@ import { MsalProvider } from '@azure/msal-react';
 import MainAppBarMenu from './MainAppBarMenu';
 import SessionStorageService from '../../services/SessionStorageService';
 import GlobalContext from '../../components/GlobalContexts';
-import { getTestOwnedAccountProfile } from '../../../tests/setup';
+import { getTestAccountInfo, getTestOwnedAccountProfile } from '../../../tests/setup';
 
 describe('Main App Bar Menu', () => {
     let msalTester: MsalReactTester;
@@ -53,19 +53,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -118,19 +106,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        givenName: 'Ron',
-                        familyName: 'Vecchi'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -156,7 +132,7 @@ describe('Main App Bar Menu', () => {
 
         if (expectedDefined) {
             expect(el).toBeDefined();
-            expect(el).toHaveTextContent('Ron Vecchi');
+            expect(el).toHaveTextContent('Billy Simms');
 
             if (expectedVisible) {
                 expect(el).toBeVisible();
@@ -183,19 +159,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -248,19 +212,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -313,19 +265,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -378,19 +318,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>

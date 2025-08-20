@@ -5,6 +5,7 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import AccountProfileImagePage from './AccountProfileImagePage';
 import GlobalContext from '../../../../components/GlobalContexts';
+import { getTestAccountInfo } from '../../../../../tests/setup';
 
 describe('Account Profile Image Page', () => {
     let msalTester: MsalReactTester;
@@ -25,19 +26,7 @@ describe('Account Profile Image Page', () => {
         });
 
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <MsalProvider instance={msalTester.client}>
