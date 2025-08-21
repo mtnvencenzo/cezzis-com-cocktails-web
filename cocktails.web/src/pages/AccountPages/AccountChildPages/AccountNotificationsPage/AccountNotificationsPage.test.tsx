@@ -3,11 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
-import AccountProfileImagePage from './AccountProfileImagePage';
+import AccountNotificationsPage from './AccountNotificationsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
 import { getTestAccountInfo } from '../../../../../tests/setup';
 
-describe('Account Profile Image Page', () => {
+describe('Account Notifications Page', () => {
     let msalTester: MsalReactTester;
 
     beforeEach(() => {
@@ -20,9 +20,9 @@ describe('Account Profile Image Page', () => {
         msalTester.resetSpyMsal();
     });
 
-    test('renders profile image page', async () => {
-        const router = createMemoryRouter(createRoutesFromElements(<Route path='/account/profile-center/avatar' element={<AccountProfileImagePage />} />), {
-            initialEntries: ['/account/profile-center/avatar']
+    test('renders account notifications page', async () => {
+        const router = createMemoryRouter(createRoutesFromElements(<Route path='/account/interactions/notifications' element={<AccountNotificationsPage />} />), {
+            initialEntries: ['/account/interactions/notifications']
         });
 
         await msalTester.isLogged();
@@ -36,9 +36,8 @@ describe('Account Profile Image Page', () => {
             </MsalProvider>
         );
 
-        await screen.findByText('Profile Center');
-        await screen.findByText('Edit Avatar');
-
-        expect(document.title).toBe('Profile Center - Edit Avatar');
+        expect(document.title).toBe('Account Notification Settings');
+        await screen.findByText('Notification Settings');
+        await screen.findByText('Notify me when new cocktails are added');
     });
 });

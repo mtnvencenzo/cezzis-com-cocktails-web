@@ -5,6 +5,7 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import AccountAccessibilityPage from './AccountAccessibilityPage';
 import GlobalContext from '../../../../components/GlobalContexts';
+import { getTestAccountInfo } from '../../../../../tests/setup';
 
 describe('Account Accessibility Page', () => {
     let msalTester: MsalReactTester;
@@ -25,19 +26,7 @@ describe('Account Accessibility Page', () => {
         });
 
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <MsalProvider instance={msalTester.client}>

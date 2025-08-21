@@ -29,6 +29,7 @@ const AccountFavoriteCocktailsPage = React.lazy(() => import('./pages/AccountPag
 const AccountTermsOfServicePage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountTermsOfServicePage/AccountTermsOfServicePage'));
 const AccountPrivacyPolicyPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountPrivacyPolicyPage/AccountPrivacyPolicyPage'));
 const AccountCocktailRatingsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountCocktailRatingsPage/AccountCocktailRatingsPage'));
+const AccountNotificationsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountNotificationsPage/AccountNotificationsPage'));
 
 const CocktailPage = React.lazy(() => import('./pages/CocktailPage/CocktailPage'));
 const CocktailsSearchPage = React.lazy(() => import('./pages/CocktailsSearchPage/CocktailsSearchPage'));
@@ -255,6 +256,14 @@ const router = createBrowserRouter(
                                     element: (
                                         <React.Suspense>
                                             <AccountCocktailRatingsPage />
+                                        </React.Suspense>
+                                    )
+                                },
+                                {
+                                    path: '/account/interactions/notifications',
+                                    element: (
+                                        <React.Suspense>
+                                            <AccountNotificationsPage />
                                         </React.Suspense>
                                     )
                                 },

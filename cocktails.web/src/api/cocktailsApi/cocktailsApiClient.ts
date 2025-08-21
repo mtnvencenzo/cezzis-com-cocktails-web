@@ -383,11 +383,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     }
 
     /**
+     * @param body The account profile update request body
      * @param x_Key (optional) Subscription key
-     * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedProfile(x_Key?: string | undefined, body?: UpdateAccountOwnedProfileRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedProfile(body: UpdateAccountOwnedProfileRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -429,11 +429,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     }
 
     /**
+     * @param body The account profile email update request body
      * @param x_Key (optional) Subscription key
-     * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedProfileEmail(x_Key?: string | undefined, body?: UpdateAccountOwnedProfileEmailRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedProfileEmail(body: UpdateAccountOwnedProfileEmailRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/email";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -475,11 +475,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     }
 
     /**
+     * @param body The account accessibility settings request body
      * @param x_Key (optional) Subscription key
-     * @param body (optional) 
      * @return OK
      */
-    updateAccountOwnedAccessibilitySettings(x_Key?: string | undefined, body?: UpdateAccountOwnedAccessibilitySettingsRq | undefined): Promise<AccountOwnedProfileRs> {
+    updateAccountOwnedAccessibilitySettings(body: UpdateAccountOwnedAccessibilitySettingsRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/accessibility";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -566,11 +566,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     }
 
     /**
+     * @param body The favorite cocktails management request body
      * @param x_Key (optional) Subscription key
-     * @param body (optional) 
      * @return OK
      */
-    manageFavoriteCocktails(x_Key?: string | undefined, body?: ManageFavoriteCocktailsRq | undefined): Promise<AccountOwnedProfileRs> {
+    manageFavoriteCocktails(body: ManageFavoriteCocktailsRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/favorites";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -612,11 +612,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
     }
 
     /**
+     * @param body The cocktail rating request body
      * @param x_Key (optional) Subscription key
-     * @param body (optional) 
      * @return Created
      */
-    rateCocktail(x_Key?: string | undefined, body?: RateCocktailRq | undefined): Promise<RateCocktailRs> {
+    rateCocktail(body: RateCocktailRq, x_Key?: string | undefined): Promise<RateCocktailRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/cocktails/ratings";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -746,9 +746,55 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
             });
         }
     }
+
+    /**
+     * @param body The account notifications request body
+     * @param x_Key (optional) Subscription key
+     * @return OK
+     */
+    updateAccountOwnedNotificationSettings(body: UpdateAccountOwnedNotificationSettingsRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
+        let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/notifications";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "X-Key": x_Key !== undefined && x_Key !== null ? "" + x_Key : "",
+                "Content-Type": "application/json; x-api-version=1.0",
+                "Accept": "application/json; x-api-version=1.0"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processUpdateAccountOwnedNotificationSettings(_response));
+        });
+    }
+
+    protected processUpdateAccountOwnedNotificationSettings(response: Response): Promise<AccountOwnedProfileRs> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as AccountOwnedProfileRs;
+            return result200;
+            });
+        } else {
+            return response.text().then((_responseText) => {
+            let resultdefault: any = null;
+            resultdefault = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ProblemDetails;
+            return throwException("A server side error occurred.", status, _responseText, _headers, resultdefault);
+            });
+        }
+    }
 }
 
-/** The accessibility settings for the account visible to other users */
+/** The accessibility settings for the account */
 export interface AccountAccessibilitySettingsModel {
     theme: DisplayThemeModel;
 
@@ -813,6 +859,13 @@ export interface AccountCocktailRatingsRs {
     [key: string]: any;
 }
 
+/** The notification settings for the account */
+export interface AccountNotificationSettingsModel {
+    onNewCocktailAdditions: CocktailUpdatedNotificationModel;
+
+    [key: string]: any;
+}
+
 export interface AccountOwnedProfileRs {
     /** The federated subject identifier for the account */
     subjectId: string;
@@ -832,6 +885,7 @@ export interface AccountOwnedProfileRs {
     accessibility: AccountAccessibilitySettingsModel;
     /** The list of favorite cocktails */
     favoriteCocktails: string[];
+    notifications: AccountNotificationSettingsModel;
 
     [key: string]: any;
 }
@@ -1030,6 +1084,12 @@ export interface CocktailsListRs {
     items: CocktailsListModel[];
 
     [key: string]: any;
+}
+
+/** The notification setting to use when new cocktail addtions are added */
+export enum CocktailUpdatedNotificationModel {
+    Never = "never",
+    Always = "always",
 }
 
 /** The accessibility theme */
@@ -1322,6 +1382,12 @@ export enum UofMTypeModel {
 
 export interface UpdateAccountOwnedAccessibilitySettingsRq {
     theme: DisplayThemeModel2;
+
+    [key: string]: any;
+}
+
+export interface UpdateAccountOwnedNotificationSettingsRq {
+    onNewCocktailAdditions: CocktailUpdatedNotificationModel;
 
     [key: string]: any;
 }

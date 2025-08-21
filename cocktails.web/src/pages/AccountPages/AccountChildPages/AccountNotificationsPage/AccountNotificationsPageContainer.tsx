@@ -1,8 +1,8 @@
 import { Button, Divider, FormControlLabel, Grid, Switch, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
-import { updateOwnedAccountAccessibilitySettings } from '../../../../services/AccountService';
-import { DisplayThemeModel, DisplayThemeModel2 } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { updateOwnedAccountNotificationsSettings } from '../../../../services/AccountService';
+import { CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import theme from '../../../../theme';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
@@ -13,33 +13,33 @@ interface FieldValueState<T> {
     hasError: boolean;
 }
 
-const AccountAccessibilityPageContainer = () => {
+const AccountNotificationsPageContainer = () => {
     const { ownedAccount } = useOwnedAccount();
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
-    const [displayTheme, setDisplayTheme] = useState<FieldValueState<DisplayThemeModel | DisplayThemeModel2>>({
-        value: ownedAccount?.accessibility?.theme ?? DisplayThemeModel.Light,
+    const [onNewCocktailAdditions, setOnNewCocktailAdditions] = useState<FieldValueState<CocktailUpdatedNotificationModel>>({
+        value: ownedAccount?.notifications?.onNewCocktailAdditions ?? CocktailUpdatedNotificationModel.Always,
         hasError: false
     });
 
-    const handleDarkModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDisplayTheme({
-            value: event.target.checked ? DisplayThemeModel.Dark : DisplayThemeModel.Light,
+    const handleOnNewCocktailAdditionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setOnNewCocktailAdditions({
+            value: event.target.checked ? CocktailUpdatedNotificationModel.Always : CocktailUpdatedNotificationModel.Never,
             hasError: false
         });
     };
 
-    const handleAccessibilitySave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleNotificationsSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        await updateOwnedAccountAccessibilitySettings({
-            theme: displayTheme.value as DisplayThemeModel2
+        await updateOwnedAccountNotificationsSettings({
+            onNewCocktailAdditions: onNewCocktailAdditions.value as CocktailUpdatedNotificationModel
         });
     };
 
     return (
         <>
-            <title>Profile Center - Accessibility Settings</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/accessibility`} />
+            <title>Account Notification Settings</title>
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/notifications`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}
@@ -54,30 +54,33 @@ const AccountAccessibilityPageContainer = () => {
                     mr: '0px'
                 }}
             >
-                <Grid size={12} sx={{ pt: '5px' }}>
-                    <Typography variant='h6'>Profile Center</Typography>
-                </Grid>
-                <Grid id='accessibility-settings' size={12} sx={{ pb: '50px' }}>
+                <Grid id='notification-settings' size={12} sx={{ pb: '50px' }}>
                     <Grid
                         container
                         sx={{
-                            pt: '20px'
+                            pt: '5px'
                         }}
                     >
                         <Grid size={12} sx={{ pb: '10px', pt: '5px' }}>
-                            <Typography variant='h6'>Accessibility Settings</Typography>
+                            <Typography variant='h6'>Notification Settings</Typography>
                             <Divider />
                         </Grid>
                         <Grid size={{ md: 4, sm: 6 }} sx={{ pb: '15px' }}>
                             <FormControlLabel
-                                control={<Switch data-testid='chkTheme' checked={displayTheme.value === DisplayThemeModel.Dark} onChange={handleDarkModeChange} />}
-                                label='Dark Mode'
+                                control={
+                                    <Switch
+                                        data-testid='chkNotifyNewCocktails'
+                                        checked={onNewCocktailAdditions.value === CocktailUpdatedNotificationModel.Always}
+                                        onChange={handleOnNewCocktailAdditionsChange}
+                                    />
+                                }
+                                label='Notify me when new cocktails are added'
                                 labelPlacement='start'
                                 sx={{ pl: '0px', pr: '10px' }}
                             />
                         </Grid>
                         <Grid size={12} sx={{ backgroundColor: 'rgba(245,245,245,.5)' }}>
-                            <Button data-testid='btnSubmitAccessibility' variant='outlined' color='primary' onClick={handleAccessibilitySave}>
+                            <Button data-testid='btnSubmitNotifications' variant='outlined' color='primary' onClick={handleNotificationsSave}>
                                 Submit
                             </Button>
                         </Grid>
@@ -88,4 +91,4 @@ const AccountAccessibilityPageContainer = () => {
     );
 };
 
-export default AccountAccessibilityPageContainer;
+export default AccountNotificationsPageContainer;

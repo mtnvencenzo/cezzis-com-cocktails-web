@@ -7,6 +7,7 @@ import {
     RateCocktailRq,
     RateCocktailRs,
     UpdateAccountOwnedAccessibilitySettingsRq,
+    UpdateAccountOwnedNotificationSettingsRq,
     UpdateAccountOwnedProfileEmailRq,
     UpdateAccountOwnedProfileRq,
     UploadProfileImageRs
@@ -73,7 +74,7 @@ const updateOwnedAccountProfile = async (request: UpdateAccountOwnedProfileRq): 
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const results = await cocktailsApiClient.updateAccountOwnedProfile(undefined, request);
+        const results = await cocktailsApiClient.updateAccountOwnedProfile(request, undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -94,7 +95,7 @@ const updateOwnedAccountProfileEmail = async (request: UpdateAccountOwnedProfile
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const results = await cocktailsApiClient.updateAccountOwnedProfileEmail(undefined, request);
+        const results = await cocktailsApiClient.updateAccountOwnedProfileEmail(request, undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -115,7 +116,7 @@ const updateOwnedAccountAccessibilitySettings = async (request: UpdateAccountOwn
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const results = await cocktailsApiClient.updateAccountOwnedAccessibilitySettings(undefined, request);
+        const results = await cocktailsApiClient.updateAccountOwnedAccessibilitySettings(request, undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -136,7 +137,7 @@ const manageOwnedAccountFavoriteCocktails = async (request: ManageFavoriteCockta
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const results = await cocktailsApiClient.manageFavoriteCocktails(undefined, request);
+        const results = await cocktailsApiClient.manageFavoriteCocktails(request, undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -184,7 +185,7 @@ const rateCocktail = async (request: RateCocktailRq): Promise<RateCocktailRs | u
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const rs = await cocktailsApiClient.rateCocktail(undefined, request);
+        const rs = await cocktailsApiClient.rateCocktail(request, undefined);
 
         // not awaiting, it's not important to wait for this to finish
         getAccountCocktailRatings(true);
@@ -227,6 +228,27 @@ const sendRecommendation = async (name: string, ingredients: string, directions:
     }
 };
 
+const updateOwnedAccountNotificationsSettings = async (request: UpdateAccountOwnedNotificationSettingsRq): Promise<AccountOwnedProfileRs | undefined> => {
+    const sessionStorageService = new SessionStorageService();
+
+    try {
+        const cocktailsApiClient = new CocktailsApiClient();
+        cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
+        const results = await cocktailsApiClient.updateAccountOwnedNotificationSettings(request, undefined);
+
+        if (results) {
+            sessionStorageService.SetOwnedAccountProfileRequestData(results);
+        }
+
+        return results;
+    } catch (e: unknown) {
+        const apiError: ProblemDetails = e as ProblemDetails;
+        const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
+        const error = new Error(errorMessage);
+        throw error;
+    }
+};
+
 export {
     getOwnedAccountProfile,
     uploadProfileImage,
@@ -236,5 +258,6 @@ export {
     manageOwnedAccountFavoriteCocktails,
     rateCocktail,
     getAccountCocktailRatings,
-    sendRecommendation
+    sendRecommendation,
+    updateOwnedAccountNotificationsSettings
 };

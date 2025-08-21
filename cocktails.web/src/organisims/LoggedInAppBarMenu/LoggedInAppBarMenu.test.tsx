@@ -6,31 +6,8 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import LoggedInAppBarMenu from './LoggedInAppBarMenu';
 import GlobalContext from '../../components/GlobalContexts';
-import { AccountOwnedProfileRs, DisplayThemeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../services/SessionStorageService';
-
-const getOwnedAccountProfile = (): AccountOwnedProfileRs => ({
-    subjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
-    email: 'test@tester.com',
-    givenName: 'Billy',
-    familyName: 'Simms',
-    avatarUri: 'https://cdn.cezzis.com/account-avatars/41598664-1466-4e3e-b28c-dfe9837e462e/1e4fc827-8e47-4ebb-9f48-a81c979b3686.webp',
-    accessibility: {
-        theme: DisplayThemeModel.Light
-    },
-    favoriteCocktails: [],
-    loginEmail: '',
-    primaryAddress: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        region: '',
-        subRegion: '',
-        postalCode: '',
-        country: ''
-    },
-    displayName: ''
-});
+import { getTestAccountInfo, getTestOwnedAccountProfile } from '../../../tests/setup';
 
 describe('LoggedIn App Bar Menu', () => {
     let msalTester: MsalReactTester;
@@ -70,21 +47,9 @@ describe('LoggedIn App Bar Menu', () => {
         sessionStorage.removeItem(SessionStorageService.OwnedAccountProfileGroupCacheKey);
 
         if (authed) {
-            sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+            sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -131,21 +96,9 @@ describe('LoggedIn App Bar Menu', () => {
         sessionStorage.removeItem(SessionStorageService.OwnedAccountProfileGroupCacheKey);
 
         if (authed) {
-            sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+            sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -192,21 +145,9 @@ describe('LoggedIn App Bar Menu', () => {
         sessionStorage.removeItem(SessionStorageService.OwnedAccountProfileGroupCacheKey);
 
         if (authed) {
-            sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+            sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -253,21 +194,9 @@ describe('LoggedIn App Bar Menu', () => {
         sessionStorage.removeItem(SessionStorageService.OwnedAccountProfileGroupCacheKey);
 
         if (authed) {
-            sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+            sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -322,7 +251,7 @@ describe('LoggedIn App Bar Menu', () => {
     //                 tenantId: '',
     //                 idTokenClaims: {
     //                     given_name: 'Billy',
-    //                     family_name: 'Simms'
+    //                     family_name: 'Simmy'
     //                 }
     //             }
     //         ];

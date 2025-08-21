@@ -9,36 +9,13 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import CocktailRecommendationForm from './CocktailRecommendationForm';
 import GlobalContext from '../../components/GlobalContexts';
-import { requestSpy, server } from '../../../tests/setup';
-import { AccountOwnedProfileRs, CocktailRecommendationRq, DisplayThemeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { getTestAccountInfo, getTestOwnedAccountProfile, requestSpy, server } from '../../../tests/setup';
+import { CocktailRecommendationRq } from '../../api/cocktailsApi/cocktailsApiClient';
 import { executeRecaptcha, resetRecaptcha } from '../../services/RecaptchaService';
 import SessionStorageService from '../../services/SessionStorageService';
 
 vi.mock('../../services/RecaptchaService.ts');
 vi.mocked(resetRecaptcha).mockImplementation(() => vi.fn());
-
-const getOwnedAccountProfile = (): AccountOwnedProfileRs => ({
-    subjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
-    email: 'test@tester.com',
-    givenName: 'Billy',
-    familyName: 'Simms',
-    avatarUri: 'https://cdn.cezzis.com/account-avatars/41598664-1466-4e3e-b28c-dfe9837e462e/1e4fc827-8e47-4ebb-9f48-a81c979b3686.webp',
-    loginEmail: '',
-    primaryAddress: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        region: '',
-        subRegion: '',
-        postalCode: '',
-        country: ''
-    },
-    displayName: '',
-    accessibility: {
-        theme: DisplayThemeModel.Light
-    },
-    favoriteCocktails: []
-});
 
 describe('Cocktail Recommendation Form', () => {
     let msalTester: MsalReactTester;
@@ -103,21 +80,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders default cocktail name textbox form state', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -152,21 +117,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders default cocktail ingredients textbox form state', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -200,21 +153,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders default cocktail directions textbox form state', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -248,21 +189,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders cocktail name textbox in errored state when modified to blank', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -293,21 +222,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders cocktail ingredients textbox in errored state when modified to blank', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -338,21 +255,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders cocktail directions textbox in errored state when modified to blank', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -383,21 +288,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders cocktail submit button in default disabled form state', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -418,21 +311,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('renders cocktail submit button in enabled state only after all fields have values', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         render(
             <GlobalContext>
@@ -466,21 +347,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('calls recommendation api successfully and resets form when recaptcha token retrieved', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -535,21 +404,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('sets cocktail name required error when recommendation api fails with name error', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -605,21 +462,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('sets cocktail ingredients required error when recommendation api fails with error', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -676,21 +521,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('sets cocktail directions required error when recommendation api fails with name error', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -748,21 +581,9 @@ describe('Cocktail Recommendation Form', () => {
     });
 
     test('doesnt call api when recaptcha token comes back empty', async () => {
-        sessionStorageService.SetOwnedAccountProfileRequestData(getOwnedAccountProfile());
+        sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await msalTester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Billy',
-                    family_name: 'Simms'
-                }
-            }
-        ];
+        msalTester.accounts = [getTestAccountInfo()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('');

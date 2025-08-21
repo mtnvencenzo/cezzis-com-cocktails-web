@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import MainAppBar from './MainAppBar';
+import { getTestAccountInfo } from '../../../tests/setup';
 
 describe('Main App Bar', () => {
     let msalTester: MsalReactTester;
@@ -68,19 +69,7 @@ describe('Main App Bar', () => {
     ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>
@@ -111,19 +100,7 @@ describe('Main App Bar', () => {
     ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             await msalTester.isLogged();
-            msalTester.accounts = [
-                {
-                    homeAccountId: '',
-                    username: '',
-                    localAccountId: '',
-                    environment: '',
-                    tenantId: '',
-                    idTokenClaims: {
-                        given_name: 'Billy',
-                        family_name: 'Simms'
-                    }
-                }
-            ];
+            msalTester.accounts = [getTestAccountInfo()];
         }
 
         await act(async () =>

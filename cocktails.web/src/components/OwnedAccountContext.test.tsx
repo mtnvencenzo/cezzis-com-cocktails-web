@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Box } from '@mui/material';
 import { OwnedAccountContextProvider, useOwnedAccount } from './OwnedAccountContext';
+import { CocktailUpdatedNotificationModel, DisplayThemeModel } from '../api/cocktailsApi/cocktailsApiClient';
 
 describe('Owned Account Context', () => {
     const TestComp = () => {
@@ -12,10 +13,28 @@ describe('Owned Account Context', () => {
             if (!ownedAccount) {
                 setOwnedAccount({
                     subjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
+                    loginEmail: 'test@test.com',
+                    displayName: 'Test User',
                     email: 'test@tester.com',
-                    givenName: 'Ron',
-                    familyName: 'Vecchi',
-                    avatarUri: 'https://cdn.cezzis.com/account-avatars/41598664-1466-4e3e-b28c-dfe9837e462e/1e4fc827-8e47-4ebb-9f48-a81c979b3686.webp'
+                    givenName: 'Billy',
+                    familyName: 'Simms',
+                    avatarUri: 'https://cdn.cezzis.com/account-avatars/41598664-1466-4e3e-b28c-dfe9837e462e/1e4fc827-8e47-4ebb-9f48-a81c979b3686.webp',
+                    primaryAddress: {
+                        addressLine1: '123 Test St',
+                        addressLine2: '',
+                        city: 'Testville',
+                        region: 'TS',
+                        subRegion: 'Test Region',
+                        postalCode: '12345',
+                        country: 'Testland'
+                    },
+                    accessibility: {
+                        theme: DisplayThemeModel.Light
+                    },
+                    notifications: {
+                        onNewCocktailAdditions: CocktailUpdatedNotificationModel.Always
+                    },
+                    favoriteCocktails: []
                 });
             }
         }, [ownedAccount, setOwnedAccount]);
