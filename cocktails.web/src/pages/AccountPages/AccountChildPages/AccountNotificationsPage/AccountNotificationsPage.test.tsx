@@ -36,10 +36,8 @@ describe('Account Notifications Page', () => {
             </MsalProvider>
         );
 
-        expect(document.title).toBe('Profile Center - Notification Settings');
-
-        await screen.findByText('Profile Center');
-        await screen.findByText('Notification Settings');
+        expect(document.title).toBe('Account Notification Settings');
+        await screen.findByText('Account Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
     });
 });

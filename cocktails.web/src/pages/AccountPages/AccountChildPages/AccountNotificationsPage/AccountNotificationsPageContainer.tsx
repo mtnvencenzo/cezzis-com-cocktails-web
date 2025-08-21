@@ -38,7 +38,7 @@ const AccountNotificationsPageContainer = () => {
 
     return (
         <>
-            <title>Profile Center - Notification Settings</title>
+            <title>Account Notification Settings</title>
             <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/notifications`} />
             <meta name='robots' content='noindex,follow' />
 
@@ -54,14 +54,11 @@ const AccountNotificationsPageContainer = () => {
                     mr: '0px'
                 }}
             >
-                <Grid size={12} sx={{ pt: '5px' }}>
-                    <Typography variant='h6'>Profile Center</Typography>
-                </Grid>
                 <Grid id='notification-settings' size={12} sx={{ pb: '50px' }}>
                     <Grid
                         container
                         sx={{
-                            pt: '20px'
+                            pt: '5px'
                         }}
                     >
                         <Grid size={12} sx={{ pb: '10px', pt: '5px' }}>
