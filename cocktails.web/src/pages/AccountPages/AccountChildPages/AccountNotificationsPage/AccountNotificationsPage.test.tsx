@@ -37,7 +37,7 @@ describe('Account Notifications Page', () => {
         );
 
         expect(document.title).toBe('Account Notification Settings');
-        await screen.findByText('Account Notification Settings');
+        await screen.findByText('Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
     });
 });

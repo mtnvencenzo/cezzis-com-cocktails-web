@@ -38,7 +38,7 @@ describe('Account Notifications Page Container', () => {
         );
 
         expect(document.title).toBe('Account Notification Settings');
-        await screen.findByText('Account Notification Settings');
+        await screen.findByText('Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
     });
 
@@ -62,7 +62,7 @@ describe('Account Notifications Page Container', () => {
         );
 
         expect(document.title).toBe('Account Notification Settings');
-        await screen.findByText('Account Notification Settings');
+        await screen.findByText('Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
 
         const el = await screen.findByTestId('chkNotifyNewCocktails');
@@ -94,7 +94,7 @@ describe('Account Notifications Page Container', () => {
         );
 
         expect(document.title).toBe('Account Notification Settings');
-        await screen.findByText('Account Notification Settings');
+        await screen.findByText('Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
 
         const el = await screen.findByTestId('chkNotifyNewCocktails');
@@ -141,7 +141,7 @@ describe('Account Notifications Page Container', () => {
         );
 
         expect(document.title).toBe('Account Notification Settings');
-        await screen.findByText('Account Notification Settings');
+        await screen.findByText('Notification Settings');
         await screen.findByText('Notify me when new cocktails are added');
 
         const el = await screen.findByTestId('chkNotifyNewCocktails');
