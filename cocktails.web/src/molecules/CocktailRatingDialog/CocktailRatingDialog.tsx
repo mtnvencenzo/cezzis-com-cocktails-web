@@ -50,7 +50,9 @@ const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText
                 stars
             });
 
-            setStars(ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0);
+            const newStars = rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
+
+            setStars(newStars);
         }
 
         if (onConfirm) {
