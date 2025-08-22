@@ -55,6 +55,7 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
                     precision={0.5}
                     max={5}
                     size='medium'
+                    readOnly
                     indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === cocktail.id)?.stars ?? 0}
                     indicatorPosition='Bottom'
                 />
