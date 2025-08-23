@@ -36,7 +36,7 @@ const ShareCocktailButton = ({ cocktailId, testId }: ShareCocktailButtonProps) =
         } else {
             tooltipRef.current?.open({
                 anchorSelect: `.shatip-${testId}`,
-                content: 'aww snap, login required',
+                content: 'Aw snap, login required',
                 place: 'top'
             });
         }

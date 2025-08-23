@@ -57,9 +57,11 @@ const AlertDialog = ({ children, open, title, content, cancelButtonText, confirm
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCancel}>{cancelButtonText}</Button>
+                <Button data-testid='alert-modal-cancel' onClick={handleCancel}>
+                    {cancelButtonText}
+                </Button>
                 {showConfirm && (
-                    <Button onClick={handleConfirm} autoFocus disabled={!canConfirm}>
+                    <Button data-testid='alert-modal-confirm' onClick={handleConfirm} autoFocus disabled={!canConfirm}>
                         {confirmButtonText}
                     </Button>
                 )}

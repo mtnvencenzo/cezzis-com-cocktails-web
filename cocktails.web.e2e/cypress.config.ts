@@ -12,6 +12,19 @@ export default defineConfig({
         experimentalOriginDependencies: true,
         experimentalModifyObstructiveThirdPartyCode: true,
         setupNodeEvents(on) {
+            on('before:run', async () => {
+                console.log('Cypress run started');
+                console.log('Seeding test account');
+                const response = await fetch('https://localhost:7176/api/v1/accounts/test/profile', {
+                    method: 'PUT'
+                });
+
+                if (response.status !== 204) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                console.log('API call successful. Test environment is set up.');
+            });
             on('after:spec', (_, results) => {
                 if (results && results.video && results.stats.failures === 0 && fs.existsSync(results.video)) {
                     fs.unlinkSync(results.video);

@@ -36,7 +36,7 @@ const FavoriteCocktailButton = ({ cocktailId, isFav, testId }: FavoriteCocktailB
         } else {
             tooltipRef.current?.open({
                 anchorSelect: `.favtip-${testId}`,
-                content: 'aww snap, login required',
+                content: 'Aw snap, login required',
                 place: 'top'
             });
         }

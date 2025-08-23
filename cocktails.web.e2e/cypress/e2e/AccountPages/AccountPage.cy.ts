@@ -4,10 +4,6 @@ describe('Account page', () => {
         cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
     });
 
-    beforeEach(() => {
-        cy.validateSession();
-    });
-
     it('login and successfully navigate from menu to the account page then logout', () => {
         cy.visit('/account');
         cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/personal-details`);

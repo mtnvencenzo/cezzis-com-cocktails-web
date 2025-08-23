@@ -84,7 +84,7 @@ Cypress.Commands.addAll({
             .its('sessionStorage')
             .invoke(
                 'getItem',
-                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-accesstoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy-https://cezzis.onmicrosoft.com/cocktailsapi/account.read--`
+                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-accesstoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy-https://cezzis.onmicrosoft.com/cocktailsapi/account.read https://cezzis.onmicrosoft.com/cocktailsapi/account.write--`
             )
             .should('exist');
 
