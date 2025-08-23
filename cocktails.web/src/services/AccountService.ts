@@ -33,7 +33,28 @@ const getOwnedAccountProfile = async (reload: boolean = false): Promise<AccountO
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope]);
-        const results = await cocktailsApiClient.getAccountOwnedProfile(undefined);
+        const results = await cocktailsApiClient.loginAccountOwnedProfile(undefined);
+
+        if (results) {
+            sessionStorageService.SetOwnedAccountProfileRequestData(results);
+        }
+
+        return results;
+    } catch (e: unknown) {
+        const apiError: ProblemDetails = e as ProblemDetails;
+        const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
+        const error = new Error(errorMessage);
+        throw error;
+    }
+};
+
+const loginOwnedAccountProfile = async (): Promise<AccountOwnedProfileRs | undefined> => {
+    const sessionStorageService = new SessionStorageService();
+
+    try {
+        const cocktailsApiClient = new CocktailsApiClient();
+        cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
+        const results = await cocktailsApiClient.loginAccountOwnedProfile(undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -187,8 +208,8 @@ const rateCocktail = async (request: RateCocktailRq): Promise<RateCocktailRs | u
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
         const rs = await cocktailsApiClient.rateCocktail(request, undefined);
 
-        // not awaiting, it's not important to wait for this to finish
-        getAccountCocktailRatings(true);
+        // reload the account cocktail ratings
+        await getAccountCocktailRatings(true);
 
         // Clearing out list data so we can refresh
         // the data with whatever the new ratings are
@@ -251,6 +272,7 @@ const updateOwnedAccountNotificationsSettings = async (request: UpdateAccountOwn
 
 export {
     getOwnedAccountProfile,
+    loginOwnedAccountProfile,
     uploadProfileImage,
     updateOwnedAccountProfile,
     updateOwnedAccountProfileEmail,

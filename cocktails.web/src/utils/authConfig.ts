@@ -2,7 +2,7 @@ import { LogLevel, PublicClientApplication, EventType, EventMessage, Authenticat
 import { getWindowEnv } from './envConfig';
 import logger from '../services/Logger';
 import SessionStorageService from '../services/SessionStorageService';
-import { getAccountCocktailRatings, getOwnedAccountProfile } from '../services/AccountService';
+import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services/AccountService';
 
 let idToken = '';
 
@@ -82,10 +82,8 @@ msalInstance.addEventCallback(async (event: EventMessage) => {
 
             if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
                 if (activeAccount && activeAccount.idTokenClaims && activeAccount.idTokenClaims.sub) {
-                    const getProfilePromise = getOwnedAccountProfile(true);
-                    const getProfileCocktailRatingsPromise = getAccountCocktailRatings(true);
-
-                    await Promise.all([getProfilePromise, getProfileCocktailRatingsPromise]);
+                    await loginOwnedAccountProfile();
+                    await getAccountCocktailRatings(true);
                 }
             }
         }

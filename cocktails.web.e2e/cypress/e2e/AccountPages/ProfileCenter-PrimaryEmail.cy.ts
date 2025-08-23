@@ -6,10 +6,6 @@ describe('Profile center primary email', () => {
         cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
     });
 
-    beforeEach(() => {
-        cy.validateSession();
-    });
-
     it('navigates from menu user account to the personal details primary email', () => {
         cy.visit('/');
         cy.title().should('eq', "Cezzi's Cocktail Recipes");

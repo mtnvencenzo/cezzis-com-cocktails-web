@@ -24,7 +24,7 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
         } else {
             tooltipRef.current?.open({
                 anchorSelect: `.tip-cocktail-rating-${cocktail?.id}`,
-                content: 'aww snap, login required',
+                content: 'Aw snap, login required',
                 place: 'top'
             });
         }
@@ -50,11 +50,12 @@ const CocktailRater = ({ cocktail, onCocktailRated }: CocktailRaterProps) => {
                 sx={{ pt: '0px', pb: '20px' }}
             >
                 <RatingExtended
-                    testId={`rating-${cocktail.id}-${cocktail.rating}`}
+                    testId={`rating-${cocktail.id}`}
                     value={cocktail.rating.rating ?? 0}
                     precision={0.5}
                     max={5}
                     size='medium'
+                    readOnly
                     indicatorValue={ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === cocktail.id)?.stars ?? 0}
                     indicatorPosition='Bottom'
                 />

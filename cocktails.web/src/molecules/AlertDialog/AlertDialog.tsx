@@ -11,9 +11,10 @@ interface AlertDialogProps {
     onConfirm?: () => void;
     children?: React.ReactNode;
     showConfirm?: boolean;
+    canConfirm?: boolean;
 }
 
-const AlertDialog = ({ children, open, title, content, cancelButtonText, confirmButtonText, onCancel = undefined, onConfirm = undefined, showConfirm = true }: AlertDialogProps) => {
+const AlertDialog = ({ children, open, title, content, cancelButtonText, confirmButtonText, onCancel = undefined, onConfirm = undefined, showConfirm = true, canConfirm = true }: AlertDialogProps) => {
     const handleCancel = () => {
         if (onCancel) {
             onCancel();
@@ -56,9 +57,11 @@ const AlertDialog = ({ children, open, title, content, cancelButtonText, confirm
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCancel}>{cancelButtonText}</Button>
+                <Button data-testid='alert-modal-cancel' onClick={handleCancel}>
+                    {cancelButtonText}
+                </Button>
                 {showConfirm && (
-                    <Button onClick={handleConfirm} autoFocus>
+                    <Button data-testid='alert-modal-confirm' onClick={handleConfirm} autoFocus disabled={!canConfirm}>
                         {confirmButtonText}
                     </Button>
                 )}

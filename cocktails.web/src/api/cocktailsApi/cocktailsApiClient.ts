@@ -345,6 +345,53 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
+    loginAccountOwnedProfile(x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
+        let url_ = this.baseUrl + "/api/v1/accounts/owned/profile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+                "X-Key": x_Key !== undefined && x_Key !== null ? "" + x_Key : "",
+                "Accept": "application/json; x-api-version=1.0"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processLoginAccountOwnedProfile(_response));
+        });
+    }
+
+    protected processLoginAccountOwnedProfile(response: Response): Promise<AccountOwnedProfileRs> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            result201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as AccountOwnedProfileRs;
+            return result201;
+            });
+        } else if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as AccountOwnedProfileRs;
+            return result200;
+            });
+        } else {
+            return response.text().then((_responseText) => {
+            let resultdefault: any = null;
+            resultdefault = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ProblemDetails;
+            return throwException("A server side error occurred.", status, _responseText, _headers, resultdefault);
+            });
+        }
+    }
+
+    /**
+     * @param x_Key (optional) Subscription key
+     * @return OK
+     */
     getAccountOwnedProfile(x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile";
         url_ = url_.replace(/[?&]$/, "");

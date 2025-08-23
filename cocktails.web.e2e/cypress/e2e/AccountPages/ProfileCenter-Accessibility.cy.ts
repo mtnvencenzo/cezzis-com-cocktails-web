@@ -4,10 +4,6 @@ describe('Profile center accessibility', () => {
         cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
     });
 
-    beforeEach(() => {
-        cy.validateSession();
-    });
-
     it('navigates to the accessibility account page', () => {
         cy.visit('/');
         cy.title().should('eq', "Cezzi's Cocktail Recipes");

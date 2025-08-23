@@ -14,9 +14,20 @@ interface CocktailRatingDialogProps {
     confirmButtonText: string;
     onCancel?: () => void;
     onConfirm?: (rateRs: RateCocktailRs | undefined) => void;
+    onChange?: (stars: number) => void;
 }
 
-const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText, confirmButtonText, onCancel = undefined, onConfirm = undefined }: CocktailRatingDialogProps) => {
+const CocktailRatingDialog = ({
+    open,
+    cocktail,
+    title,
+    content,
+    cancelButtonText,
+    confirmButtonText,
+    onCancel = undefined,
+    onConfirm = undefined,
+    onChange = undefined
+}: CocktailRatingDialogProps) => {
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
     const [hover, setHover] = useState(0);
     const [stars, setStars] = useState<number>(ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0);
@@ -50,7 +61,9 @@ const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText
                 stars
             });
 
-            setStars(ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0);
+            const newStars = rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
+
+            setStars(newStars);
         }
 
         if (onConfirm) {
@@ -64,6 +77,10 @@ const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText
         }
 
         setStars(value);
+
+        if (onChange) {
+            onChange(value);
+        }
     };
 
     const labels: { [index: string]: string } = {
@@ -87,6 +104,7 @@ const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText
             showConfirm={!hasAlreadyRated}
             onCancel={handleCancelCocktailRating}
             onConfirm={handleConfirmCocktailRating}
+            canConfirm={stars > 0}
         >
             <Rating
                 value={stars}

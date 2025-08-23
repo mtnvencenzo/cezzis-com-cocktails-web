@@ -4,10 +4,6 @@ describe('Contact page', () => {
         cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
     });
 
-    beforeEach(() => {
-        cy.validateSession();
-    });
-
     it('logs in and fills in cocktail recommendation form and sends it', () => {
         cy.visit('/');
 
