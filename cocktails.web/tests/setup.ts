@@ -5,7 +5,20 @@ import { MsalReactTesterPlugin } from 'msal-react-tester';
 import { setupServer } from 'msw/node';
 import 'vitest-location-mock';
 import { AccountInfo } from '@azure/msal-browser';
-import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, DisplayThemeModel } from '../src/api/cocktailsApi/cocktailsApiClient';
+import {
+    AccountCocktailRatingsModel,
+    AccountCocktailRatingsRs,
+    AccountOwnedProfileRs,
+    CocktailModel,
+    CocktailUpdatedNotificationModel,
+    DisplayThemeModel,
+    GlasswareTypeModel,
+    IngredientApplicationModel,
+    IngredientRequirementTypeModel,
+    IngredientTypeModel,
+    PreparationTypeModel,
+    UofMTypeModel
+} from '../src/api/cocktailsApi/cocktailsApiClient';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -82,6 +95,10 @@ export const getTestOwnedAccountProfile = (): AccountOwnedProfileRs => ({
     favoriteCocktails: []
 });
 
+export const getTestOwnedAccountCocktailRatings = (ratings: AccountCocktailRatingsModel[] = []): AccountCocktailRatingsRs => ({
+    ratings: ratings ?? []
+});
+
 export const getTestAccountInfo = (): AccountInfo => ({
     homeAccountId: '',
     username: '',
@@ -93,3 +110,67 @@ export const getTestAccountInfo = (): AccountInfo => ({
         family_name: 'Simms'
     }
 });
+
+export const getTestCocktails = (): CocktailModel[] => [
+    {
+        id: 'adonis',
+        content: 'The Adonis',
+        title: '',
+        searchableTitles: ['The Adonis'],
+        tags: ['tag1', 'tag2'],
+        rating: {
+            oneStars: 1,
+            twoStars: 2,
+            threeStars: 3,
+            fourStars: 5,
+            fiveStars: 1,
+            totalStars: 39,
+            rating: 3,
+            ratingCount: 12
+        },
+        ingredients: [
+            {
+                name: 'Ingredient 1',
+                units: 1,
+                uoM: UofMTypeModel.Ounces,
+                types: [IngredientTypeModel.Fruit, IngredientTypeModel.Spirit],
+                applications: [IngredientApplicationModel.Additional],
+                preparation: PreparationTypeModel.None,
+                suggestions: 'Some friendly suggestions',
+                requirement: IngredientRequirementTypeModel.Optional,
+                display: '1 oz Ingredient 1'
+            },
+            {
+                name: 'Ingredient 2',
+                units: 2,
+                uoM: UofMTypeModel.Dashes,
+                types: [IngredientTypeModel.Protein, IngredientTypeModel.Spirit],
+                applications: [IngredientApplicationModel.Additional],
+                preparation: PreparationTypeModel.None,
+                suggestions: 'Some friendly suggestions for ingredient 2',
+                requirement: IngredientRequirementTypeModel.Required,
+                display: '2 dashes Ingredient 2'
+            }
+        ],
+        serves: 1,
+        glassware: [GlasswareTypeModel.WineGlass, GlasswareTypeModel.Coupe],
+        descriptiveTitle: 'This is the Adonis',
+        description: 'The adonis is a cocktail',
+        isIba: true,
+        publishedOn: new Date(),
+        modifiedOn: new Date(),
+        searchTiles: [],
+        mainImages: [],
+        prepTimeMinutes: 10,
+        instructions: [
+            {
+                display: 'instruction 1',
+                order: 0
+            },
+            {
+                display: 'instruction 2',
+                order: 1
+            }
+        ]
+    }
+];

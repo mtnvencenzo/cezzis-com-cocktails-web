@@ -89,6 +89,7 @@ const CocktailRatingDialog = ({ open, cocktail, title, content, cancelButtonText
             showConfirm={!hasAlreadyRated}
             onCancel={handleCancelCocktailRating}
             onConfirm={handleConfirmCocktailRating}
+            canConfirm={stars > 0}
         >
             <Rating
                 value={stars}
