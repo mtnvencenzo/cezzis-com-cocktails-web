@@ -4,10 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import userEvent from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../components/GlobalContexts';
-import { getTestAccountInfo, getTestCocktails, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile } from '../../../tests/setup';
+import { getTestAccountInfo, getTestCocktails, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, server } from '../../../tests/setup';
 import SessionStorageService from '../../services/SessionStorageService';
 import CocktailRatingDialog from './CocktailRatingDialog';
+import { AccountCocktailRatingsRs, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
 
 describe('Cocktail Rating Dialog', () => {
     let msalTester: MsalReactTester;
@@ -233,15 +235,75 @@ describe('Cocktail Rating Dialog', () => {
         expect(submitButton).toBeDisabled();
     });
 
-    test('renders modal and selects stars and submits', async () => {
+    test('renders modal and selects stars and submits rating', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([]));
         await msalTester.isLogged();
         msalTester.accounts = [getTestAccountInfo()];
+        const cocktailId = 'adonis';
 
-        const cocktail = cocktails.find((c) => c.id === 'adonis')!;
+        const serverRatingRs: RateCocktailRs = {
+            cocktailId,
+            ratings: [
+                {
+                    cocktailId,
+                    stars: 3
+                }
+            ],
+            cocktailRating: {
+                oneStars: 0,
+                twoStars: 0,
+                threeStars: 1,
+                fourStars: 0,
+                fiveStars: 0,
+                totalStars: 1,
+                ratingCount: 0,
+                rating: 1
+            }
+        };
+
+        // For the initial save response
+        server.use(
+            http.post(
+                'http://localhost:0/api/v1/accounts/owned/profile/cocktails/ratings',
+                () =>
+                    HttpResponse.json<RateCocktailRs>(serverRatingRs, {
+                        status: 201,
+                        statusText: 'Created'
+                    }),
+                { once: true }
+            )
+        );
+
+        // For the subsequent reload of the account cocktail ratings
+        server.use(
+            http.get(
+                'http://localhost:0/api/v1/accounts/owned/profile/cocktails/ratings',
+                () =>
+                    HttpResponse.json<AccountCocktailRatingsRs>(
+                        {
+                            ratings: serverRatingRs.ratings
+                        },
+                        {
+                            status: 200,
+                            statusText: 'Ok'
+                        }
+                    ),
+                { once: true }
+            )
+        );
+
+        let changedStars = 0;
+        let confirmed = false;
+
+        const cocktail = cocktails.find((c) => c.id === cocktailId)!;
         const onCancel = async () => {};
-        const onConfirm = async () => {};
+        const onConfirm = async () => {
+            confirmed = true;
+        };
+        const onChange = (stars: number) => {
+            changedStars = stars;
+        };
 
         render(
             <GlobalContext>
@@ -255,6 +317,7 @@ describe('Cocktail Rating Dialog', () => {
                             cancelButtonText='Cancel My Rating'
                             confirmButtonText='Rate My Cocktail'
                             onCancel={onCancel}
+                            onChange={onChange}
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
@@ -275,9 +338,14 @@ describe('Cocktail Rating Dialog', () => {
         expect(submitButton).toBeDisabled();
 
         const starLabelEL = await screen.findByLabelText("3 Stars, Meh, It's five oclock somewhere.");
-        await userEvent.hover(starLabelEL);
-        await userEvent.click(starLabelEL);
+        fireEvent.click(starLabelEL); // using fireEvent here because userEvent was not causing the change event to happen
         selectedStars = screen.queryAllByTestId('StarIcon');
         expect(selectedStars.length).toBe(3);
+
+        expect(changedStars).toBe(3);
+        expect(submitButton).toBeEnabled();
+
+        await userEvent.click(submitButton);
+        expect(confirmed).toBeTruthy();
     });
 });
