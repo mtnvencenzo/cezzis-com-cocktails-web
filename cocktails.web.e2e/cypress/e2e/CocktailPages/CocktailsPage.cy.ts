@@ -158,13 +158,16 @@ describe('Cocktails page', () => {
                     .click()
                     .then(() => {
                         cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled').click();
+                        cy.get('[data-testid="alert-modal-confirm"]')
+                            .click()
+                            .then(() => {
+                                cy.get('[data-testid="StarIcon"]')
+                                    .its('length')
+                                    .then((count) => {
+                                        expect(count).to.be.greaterThan(0);
+                                    });
+                            });
                     });
-            });
-
-        cy.get('[data-testid="StarIcon"]')
-            .its('length')
-            .then((count) => {
-                expect(count).to.be.greaterThan(0);
             });
     });
 
@@ -189,29 +192,32 @@ describe('Cocktails page', () => {
                 cy.contains("4 Stars, Yes bartender, I'll have another round.")
                     .click()
                     .then(() => {
-                        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled').click();
-                    });
-            });
+                        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
+                        cy.get('[data-testid="alert-modal-confirm"]')
+                            .click()
+                            .then(() => {
+                                cy.get('[data-testid="StarIcon"]')
+                                    .its('length')
+                                    .then((count) => {
+                                        expect(count).to.be.greaterThan(0);
+                                    });
 
-        cy.get('[data-testid="StarIcon"]')
-            .its('length')
-            .then((count) => {
-                expect(count).to.be.greaterThan(0);
-            });
+                                cy.get('[data-testid="cocktail-rating-sazerac"]')
+                                    .click()
+                                    .then(() => {
+                                        cy.contains('Rate the Sazerac Cocktail Recipe');
 
-        cy.get('[data-testid="cocktail-rating-sazerac"]')
-            .click()
-            .then(() => {
-                cy.contains('Rate the Sazerac Cocktail Recipe');
+                                        cy.get('[data-testid="alert-modal-confirm"]').should('not.exist');
 
-                cy.get('[data-testid="alert-modal-confirm"]').should('not.exist');
+                                        cy.contains('Hmm, it looks like you have already rated this cocktail. Thank you for being an active contributor!').click();
 
-                cy.contains('Hmm, it looks like you have already rated this cocktail. Thank you for being an active contributor!').click();
-
-                cy.get('[data-testid="alert-modal-cancel"]')
-                    .click()
-                    .then(() => {
-                        cy.contains('Rate the Sazerac Cocktail Recipe').should('not.exist');
+                                        cy.get('[data-testid="alert-modal-cancel"]')
+                                            .click()
+                                            .then(() => {
+                                                cy.contains('Rate the Sazerac Cocktail Recipe').should('not.exist');
+                                            });
+                                    });
+                            });
                     });
             });
     });
