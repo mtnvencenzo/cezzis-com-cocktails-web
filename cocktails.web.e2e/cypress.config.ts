@@ -11,19 +11,22 @@ export default defineConfig({
         experimentalInteractiveRunEvents: true,
         experimentalOriginDependencies: true,
         experimentalModifyObstructiveThirdPartyCode: true,
-        setupNodeEvents(on) {
+        setupNodeEvents(on, config) {
             on('before:run', async () => {
                 console.log('Cypress run started');
                 console.log('Seeding test account');
-                const response = await fetch('https://localhost:7176/api/v1/accounts/test/profile', {
-                    method: 'PUT'
+                const response = await fetch(`${config.env.cocktailsApiBaseUrl}/api/v1/accounts/test/profile`, {
+                    method: 'PUT',
+                    headers: {
+                        'X-Key': `${config.env.cocktailsApiKey}`
+                    }
                 });
 
                 if (response.status !== 204) {
-                    throw new Error(`API call failed with status: ${response.status}`);
+                    throw new Error(`---Failed ${response.status}, test account is not setup.  Some tests might fail.`);
                 }
 
-                console.log('API call successful. Test environment is set up.');
+                console.log('---Success, test account is setup.');
             });
             on('after:spec', (_, results) => {
                 if (results && results.video && results.stats.failures === 0 && fs.existsSync(results.video)) {
@@ -40,6 +43,8 @@ export default defineConfig({
                     return null;
                 }
             });
+
+            return config;
         }
     },
     env: {
@@ -48,7 +53,9 @@ export default defineConfig({
         b2cClientId: '84744194-da27-410f-ae0e-74f5589d4c96',
         b2cUserObjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
         b2cUserEmail: 'rvecchi+cypress@gmail.com',
-        b2cUserPassword: '---'
+        b2cUserPassword: '---',
+        cocktailsApiBaseUrl: 'https://localhost:7176',
+        cocktailsApiKey: '---'
     },
     video: true,
     trashAssetsBeforeRuns: true,
