@@ -158,11 +158,7 @@ describe('Cocktails page', () => {
         cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
         cy.get('[data-testid="alert-modal-confirm"]').click();
 
-        cy.get('[data-testid="StarIcon"]')
-            .its('length')
-            .then((count) => {
-                expect(count).to.be.greaterThan(0);
-            });
+        cy.get('[data-testid="rating-indicator-5"]').should('exist');
     });
 
     it('authenticated user rates a cocktail but can only do it once', () => {
@@ -187,11 +183,7 @@ describe('Cocktails page', () => {
         cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
         cy.get('[data-testid="alert-modal-confirm"]').click();
 
-        cy.get('[data-testid="StarIcon"]')
-            .its('length')
-            .then((count) => {
-                expect(count).to.be.greaterThan(0);
-            });
+        cy.get('[data-testid="rating-indicator-4"]').should('exist');
 
         cy.get('[data-testid="cocktail-rating-sazerac"]').click();
 
