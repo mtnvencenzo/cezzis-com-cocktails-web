@@ -146,28 +146,22 @@ describe('Cocktails page', () => {
                 expect(src).to.contain('traditional-stone-fence-cocktail-main.webp');
             });
 
-        cy.get('[data-testid="cocktail-rating-stone-fence"]')
-            .click()
-            .then(() => {
-                cy.contains('Rate the Stone Fence Cocktail Recipe');
-                cy.contains("Help us spread the word about this cocktail recipe. Select your rating below and click the 'Rate Cocktail' button.");
+        cy.get('[data-testid="cocktail-rating-stone-fence"]').click();
 
-                cy.get('[data-testid="alert-modal-confirm"]').should('be.disabled');
+        cy.contains('Rate the Stone Fence Cocktail Recipe');
+        cy.contains("Help us spread the word about this cocktail recipe. Select your rating below and click the 'Rate Cocktail' button.");
 
-                cy.contains('5 Stars, One of my favorites!')
-                    .click()
-                    .then(() => {
-                        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled').click();
-                        cy.get('[data-testid="alert-modal-confirm"]')
-                            .click()
-                            .then(() => {
-                                cy.get('[data-testid="StarIcon"]')
-                                    .its('length')
-                                    .then((count) => {
-                                        expect(count).to.be.greaterThan(0);
-                                    });
-                            });
-                    });
+        cy.get('[data-testid="alert-modal-confirm"]').should('be.disabled');
+
+        cy.contains('5 Stars, One of my favorites!').click();
+
+        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
+        cy.get('[data-testid="alert-modal-confirm"]').click();
+
+        cy.get('[data-testid="StarIcon"]')
+            .its('length')
+            .then((count) => {
+                expect(count).to.be.greaterThan(0);
             });
     });
 
@@ -182,43 +176,33 @@ describe('Cocktails page', () => {
         cy.get('[data-testid="sazerac"]').click();
         cy.title().should('eq', 'Sazerac Cocktail Recipe');
 
-        cy.get('[data-testid="cocktail-rating-sazerac"]')
-            .click()
-            .then(() => {
-                cy.contains('Rate the Sazerac Cocktail Recipe');
+        cy.get('[data-testid="cocktail-rating-sazerac"]').click();
 
-                cy.get('[data-testid="alert-modal-confirm"]').should('be.disabled');
+        cy.contains('Rate the Sazerac Cocktail Recipe');
 
-                cy.contains("4 Stars, Yes bartender, I'll have another round.")
-                    .click()
-                    .then(() => {
-                        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
-                        cy.get('[data-testid="alert-modal-confirm"]')
-                            .click()
-                            .then(() => {
-                                cy.get('[data-testid="StarIcon"]')
-                                    .its('length')
-                                    .then((count) => {
-                                        expect(count).to.be.greaterThan(0);
-                                    });
+        cy.get('[data-testid="alert-modal-confirm"]').should('be.disabled');
 
-                                cy.get('[data-testid="cocktail-rating-sazerac"]')
-                                    .click()
-                                    .then(() => {
-                                        cy.contains('Rate the Sazerac Cocktail Recipe');
+        cy.contains("4 Stars, Yes bartender, I'll have another round.").click();
 
-                                        cy.get('[data-testid="alert-modal-confirm"]').should('not.exist');
+        cy.get('[data-testid="alert-modal-confirm"]').should('not.be.disabled');
+        cy.get('[data-testid="alert-modal-confirm"]').click();
 
-                                        cy.contains('Hmm, it looks like you have already rated this cocktail. Thank you for being an active contributor!').click();
-
-                                        cy.get('[data-testid="alert-modal-cancel"]')
-                                            .click()
-                                            .then(() => {
-                                                cy.contains('Rate the Sazerac Cocktail Recipe').should('not.exist');
-                                            });
-                                    });
-                            });
-                    });
+        cy.get('[data-testid="StarIcon"]')
+            .its('length')
+            .then((count) => {
+                expect(count).to.be.greaterThan(0);
             });
+
+        cy.get('[data-testid="cocktail-rating-sazerac"]').click();
+
+        cy.contains('Rate the Sazerac Cocktail Recipe');
+
+        cy.get('[data-testid="alert-modal-confirm"]').should('not.exist');
+
+        cy.contains('Hmm, it looks like you have already rated this cocktail. Thank you for being an active contributor!').click();
+
+        cy.get('[data-testid="alert-modal-cancel"]').click();
+
+        cy.contains('Rate the Sazerac Cocktail Recipe').should('not.exist');
     });
 });
