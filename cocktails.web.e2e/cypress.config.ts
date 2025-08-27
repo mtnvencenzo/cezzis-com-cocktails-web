@@ -15,10 +15,17 @@ export default defineConfig({
             on('before:run', async () => {
                 console.log('Cypress run started');
                 console.log('Seeding test account');
+
+                let cypressApiKey = config.env.cypressApiKey;
+
+                if (!cypressApiKey || cypressApiKey === '') {
+                    cypressApiKey = process.env.cypressApiKey;
+                }
+
                 const response = await fetch(`${config.env.cocktailsApiBaseUrl}/api/v1/accounts/test/profile`, {
                     method: 'PUT',
                     headers: {
-                        'X-Key': `${config.env.cypressApiKey}`
+                        'X-Key': `${cypressApiKey}`
                     }
                 });
 
