@@ -22,7 +22,6 @@ const AccountFavoriteCocktailsPageContainer = () => {
     const [cocktailListModels, setCocktailListModels] = useState<CocktailsListModel[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
-    const [clearedCount, setClearedCount] = useState<number>(1);
     const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
@@ -38,7 +37,13 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
             setSkip(skip + DEFAULT_TAKE);
             setApiCallFailed(false);
-            setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
+            setCocktailListModels((prevModels) => {
+                const models = [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])];
+
+                // Might seem redundant, but making sure item is in owned account favorites list.
+                // This fixes the issue when the user is already on the page and un-favoriting them
+                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
+            });
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
         } catch {
             setApiCallFailed(true);
@@ -74,14 +79,13 @@ const AccountFavoriteCocktailsPageContainer = () => {
             setHasMore(true);
             setSkip(0);
             setOpenConfirmation(false);
-            setClearedCount((prev) => prev + 1);
         }
     };
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchData();
-    }, [clearedCount]);
+    }, [ownedAccount?.favoriteCocktails]);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (
