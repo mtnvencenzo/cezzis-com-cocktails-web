@@ -34,13 +34,6 @@ const AccountCocktailRatingsPageContainer = () => {
             const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ratedCocktailIds ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
 
-            // items.forEach((x) => {
-            //     const rating = ownedAccountCocktailRatings?.ratings?.find((y) => y.cocktailId === x.id);
-            //     if (rating) {
-            //         x.rating = rating.stars;
-            //     }
-            // });
-
             setSkip(skip + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);

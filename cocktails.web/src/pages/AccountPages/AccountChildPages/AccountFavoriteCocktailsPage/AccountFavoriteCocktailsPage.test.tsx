@@ -5,7 +5,11 @@ import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
 import AccountFavoriteCocktailsPage from './AccountFavoriteCocktailsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo } from '../../../../../tests/setup';
+import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { http, HttpResponse } from 'msw';
+import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
+import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import SessionStorageService from '../../../../services/SessionStorageService';
 
 describe('Account Interactions Favorite Cocktails Page', () => {
     let msalTester: MsalReactTester;
@@ -23,6 +27,35 @@ describe('Account Interactions Favorite Cocktails Page', () => {
     test('renders account interactions favorite cocktails page', async () => {
         await msalTester.isLogged();
         msalTester.accounts = [getTestAccountInfo()];
+
+        const profile = getTestOwnedAccountProfile();
+        profile.favoriteCocktails = [];
+        const sessionStorageService = new SessionStorageService();
+        sessionStorageService.SetOwnedAccountProfileRequestData(profile);
+
+        server.use(
+            http.get(
+                'http://localhost:0/api/v1/cocktails',
+                ({ request }) => {
+                    const url = new URL(request.url);
+                    expect(url.searchParams.get('skip')).toBe('0');
+                    expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
+                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
+                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
+
+                    return HttpResponse.json<CocktailsListRs>(
+                        {
+                            items: []
+                        },
+                        {
+                            status: 200,
+                            statusText: 'OK'
+                        }
+                    );
+                },
+                { once: true }
+            )
+        );
 
         render(
             <MsalProvider instance={msalTester.client}>

@@ -1,13 +1,15 @@
-import { describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
+import { MsalReactTester } from 'msal-react-tester';
 import FavoriteCocktailsPageContainer from './FavoriteCocktailsPageContainer';
 import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
-import { server } from '../../../tests/setup';
+import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 import { DEFAULT_TAKE } from '../../services/CocktailsService';
+import SessionStorageService from '../../services/SessionStorageService';
 
 const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
     const items: CocktailsListModel[] = [];
@@ -31,8 +33,30 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
     return items;
 };
 
-describe('Cocktails List Page Container', () => {
+describe('Favorite Cocktails Page Container', () => {
+    let msalTester: MsalReactTester;
+
+    beforeEach(() => {
+        msalTester = new MsalReactTester();
+        msalTester.interationType = 'Redirect';
+        msalTester.spyMsal();
+    });
+
+    afterEach(() => {
+        msalTester.resetSpyMsal();
+    });
+
     test('renders and fetches cocktails data', async () => {
+        await msalTester.isLogged();
+        msalTester.accounts = [getTestAccountInfo()];
+
+        const profile = getTestOwnedAccountProfile();
+
+        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);
+
+        const sessionStorageService = new SessionStorageService();
+        sessionStorageService.SetOwnedAccountProfileRequestData(profile);
+
         localStorage.removeItem(LocalStorageService.CocktailsListGroupCacheKey);
 
         server.use(
@@ -47,7 +71,7 @@ describe('Cocktails List Page Container', () => {
 
                     return HttpResponse.json<CocktailsListRs>(
                         {
-                            items: getCocktailItems('Adonis', DEFAULT_TAKE)
+                            items: getCocktailItems('adonis', DEFAULT_TAKE)
                         },
                         {
                             status: 200,
@@ -69,7 +93,7 @@ describe('Cocktails List Page Container', () => {
 
         /* eslint-disable no-await-in-loop */
         for (let i = 0; i < DEFAULT_TAKE; i += 1) {
-            const el = await screen.findByText(`The Adonis ${i}`);
+            const el = await screen.findByText(`The adonis ${i}`);
             expect(el).toBeTruthy();
             expect(el.classList).toContain('cocktailLink');
         }
@@ -77,6 +101,15 @@ describe('Cocktails List Page Container', () => {
     });
 
     test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
+        await msalTester.isLogged();
+        msalTester.accounts = [getTestAccountInfo()];
+
+        const profile = getTestOwnedAccountProfile();
+        profile.favoriteCocktails.push('Test-1');
+        profile.favoriteCocktails.push('Test-2');
+        const sessionStorageService = new SessionStorageService();
+        sessionStorageService.SetOwnedAccountProfileRequestData(profile);
+
         localStorage.removeItem(LocalStorageService.CocktailsListGroupCacheKey);
 
         server.use(
