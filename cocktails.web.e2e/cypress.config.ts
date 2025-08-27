@@ -18,7 +18,7 @@ export default defineConfig({
                 const response = await fetch(`${config.env.cocktailsApiBaseUrl}/api/v1/accounts/test/profile`, {
                     method: 'PUT',
                     headers: {
-                        'X-Key': `${config.env.cocktailsApiKey}`
+                        'X-Key': `${config.env.cypressApiKey}`
                     }
                 });
 
@@ -53,9 +53,9 @@ export default defineConfig({
         b2cClientId: '84744194-da27-410f-ae0e-74f5589d4c96',
         b2cUserObjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
         b2cUserEmail: 'rvecchi+cypress@gmail.com',
-        b2cUserPassword: '---',
+        cypressUserPassword: '---',
         cocktailsApiBaseUrl: 'https://localhost:7176',
-        cocktailsApiKey: '---'
+        cypressApiKey: '---'
     },
     video: true,
     trashAssetsBeforeRuns: true,

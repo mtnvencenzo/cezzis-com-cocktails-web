@@ -3,7 +3,7 @@ import { randomInt } from '../../support/utils';
 describe('Profile center primary email', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
+        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates from menu user account to the personal details primary email', () => {
