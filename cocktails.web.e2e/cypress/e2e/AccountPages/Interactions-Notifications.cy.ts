@@ -1,7 +1,7 @@
 describe('Interactions notifications', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
+        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates to the notifications account page', () => {

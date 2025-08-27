@@ -35,7 +35,13 @@ const FavoriteCocktailsPageContainer = () => {
 
             setSkip(skip + DEFAULT_TAKE);
             setApiCallFailed(false);
-            setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
+            setCocktailListModels((prevModels) => {
+                const models = [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])];
+
+                // Might seem redundant, but making sure item is in owned account favorites list.
+                // This fixes the issue when the user is already on the page and un-favoriting them
+                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
+            });
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
         } catch {
             setApiCallFailed(true);
@@ -52,7 +58,7 @@ const FavoriteCocktailsPageContainer = () => {
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('My Favorite Cocktails');
-    }, []);
+    }, [ownedAccount?.favoriteCocktails]);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (

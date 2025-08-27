@@ -19,12 +19,12 @@ yarn install
 
 ### Run All Tests
 ```bash
-yarn cypress run --env b2cUserPassword=<your-password>
+yarn cypress run --env cypressUserPassword=<your-password>
 ```
 
 ### Run Specific Test File
 ```bash
-yarn cypress run --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env b2cUserPassword=<your-password>
+yarn cypress run --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env cypressUserPassword=<your-password>
 ```
 
 ### Run Tests in Interactive Mode
@@ -39,15 +39,15 @@ yarn cypress open --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts'
 ### Run Tests with Specific Browser
 ```bash
 # Run tests in Chrome
-yarn cypress run --browser chrome --env b2cUserPassword=<your-password>
+yarn cypress run --browser chrome --env cypressUserPassword=<your-password>
 
 # Run tests in Firefox
-yarn cypress run --browser firefox -- --env b2cUserPassword=<your-password>
+yarn cypress run --browser firefox -- --env cypressUserPassword=<your-password>
 ```
 
 ### Run Tests in Headless Mode
 ```bash
-yarn cypress run --headless --env b2cUserPassword=<your-password>
+yarn cypress run --headless --env cypressUserPassword=<your-password>
 ```
 
 ## Test Reports
@@ -63,7 +63,7 @@ The following environment variables are used in the tests:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| b2cUserPassword | Password for B2C test user | Yes |
+| cypressUserPassword | Password for B2C test user | Yes |
 | b2cUserEmail | Email for B2C test user | Yes |
 | b2cClientId | B2C client ID | Yes |
 | b2cTenantId | B2C tenant ID | Yes |
@@ -111,7 +111,7 @@ yarn cypress verify
 yarn cypress run --config-file cypress.config.ts --config video=true,trashAssetsBeforeRuns=true
 
 # Run tests with specific environment
-yarn cypress run --env type=staging,b2cUserPassword=<your-password>
+yarn cypress run --env type=staging,cypressUserPassword=<your-password>
 ```
 
 ## Best Practices

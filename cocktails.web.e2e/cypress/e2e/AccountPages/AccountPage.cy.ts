@@ -1,7 +1,7 @@
 describe('Account page', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
+        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('login and successfully navigate from menu to the account page then logout', () => {

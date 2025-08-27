@@ -28,10 +28,14 @@ Cypress.Commands.addAll({
 
                     cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/personal-details`);
 
-                    cy.get('[data-testid="menu-avatar"]').click();
-                    cy.get('[data-testid="l-menu-usersettings"]').click();
-
-                    cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
+                    cy.get('[data-testid="menu-avatar"]')
+                        .click()
+                        .then(() => {
+                            cy.get('[data-testid="l-menu-usersettings"]').scrollIntoView();
+                            cy.get('[data-testid="l-menu-usersettings"]').should('be.visible');
+                            cy.get('[data-testid="l-menu-usersettings"]').click();
+                            cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
+                        });
                 });
             },
             {

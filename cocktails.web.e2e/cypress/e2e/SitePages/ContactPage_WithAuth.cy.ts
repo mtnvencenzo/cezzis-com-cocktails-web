@@ -1,7 +1,7 @@
 describe('Contact page', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('b2cUserPassword'));
+        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('logs in and fills in cocktail recommendation form and sends it', () => {
