@@ -1,40 +1,17 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { http, HttpResponse } from 'msw';
 import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
-import FavoriteCocktailsPageContainer from './FavoriteCocktailsPageContainer';
-import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
-import LocalStorageService from '../../services/LocalStorageService';
-import { getTestAccountInfo, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../tests/setup';
-import GlobalContext from '../../components/GlobalContexts';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
-import SessionStorageService from '../../services/SessionStorageService';
+import { http, HttpResponse } from 'msw';
+import AccountFavoriteCocktailsPageContainer from './AccountFavoriteCocktailsPageContainer';
+import GlobalContext from '../../../../components/GlobalContexts';
+import { getTestAccountInfo, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
+import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import SessionStorageService from '../../../../services/SessionStorageService';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
-
-    for (let i = 0; i < count; i += 1) {
-        items.push({
-            id: `${name}-${i}`,
-            title: `The ${name} ${i}`,
-            isIba: true,
-            descriptiveTitle: `The ${name} ${i}`,
-            searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
-            ingredients: [],
-            mainImages: [],
-            rating: 0,
-            serves: 1,
-            glassware: [],
-            prepTimeMinutes: 10
-        });
-    }
-
-    return items;
-};
-
-describe('Favorite Cocktails Page Container', () => {
+describe('Account Interactions Favorite Cocktails Page Container', () => {
     let msalTester: MsalReactTester;
 
     beforeEach(() => {
@@ -47,18 +24,14 @@ describe('Favorite Cocktails Page Container', () => {
         msalTester.resetSpyMsal();
     });
 
-    test('renders and fetches cocktails data', async () => {
+    test('renders default content when no favorites', async () => {
         await msalTester.isLogged();
         msalTester.accounts = [getTestAccountInfo()];
 
         const profile = getTestOwnedAccountProfile();
-
-        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);
-
+        profile.favoriteCocktails = [];
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
-
-        localStorage.removeItem(LocalStorageService.CocktailsListGroupCacheKey);
 
         server.use(
             http.get(
@@ -69,10 +42,11 @@ describe('Favorite Cocktails Page Container', () => {
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
+                    expect(url.searchParams.get('match-exclusive')).toBe('true');
 
                     return HttpResponse.json<CocktailsListRs>(
                         {
-                            items: getCocktailItems('adonis', DEFAULT_TAKE)
+                            items: []
                         },
                         {
                             status: 200,
@@ -85,96 +59,18 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <GlobalContext>
-                <MemoryRouter>
-                    <FavoriteCocktailsPageContainer />
-                </MemoryRouter>
-            </GlobalContext>
+            <MsalProvider instance={msalTester.client}>
+                <GlobalContext>
+                    <MemoryRouter>
+                        <AccountFavoriteCocktailsPageContainer />
+                    </MemoryRouter>
+                </GlobalContext>
+            </MsalProvider>
         );
 
-        expect(document.title).toBe('My Favorite Cocktails');
+        await screen.findByText('Favorite Cocktail Recipes');
 
-        /* eslint-disable no-await-in-loop */
-        for (let i = 0; i < DEFAULT_TAKE; i += 1) {
-            const el = await screen.findByText(`The adonis ${i}`);
-            expect(el).toBeTruthy();
-            expect(el.classList).toContain('cocktailLink');
-        }
-        /* eslint-enable no-await-in-loop */
-    });
-
-    test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
-
-        const profile = getTestOwnedAccountProfile();
-        profile.favoriteCocktails.push('Test-1');
-        profile.favoriteCocktails.push('Test-2');
-        const sessionStorageService = new SessionStorageService();
-        sessionStorageService.SetOwnedAccountProfileRequestData(profile);
-
-        localStorage.removeItem(LocalStorageService.CocktailsListGroupCacheKey);
-
-        server.use(
-            http.get(
-                'http://localhost:0/api/v1/cocktails',
-                () =>
-                    HttpResponse.json<CocktailsListRs>(
-                        {
-                            items: [
-                                {
-                                    id: 'Test-1',
-                                    title: 'Test Title 1',
-                                    isIba: true,
-                                    descriptiveTitle: 'Test Title 1',
-                                    searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
-                                    ingredients: [],
-                                    mainImages: [],
-                                    rating: 0,
-                                    serves: 1,
-                                    glassware: [],
-                                    prepTimeMinutes: 10
-                                },
-                                {
-                                    id: 'Test-2',
-                                    title: 'Test Title 2',
-                                    isIba: true,
-                                    descriptiveTitle: 'Test Title 2',
-                                    searchTiles: [],
-                                    ingredients: [],
-                                    mainImages: [],
-                                    rating: 0,
-                                    serves: 1,
-                                    glassware: [],
-                                    prepTimeMinutes: 10
-                                }
-                            ]
-                        },
-                        {
-                            status: 200,
-                            statusText: 'OK'
-                        }
-                    ),
-                { once: true }
-            )
-        );
-
-        render(
-            <GlobalContext>
-                <MemoryRouter>
-                    <FavoriteCocktailsPageContainer />
-                </MemoryRouter>
-            </GlobalContext>
-        );
-
-        expect(document.title).toBe('My Favorite Cocktails');
-
-        let el: HTMLElement | null = await screen.findByText('Test Title 1');
-        expect(el).toBeDefined();
-        expect(el.classList).toContain('cocktailLink');
-
-        el = screen.queryByText('Test Title 2');
-        expect(el).toBeNull();
+        expect(document.title).toBe('Account Favorite Cocktail Recipes');
     });
 
     test('renders account profile favorites', async () => {
@@ -216,13 +112,15 @@ describe('Favorite Cocktails Page Container', () => {
             <MsalProvider instance={msalTester.client}>
                 <GlobalContext>
                     <MemoryRouter>
-                        <FavoriteCocktailsPageContainer />
+                        <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
             </MsalProvider>
         );
 
-        expect(document.title).toBe('My Favorite Cocktails');
+        await screen.findByText('Favorite Cocktail Recipes');
+
+        expect(document.title).toBe('Account Favorite Cocktail Recipes');
 
         await screen.findByText('Adonis');
     });
@@ -267,13 +165,15 @@ describe('Favorite Cocktails Page Container', () => {
             <MsalProvider instance={msalTester.client}>
                 <GlobalContext>
                     <MemoryRouter>
-                        <FavoriteCocktailsPageContainer />
+                        <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
             </MsalProvider>
         );
 
-        expect(document.title).toBe('My Favorite Cocktails');
+        await screen.findByText('Favorite Cocktail Recipes');
+
+        expect(document.title).toBe('Account Favorite Cocktail Recipes');
 
         await screen.findByText('Adonis');
         await screen.findByText('Absinthe Frappé');
@@ -319,13 +219,15 @@ describe('Favorite Cocktails Page Container', () => {
             <MsalProvider instance={msalTester.client}>
                 <GlobalContext>
                     <MemoryRouter>
-                        <FavoriteCocktailsPageContainer />
+                        <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
             </MsalProvider>
         );
 
-        expect(document.title).toBe('My Favorite Cocktails');
+        await screen.findByText('Favorite Cocktail Recipes');
+
+        expect(document.title).toBe('Account Favorite Cocktail Recipes');
 
         await screen.findByText('Adonis');
 
@@ -377,13 +279,15 @@ describe('Favorite Cocktails Page Container', () => {
             <MsalProvider instance={msalTester.client}>
                 <GlobalContext>
                     <MemoryRouter>
-                        <FavoriteCocktailsPageContainer />
+                        <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
             </MsalProvider>
         );
 
-        expect(document.title).toBe('My Favorite Cocktails');
+        await screen.findByText('Favorite Cocktail Recipes');
+
+        expect(document.title).toBe('Account Favorite Cocktail Recipes');
 
         await screen.findByText('Adonis');
 

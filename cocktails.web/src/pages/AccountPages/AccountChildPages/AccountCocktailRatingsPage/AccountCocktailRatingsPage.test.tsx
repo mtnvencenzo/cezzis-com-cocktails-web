@@ -3,11 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { MsalReactTester } from 'msal-react-tester';
 import { MsalProvider } from '@azure/msal-react';
+import { http, HttpResponse } from 'msw';
 import AccountCocktailRatingsPage from './AccountCocktailRatingsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
 import { getTestAccountInfo, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
 import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
-import { http, HttpResponse } from 'msw';
 import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 
