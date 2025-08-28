@@ -18,7 +18,7 @@ export default defineConfig({
 
                 let cypressApiKey = config.env.cypressApiKey;
 
-                if (!cypressApiKey || cypressApiKey === '') {
+                if (cypressApiKey === undefined || cypressApiKey === null || cypressApiKey === '' || cypressApiKey === '---') {
                     cypressApiKey = process.env.cypressApiKey;
                 }
 
