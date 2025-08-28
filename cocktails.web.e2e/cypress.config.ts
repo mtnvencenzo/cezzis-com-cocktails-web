@@ -19,15 +19,15 @@ export default defineConfig({
                 if (!config.env.cypressApiKey) {
                     console.log('setting api key from CYPRESS_ENV');
                     config.env.cypressApiKey = process.env.CYPRESS_cypressApiKey;
-                    console.log(`length: ${process.env.CYPRESS_cypressApiKey?.length}` );
-                    console.log(`length: ${process.env.cypressApiKey?.length}` );
+                    console.log(`length: ${process.env.CYPRESS_cypressApiKey?.length ?? 0}`);
+                    console.log(`length: ${process.env.cypressApiKey?.length ?? 0}`);
                 }
 
                 if (!config.env.cypressUserPassword) {
                     console.log('setting password from CYPRESS_ENV');
                     config.env.cypressUserPassword = process.env.CYPRESS_cypressUserPassword;
-                    console.log(`length: ${process.env.CYPRESS_cypressUserPassword?.length}` );
-                    console.log(`length: ${process.env.cypressUserPassword?.length}` );
+                    console.log(`length: ${process.env.CYPRESS_cypressUserPassword?.length ?? 0}`);
+                    console.log(`length: ${process.env.cypressUserPassword?.length ?? 0}`);
                 }
 
                 console.log(`apikey: ${config.env.cypressApiKey}`);
