@@ -103,7 +103,7 @@ describe('Interactions cocktailfavorites', () => {
             .click()
             .then(() => {
                 cy.contains('Clear your cocktail favorites?');
-                cy.get('[alert-modal-confirm"]')
+                cy.get('[data-testid="alert-modal-confirm"]')
                     .click()
                     .then(() => {
                         cy.contains("Hmmm, you don't appear to have any selected cocktail favorites.");
