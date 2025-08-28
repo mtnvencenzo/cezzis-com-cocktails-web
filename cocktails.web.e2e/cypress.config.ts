@@ -16,20 +16,21 @@ export default defineConfig({
                 console.log('Cypress run started');
                 console.log('Seeding test account');
 
-                let cypressApiKey = config.env.cypressApiKey;
-
-                if (cypressApiKey === undefined || cypressApiKey === null || cypressApiKey === '' || cypressApiKey === '---') {
-                    cypressApiKey = process.env.cypressApiKey;
+                if (!config.env.cypressApiKey) {
+                    config.env.cypressApiKey = process.env.CYPRESS_cypressApiKey;
                 }
 
-                console.log(`apikey: ${cypressApiKey}`);
-                console.log(process.env.CYPRESS_TEST_VAR);
-                console.log(Cypress.env().CYPRESS_TEST_VAR);
+                if (!config.env.cypressUserPassword) {
+                    config.env.cypressUserPassword = process.env.CYPRESS_cypressUserPassword;
+                }
+
+                console.log(`apikey: ${config.env.cypressApiKey}`);
+                console.log(`pass: ${config.env.cypressUserPassword}`);
 
                 const response = await fetch(`${config.env.cocktailsApiBaseUrl}/api/v1/accounts/test/profile`, {
                     method: 'PUT',
                     headers: {
-                        'X-Key': `${cypressApiKey}`
+                        'X-Key': `${config.env.cypressApiKey}`
                     }
                 });
 
@@ -64,9 +65,9 @@ export default defineConfig({
         b2cClientId: '84744194-da27-410f-ae0e-74f5589d4c96',
         b2cUserObjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
         b2cUserEmail: 'rvecchi+cypress@gmail.com',
-        cypressUserPassword: '---',
+        cypressUserPassword: '',
         cocktailsApiBaseUrl: 'https://localhost:7176',
-        cypressApiKey: '---'
+        cypressApiKey: ''
     },
     video: true,
     trashAssetsBeforeRuns: true,
