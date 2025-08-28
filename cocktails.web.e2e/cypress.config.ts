@@ -22,6 +22,8 @@ export default defineConfig({
                     cypressApiKey = process.env.cypressApiKey;
                 }
 
+                console.log(`apikey: ${cypressApiKey}`);
+
                 const response = await fetch(`${config.env.cocktailsApiBaseUrl}/api/v1/accounts/test/profile`, {
                     method: 'PUT',
                     headers: {
