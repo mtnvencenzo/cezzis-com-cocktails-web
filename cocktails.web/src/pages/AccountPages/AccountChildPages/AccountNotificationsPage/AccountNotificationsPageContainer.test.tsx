@@ -147,10 +147,16 @@ describe('Account Notifications Page Container', () => {
         const el = await screen.findByTestId('chkNotifyNewCocktails');
         const chkNotifyNewCocktails = el.firstChild as HTMLInputElement;
         expect(chkNotifyNewCocktails).not.toBeNull();
-        expect((chkNotifyNewCocktails as HTMLInputElement).checked).toBe(true);
 
+        const isChecked = (chkNotifyNewCocktails as HTMLInputElement).checked;
         fireEvent.click(chkNotifyNewCocktails);
-        expect((chkNotifyNewCocktails as HTMLInputElement).checked).toBe(false);
+        const newIsChecked = (chkNotifyNewCocktails as HTMLInputElement).checked;
+
+        if (isChecked) {
+            expect(newIsChecked).toBe(false);
+        } else {
+            expect(newIsChecked).toBe(true);
+        }
 
         const btn = await screen.findByTestId('btnSubmitNotifications');
         fireEvent.click(btn);

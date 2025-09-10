@@ -220,7 +220,6 @@ describe('Welcome page', () => {
             .click()
             .then(() => {
                 cy.contains('.MuiButtonBase-root', 'Reset All Filters').click();
-                cy.get('[data-testid="dialog-filters-close-btn"]').click();
                 cy.wait(1000);
             });
 

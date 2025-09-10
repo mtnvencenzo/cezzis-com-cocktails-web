@@ -11,6 +11,10 @@ describe('Account page', () => {
         cy.title().should('eq', 'Profile Center - Personal Details');
         cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
 
+        cy.scrollTo(0, 0);
+        cy.get('[data-testid="menu-avatar"]').should('be.visible');
+        cy.get('[data-testid="menu-avatar"]').scrollIntoView();
+
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-myaccount"]').contains('Cypress User');
         cy.get('[data-testid="l-menu-usersettings"]').contains('Profile & settings');
@@ -24,6 +28,7 @@ describe('Account page', () => {
         cy.url().should('eq', `${Cypress.config().baseUrl}/`);
 
         // Now logout
+        cy.scrollTo(0, 0);
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-logout"]').contains('Logout');
         cy.get('[data-testid="l-menu-logout"]').click();
@@ -31,6 +36,7 @@ describe('Account page', () => {
         cy.title().should('eq', "Cezzi's Cocktail Recipes");
         cy.url().should('eq', `${Cypress.config().baseUrl}/`);
 
+        cy.scrollTo(0, 0);
         cy.get('[data-testid="menu-avatar"]').click();
         cy.get('[data-testid="l-menu-signin"]').contains('Signin');
         cy.get('[data-testid="l-menu-logout"]').should('not.exist');

@@ -11,6 +11,30 @@ on:
   workflow_dispatch:
 
 jobs:
+  gitVersion:
+    name: Git version
+    permissions: 
+      contents: read
+    runs-on: ubuntu-latest
+    outputs:
+      semVer: ${{ steps.gitVersion.outputs.semVer }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+      
+      - name: Install GetVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: "5.x"
+
+      - name: Use GitVersion
+        id: gitVersion
+        uses: gittools/actions/gitversion/execute@v1.1.1
+        with:
+          useConfigFile: true
+
   build:
     name: Build app
     uses: mtnvencenzo/workflows/.github/workflows/ui-build.yaml@main
@@ -61,6 +85,19 @@ jobs:
       terraform_module_repo_access_key_secret: ${{ secrets.TERRAFORM_MODULE_REPO_ACCESS_KEY_SECRET }}
       command_line_args: '-var "b2c_terraform_app_registration_client_id=${{ secrets.PRD_B2C_TERRAFORM_APP_REGISTRATION_CLIENT_ID }}" -var "b2c_terraform_app_registration_client_secret=${{ secrets.PRD_B2C_TERRAFORM_APP_REGISTRATION_CLIENT_SECRET }}"'
     
+  create_release_prd:
+    name: Create release
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    needs: [docker, gitVersion, terraform_deploy_prd]
+    steps:
+      - name: Create release
+        uses: mtnvencenzo/workflows/.github/actions/create-release@main
+        with:
+          version: ${{ needs.gitVersion.outputs.semVer }}
+
   cypress_e2e_prd:
     name: Cypress e2e prd
     uses: mtnvencenzo/workflows/.github/workflows/cypress-runner.yaml@main
