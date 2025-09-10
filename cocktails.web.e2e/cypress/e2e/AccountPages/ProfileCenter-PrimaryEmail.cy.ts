@@ -33,10 +33,11 @@ describe('Profile center primary email', () => {
         cy.get('[data-testid="l-menu-usersettings"]').click();
 
         cy.get('[data-testid="p-settings-email"]').click();
-        cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/change-email`);
-
         cy.title().should('eq', 'Profile Center - Change Email');
+        cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/change-email`);
         cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
+
+        //b2cUserEmail
 
         cy.get('[data-testid="txtLoginEmail"]').should('have.value', 'rvecchi+cypress@gmail.com');
         cy.get('[data-testid="txtEmail"]')
@@ -54,17 +55,16 @@ describe('Profile center primary email', () => {
         }
 
         cy.get('[data-testid="txtEmail"]').clear().type(newemail, { delay: 10 });
-        cy.get('[data-testid="btnSubmitEmail"]')
-            .click()
-            .then(() => {
-                // assert
-                cy.wait(3000).then(() => {
-                    cy.visit('/');
-                    cy.get('[data-testid="menu-avatar"]').click();
-                    cy.get('[data-testid="l-menu-usersettings"]').click();
-                    cy.get('[data-testid="p-settings-email"]').click();
-                    cy.get('[data-testid="txtEmail"]').should('have.value', `${newemail}`);
-                });
-            });
+        cy.get('[data-testid="btnSubmitEmail"]').click();
+        cy.wait(3000);
+
+        cy.visit('/');
+        cy.get('[data-testid="menu-avatar"]').click();
+        cy.get('[data-testid="l-menu-usersettings"]').click();
+        cy.get('[data-testid="p-settings-email"]').click();
+        cy.title().should('eq', 'Profile Center - Change Email');
+
+        cy.get('[data-testid="txtEmail"]').should('not.have.value', `${prevemail}`);
+        cy.get('[data-testid="txtEmail"]').should('have.value', `${newemail}`);
     });
 });

@@ -28,6 +28,8 @@ Cypress.Commands.addAll({
 
                     cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/personal-details`);
 
+                    cy.get('[data-testid="menu-avatar"]').scrollIntoView();
+
                     cy.get('[data-testid="menu-avatar"]')
                         .click()
                         .then(() => {

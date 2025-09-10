@@ -64,6 +64,9 @@ const CocktailFiltersDialog = ({ testId, enablePulsate = true, onOpening, onClos
         filtersStorageService.ClearAllSelections();
         setHasChange(true);
         setForce(!force);
+
+        setOpen(false);
+        setFiltersRevision();
     };
 
     useEffect(() => {
@@ -104,7 +107,10 @@ const CocktailFiltersDialog = ({ testId, enablePulsate = true, onOpening, onClos
                     >
                         <Grid size={{ xs: 1, sm: 1, md: 1, lg: 1 }}>Cocktail Search filters</Grid>
                         <Grid size={{ xs: 1, sm: 1, md: 1, lg: 1 }} alignContent='right' textAlign='right'>
-                            <CocktailFiltersResetButton testId='dialog-filters-reset-btn' disabled={loading || apiCallFailed || cocktailsSearchFilters === undefined} onReset={handleReset} />
+                            <Button data-testid='dialog-filters-close-btn' variant='outlined' color='primary' onClick={handleClose}>
+                                {hasChange && 'Apply Filters'}
+                                {!hasChange && 'Close'}
+                            </Button>
                         </Grid>
                     </Grid>
                 </DialogTitle>
@@ -192,9 +198,7 @@ const CocktailFiltersDialog = ({ testId, enablePulsate = true, onOpening, onClos
                     </Card>
                 </DialogContent>
                 <DialogActions>
-                    <Button data-testid='dialog-filters-close-btn' color='primary' onClick={handleClose}>
-                        Close
-                    </Button>
+                    <CocktailFiltersResetButton testId='dialog-filters-reset-btn' disabled={loading || apiCallFailed || cocktailsSearchFilters === undefined} onReset={handleReset} />
                 </DialogActions>
             </Dialog>
         </>

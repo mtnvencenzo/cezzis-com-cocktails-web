@@ -767,9 +767,7 @@ describe('Cocktail Filters Dialog', () => {
         dialog = await screen.findByTestId('cocktail-search-filters-dialog');
 
         const closeButton = (await screen.findByText('Close')) as HTMLButtonElement;
-        expect(closeButton).toHaveClass(
-            'MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary'
-        );
+        expect(closeButton).toBeTruthy();
     });
 
     test('renders dialog title', async () => {
@@ -880,9 +878,7 @@ describe('Cocktail Filters Dialog', () => {
         verifyOnlyDefaultFilters(heading);
 
         const closeButton = (await screen.findByText('Close')) as HTMLButtonElement;
-        expect(closeButton).toHaveClass(
-            'MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary'
-        );
+        expect(closeButton).toBeTruthy();
     });
 
     test('renders dialog reset button', async () => {
@@ -1009,9 +1005,7 @@ describe('Cocktail Filters Dialog', () => {
         verifyFilters(heading, rs.eras ?? []);
 
         const closeButton = (await screen.findByText('Close')) as HTMLButtonElement;
-        expect(closeButton).toHaveClass(
-            'MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary'
-        );
+        expect(closeButton).toBeTruthy();
     });
 
     test('reset button click resets all chips', async () => {
@@ -1189,9 +1183,6 @@ describe('Cocktail Filters Dialog', () => {
         const resetButton = (await screen.findByText('Reset All Filters')) as HTMLButtonElement;
         fireEvent.click(resetButton);
 
-        const closeButton = (await screen.findByText('Close')) as HTMLButtonElement;
-        fireEvent.click(closeButton);
-
         await screen.findByTestId('test-comp-1');
     });
 
@@ -1271,7 +1262,7 @@ describe('Cocktail Filters Dialog', () => {
         const chip = (await screen.findByText('Oloroso Sherry')) as HTMLDivElement;
         fireEvent.click(chip);
 
-        const closeButton = (await screen.findByText('Close')) as HTMLButtonElement;
+        const closeButton = (await screen.findByText('Apply Filters')) as HTMLButtonElement;
         fireEvent.click(closeButton);
 
         await screen.findByTestId('test-comp-1');

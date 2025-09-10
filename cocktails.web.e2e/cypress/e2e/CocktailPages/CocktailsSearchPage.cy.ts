@@ -184,7 +184,6 @@ describe.only('Cocktails search page', () => {
             .click()
             .then(() => {
                 cy.contains('.MuiButtonBase-root', 'Reset All Filters').click();
-                cy.get('[data-testid="dialog-filters-close-btn"]').click();
                 cy.wait(1000);
             });
 
@@ -326,7 +325,6 @@ describe.only('Cocktails search page', () => {
             .click()
             .then(() => {
                 cy.contains('.MuiButtonBase-root', 'Reset All Filters').click();
-                cy.get('[data-testid="dialog-filters-close-btn"]').click();
             });
 
         // now should contain bloody mary and others
