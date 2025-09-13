@@ -1,9 +1,4 @@
 
-data "azurerm_application_insights" "appi" {
-  name                = "appi-${var.sub}-${var.region}-${var.global_environment}-${var.global_domain}-${var.sequence}"
-  resource_group_name = "rg-${var.sub}-${var.region}-${var.global_environment}-${var.global_domain}-${var.sequence}"
-}
-
 data "azurerm_resource_group" "cocktails_resource_group" {
   name = "rg-${var.sub}-${var.region}-${var.environment}-${var.domain}-${var.sequence}"
 }

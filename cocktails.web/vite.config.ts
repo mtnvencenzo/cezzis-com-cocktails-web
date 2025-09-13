@@ -16,7 +16,7 @@ export default ({ mode }) => {
             port: parseInt(process.env.VITE_PORT, 10)
         },
         resolve: {
-            conditions: ['mui-modern', 'module', 'browser', 'development|production']
+            conditions: ['mui-modern', 'module', 'browser', 'local|development|production']
         },
         plugins: [react(), tsconfigPaths(), splitVendorChunkPlugin(), mkcert()]
     });

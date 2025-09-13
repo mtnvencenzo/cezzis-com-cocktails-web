@@ -19,18 +19,8 @@ const ShareCocktailButton = ({ cocktailId, testId }: ShareCocktailButtonProps) =
     const handleShareClick = async () => {
         if (ownedAccount) {
             if (cocktailId === '') {
-                logger.logInformation({ message: 'cocktailid is empty' });
+                logger.logInformation('cocktailid is empty');
             }
-            // manageOwnedAccountFavoriteCocktails({
-            //     cocktailActions: [
-            //         {
-            //             cocktailId: cocktailId,
-            //             action: fav ? CocktailFavoritingAction.Remove : CocktailFavoritingAction.Add
-            //         }
-            //     ]
-            // });
-
-            // setFav(!fav);
         } else if (tooltipRef.current?.isOpen) {
             tooltipRef.current?.close();
         } else {

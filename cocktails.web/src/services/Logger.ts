@@ -1,26 +1,46 @@
-import { ICustomProperties, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
-import { appInsights, isAppInsightsEnabled } from './AppinsightsService';
+import { Attributes, AttributeValue, SpanStatusCode } from '@opentelemetry/api';
+import { isTelemetryEnabled, tracer } from '../utils/otelConfig';
+
+export interface ITraceTelemetryAttribute {
+    name: string;
+    value: AttributeValue;
+}
 
 /* eslint-disable no-console */
 class logger {
-    static logException = (exception: IExceptionTelemetry, customProperties?: ICustomProperties): void => {
-        if (isAppInsightsEnabled()) {
-            appInsights.trackException(exception, customProperties);
+    static logException = (error: Error, attrs: Attributes | undefined = undefined): void => {
+        if (isTelemetryEnabled()) {
+            const span = tracer.startSpan('exception-error');
+            span.setStatus({ code: SpanStatusCode.ERROR, message: error.message });
+            span.recordException(error);
+            span.setAttribute('component.stack', error.originalStack ?? '');
+
+            if (attrs && attrs instanceof Object && Object.keys(attrs).length > 0) {
+                span.setAttributes(attrs);
+            }
+
+            span.end();
         } else {
             console.log({
-                exception,
-                customProperties
+                error,
+                attrs
             });
         }
     };
 
-    static logInformation = (traceTelemetry: ITraceTelemetry, customProperties?: ICustomProperties): void => {
-        if (isAppInsightsEnabled()) {
-            appInsights.trackTrace(traceTelemetry, customProperties);
+    static logInformation = (message: string, attrs: Attributes | undefined = undefined): void => {
+        if (isTelemetryEnabled()) {
+            const span = tracer.startSpan(message);
+
+            if (attrs && attrs instanceof Object && Object.keys(attrs).length > 0) {
+                span.setAttributes(attrs);
+            }
+
+            span.end();
         } else {
             console.log({
-                traceTelemetry,
-                customProperties
+                message,
+                attrs
             });
         }
     };

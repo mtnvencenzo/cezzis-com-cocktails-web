@@ -4,11 +4,13 @@ import { Box } from '@mui/material';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getPrivacyPolicy } from '../../services/LegalService';
 import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';
+import { startPageViewSpan } from '../../utils/otelConfig';
 
 interface PrivacyPolicyPageContainerProps {
     enableWidePadding?: boolean;
@@ -20,22 +22,27 @@ const PrivacyPolicyPageContainer = ({ enableWidePadding = false }: PrivacyPolicy
     const [legalDocumentRs, setLegalDocumentRs] = useState<LegalDocumentRs | undefined>();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (span?: Span) => {
             try {
                 const rs = await getPrivacyPolicy();
                 setApiCallFailed(false);
                 setLegalDocumentRs(rs);
-            } catch {
+            } catch (e: unknown) {
                 setApiCallFailed(true);
+                span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
             }
 
             setLoading(false);
+            span?.end();
         };
 
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('Cezzis.com');
-        fetchData();
+
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
     }, []);
 
     return (

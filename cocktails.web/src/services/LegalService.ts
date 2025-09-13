@@ -8,7 +8,8 @@ const getPrivacyPolicy = async (): Promise<LegalDocumentRs | undefined> => {
         const cocktailsApiClient = new CocktailsApiClient();
         result = await cocktailsApiClient.getPrivacyPolicy(undefined);
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
 
     return result;
@@ -21,7 +22,8 @@ const getTermsOfService = async (): Promise<LegalDocumentRs | undefined> => {
         const cocktailsApiClient = new CocktailsApiClient();
         result = await cocktailsApiClient.getTermsOfService(undefined);
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
 
     return result;

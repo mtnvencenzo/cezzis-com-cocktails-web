@@ -1,5 +1,5 @@
 import { Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CountrySelect from '../../../../atoms/CountrySelect/CountrySelect';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountProfile } from '../../../../services/AccountService';
@@ -7,6 +7,7 @@ import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
+import { startPageViewSpan } from '../../../../utils/otelConfig';
 
 interface FieldValueState<T> {
     value: T;
@@ -100,6 +101,10 @@ const AccountPersonalDetailsPageContainer = () => {
             }
         });
     };
+
+    useEffect(() => {
+        startPageViewSpan((span) => span.end());
+    }, []);
 
     return (
         <>

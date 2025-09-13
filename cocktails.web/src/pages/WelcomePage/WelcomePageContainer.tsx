@@ -5,9 +5,12 @@ import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './WelcomePageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
+import { startPageViewSpan } from '../../utils/otelConfig';
 
 const WelcomePageContainer = () => {
     useEffect(() => {
+        startPageViewSpan((span) => span.end());
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setJsonLd(jsonld());

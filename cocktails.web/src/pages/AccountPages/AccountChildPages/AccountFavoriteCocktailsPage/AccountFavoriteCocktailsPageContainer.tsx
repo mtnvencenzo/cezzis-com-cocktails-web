@@ -2,6 +2,7 @@ import { Box, Button, Grid, Stack, Typography, useMediaQuery } from '@mui/materi
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
@@ -13,6 +14,7 @@ import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavori
 import { manageOwnedAccountFavoriteCocktails } from '../../../../services/AccountService';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
+import { startPageViewSpan } from '../../../../utils/otelConfig';
 
 const AccountFavoriteCocktailsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -25,7 +27,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
     const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
-    const fetchData = async () => {
+    const fetchData = async (span?: Span) => {
         if (isFetching) {
             return;
         }
@@ -45,13 +47,15 @@ const AccountFavoriteCocktailsPageContainer = () => {
                 return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
             });
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
-        } catch {
+        } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 
         setLoading(false);
         setIsFetching(false);
+        span?.end();
     };
 
     const confirmClearCocktailFavorites = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -84,7 +88,9 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchData();
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
     }, [ownedAccount?.favoriteCocktails]);
     /* eslint-enable react-hooks/exhaustive-deps */
 

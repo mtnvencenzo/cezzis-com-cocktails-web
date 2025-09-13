@@ -31,12 +31,12 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailsListModel
         if (results && results.length > 0 && freeText === '' && skip === 0 && take === DEFAULT_TAKE && searchFilters.length === 0) {
             localStorageService.SetInitialCocktailsSearchData(results, freeText, skip, take);
         }
-    } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
-        results = [];
-    }
 
-    callBack(results);
+        callBack(results);
+    } catch (e: unknown) {
+        logger.logException(e as Error);
+        throw e;
+    }
 };
 
 const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
@@ -45,11 +45,11 @@ const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         result = await cocktailsApiClient.getCocktail(id, undefined);
+        return result;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return result;
 };
 
 const getCocktailsList = async (skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsListRs | undefined> => {
@@ -71,10 +71,9 @@ const getCocktailsList = async (skip: number, take: number, include: CocktailDat
 
         return results;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return undefined;
 };
 
 const getCocktailFavorites = async (
@@ -89,10 +88,9 @@ const getCocktailFavorites = async (
         const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
         return results;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return undefined;
 };
 
 const getCocktailsWithRatings = async (
@@ -107,10 +105,9 @@ const getCocktailsWithRatings = async (
         const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
         return results;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return undefined;
 };
 
 const searchCocktails = async (freeText: string, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsListRs | undefined> => {
@@ -122,10 +119,9 @@ const searchCocktails = async (freeText: string, skip: number, take: number, inc
 
         return results;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return undefined;
 };
 
 const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs | undefined> => {
@@ -146,10 +142,9 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
 
         return results;
     } catch (e: unknown) {
-        logger.logException({ exception: e as Error });
+        logger.logException(e as Error);
+        throw e;
     }
-
-    return undefined;
 };
 
 export { getCocktailsSearchResults, getCocktail, getCocktailsList, searchCocktails, getCocktailsSearchFilters, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };

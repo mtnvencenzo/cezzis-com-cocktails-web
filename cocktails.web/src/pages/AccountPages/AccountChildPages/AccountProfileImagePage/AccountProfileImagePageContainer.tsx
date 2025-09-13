@@ -1,6 +1,6 @@
 import { Divider, Grid, Typography, useMediaQuery } from '@mui/material';
 import { Form } from 'react-router-dom';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 import AccountAvatar from '../../../../molecules/AccountAvatar/AccountAvatar';
 import { getOwnedAccountProfile, uploadProfileImage } from '../../../../services/AccountService';
@@ -10,6 +10,7 @@ import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
+import { startPageViewSpan } from '../../../../utils/otelConfig';
 
 const AccountProfileImagePageContainer = () => {
     const [editingAvatarFile, setEditingAvatarFile] = useState<File>();
@@ -66,6 +67,10 @@ const AccountProfileImagePageContainer = () => {
         setEditingAvatarName('');
         setEditingAvatarFile(undefined);
     };
+
+    useEffect(() => {
+        startPageViewSpan((span) => span.end());
+    }, []);
 
     return (
         <>

@@ -3,6 +3,7 @@ import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import './CocktailsListPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { DEFAULT_TAKE, getCocktailsList } from '../../services/CocktailsService';
 import { CocktailsListModel, CocktailDataIncludeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
@@ -11,6 +12,7 @@ import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
 import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
+import { startPageViewSpan } from '../../utils/otelConfig';
 
 const CocktailsListPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -21,7 +23,7 @@ const CocktailsListPageContainer = () => {
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
-    const fetchData = async () => {
+    const fetchData = async (span?: Span) => {
         if (isFetching) {
             return;
         }
@@ -30,29 +32,32 @@ const CocktailsListPageContainer = () => {
             setIsFetching(true);
 
             const rs = await getCocktailsList(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
-
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
             setSkip(skip + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
-        } catch {
+        } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 
         setLoading(false);
         setIsFetching(false);
+        span?.end();
     };
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchData();
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('Complete Cocktail List');
-    }, []);
+    }, [ownedAccountCocktailRatings]);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (

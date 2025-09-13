@@ -5,6 +5,7 @@ import rehypeRaw from 'rehype-raw';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import './CocktailPageContainer.css';
 import { Box } from '@mui/material';
+import { SpanStatusCode } from '@opentelemetry/api';
 import { getCocktail } from '../../services/CocktailsService';
 import { CocktailRs, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
@@ -15,6 +16,7 @@ import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteC
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import CocktailRater from '../../organisims/CocktailRater/CocktailRater';
+import { startPageViewSpan } from '../../utils/otelConfig';
 
 const CocktailPageContainer = () => {
     const { id } = useParams();
@@ -43,27 +45,31 @@ const CocktailPageContainer = () => {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const rs = await getCocktail(id ?? 'unavailable');
-                setApiCallFailed(false);
-                setCocktailRs(rs);
+        startPageViewSpan((span) => {
+            const fetchData = async () => {
+                try {
+                    const rs = await getCocktail(id ?? 'unavailable');
+                    setApiCallFailed(false);
+                    setCocktailRs(rs);
 
-                if (rs?.item) {
-                    // setting dom directly due to react v19 & react-helmet-async breaking
-                    // and react not hoisting the script and cert meta tag to the top
-                    setJsonLd(jsonld(rs.item));
-                    setMetaItemProp(`${rs.item.title} Cocktail Recipe`);
+                    if (rs?.item) {
+                        // setting dom directly due to react v19 & react-helmet-async breaking
+                        // and react not hoisting the script and cert meta tag to the top
+                        setJsonLd(jsonld(rs.item));
+                        setMetaItemProp(`${rs.item.title} Cocktail Recipe`);
+                    }
+                } catch (e: unknown) {
+                    setApiCallFailed(true);
+                    setLoading(false);
+                    span.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
                 }
-            } catch {
-                setApiCallFailed(true);
+
                 setLoading(false);
-            }
+                span.end();
+            };
 
-            setLoading(false);
-        };
-
-        fetchData();
+            fetchData();
+        });
     }, [id]);
 
     return (

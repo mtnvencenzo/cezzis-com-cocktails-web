@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { MsalProvider } from '@azure/msal-react';
-import { reactPlugin } from './services/AppinsightsService';
 import { msalInstance } from './utils/authConfig';
 import App from './App';
+import { setupTelemetry } from './utils/otelConfig';
+import AppErrorBoundary from './components/AppErrorBoundary/AppErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+// Initialize OpenTelemetry
+setupTelemetry();
 
 root.render(
     <React.StrictMode>
         <MsalProvider instance={msalInstance}>
-            <AppInsightsErrorBoundary onError={() => <h1>Something went wrong</h1>} appInsights={reactPlugin}>
+            <AppErrorBoundary onError={() => <h1>Something went wrong</h1>}>
                 <App />
-            </AppInsightsErrorBoundary>
+            </AppErrorBoundary>
         </MsalProvider>
     </React.StrictMode>
 );
