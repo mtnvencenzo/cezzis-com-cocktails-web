@@ -10,7 +10,7 @@ import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 interface PrivacyPolicyPageContainerProps {
     enableWidePadding?: boolean;

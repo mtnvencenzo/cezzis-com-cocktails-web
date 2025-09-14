@@ -1,6 +1,5 @@
 import React from 'react';
-import { SpanStatusCode } from '@opentelemetry/api';
-import { tracer } from '../../utils/otelConfig';
+import logger from '../../services/Logger';
 
 export interface IAppErrorBoundaryProps {
     onError: React.ComponentType<unknown>;
@@ -17,15 +16,10 @@ export default class AppErrorBoundary extends React.Component<IAppErrorBoundaryP
         this.state = { hasError: false };
     }
 
-    componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    componentDidCatch(error: Error) {
         this.setState({ hasError: true });
 
-        // Send error to OpenTelemetry
-        const span = tracer.startSpan('Unhandled exception / boundary-error');
-        span.setStatus({ code: SpanStatusCode.ERROR, message: error.message });
-        span.recordException(error);
-        span.setAttribute('component-stack', errorInfo.componentStack ?? '');
-        span.end();
+        logger.logException(error);
     }
 
     render() {

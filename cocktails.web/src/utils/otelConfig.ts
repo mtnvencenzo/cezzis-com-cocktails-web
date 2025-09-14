@@ -5,10 +5,13 @@ import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xm
 import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
 import { BatchSpanProcessor, SpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { resourceFromAttributes } from '@opentelemetry/resources';
+import { Resource, resourceFromAttributes } from '@opentelemetry/resources';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
-import { context, Span, SpanKind, trace } from '@opentelemetry/api';
+import { trace } from '@opentelemetry/api';
+import { LoggerProvider, BatchLogRecordProcessor, LogRecordProcessor } from '@opentelemetry/sdk-logs';
+import { logs } from '@opentelemetry/api-logs';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 import { getWindowEnv } from './envConfig';
 
 export const isTelemetryEnabled = (): boolean => {
@@ -19,21 +22,10 @@ export const isTelemetryEnabled = (): boolean => {
     return false;
 };
 
-export const tracer = trace.getTracer('cezzis-com-cocktails-web');
+export const otelTracer = trace.getTracer('cezzis-com-cocktails-web');
+export const otelLogger = logs.getLogger('cezzis-com-cocktails-web');
 
-export const setupTelemetry = () => {
-    const resource = resourceFromAttributes({
-        [ATTR_SERVICE_NAME]: 'cocktails-web',
-        'service.namespace': 'cocktails-web',
-        'deployment.environment': getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown',
-        'app.unit': 'cocktails',
-        app_product: 'cezzis.com',
-        app_product_segment: 'frontend',
-        app_name: 'cezzis-com-cocktails-web',
-        app_class: 'ux',
-        app_env: getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
-    });
-
+const setupTraceing = (resource: Resource) => {
     const spanProcessors: SpanProcessor[] = [];
 
     if (isTelemetryEnabled()) {
@@ -69,28 +61,38 @@ export const setupTelemetry = () => {
     });
 };
 
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-nested-ternary */
-export const startPageViewSpan = (fn: (span: Span) => void) =>
-    tracer.startActiveSpan(
-        `page view: ${location?.pathname}`,
-        {
-            attributes: {
-                'http.method': 'GET',
-                'http.request.method': 'GET',
-                'url.full': location?.href,
-                'url.domain': location?.hostname,
-                'url.path': location?.pathname,
-                'url.scheme': location?.protocol?.replace(':', ''),
-                'url.query': location?.search,
-                'url.hash': location?.hash,
-                'server.port': location?.port ? parseInt(location.port, 10) : location?.protocol === 'https:' ? 443 : 80,
-                'user_agent.original': navigator?.userAgent
-            },
-            kind: SpanKind.SERVER
-        },
-        context.active(),
-        fn
-    );
-/* eslint-enable no-nested-ternary */
-/* eslint-enable no-restricted-globals */
+const setupLogging = (resource: Resource) => {
+    const processors: LogRecordProcessor[] = [];
+
+    if (isTelemetryEnabled()) {
+        const otlpExporter = new OTLPLogExporter({
+            url: `${getWindowEnv().VITE_TELEMETRY_URL}/v1/logs`
+        });
+
+        processors.push(new BatchLogRecordProcessor(otlpExporter));
+    }
+
+    const loggerProvider = new LoggerProvider({
+        resource,
+        processors
+    });
+
+    logs.setGlobalLoggerProvider(loggerProvider);
+};
+
+export const setupTelemetry = () => {
+    const resource = resourceFromAttributes({
+        [ATTR_SERVICE_NAME]: 'cocktails-web',
+        'service.namespace': 'cocktails-web',
+        'deployment.environment': getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown',
+        'app.unit': 'cocktails',
+        app_product: 'cezzis.com',
+        app_product_segment: 'frontend',
+        app_name: 'cezzis-com-cocktails-web',
+        app_class: 'ux',
+        app_env: getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
+    });
+
+    setupTraceing(resource);
+    setupLogging(resource);
+};

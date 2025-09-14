@@ -12,7 +12,7 @@ import { CocktailDataIncludeModel, CocktailsListModel } from '../../../../api/co
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
-import { startPageViewSpan } from '../../../../utils/otelConfig';
+import startPageViewSpan from '../../../../services/Tracer';
 
 const AccountCocktailRatingsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));

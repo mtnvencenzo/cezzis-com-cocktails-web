@@ -16,7 +16,7 @@ import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteC
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import CocktailRater from '../../organisims/CocktailRater/CocktailRater';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 const CocktailPageContainer = () => {
     const { id } = useParams();

@@ -12,7 +12,7 @@ import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
 import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 const CocktailsListPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);

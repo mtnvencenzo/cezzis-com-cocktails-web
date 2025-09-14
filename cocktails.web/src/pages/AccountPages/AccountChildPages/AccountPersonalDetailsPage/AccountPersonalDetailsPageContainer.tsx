@@ -7,7 +7,7 @@ import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
-import { startPageViewSpan } from '../../../../utils/otelConfig';
+import startPageViewSpan from '../../../../services/Tracer';
 
 interface FieldValueState<T> {
     value: T;

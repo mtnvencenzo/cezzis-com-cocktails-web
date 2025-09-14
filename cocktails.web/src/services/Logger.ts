@@ -1,5 +1,6 @@
-import { Attributes, AttributeValue, SpanStatusCode } from '@opentelemetry/api';
-import { isTelemetryEnabled, tracer } from '../utils/otelConfig';
+import { Attributes, AttributeValue, context } from '@opentelemetry/api';
+import { SeverityNumber } from '@opentelemetry/api-logs';
+import { isTelemetryEnabled, otelLogger } from '../utils/otelConfig';
 
 export interface ITraceTelemetryAttribute {
     name: string;
@@ -8,18 +9,23 @@ export interface ITraceTelemetryAttribute {
 
 /* eslint-disable no-console */
 class logger {
-    static logException = (error: Error, attrs: Attributes | undefined = undefined): void => {
+    static logException = (error: Error, attrs: Attributes | undefined = {}): void => {
         if (isTelemetryEnabled()) {
-            const span = tracer.startSpan('exception-error');
-            span.setStatus({ code: SpanStatusCode.ERROR, message: error.message });
-            span.recordException(error);
-            span.setAttribute('component.stack', error.originalStack ?? '');
-
-            if (attrs && attrs instanceof Object && Object.keys(attrs).length > 0) {
-                span.setAttributes(attrs);
-            }
-
-            span.end();
+            otelLogger.emit({
+                timestamp: Date.now(),
+                observedTimestamp: Date.now(),
+                severityNumber: SeverityNumber.ERROR, // ERROR
+                severityText: 'Error',
+                body: error.message,
+                attributes: {
+                    ...attrs,
+                    'component.type': 'exception',
+                    'component.error.message': error.message,
+                    'component.error.name': error.name,
+                    'component.error.stack': error.originalStack ?? ''
+                },
+                context: context?.active()
+            });
         } else {
             console.log({
                 error,
@@ -28,15 +34,19 @@ class logger {
         }
     };
 
-    static logInformation = (message: string, attrs: Attributes | undefined = undefined): void => {
+    static logInformation = (message: string, attrs: Attributes | undefined = {}): void => {
         if (isTelemetryEnabled()) {
-            const span = tracer.startSpan(message);
-
-            if (attrs && attrs instanceof Object && Object.keys(attrs).length > 0) {
-                span.setAttributes(attrs);
-            }
-
-            span.end();
+            otelLogger.emit({
+                timestamp: Date.now(),
+                observedTimestamp: Date.now(),
+                severityNumber: SeverityNumber.INFO,
+                severityText: 'Info',
+                body: message,
+                attributes: {
+                    ...attrs
+                },
+                context: context?.active()
+            });
         } else {
             console.log({
                 message,

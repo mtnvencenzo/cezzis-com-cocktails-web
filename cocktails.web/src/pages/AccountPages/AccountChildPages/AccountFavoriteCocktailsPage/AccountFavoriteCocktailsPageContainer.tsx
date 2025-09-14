@@ -14,7 +14,7 @@ import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavori
 import { manageOwnedAccountFavoriteCocktails } from '../../../../services/AccountService';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
-import { startPageViewSpan } from '../../../../utils/otelConfig';
+import startPageViewSpan from '../../../../services/Tracer';
 
 const AccountFavoriteCocktailsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));

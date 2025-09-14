@@ -6,7 +6,7 @@ import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './AboutUsPageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 const AboutUsPageContainer = () => {
     useEffect(() => {

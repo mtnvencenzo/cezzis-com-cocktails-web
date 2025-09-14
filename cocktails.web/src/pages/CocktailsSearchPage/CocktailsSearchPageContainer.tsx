@@ -17,7 +17,7 @@ import CocktailSearchNoResultsView from '../../molecules/CocktailSearchNoResults
 import jsonld from './CocktailsSearchPageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 interface CocktailsSearchPageContainerState {
     loading: boolean;

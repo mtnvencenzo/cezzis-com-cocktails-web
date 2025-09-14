@@ -2,7 +2,7 @@ import { useMsal } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
 import { useEffect } from 'react';
 import { logout } from '../../utils/authConfig';
-import { startPageViewSpan } from '../../utils/otelConfig';
+import startPageViewSpan from '../../services/Tracer';
 
 const FrontChannelLogout = () => {
     const { inProgress } = useMsal();
