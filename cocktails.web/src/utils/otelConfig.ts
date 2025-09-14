@@ -85,11 +85,11 @@ export const setupTelemetry = () => {
         'service.namespace': 'cocktails-web',
         'deployment.environment': getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown',
         'app.unit': 'cocktails',
-        app_product: 'cezzis.com',
-        app_product_segment: 'frontend',
-        app_name: 'cezzis-com-cocktails-web',
-        app_class: 'ux',
-        app_env: getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
+        'app.product': 'cezzis.com',
+        'app.product_segment': 'frontend',
+        'app.name': 'cezzis-com-cocktails-web',
+        'app.class': 'ux',
+        'app.env': getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
     });
 
     const traceProvider = setupTracing(resource);
