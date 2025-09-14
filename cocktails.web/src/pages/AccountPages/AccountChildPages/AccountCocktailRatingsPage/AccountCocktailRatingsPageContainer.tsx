@@ -2,6 +2,7 @@ import { Box, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
@@ -11,6 +12,7 @@ import { CocktailDataIncludeModel, CocktailsListModel } from '../../../../api/co
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
+import startPageViewSpan from '../../../../services/Tracer';
 
 const AccountCocktailRatingsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -22,7 +24,7 @@ const AccountCocktailRatingsPageContainer = () => {
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
-    const fetchData = async () => {
+    const fetchData = async (span?: Span) => {
         if (isFetching) {
             return;
         }
@@ -34,22 +36,27 @@ const AccountCocktailRatingsPageContainer = () => {
             const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ratedCocktailIds ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
 
-            setSkip(skip + DEFAULT_TAKE);
+            setSkip((s) => s + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
-        } catch {
+        } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.recordException(e as Error);
+            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 
         setLoading(false);
         setIsFetching(false);
+        span?.end();
     };
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchData();
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
     }, []);
     /* eslint-enable react-hooks/exhaustive-deps */
 

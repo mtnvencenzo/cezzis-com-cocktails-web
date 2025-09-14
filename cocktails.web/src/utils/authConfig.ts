@@ -48,10 +48,7 @@ const msalConfig = {
                     const dontlogEx = getWindowEnv().VITE_NODE_ENV === 'test' && message.includes('Clearing keystore failed with error');
 
                     if (!dontlogEx) {
-                        logger.logException({
-                            exception: new Error(`Login failed.  Please check your username and or password. ${message}`),
-                            properties: { message }
-                        });
+                        logger.logException(new Error(`Login failed.  Please check your username and or password. ${message}`));
                     }
                 }
             }
@@ -107,14 +104,12 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
             .acquireTokenSilent(request)
             .then((response) => response.accessToken)
             .catch((error) => {
-                logger.logException({
-                    error
-                });
+                logger.logException(error as Error);
 
                 if (error instanceof InteractionRequiredAuthError) {
                     // fallback to interaction when silent call fails
                     return msalInstance.acquireTokenPopup({ ...request }).catch((err) => {
-                        logger.logException({ error: err });
+                        logger.logException(err as Error);
                     });
                 }
                 return undefined;
@@ -139,9 +134,7 @@ export const resetPassword = async () => {
             redirectUri: b2cPolicies.authorities.passwordReset.redirectUri
         })
         .catch((error) => {
-            logger.logException({
-                error
-            });
+            logger.logException(error as Error);
         });
 };
 

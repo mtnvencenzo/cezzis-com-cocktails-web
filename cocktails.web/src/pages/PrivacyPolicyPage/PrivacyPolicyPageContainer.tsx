@@ -4,11 +4,13 @@ import { Box } from '@mui/material';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getPrivacyPolicy } from '../../services/LegalService';
 import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';
+import startPageViewSpan from '../../services/Tracer';
 
 interface PrivacyPolicyPageContainerProps {
     enableWidePadding?: boolean;
@@ -20,22 +22,28 @@ const PrivacyPolicyPageContainer = ({ enableWidePadding = false }: PrivacyPolicy
     const [legalDocumentRs, setLegalDocumentRs] = useState<LegalDocumentRs | undefined>();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (span?: Span) => {
             try {
                 const rs = await getPrivacyPolicy();
                 setApiCallFailed(false);
                 setLegalDocumentRs(rs);
-            } catch {
+            } catch (e: unknown) {
                 setApiCallFailed(true);
+                span?.recordException(e as Error);
+                span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
             }
 
             setLoading(false);
+            span?.end();
         };
 
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('Cezzis.com');
-        fetchData();
+
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
     }, []);
 
     return (
@@ -48,7 +56,7 @@ const PrivacyPolicyPageContainer = ({ enableWidePadding = false }: PrivacyPolicy
             <meta property='og:site_name' content='Cezzis.com' />
             <meta property='og:url' content='https://www.cezzis.com/privacy-policy' />
             <meta property='og:title' content='Privacy Policy - Cezzis.com' />
-            <meta property='og:description' content='null' />
+            <meta property='og:description' content='Cezzis.com privacy policy' />
             <Box
                 component='div'
                 sx={{

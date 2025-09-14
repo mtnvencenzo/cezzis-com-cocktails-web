@@ -1,11 +1,12 @@
 import { Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountProfileEmail } from '../../../../services/AccountService';
 import theme from '../../../../theme';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
+import startPageViewSpan from '../../../../services/Tracer';
 
 interface FieldValueState<T> {
     value: T;
@@ -33,6 +34,10 @@ const AccountChangeEmailPageContainer = () => {
             email: email.value ?? ''
         });
     };
+
+    useEffect(() => {
+        startPageViewSpan((span) => span.end());
+    }, []);
 
     return (
         <>

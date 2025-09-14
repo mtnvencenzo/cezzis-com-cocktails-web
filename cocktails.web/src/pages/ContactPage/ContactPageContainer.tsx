@@ -6,9 +6,12 @@ import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './ContactPageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
+import startPageViewSpan from '../../services/Tracer';
 
 const ContactPageContainer = () => {
     useEffect(() => {
+        startPageViewSpan((span) => span.end());
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setJsonLd(jsonld());

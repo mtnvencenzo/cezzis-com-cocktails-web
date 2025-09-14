@@ -6,9 +6,12 @@ import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './AboutUsPageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
+import startPageViewSpan from '../../services/Tracer';
 
 const AboutUsPageContainer = () => {
     useEffect(() => {
+        startPageViewSpan((span) => span.end());
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setJsonLd(jsonld());
@@ -56,7 +59,7 @@ const AboutUsPageContainer = () => {
                         display: 'flex',
                         width: '100%',
                         flexDirection: 'row',
-                        alignItems: 'top'
+                        alignItems: 'flex-start'
                     }}
                 >
                     <Box
@@ -172,7 +175,7 @@ const AboutUsPageContainer = () => {
                                     style={{ width: '100%', height: 'auto' }}
                                 />
                                 <Typography variant='body1' style={{ paddingTop: '10px' }}>
-                                    Have a cocktail recipe? Contrbute{' '}
+                                    Have a cocktail recipe? Contribute{' '}
                                     <Typography component='span' variant='body1' style={{ color: 'blue' }}>
                                         here!
                                     </Typography>

@@ -1,5 +1,5 @@
 import { Button, Divider, FormControlLabel, Grid, Switch, Typography, useMediaQuery } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountNotificationsSettings } from '../../../../services/AccountService';
 import { CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
@@ -7,6 +7,7 @@ import theme from '../../../../theme';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
+import startPageViewSpan from '../../../../services/Tracer';
 
 interface FieldValueState<T> {
     value: T;
@@ -35,6 +36,10 @@ const AccountNotificationsPageContainer = () => {
             onNewCocktailAdditions: onNewCocktailAdditions.value as CocktailUpdatedNotificationModel
         });
     };
+
+    useEffect(() => {
+        startPageViewSpan((span) => span.end());
+    }, []);
 
     return (
         <>

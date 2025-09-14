@@ -4,11 +4,13 @@ import { Box } from '@mui/material';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getTermsOfService } from '../../services/LegalService';
 import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';
+import startPageViewSpan from '../../services/Tracer';
 
 interface TermsOfServicePageContainerProps {
     enableWidePadding?: boolean;
@@ -20,22 +22,28 @@ const TermsOfServicePageContainer = ({ enableWidePadding = false }: TermsOfServi
     const [legalDocumentRs, setLegalDocumentRs] = useState<LegalDocumentRs | undefined>();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (span?: Span) => {
             try {
                 const rs = await getTermsOfService();
                 setApiCallFailed(false);
                 setLegalDocumentRs(rs);
-            } catch {
+            } catch (e: unknown) {
                 setApiCallFailed(true);
+                span?.recordException(e as Error);
+                span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
             }
 
             setLoading(false);
+            span?.end();
         };
 
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('Cezzis.com');
-        fetchData();
+
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
     }, []);
 
     return (
@@ -48,7 +56,7 @@ const TermsOfServicePageContainer = ({ enableWidePadding = false }: TermsOfServi
             <meta property='og:site_name' content='Cezzis.com' />
             <meta property='og:url' content='https://www.cezzis.com/terms-of-service' />
             <meta property='og:title' content='Terms Of Service - Cezzis.com' />
-            <meta property='og:description' content='null' />
+            <meta property='og:description' content='Cezzis.com terms of service' />
             <Box
                 component='div'
                 sx={{

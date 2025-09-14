@@ -50,18 +50,6 @@ module "aca_cocktails_web" {
 
   env_vars = [
     {
-      name  = "APPLICATIONINSIGHTS_CONNECTION_STRING"
-      value = data.azurerm_application_insights.appi.connection_string
-    },
-    {
-      name  = "APPLICATIONINSIGHTS_INSTRUMENTATIONKEY"
-      value = data.azurerm_application_insights.appi.instrumentation_key
-    },
-    {
-      name  = "ApplicationInsightsAgent_EXTENSION_VERSION"
-      value = "~2"
-    },
-    {
       name  = "VITE_NODE_ENV"
       value = var.vite_node_environment
     },
@@ -74,8 +62,12 @@ module "aca_cocktails_web" {
       value = var.b2c_login_redirect_uri
     },
     {
-      name  = "VITE_INSTRUMENTATION_KEY"
-      value = data.azurerm_application_insights.appi.instrumentation_key
+      name  = "VITE_TELEMETRY_KEY"
+      value = data.azurerm_key_vault_secret.otel_collector_web_key.value
+    },
+    {
+      name  = "VITE_TELEMETRY_URL"
+      value = "https://${data.azurerm_container_app.otel_collector.ingress[0].fqdn}"
     },
     {
       name  = "VITE_B2C_TENANT"

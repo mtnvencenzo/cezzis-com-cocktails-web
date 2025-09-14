@@ -1,26 +1,50 @@
-import { ICustomProperties, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
-import { appInsights, isAppInsightsEnabled } from './AppinsightsService';
+import { Attributes, context } from '@opentelemetry/api';
+import { SeverityNumber } from '@opentelemetry/api-logs';
+import { isTelemetryEnabled, otelLogger } from '../utils/otelConfig';
 
 /* eslint-disable no-console */
 class logger {
-    static logException = (exception: IExceptionTelemetry, customProperties?: ICustomProperties): void => {
-        if (isAppInsightsEnabled()) {
-            appInsights.trackException(exception, customProperties);
+    static logException = (error: Error, attrs: Attributes = {}): void => {
+        if (isTelemetryEnabled()) {
+            otelLogger.emit({
+                timestamp: Date.now(),
+                observedTimestamp: Date.now(),
+                severityNumber: SeverityNumber.ERROR, // ERROR
+                severityText: 'ERROR',
+                body: error.message,
+                attributes: {
+                    ...attrs,
+                    'exception.type': error.name,
+                    'exception.message': error.message,
+                    'exception.stacktrace': error.originalStack ?? error.stack ?? ''
+                },
+                context: context?.active()
+            });
         } else {
-            console.log({
-                exception,
-                customProperties
+            console.error({
+                error,
+                attrs
             });
         }
     };
 
-    static logInformation = (traceTelemetry: ITraceTelemetry, customProperties?: ICustomProperties): void => {
-        if (isAppInsightsEnabled()) {
-            appInsights.trackTrace(traceTelemetry, customProperties);
+    static logInformation = (message: string, attrs: Attributes = {}): void => {
+        if (isTelemetryEnabled()) {
+            otelLogger.emit({
+                timestamp: Date.now(),
+                observedTimestamp: Date.now(),
+                severityNumber: SeverityNumber.INFO,
+                severityText: 'INFO',
+                body: message,
+                attributes: {
+                    ...attrs
+                },
+                context: context?.active()
+            });
         } else {
             console.log({
-                traceTelemetry,
-                customProperties
+                message,
+                attrs
             });
         }
     };

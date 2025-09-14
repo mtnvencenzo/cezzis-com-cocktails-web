@@ -4,6 +4,7 @@ import './CocktailsSearchPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { DEFAULT_TAKE, searchCocktails } from '../../services/CocktailsService';
 import { CocktailsListModel, CocktailDataIncludeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
@@ -16,6 +17,7 @@ import CocktailSearchNoResultsView from '../../molecules/CocktailSearchNoResults
 import jsonld from './CocktailsSearchPageContainer.jsonld';
 import { setJsonLd, setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
+import startPageViewSpan from '../../services/Tracer';
 
 interface CocktailsSearchPageContainerState {
     loading: boolean;
@@ -40,7 +42,7 @@ const CocktailsSearchPageContainer = () => {
     const { filtersRevision } = useCocktailFiltering();
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
-    const fetchData = async (skip: number | undefined = undefined) => {
+    const fetchData = async (skip: number | undefined = undefined, span: Span | undefined = undefined) => {
         const useSkip = skip ?? state.skip;
         const currentItems = useSkip === 0 ? [] : state.cocktailSearchModels;
 
@@ -69,7 +71,7 @@ const CocktailsSearchPageContainer = () => {
                 hasMore: (rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false,
                 cocktailSearchModels: [...currentItems, ...(items.filter((x) => currentItems.find((p) => p.id === x.id) === undefined) ?? [])]
             });
-        } catch {
+        } catch (e: unknown) {
             setState({
                 ...state,
                 apiCallFailed: true,
@@ -78,12 +80,19 @@ const CocktailsSearchPageContainer = () => {
                 loading: false,
                 skip: useSkip
             });
+            span?.recordException(e as Error);
+            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
+
+        span?.end();
     };
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchData(0);
+        startPageViewSpan((span) => {
+            fetchData(0, span);
+        });
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setJsonLd(jsonld());

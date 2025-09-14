@@ -3,6 +3,7 @@ import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import './FavoriteCocktailsPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { DEFAULT_TAKE, getCocktailFavorites } from '../../services/CocktailsService';
 import { CocktailsListModel, CocktailDataIncludeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
@@ -11,6 +12,7 @@ import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
 import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
+import startPageViewSpan from '../../services/Tracer';
 
 const FavoriteCocktailsPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -21,7 +23,7 @@ const FavoriteCocktailsPageContainer = () => {
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
 
-    const fetchData = async () => {
+    const fetchData = async (span?: Span) => {
         if (isFetching) {
             return;
         }
@@ -30,10 +32,9 @@ const FavoriteCocktailsPageContainer = () => {
             setIsFetching(true);
 
             const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
-
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
-            setSkip(skip + DEFAULT_TAKE);
+            setSkip((s) => s + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => {
                 const models = [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])];
@@ -42,19 +43,25 @@ const FavoriteCocktailsPageContainer = () => {
                 // This fixes the issue when the user is already on the page and un-favoriting them
                 return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
             });
-            setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
-        } catch {
+            setHasMore(rs?.items?.length === DEFAULT_TAKE);
+        } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.recordException(e as Error);
+            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 
         setLoading(false);
         setIsFetching(false);
+        span?.end();
     };
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchData();
+        startPageViewSpan((span) => {
+            fetchData(span);
+        });
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('My Favorite Cocktails');

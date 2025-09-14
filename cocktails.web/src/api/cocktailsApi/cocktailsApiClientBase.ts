@@ -42,7 +42,7 @@ export class CocktailsApiClientBase {
         try {
             return processor(response);
         } catch (e: unknown) {
-            logger.logException({ exception: e as Error });
+            logger.logException(e as Error);
             throw e;
         }
     }
