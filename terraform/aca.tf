@@ -63,7 +63,7 @@ module "aca_cocktails_web" {
     },
     {
       name  = "VITE_TELEMETRY_KEY"
-      value = "00000000-0000-0000-0000-000000000000"
+      value = data.azurerm_key_vault_secret.otel_collector_web_key.value
     },
     {
       name  = "VITE_TELEMETRY_URL"
