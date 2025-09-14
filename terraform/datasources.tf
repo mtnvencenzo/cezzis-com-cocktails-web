@@ -53,4 +53,9 @@ data "azurerm_dns_zone" "cezzis_dns_zone" {
   resource_group_name = data.azurerm_resource_group.cocktails_global_resource_group.name
 }
 
+data "azurerm_container_app" "otel_collector" {
+  name                = "aca-${var.sub}-${var.region}-${var.global_environment}-otelcol-${var.sequence}"
+  resource_group_name = data.azurerm_resource_group.global_shared_resource_group.name
+}
+
 data "azurerm_client_config" "current" {}

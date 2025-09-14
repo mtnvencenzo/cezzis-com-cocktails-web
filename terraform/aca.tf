@@ -67,7 +67,7 @@ module "aca_cocktails_web" {
     },
     {
       name  = "VITE_TELEMETRY_URL"
-      value = ""
+      value = "https://${data.azurerm_container_app.otel_collector.ingress[0].fqdn}"
     },
     {
       name  = "VITE_B2C_TENANT"
