@@ -34,7 +34,7 @@ const FavoriteCocktailsPageContainer = () => {
             const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
-            setSkip(skip + DEFAULT_TAKE);
+            setSkip((s) => s + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => {
                 const models = [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])];
@@ -43,10 +43,11 @@ const FavoriteCocktailsPageContainer = () => {
                 // This fixes the issue when the user is already on the page and un-favoriting them
                 return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
             });
-            setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
+            setHasMore(rs?.items?.length === DEFAULT_TAKE);
         } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.recordException(e as Error);
             span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 

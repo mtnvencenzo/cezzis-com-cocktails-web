@@ -9,15 +9,16 @@ const FrontChannelLogout = () => {
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        startPageViewSpan((span) => span.end());
+        startPageViewSpan((span) => {
+            const handleLogout = async () => {
+                if (inProgress === InteractionStatus.None || inProgress === InteractionStatus.Startup) {
+                    await logout();
+                }
+            };
 
-        const handleLogout = async () => {
-            if (inProgress === InteractionStatus.None || inProgress === InteractionStatus.Startup) {
-                await logout();
-            }
-        };
-
-        handleLogout();
+            span.end();
+            handleLogout();
+        });
     }, []);
     /* eslint-enable react-hooks/exhaustive-deps */
 

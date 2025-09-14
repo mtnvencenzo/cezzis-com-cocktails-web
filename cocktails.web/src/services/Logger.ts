@@ -1,46 +1,40 @@
-import { Attributes, AttributeValue, context } from '@opentelemetry/api';
+import { Attributes, context } from '@opentelemetry/api';
 import { SeverityNumber } from '@opentelemetry/api-logs';
 import { isTelemetryEnabled, otelLogger } from '../utils/otelConfig';
 
-export interface ITraceTelemetryAttribute {
-    name: string;
-    value: AttributeValue;
-}
-
 /* eslint-disable no-console */
 class logger {
-    static logException = (error: Error, attrs: Attributes | undefined = {}): void => {
+    static logException = (error: Error, attrs: Attributes = {}): void => {
         if (isTelemetryEnabled()) {
             otelLogger.emit({
                 timestamp: Date.now(),
                 observedTimestamp: Date.now(),
                 severityNumber: SeverityNumber.ERROR, // ERROR
-                severityText: 'Error',
+                severityText: 'ERROR',
                 body: error.message,
                 attributes: {
                     ...attrs,
-                    'component.type': 'exception',
-                    'component.error.message': error.message,
-                    'component.error.name': error.name,
-                    'component.error.stack': error.originalStack ?? ''
+                    'exception.type': error.name,
+                    'exception.message': error.message,
+                    'exception.stacktrace': error.originalStack ?? error.stack ?? ''
                 },
                 context: context?.active()
             });
         } else {
-            console.log({
+            console.error({
                 error,
                 attrs
             });
         }
     };
 
-    static logInformation = (message: string, attrs: Attributes | undefined = {}): void => {
+    static logInformation = (message: string, attrs: Attributes = {}): void => {
         if (isTelemetryEnabled()) {
             otelLogger.emit({
                 timestamp: Date.now(),
                 observedTimestamp: Date.now(),
                 severityNumber: SeverityNumber.INFO,
-                severityText: 'Info',
+                severityText: 'INFO',
                 body: message,
                 attributes: {
                     ...attrs

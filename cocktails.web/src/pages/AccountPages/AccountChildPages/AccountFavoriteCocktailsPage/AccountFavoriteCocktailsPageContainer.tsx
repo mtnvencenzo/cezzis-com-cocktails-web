@@ -37,7 +37,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
             const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
-            setSkip(skip + DEFAULT_TAKE);
+            setSkip((s) => s + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => {
                 const models = [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])];
@@ -50,6 +50,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
         } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.recordException(e as Error);
             span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 

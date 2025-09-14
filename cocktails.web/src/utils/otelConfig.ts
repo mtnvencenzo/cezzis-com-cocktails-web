@@ -25,16 +25,15 @@ export const isTelemetryEnabled = (): boolean => {
 export const otelTracer = trace.getTracer('cezzis-com-cocktails-web');
 export const otelLogger = logs.getLogger('cezzis-com-cocktails-web');
 
-const setupTracing = (resource: Resource) => {
+const setupTracing = (resource: Resource): WebTracerProvider => {
     const spanProcessors: SpanProcessor[] = [];
 
-    if (isTelemetryEnabled()) {
-        const otlpExporter = new OTLPTraceExporter({
-            url: `${getWindowEnv().VITE_TELEMETRY_URL}/v1/traces`
-        });
+    const otlpExporter = new OTLPTraceExporter({
+        url: `${getWindowEnv().VITE_TELEMETRY_URL}/v1/traces`,
+        headers: getWindowEnv().VITE_TELEMETRY_KEY ? { Authorization: `Bearer ${getWindowEnv().VITE_TELEMETRY_KEY}` } : undefined
+    });
 
-        spanProcessors.push(new BatchSpanProcessor(otlpExporter));
-    }
+    spanProcessors.push(new BatchSpanProcessor(otlpExporter));
 
     const provider = new WebTracerProvider({
         resource,
@@ -45,32 +44,18 @@ const setupTracing = (resource: Resource) => {
         contextManager: new ZoneContextManager()
     });
 
-    // Instantiate instrumentations and enable them
-    const instrumentations = [
-        new DocumentLoadInstrumentation(),
-        new FetchInstrumentation({
-            propagateTraceHeaderCorsUrls: [/.*$/]
-        }),
-        new XMLHttpRequestInstrumentation({
-            propagateTraceHeaderCorsUrls: [/.*$/]
-        })
-    ];
-
-    registerInstrumentations({
-        instrumentations
-    });
+    return provider;
 };
 
-const setupLogging = (resource: Resource) => {
+const setupLogging = (resource: Resource): LoggerProvider => {
     const processors: LogRecordProcessor[] = [];
 
-    if (isTelemetryEnabled()) {
-        const otlpExporter = new OTLPLogExporter({
-            url: `${getWindowEnv().VITE_TELEMETRY_URL}/v1/logs`
-        });
+    const otlpExporter = new OTLPLogExporter({
+        url: `${getWindowEnv().VITE_TELEMETRY_URL}/v1/logs`,
+        headers: getWindowEnv().VITE_TELEMETRY_KEY ? { Authorization: `Bearer ${getWindowEnv().VITE_TELEMETRY_KEY}` } : undefined
+    });
 
-        processors.push(new BatchLogRecordProcessor(otlpExporter));
-    }
+    processors.push(new BatchLogRecordProcessor(otlpExporter));
 
     const loggerProvider = new LoggerProvider({
         resource,
@@ -78,6 +63,8 @@ const setupLogging = (resource: Resource) => {
     });
 
     logs.setGlobalLoggerProvider(loggerProvider);
+
+    return loggerProvider;
 };
 
 export const setupTelemetry = () => {
@@ -105,6 +92,23 @@ export const setupTelemetry = () => {
         app_env: getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
     });
 
-    setupTracing(resource);
-    setupLogging(resource);
+    const traceProvider = setupTracing(resource);
+    const loggerProvider = setupLogging(resource);
+
+    // Instantiate instrumentations and enable them
+    const instrumentations = [
+        new DocumentLoadInstrumentation(),
+        new FetchInstrumentation({
+            propagateTraceHeaderCorsUrls: [/.*$/]
+        }),
+        new XMLHttpRequestInstrumentation({
+            propagateTraceHeaderCorsUrls: [/.*$/]
+        })
+    ];
+
+    registerInstrumentations({
+        tracerProvider: traceProvider,
+        loggerProvider,
+        instrumentations
+    });
 };

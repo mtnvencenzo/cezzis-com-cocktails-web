@@ -3,7 +3,7 @@ import logger from '../../services/Logger';
 
 export interface IAppErrorBoundaryProps {
     onError: React.ComponentType<unknown>;
-    children: React.ReactElement;
+    children: React.ReactNode;
 }
 
 export interface IAppErrorBoundaryState {
@@ -16,9 +16,11 @@ export default class AppErrorBoundary extends React.Component<IAppErrorBoundaryP
         this.state = { hasError: false };
     }
 
-    componentDidCatch(error: Error) {
-        this.setState({ hasError: true });
+    static getDerivedStateFromError(): IAppErrorBoundaryState {
+        return { hasError: true };
+    }
 
+    componentDidCatch(error: Error) {
         logger.logException(error);
     }
 

@@ -80,7 +80,7 @@ const CocktailsSearchPageContainer = () => {
                 loading: false,
                 skip: useSkip
             });
-
+            span?.recordException(e as Error);
             span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 

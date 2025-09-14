@@ -34,13 +34,14 @@ const CocktailsListPageContainer = () => {
             const rs = await getCocktailsList(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
-            setSkip(skip + DEFAULT_TAKE);
+            setSkip((prev) => prev + DEFAULT_TAKE);
             setApiCallFailed(false);
             setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
         } catch (e: unknown) {
             setApiCallFailed(true);
             setHasMore(false);
+            span?.recordException(e as Error);
             span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
         }
 

@@ -29,6 +29,7 @@ const TermsOfServicePageContainer = ({ enableWidePadding = false }: TermsOfServi
                 setLegalDocumentRs(rs);
             } catch (e: unknown) {
                 setApiCallFailed(true);
+                span?.recordException(e as Error);
                 span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
             }
 
@@ -55,7 +56,7 @@ const TermsOfServicePageContainer = ({ enableWidePadding = false }: TermsOfServi
             <meta property='og:site_name' content='Cezzis.com' />
             <meta property='og:url' content='https://www.cezzis.com/terms-of-service' />
             <meta property='og:title' content='Terms Of Service - Cezzis.com' />
-            <meta property='og:description' content='null' />
+            <meta property='og:description' content='Cezzis.com terms of service' />
             <Box
                 component='div'
                 sx={{

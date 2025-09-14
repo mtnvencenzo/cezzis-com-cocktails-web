@@ -9,12 +9,13 @@ import startPageViewSpan from '../../services/Tracer';
 
 const WelcomePageContainer = () => {
     useEffect(() => {
-        startPageViewSpan((span) => span.end());
-
-        // setting dom directly due to react v19 & react-helmet-async breaking
-        // and react not hoisting the script and cert meta tag to the top
-        setJsonLd(jsonld());
-        setMetaItemProp('Cezzis.com');
+        startPageViewSpan((span) => {
+            // setting dom directly due to react v19 & react-helmet-async breaking
+            // and react not hoisting the script and cert meta tag to the top
+            setJsonLd(jsonld());
+            setMetaItemProp('Cezzis.com');
+            span.end();
+        });
     }, []);
 
     return (

@@ -29,6 +29,7 @@ const PrivacyPolicyPageContainer = ({ enableWidePadding = false }: PrivacyPolicy
                 setLegalDocumentRs(rs);
             } catch (e: unknown) {
                 setApiCallFailed(true);
+                span?.recordException(e as Error);
                 span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
             }
 
@@ -55,7 +56,7 @@ const PrivacyPolicyPageContainer = ({ enableWidePadding = false }: PrivacyPolicy
             <meta property='og:site_name' content='Cezzis.com' />
             <meta property='og:url' content='https://www.cezzis.com/privacy-policy' />
             <meta property='og:title' content='Privacy Policy - Cezzis.com' />
-            <meta property='og:description' content='null' />
+            <meta property='og:description' content='Cezzis.com privacy policy' />
             <Box
                 component='div'
                 sx={{

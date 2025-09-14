@@ -59,7 +59,7 @@ const AboutUsPageContainer = () => {
                         display: 'flex',
                         width: '100%',
                         flexDirection: 'row',
-                        alignItems: 'top'
+                        alignItems: 'flex-start'
                     }}
                 >
                     <Box
@@ -175,7 +175,7 @@ const AboutUsPageContainer = () => {
                                     style={{ width: '100%', height: 'auto' }}
                                 />
                                 <Typography variant='body1' style={{ paddingTop: '10px' }}>
-                                    Have a cocktail recipe? Contrbute{' '}
+                                    Have a cocktail recipe? Contribute{' '}
                                     <Typography component='span' variant='body1' style={{ color: 'blue' }}>
                                         here!
                                     </Typography>

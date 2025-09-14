@@ -15,6 +15,7 @@ const startPageViewSpan = (fn: (span: Span) => void) =>
                 'url.scheme': location?.protocol?.replace(':', ''),
                 'url.query': location?.search,
                 'url.hash': location?.hash,
+                'url.port': location?.port ? parseInt(location.port, 10) : undefined,
                 'user_agent.original': navigator?.userAgent,
                 'browser.page.title': document?.title
             },
