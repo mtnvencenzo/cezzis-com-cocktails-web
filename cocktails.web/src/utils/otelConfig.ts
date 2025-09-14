@@ -25,7 +25,7 @@ export const isTelemetryEnabled = (): boolean => {
 export const otelTracer = trace.getTracer('cezzis-com-cocktails-web');
 export const otelLogger = logs.getLogger('cezzis-com-cocktails-web');
 
-const setupTraceing = (resource: Resource) => {
+const setupTracing = (resource: Resource) => {
     const spanProcessors: SpanProcessor[] = [];
 
     if (isTelemetryEnabled()) {
@@ -81,6 +81,18 @@ const setupLogging = (resource: Resource) => {
 };
 
 export const setupTelemetry = () => {
+    // prevent double registration in dev/SSR/HMR
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    if ((window as any).cezzisTelemetrySetupDone) {
+        return;
+    }
+    (window as any).cezzisTelemetrySetupDone = true;
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+
+    if (!isTelemetryEnabled()) {
+        return;
+    }
+
     const resource = resourceFromAttributes({
         [ATTR_SERVICE_NAME]: 'cocktails-web',
         'service.namespace': 'cocktails-web',
@@ -93,6 +105,6 @@ export const setupTelemetry = () => {
         app_env: getWindowEnv().VITE_NODE_ENV?.toLowerCase() ?? 'unknown'
     });
 
-    setupTraceing(resource);
+    setupTracing(resource);
     setupLogging(resource);
 };

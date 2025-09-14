@@ -3,13 +3,11 @@
 import { context, Span, SpanKind } from '@opentelemetry/api';
 import { otelTracer } from '../utils/otelConfig';
 
-/* eslint-disable no-nested-ternary */
 const startPageViewSpan = (fn: (span: Span) => void) =>
     otelTracer.startActiveSpan(
         `page view: ${location?.pathname}`,
         {
             attributes: {
-                'http.method': 'GET',
                 'http.request.method': 'GET',
                 'url.full': location?.href,
                 'url.domain': location?.hostname,
@@ -17,15 +15,35 @@ const startPageViewSpan = (fn: (span: Span) => void) =>
                 'url.scheme': location?.protocol?.replace(':', ''),
                 'url.query': location?.search,
                 'url.hash': location?.hash,
-                'server.port': location?.port ? parseInt(location.port, 10) : location?.protocol === 'https:' ? 443 : 80,
-                'user_agent.original': navigator?.userAgent
+                'user_agent.original': navigator?.userAgent,
+                'browser.page.title': document?.title
             },
-            kind: SpanKind.SERVER
+            kind: SpanKind.INTERNAL
         },
         context.active(),
         fn
     );
-/* eslint-enable no-nested-ternary */
+
+export const startLoginSpan = (fn: (span: Span) => void) =>
+    otelTracer.startActiveSpan(
+        `user login: ${location?.pathname}`,
+        {
+            attributes: {
+                'http.request.method': 'GET',
+                'url.full': location?.href,
+                'url.domain': location?.hostname,
+                'url.path': location?.pathname,
+                'url.scheme': location?.protocol?.replace(':', ''),
+                'url.query': location?.search,
+                'url.hash': location?.hash,
+                'user_agent.original': navigator?.userAgent,
+                'browser.page.title': document?.title
+            },
+            kind: SpanKind.INTERNAL
+        },
+        context.active(),
+        fn
+    );
 /* eslint-enable no-restricted-globals */
 
 export default startPageViewSpan;
