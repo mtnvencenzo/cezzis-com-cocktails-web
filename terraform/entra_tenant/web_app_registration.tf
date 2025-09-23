@@ -4,7 +4,6 @@ resource "azuread_application" "cocktails_entra_web_app_registration" {
   display_name                   = "appr-${var.sub}-${var.region}-${var.environment}-${var.domain}web-${var.sequence}"
   sign_in_audience               = "AzureADandPersonalMicrosoftAccount"
   fallback_public_client_enabled = true
-  identifier_uris                = ["https://${var.tenant_domain_name}/${var.domain}web"]
 
   api {
     requested_access_token_version = 2
@@ -75,6 +74,12 @@ resource "azuread_application" "cocktails_entra_web_app_registration" {
     }
   }
 }
+
+resource "azuread_application_identifier_uri" "cocktails_entra_web_app_registration_id" {
+  application_id = azuread_application.cocktails_entra_web_app_registration.id
+  identifier_uri = "api://${azuread_application.cocktails_entra_web_app_registration.client_id}"
+}
+
 
 resource "azuread_service_principal" "cocktails_entra_web_app_registration_serviceprincipal" {
   client_id                    = azuread_application.cocktails_entra_web_app_registration.client_id
