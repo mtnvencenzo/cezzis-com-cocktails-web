@@ -194,3 +194,41 @@ variable "include_google_verification_txt_record" {
 variable "login_subdomain" {
   type = string
 }
+
+# Entra External Ids Configuration
+variable "entra_tenant_domain_name" {
+  type        = string
+  description = "The entra tenant domain name for this environment"
+}
+
+variable "entra_login_redirect_uri" {
+  type = string
+}
+
+variable "entra_tenant_id" {
+  type        = string
+  description = "The entra tenant id for this environment"
+}
+
+variable "entra_tenant_name" {
+  type        = string
+  description = "The entra tenant name (typeically the first part of the hostname)"
+}
+
+variable "entra_signin_policy" {
+  type        = string
+  description = "The main signin policy for the cocktails webapp"
+  default     = "sisu-policy"
+}
+
+variable "entra_resetpassword_policy" {
+  type        = string
+  description = "The main password reset for the cocktails webapp"
+  default     = "B2C_1_ResetPassword_Policy"
+}
+
+
+variable "entra_resetpassword_redirect_uri" {
+  type        = string
+  description = "The redirect uri  to use when returning from the reset password user flow"
+}

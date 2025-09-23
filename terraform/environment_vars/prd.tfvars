@@ -7,6 +7,14 @@ b2c_tenant_name                = "cezzis"
 b2c_tenant_domain_name         = "cezzis.onmicrosoft.com"
 b2c_resetpassword_redirect_uri = "https://www.cezzis.com/account/profile-center/"
 
+# Entra External Identities
+entra_login_redirect_uri         = "https://www.cezzis.com/"
+entra_tenant_id                  = "e4ea5dbf-d3fc-4991-888c-2b2f7c6b3b45"
+entra_tenant_name                = "cezziscom"
+entra_tenant_domain_name         = "cezziscom.onmicrosoft.com"
+entra_resetpassword_redirect_uri = "https://www.cezzis.com/account/profile-center/"
+
+
 webapp_redirect_uris = [
   "https://cezzis.com/",
   "https://www.cezzis.com/",
