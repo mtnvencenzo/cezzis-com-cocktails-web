@@ -1,4 +1,4 @@
-module "webapp_b2c_tenant" {
+module "webapp_entra_extid_app_registration" {
   source                            = "./entra_tenant"
   environment                       = var.environment
   region                            = var.region
