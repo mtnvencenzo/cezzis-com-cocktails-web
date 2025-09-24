@@ -6,7 +6,7 @@ This directory contains end-to-end tests for the Cezzis Cocktails web applicatio
 
 - Node.js (v14 or higher)
 - Yarn package manager
-- B2C credentials (for authentication tests)
+- Entra External Id credentials (for authentication tests)
 
 ## Installation
 
@@ -63,14 +63,14 @@ The following environment variables are used in the tests:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| cypressUserPassword | Password for B2C test user | Yes |
-| b2cUserEmail | Email for B2C test user | Yes |
-| b2cClientId | B2C client ID | Yes |
-| b2cTenantId | B2C tenant ID | Yes |
+| cypressUserPassword | Password for CIAM test user | Yes |
+| ciamUserEmail | Email for CIAM test user | Yes |
+| ciamClientId | CIAM client ID | Yes |
+| ciamTenantId | CIAM tenant ID | Yes |
 
 ## Test User Account
 
-The tests require a specific B2C test user account with the following details:
+The tests require a specific CIAM test user account with the following details:
 
 | Field | Value |
 |-------|-------|
@@ -83,7 +83,7 @@ The tests require a specific B2C test user account with the following details:
 | Postal Code | 3860 |
 | Country | United States |
 
-This test user account should be created in your B2C tenant before running the tests. The tests will modify some of these values during execution but will maintain the basic structure.
+This test user account should be created in your CIAM tenant before running the tests. The tests will modify some of these values during execution but will maintain the basic structure.
 
 ## Useful Cypress Commands
 
@@ -146,7 +146,7 @@ yarn cypress run --env type=staging,cypressUserPassword=<your-password>
    - Verify element selectors
 
 2. **Authentication Issues**
-   - Verify B2C credentials
+   - Verify CIAM credentials
    - Check token expiration
    - Clear browser cache
 

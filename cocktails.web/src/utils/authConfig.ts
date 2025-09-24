@@ -6,17 +6,17 @@ import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services
 
 let idToken = '';
 
-const b2cPolicies = {
+const ciamPolicies = {
     names: {
-        signIn: getWindowEnv().VITE_B2C_POLICY,
-        resetPassword: getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY
+        signIn: getWindowEnv().VITE_CIAM_POLICY,
+        resetPassword: getWindowEnv().VITE_CIAM_RESET_PASSWORD_POLICY
     },
     authorities: {
         signIn: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_POLICY}`
+            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_CIAM_POLICY}`
         },
         passwordReset: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY}`,
+            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_CIAM_RESET_PASSWORD_POLICY}`,
             scope: 'openid',
             redirectUri: getWindowEnv().VITE_RESET_PASSWORD_REDIRECT_URI
         }
@@ -26,10 +26,10 @@ const b2cPolicies = {
 
 const msalConfig = {
     auth: {
-        clientId: getWindowEnv().VITE_B2C_CLIENT_ID,
+        clientId: getWindowEnv().VITE_CIAM_CLIENT_ID,
         redirectUri: getWindowEnv().VITE_REDIRECT_URI,
-        authority: b2cPolicies.authorities.signIn.authority,
-        knownAuthorities: [b2cPolicies.authorityDomain],
+        authority: ciamPolicies.authorities.signIn.authority,
+        knownAuthorities: [ciamPolicies.authorityDomain],
         navigateToLoginRequestUrl: true
     },
     cache: {
@@ -129,9 +129,9 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
 export const resetPassword = async () => {
     await msalInstance
         .loginRedirect({
-            authority: b2cPolicies.authorities.passwordReset.authority,
-            scopes: [b2cPolicies.authorities.passwordReset.scope],
-            redirectUri: b2cPolicies.authorities.passwordReset.redirectUri
+            authority: ciamPolicies.authorities.passwordReset.authority,
+            scopes: [ciamPolicies.authorities.passwordReset.scope],
+            redirectUri: ciamPolicies.authorities.passwordReset.redirectUri
         })
         .catch((error) => {
             logger.logException(error as Error);

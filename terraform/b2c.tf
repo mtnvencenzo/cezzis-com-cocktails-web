@@ -1,10 +1,10 @@
-module "webapp_b2c_tenant" {
-  source                            = "./b2c_tenant"
+module "webapp_ciam_tenant" {
+  source                            = "./ciam_tenant"
   environment                       = var.environment
   region                            = var.region
   domain                            = var.domain
-  tenant_id                         = var.b2c_tenant_id
-  tenant_domain_name                = var.b2c_tenant_domain_name
+  tenant_id                         = var.ciam_tenant_id
+  tenant_domain_name                = var.ciam_tenant_domain_name
   sub                               = var.sub
   sequence                          = var.sequence
   webapp_redirect_uris              = var.webapp_redirect_uris

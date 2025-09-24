@@ -16,8 +16,8 @@ import { getWindowEnv } from '../utils/envConfig';
 import LocalStorageService from './LocalStorageService';
 import SessionStorageService from './SessionStorageService';
 
-const accountReadScope = `https://${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/cocktailsapi/Account.Read`;
-const accountWriteScope = `https://${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/cocktailsapi/Account.Write`;
+const accountReadScope = `https://${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/cocktailsapi/Account.Read`;
+const accountWriteScope = `https://${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/cocktailsapi/Account.Write`;
 
 const getOwnedAccountProfile = async (reload: boolean = false): Promise<AccountOwnedProfileRs | undefined> => {
     const sessionStorageService = new SessionStorageService();

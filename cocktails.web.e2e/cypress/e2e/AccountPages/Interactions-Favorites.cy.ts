@@ -1,7 +1,7 @@
 describe('Interactions cocktailfavorites', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('ciamUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates to the cocktails favorites account page', () => {

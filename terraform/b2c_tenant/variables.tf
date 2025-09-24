@@ -32,7 +32,7 @@ variable "sequence" {
 
 variable "webapp_redirect_uris" {
   type        = list(string)
-  description = "The redirect uris available for the web app registration and b2c integration"
+  description = "The redirect uris available for the web app registration and ciam integration"
 }
 
 variable "webapp_logout_url" {

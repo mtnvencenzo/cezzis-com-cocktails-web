@@ -71,48 +71,48 @@ variable "global_domain" {
   default     = "shared"
 }
 
-variable "b2c_login_redirect_uri" {
+variable "ciam_login_redirect_uri" {
   type = string
 }
 
-variable "b2c_tenant_id" {
+variable "ciam_tenant_id" {
   type        = string
-  description = "The b2c tenant id for this environment"
+  description = "The ciam tenant id for this environment"
 }
 
-variable "b2c_tenant_name" {
+variable "ciam_tenant_name" {
   type        = string
-  description = "The b2c tenant name (typeically the first part of the hostname)"
+  description = "The ciam tenant name (typeically the first part of the hostname)"
 }
 
-variable "b2c_signin_policy" {
+variable "ciam_signin_policy" {
   type        = string
   description = "The main signin policy for the cocktails webapp"
-  default     = "B2C_1_SignInSignUp_Policy"
+  default     = "sisu-p"
 }
 
-variable "b2c_resetpassword_policy" {
+variable "ciam_resetpassword_policy" {
   type        = string
   description = "The main password reset for the cocktails webapp"
-  default     = "B2C_1_ResetPassword_Policy"
+  default     = "rp-p"
 }
 
 
-variable "b2c_resetpassword_redirect_uri" {
+variable "ciam_resetpassword_redirect_uri" {
   type        = string
   description = "The redirect uri  to use when returning from the reset password user flow"
 }
 
-variable "b2c_tenant_domain_name" {
+variable "ciam_tenant_domain_name" {
   type        = string
-  description = "The b2c tenant domain name for this environment"
+  description = "The ciam tenant domain name for this environment"
 }
 
-variable "b2c_terraform_app_registration_client_id" {
+variable "ciam_terraform_app_registration_client_id" {
   type = string
 }
 
-variable "b2c_terraform_app_registration_client_secret" {
+variable "ciam_terraform_app_registration_client_secret" {
   type = string
 }
 
@@ -122,7 +122,7 @@ variable "image_tag" {
 
 variable "webapp_redirect_uris" {
   type        = list(string)
-  description = "The redirect uris available for the web app registration and b2c integration"
+  description = "The redirect uris available for the web app registration and ciam integration"
 }
 
 variable "webapp_logout_url" {
@@ -193,42 +193,4 @@ variable "include_google_verification_txt_record" {
 
 variable "login_subdomain" {
   type = string
-}
-
-# Entra External Ids Configuration
-variable "entra_tenant_domain_name" {
-  type        = string
-  description = "The entra tenant domain name for this environment"
-}
-
-variable "entra_login_redirect_uri" {
-  type = string
-}
-
-variable "entra_tenant_id" {
-  type        = string
-  description = "The entra tenant id for this environment"
-}
-
-variable "entra_tenant_name" {
-  type        = string
-  description = "The entra tenant name (typeically the first part of the hostname)"
-}
-
-variable "entra_signin_policy" {
-  type        = string
-  description = "The main signin policy for the cocktails webapp"
-  default     = "sisu-policy"
-}
-
-variable "entra_resetpassword_policy" {
-  type        = string
-  description = "The main password reset for the cocktails webapp"
-  default     = "B2C_1_ResetPassword_Policy"
-}
-
-
-variable "entra_resetpassword_redirect_uri" {
-  type        = string
-  description = "The redirect uri  to use when returning from the reset password user flow"
 }

@@ -1,19 +1,11 @@
 environment           = "prd"
 vite_node_environment = "production"
 
-b2c_login_redirect_uri         = "https://www.cezzis.com/"
-b2c_tenant_id                  = "fb512a9c-5b44-41ab-8042-6465769f16c9"
-b2c_tenant_name                = "cezzis"
-b2c_tenant_domain_name         = "cezzis.onmicrosoft.com"
-b2c_resetpassword_redirect_uri = "https://www.cezzis.com/account/profile-center/"
-
-# Entra External Identities
-entra_login_redirect_uri         = "https://www.cezzis.com/"
-entra_tenant_id                  = "e4ea5dbf-d3fc-4991-888c-2b2f7c6b3b45"
-entra_tenant_name                = "cezziscom"
-entra_tenant_domain_name         = "cezziscom.onmicrosoft.com"
-entra_resetpassword_redirect_uri = "https://www.cezzis.com/account/profile-center/"
-
+ciam_login_redirect_uri         = "https://www.cezzis.com/"
+ciam_tenant_id                  = "fb512a9c-5b44-41ab-8042-6465769f16c9"
+ciam_tenant_name                = "cezzis"
+ciam_tenant_domain_name         = "cezzis.onmicrosoft.com"
+ciam_resetpassword_redirect_uri = "https://www.cezzis.com/account/profile-center/"
 
 webapp_redirect_uris = [
   "https://cezzis.com/",

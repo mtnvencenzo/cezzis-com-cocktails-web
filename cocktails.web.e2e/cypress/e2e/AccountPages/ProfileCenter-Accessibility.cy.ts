@@ -1,7 +1,7 @@
 describe('Profile center accessibility', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('ciamUserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates to the accessibility account page', () => {
