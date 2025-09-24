@@ -75,7 +75,7 @@ module "aca_cocktails_web" {
     },
     {
       name  = "VITE_B2C_CLIENT_ID"
-      value = "00000000-0000-0000-0000-000000000000" # module.webapp_b2c_tenant.cocktails_web_app_registration_client_id
+      value = module.webapp_b2c_tenant.cocktails_web_app_registration_client_id
     },
     {
       name  = "VITE_B2C_POLICY"
