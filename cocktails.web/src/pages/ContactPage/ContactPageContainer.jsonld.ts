@@ -6,7 +6,7 @@ const jsonld = (): string =>
         {
             '@context': 'http://schema.org',
             '@type': ['ContactPage'],
-            '@id': `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/contact`,
+            '@id': `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/contact`,
             headline: 'Contact Cezzis.com',
             datePublished: '2024-05-24T00:00:00.000-07:00',
             dateModified: '2024-11-03T00:00:00.000-07:00',
@@ -19,7 +19,7 @@ const jsonld = (): string =>
             publisher: {
                 '@type': 'Organization',
                 name: 'Cezzis.com',
-                url: `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}`,
+                url: `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}`,
                 brand: 'Cezzis.com',
                 sameAs: []
             },

@@ -1,10 +1,8 @@
 import { afterEach, vi, expect, beforeAll, afterAll } from 'vitest';
 import { cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MsalReactTesterPlugin } from 'msal-react-tester';
 import { setupServer } from 'msw/node';
 import 'vitest-location-mock';
-import { AccountInfo } from '@azure/msal-browser';
 import {
     AccountCocktailRatingsModel,
     AccountCocktailRatingsRs,
@@ -27,18 +25,16 @@ vi.mock('../src/utils/envConfig', () => {
         getWindowEnv: vi.fn(() => ({
             VITE_NODE_ENV: 'test',
             VITE_PORT: '123',
-            VITE_REDIRECT_URI: 'http://localhost:123/',
-            VITE_RESET_PASSWORD_REDIRECT_URI: 'https://localhost:123/account/profile-center/',
+            VITE_AUTH0_REDIRECT_URI: 'http://localhost:123/',
+
             VITE_TELEMETRY_KEY: '00000000-0000-0000-0000-000000000000',
             VITE_TELEMETRY_URL: '',
-            VITE_CIAM_TENANT: 'cezzis',
-            VITE_CIAM_CLIENT_ID: '00000000-0000-0000-0000-000000000000',
-            VITE_CIAM_POLICY: 'sisu-p',
-            VITE_CIAM_RESET_PASSWORD_POLICY: 'rp-p',
+
             VITE_COCKTAILS_API_URL: 'http://localhost:0000',
             VITE_COCKTAILS_IMAGE_URL: 'http://localhost:0000/images',
-            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
             VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY: '383hudiudhUJK984jdus7HDY',
+
+            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
             VITE_LOGIN_SUBDOMAIN: 'login'
         }))
     };

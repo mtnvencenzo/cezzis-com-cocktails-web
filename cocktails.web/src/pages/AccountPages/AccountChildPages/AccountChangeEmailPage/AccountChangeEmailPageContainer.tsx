@@ -42,7 +42,7 @@ const AccountChangeEmailPageContainer = () => {
     return (
         <>
             <title>Profile Center - Change Email</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/change-email`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/profile-center/change-email`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}

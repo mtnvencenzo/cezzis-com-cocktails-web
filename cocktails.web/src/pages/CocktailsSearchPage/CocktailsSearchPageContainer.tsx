@@ -103,7 +103,7 @@ const CocktailsSearchPageContainer = () => {
     return (
         <>
             <title>Cocktail Search</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/cocktails/search`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/cocktails/search`} />
             <meta
                 name='description'
                 content='Search through the complete listing of cocktails including the classics, prohibition era cocktailsand the traditional and the more modern cocktail recipes.'

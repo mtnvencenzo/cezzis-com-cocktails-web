@@ -21,7 +21,7 @@ const WelcomePageContainer = () => {
     return (
         <>
             <title>Cezzi&apos;s Cocktail Recipes</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}`} />
             <meta name='description' content='Cezzis.com is your place for quick lookup cocktail recipes, spirits, and more. Expand your knowledge and become part of the  cocktail community.' />
             <meta property='article:section' content='Cezzis.com' />
             <meta property='og:type' content='article' />

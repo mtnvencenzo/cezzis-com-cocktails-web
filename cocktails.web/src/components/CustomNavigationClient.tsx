@@ -1,22 +1,22 @@
-import { NavigationClient, NavigationOptions } from '@azure/msal-browser';
-import { NavigateFunction } from 'react-router-dom';
+// import { NavigationClient, NavigationOptions } from '@azure/msal-browser';
+// import { NavigateFunction } from 'react-router-dom';
 
-export default class CustomNavigationClient extends NavigationClient {
-    private navigate: NavigateFunction;
+// export default class CustomNavigationClient extends NavigationClient {
+//     private navigate: NavigateFunction;
 
-    constructor(navigate: NavigateFunction) {
-        super();
-        this.navigate = navigate;
-    }
+//     constructor(navigate: NavigateFunction) {
+//         super();
+//         this.navigate = navigate;
+//     }
 
-    async navigateInternal(url: string, options?: NavigationOptions) {
-        const relativePath = url.replace(window.location.origin, '');
-        if (options?.noHistory ?? true) {
-            this.navigate(relativePath, { replace: true });
-        } else {
-            this.navigate(relativePath);
-        }
+//     async navigateInternal(url: string, options?: NavigationOptions) {
+//         const relativePath = url.replace(window.location.origin, '');
+//         if (options?.noHistory ?? true) {
+//             this.navigate(relativePath, { replace: true });
+//         } else {
+//             this.navigate(relativePath);
+//         }
 
-        return false;
-    }
-}
+//         return false;
+//     }
+// }

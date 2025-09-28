@@ -1,9 +1,7 @@
 import React from 'react';
 import { MenuItem, Typography } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
-import { logout } from '../../../utils/authConfig';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface LogoutProps {
     testId: string;
@@ -11,14 +9,15 @@ interface LogoutProps {
 }
 
 const Logout = ({ setAnchorEl, testId }: LogoutProps) => {
-    const { inProgress } = useMsal();
+    const { logout } = useAuth0();
 
     const handleCloseUserMenu = async () => {
         setAnchorEl(null);
-
-        if (inProgress === InteractionStatus.None) {
-            await logout();
-        }
+        await logout({
+            logoutParams: {
+                returnTo: window.location.origin,
+            },
+        });
     };
 
     return (

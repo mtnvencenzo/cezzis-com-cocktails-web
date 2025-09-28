@@ -58,7 +58,7 @@ module "aca_cocktails_web" {
       value = "3000"
     },
     {
-      name  = "VITE_REDIRECT_URI"
+      name  = "VITE_AUTH0_REDIRECT_URI"
       value = var.ciamlogin_redirect_uri
     },
     {
@@ -84,10 +84,6 @@ module "aca_cocktails_web" {
     {
       name  = "VITE_CIAM_RESET_PASSWORD_POLICY"
       value = var.ciam_resetpassword_policy
-    },
-    {
-      name  = "VITE_RESET_PASSWORD_REDIRECT_URI"
-      value = var.ciam_resetpassword_redirect_uri
     },
     {
       name  = "VITE_COCKTAILS_API_URL"

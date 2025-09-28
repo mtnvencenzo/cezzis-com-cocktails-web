@@ -1,182 +1,141 @@
-import { LogLevel, PublicClientApplication, EventType, EventMessage, AuthenticationResult, InteractionRequiredAuthError, AccountInfo, BrowserCacheLocation } from '@azure/msal-browser';
-import { getWindowEnv } from './envConfig';
-import logger from '../services/Logger';
+import { AppState, User } from '@auth0/auth0-react';
 import SessionStorageService from '../services/SessionStorageService';
 import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services/AccountService';
+import { Auth0Client, AuthorizationParams } from '@auth0/auth0-spa-js';
+import trimWhack from './trimWhack';
+import { getWindowEnv } from './envConfig';
+import logger from '../services/Logger';
 
-let idToken = '';
-
-const ciamPolicies = {
-    names: {
-        signIn: getWindowEnv().VITE_CIAM_POLICY,
-        resetPassword: getWindowEnv().VITE_CIAM_RESET_PASSWORD_POLICY
-    },
-    authorities: {
-        signIn: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_CIAM_POLICY}`
-        },
-        passwordReset: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_CIAM_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_CIAM_RESET_PASSWORD_POLICY}`,
-            scope: 'openid',
-            redirectUri: getWindowEnv().VITE_RESET_PASSWORD_REDIRECT_URI
-        }
-    },
-    authorityDomain: `${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com`
-};
-
-const msalConfig = {
-    auth: {
-        clientId: getWindowEnv().VITE_CIAM_CLIENT_ID,
-        redirectUri: getWindowEnv().VITE_REDIRECT_URI,
-        authority: ciamPolicies.authorities.signIn.authority,
-        knownAuthorities: [ciamPolicies.authorityDomain],
-        navigateToLoginRequestUrl: true
-    },
-    cache: {
-        cacheLocation: BrowserCacheLocation.SessionStorage,
-        storeAuthStateInCookie: false
-    },
-    system: {
-        allowRedirectInIframe: false,
-        loggerOptions: {
-            loggerCallback: (level: LogLevel, message: string, containsPii: boolean) => {
-                if (containsPii) {
-                    return;
-                }
-
-                if (level === LogLevel.Error) {
-                    const dontlogEx = getWindowEnv().VITE_NODE_ENV === 'test' && message.includes('Clearing keystore failed with error');
-
-                    if (!dontlogEx) {
-                        logger.logException(new Error(`Login failed.  Please check your username and or password. ${message}`));
-                    }
-                }
-            }
-        }
-    }
-};
-
-export const msalInstance = new PublicClientApplication(msalConfig);
-await msalInstance.initialize();
-msalInstance.enableAccountStorageEvents();
-
-msalInstance
-    .handleRedirectPromise()
-    .then(() => {})
-    .catch(() => {
-        sessionStorage.removeItem('msal.interaction.status');
-        return undefined;
-    });
-
-msalInstance.addEventCallback(async (event: EventMessage) => {
+export const onRedirectCallback = async (appState?: AppState, user?: User) => {
     const sessionStorageService = new SessionStorageService();
+    console.log('onRedirectCallback', appState);
 
-    if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-        if ((event.payload as AuthenticationResult).account) {
-            const activeAccount = (event.payload as AuthenticationResult).account;
-            msalInstance.setActiveAccount(activeAccount);
-            idToken = (event.payload as AuthenticationResult).idToken;
-
-            if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-                if (activeAccount && activeAccount.idTokenClaims && activeAccount.idTokenClaims.sub) {
-                    await loginOwnedAccountProfile();
-                    await getAccountCocktailRatings(true);
-                }
-            }
-        }
-    } else if (event.eventType === EventType.LOGOUT_SUCCESS) {
-        sessionStorageService.ClearOwnedAccountProfileRequestData();
-        msalInstance.setActiveAccount(null);
-        idToken = '';
+    if (appState) {
+        console.log('AppState', appState);
     }
-});
+
+    if (user) {
+        await loginOwnedAccountProfile();
+        await getAccountCocktailRatings(true);
+    } else {
+        sessionStorageService.ClearOwnedAccountProfileRequestData();
+    }
+};
+
+export const authParams: AuthorizationParams = {
+    redirect_uri: trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)!,
+}
+
+export const loginWithRedirectOptions = {
+    authorizationParams: {
+        ...authParams,
+        // audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE,
+        scope: 'openid offline_access profile email'
+    }
+};
 
 export const getAccessToken = async (requiredScopes: string[] = []): Promise<string | undefined> => {
-    const accounts = msalInstance.getAllAccounts();
+    let auth0Client: Auth0Client | null = null;
+    auth0Client = new Auth0Client({
+        domain: getWindowEnv().VITE_AUTH0_DOMAIN,
+        clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
+        useRefreshTokens: false,
+        cacheLocation: "localstorage"
+    });
+
+    if (!auth0Client) {
+        console.log("Auth0 client not initialized");
+        return undefined;
+    }
+
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        console.log("User not authenticated");
+        return undefined;
+    }
+
+    const accounts = await auth0Client.getIdTokenClaims() ? [auth0Client.getIdTokenClaims()!] : [];
+    if (!accounts || accounts.length === 0) {
+        console.log("No accounts found");
+        return undefined;
+    }
+
+    const user = await auth0Client.getUser();
+
+    if (!user) {
+        console.log("User not found");
+        return undefined;
+    }
 
     if (accounts && accounts.length > 0) {
-        const request = {
-            scopes: requiredScopes ?? [],
-            account: accounts[0]
+        const authorizationParms: AuthorizationParams = {
+            ...authParams,
+            scope: ['openid', 'offline_access', 'profile', 'email', ...requiredScopes].join(' '),
+            audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
         };
 
-        const accessToken = await msalInstance
-            .acquireTokenSilent(request)
-            .then((response) => response.accessToken)
-            .catch((error) => {
-                logger.logException(error as Error);
-
-                if (error instanceof InteractionRequiredAuthError) {
-                    // fallback to interaction when silent call fails
-                    return msalInstance.acquireTokenPopup({ ...request }).catch((err) => {
-                        logger.logException(err as Error);
-                    });
-                }
-                return undefined;
+        try {
+            const accessToken = await auth0Client.getTokenSilently({
+                detailedResponse: false,
+                authorizationParams: authorizationParms,
             });
 
-        if (accessToken === undefined) {
-            msalInstance.logoutRedirect();
-            throw new Error('acquireTokenSilent return undefined!');
+            return accessToken;
+
+        } catch (error) {
+            // Fallback to interaction when silent call fails
+            // (e.g. when the session expires)
+            try {
+                const accessToken = await auth0Client.getTokenWithPopup({
+                    authorizationParams: authorizationParms,
+                });
+
+                console.log("Acquired access token with popup fallback", accessToken);
+
+                return accessToken;
+
+
+            } catch (error) {
+                console.error("Error acquiring access token: ", error);
+                logger.logException(error as Error);
+                return undefined;
+            }
         }
-
-        return accessToken as string;
     }
-
-    return undefined;
 };
 
-export const resetPassword = async () => {
-    await msalInstance
-        .loginRedirect({
-            authority: ciamPolicies.authorities.passwordReset.authority,
-            scopes: [ciamPolicies.authorities.passwordReset.scope],
-            redirectUri: ciamPolicies.authorities.passwordReset.redirectUri
-        })
-        .catch((error) => {
-            logger.logException(error as Error);
-        });
-};
 
-export const logout = async () => {
-    const sessionStorageService = new SessionStorageService();
-    sessionStorageService.ClearOwnedAccountProfileRequestData();
+// msalInstance.addEventCallback(async (event: EventMessage) => {
+//     const sessionStorageService = new SessionStorageService();
 
-    await msalInstance.logoutRedirect({
-        postLogoutRedirectUri: msalConfig.auth.redirectUri,
-        account: msalInstance.getActiveAccount(),
-        idTokenHint: idToken
-    });
-};
+//     if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
+//         if ((event.payload as AuthenticationResult).account) {
+//             const activeAccount = (event.payload as AuthenticationResult).account;
+//             msalInstance.setActiveAccount(activeAccount);
+//             idToken = (event.payload as AuthenticationResult).idToken;
 
-export const login = async () => {
-    await msalInstance.loginRedirect();
-};
+//             if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
+//                 if (activeAccount && activeAccount.idTokenClaims && activeAccount.idTokenClaims.sub) {
+//                     await loginOwnedAccountProfile();
+//                     await getAccountCocktailRatings(true);
+//                 }
+//             }
+//         }
+//     } else if (event.eventType === EventType.LOGOUT_SUCCESS) {
+//         sessionStorageService.ClearOwnedAccountProfileRequestData();
+//         msalInstance.setActiveAccount(null);
+//         idToken = '';
+//     }
+// });
 
-export const getSubjectId = (accounts: AccountInfo[]): string | undefined => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims?.sub) {
-        return accounts[0].idTokenClaims.sub;
-    }
-
-    return undefined;
-};
-
-export const getGivenName = (accounts: AccountInfo[]): string => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims) {
-        return ((accounts[0].idTokenClaims.given_name ?? '') as string).trim();
-    }
-
-    return '';
-};
-
-export const getFamilyName = (accounts: AccountInfo[]): string => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims) {
-        return ((accounts[0].idTokenClaims.family_name ?? '') as string).trim();
-    }
-
-    return '';
-};
-
-export const getDisplayName = (accounts: AccountInfo[]): string => `${getGivenName(accounts)} ${getFamilyName(accounts)}`.trim();
-
-export const getInitials = (accounts: AccountInfo[]): string => (`${getGivenName(accounts)} `.substring(0, 1) + `${getFamilyName(accounts)} `.substring(0, 1)).trim();
+// export const resetPassword = async () => {
+//     await msalInstance
+//         .loginRedirect({
+//             authority: ciamPolicies.authorities.passwordReset.authority,
+//             scopes: [ciamPolicies.authorities.passwordReset.scope],
+//             redirectUri: ciamPolicies.authorities.passwordReset.redirectUri
+//         })
+//         .catch((error) => {
+//             logger.logException(error as Error);
+//         });
+//};

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
-import { useIsAuthenticated } from '@azure/msal-react';
 import { Link } from 'react-router-dom';
 import { sendRecommendation } from '../../services/AccountService';
 import { getWindowEnv } from '../../utils/envConfig';
 import { resetRecaptcha, executeRecaptcha } from '../../services/RecaptchaService';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { login } from '../../utils/authConfig';
+import { useAuth0 } from '@auth0/auth0-react';
+import { loginWithRedirectOptions } from '../../utils/authConfig';
 
 interface CocktailRecommendationFormState {
     sendingRecommendation: boolean;
@@ -22,7 +22,7 @@ interface CocktailRecommendationFormState {
 
 const CocktailRecommendationForm = () => {
     const recaptchaRef = React.createRef<ReCAPTCHA>();
-    const isAuthenticated = useIsAuthenticated();
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
     const { ownedAccount } = useOwnedAccount();
 
     const [formState, setFormState] = useState<CocktailRecommendationFormState>({
@@ -136,7 +136,7 @@ const CocktailRecommendationForm = () => {
     };
 
     const handleLoginClick = async () => {
-        await login();
+        await loginWithRedirect(loginWithRedirectOptions);
     };
 
     return (

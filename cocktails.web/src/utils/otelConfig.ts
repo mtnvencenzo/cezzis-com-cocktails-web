@@ -99,10 +99,16 @@ export const setupTelemetry = () => {
     const instrumentations = [
         new DocumentLoadInstrumentation(),
         new FetchInstrumentation({
-            propagateTraceHeaderCorsUrls: [/.*$/]
+            propagateTraceHeaderCorsUrls: [/.*$/],
+            ignoreUrls: [
+                /https:\/\/cezzis.us.auth0.com\/*/, // Exclude a specific third-party API
+            ],
         }),
         new XMLHttpRequestInstrumentation({
-            propagateTraceHeaderCorsUrls: [/.*$/]
+            propagateTraceHeaderCorsUrls: [/.*$/],
+            ignoreUrls: [
+                /https:\/\/cezzis.us.auth0.com\/*/, // Exclude a specific third-party API
+            ],
         })
     ];
 

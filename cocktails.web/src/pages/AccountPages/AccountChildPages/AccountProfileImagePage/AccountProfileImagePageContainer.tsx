@@ -75,7 +75,7 @@ const AccountProfileImagePageContainer = () => {
     return (
         <>
             <title>Profile Center - Edit Avatar</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/avatar`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/profile-center/avatar`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}

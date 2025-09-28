@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
-import { getAccessToken } from '../../utils/authConfig';
 import { getWindowEnv } from '../../utils/envConfig';
 import logger from '../../services/Logger';
 import { CocktailsApiClientException, ProblemDetails, UploadProfileImageRs } from './cocktailsApiClient';
+import { getAccessToken } from '../../utils/authConfig';
 
 export class CocktailsApiClientBase {
 
@@ -17,6 +17,9 @@ export class CocktailsApiClientBase {
         const token = this.requiredScopes && this.requiredScopes.length > 0
             ? await getAccessToken(this.requiredScopes)
             : undefined;
+
+        console.log("requiredScopes: ", this.requiredScopes);
+        console.log("transformOptions token: ", token);
 
         //const authHeader = token && { 'Authorization': `Bearer ${token}` } ??
         options.headers = {

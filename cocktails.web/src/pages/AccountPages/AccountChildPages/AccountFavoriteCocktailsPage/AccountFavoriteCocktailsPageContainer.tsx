@@ -98,7 +98,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
     return (
         <>
             <title>Account Favorite Cocktail Recipes</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/interactions/favorite-cocktails`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/interactions/favorite-cocktails`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}

@@ -1,24 +1,26 @@
 import { Box, Grid, Typography, Container, IconButton } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { useIsAuthenticated, useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
 import logo from '../../assets/logo-32x32.png';
 import FooterLink from '../../atoms/FooterLink/FooterLink';
-import { login, logout } from '../../utils/authConfig';
 import showCookieBot from '../../utils/cookiebot';
+import { useAuth0 } from '@auth0/auth0-react';
+import { loginWithRedirectOptions } from '../../utils/authConfig';
 
 interface MainFooterBarProps {
     testId: string;
 }
 
 const MainFooterBar = ({ testId }: MainFooterBarProps) => {
-    const { inProgress } = useMsal();
-    const isAuthenticated = useIsAuthenticated();
+    const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
 
     const handleLogout = async () => {
-        if (inProgress === InteractionStatus.None) {
-            await logout();
+        if (isAuthenticated) {
+            await logout({
+                logoutParams: {
+                    returnTo: window.location.origin
+                }
+            });
         }
     };
 
@@ -90,7 +92,7 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
                     </Grid>
                     <Grid size={{ xs: 2, sm: 2, md: 2, lg: 2 }} sx={{ paddingLeft: '0px' }}>
                         {!isAuthenticated && (
-                            <IconButton size='small' onClick={() => login()} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
+                            <IconButton size='small' onClick={() => loginWithRedirect(loginWithRedirectOptions)} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
                                 <AccountCircleOutlinedIcon color='primary' />
                                 <Typography data-testid='footer-myaccount' color='text.primary' noWrap gutterBottom className='footerLink' sx={{ paddingLeft: '5px', paddingTop: '5px' }}>
                                     Signin

@@ -23,7 +23,7 @@ const AccountNavigationPageContainer = () => {
     return (
         <>
             <title>Account Settings</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem navigateTo='/' text='Close Account Settings' icon={<CloseIcon color='secondary' fontSize='small' />} />}

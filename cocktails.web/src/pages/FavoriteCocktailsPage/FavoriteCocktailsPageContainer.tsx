@@ -71,7 +71,7 @@ const FavoriteCocktailsPageContainer = () => {
     return (
         <>
             <title>My Favorite Cocktails</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/my/favorite-cocktails`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/my/favorite-cocktails`} />
             <meta name='description' content='View your favorite cocktails.  Complete listing of cocktails that you have favorited on Cezzis.com.' />
             <meta property='article:section' content='Cezzis.com' />
             <meta property='og:type' content='article' />

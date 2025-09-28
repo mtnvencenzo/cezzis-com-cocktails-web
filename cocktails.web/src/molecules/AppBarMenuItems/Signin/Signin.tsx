@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, MenuItem, Typography } from '@mui/material';
-import { login } from '../../../utils/authConfig';
+import { useAuth0 } from '@auth0/auth0-react';
+import { loginWithRedirectOptions } from '../../../utils/authConfig';
 
 interface SigninProps {
     testId: string;
@@ -8,10 +9,12 @@ interface SigninProps {
 }
 
 const Signin = ({ setAnchorEl, testId }: SigninProps) => {
+    const { loginWithRedirect } = useAuth0();
+
     const handleCloseUserMenu = async () => {
         setAnchorEl(null);
 
-        await login();
+        await loginWithRedirect(loginWithRedirectOptions);
     };
 
     return (
