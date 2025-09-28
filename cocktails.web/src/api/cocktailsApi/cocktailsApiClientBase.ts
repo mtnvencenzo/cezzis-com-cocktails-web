@@ -18,10 +18,6 @@ export class CocktailsApiClientBase {
             ? await getAccessToken(this.requiredScopes)
             : undefined;
 
-        console.log("requiredScopes: ", this.requiredScopes);
-        console.log("transformOptions token: ", token);
-
-        //const authHeader = token && { 'Authorization': `Bearer ${token}` } ??
         options.headers = {
             ...options.headers,
             'X-Key': `${getWindowEnv().VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY}`
@@ -45,7 +41,7 @@ export class CocktailsApiClientBase {
         try {
             return processor(response);
         } catch (e: unknown) {
-            logger.logException(e as Error);
+            logger.logException(undefined, e as Error);
             throw e;
         }
     }

@@ -6,33 +6,35 @@ import GlobalContext from '../../../../components/GlobalContexts';
 import AccountNotificationsPageContainer from './AccountNotificationsPageContainer';
 import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
-import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
 
 describe('Account Notifications Page Container', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account notifications page container', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('Account Notification Settings');
@@ -41,8 +43,8 @@ describe('Account Notifications Page Container', () => {
     });
 
     test('toggle > notify me when new cocktails are added > works when initially Always', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
@@ -50,13 +52,13 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('Account Notification Settings');
@@ -73,8 +75,8 @@ describe('Account Notifications Page Container', () => {
     });
 
     test('toggle > notify me when new cocktails are added > works when initially Never', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
@@ -82,13 +84,13 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('Account Notification Settings');
@@ -120,8 +122,8 @@ describe('Account Notifications Page Container', () => {
             )
         );
 
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
@@ -129,13 +131,13 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('Account Notification Settings');

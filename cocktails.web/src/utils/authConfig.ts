@@ -1,17 +1,16 @@
-import { AppState, User } from '@auth0/auth0-react';
+import { Auth0Client, AuthorizationParams, User } from '@auth0/auth0-spa-js';
 import SessionStorageService from '../services/SessionStorageService';
 import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services/AccountService';
-import { Auth0Client, AuthorizationParams } from '@auth0/auth0-spa-js';
 import trimWhack from './trimWhack';
 import { getWindowEnv } from './envConfig';
 import logger from '../services/Logger';
+import { AppState, Auth0ProviderOptions } from '../components/Auth0Provider/auth0-provider';
 
 export const onRedirectCallback = async (appState?: AppState, user?: User) => {
     const sessionStorageService = new SessionStorageService();
-    console.log('onRedirectCallback', appState);
 
-    if (appState) {
-        console.log('AppState', appState);
+    if (appState?.returnTo) {
+        // window.history.replaceState({}, document.title, appState.returnTo);
     }
 
     if (user) {
@@ -23,15 +22,18 @@ export const onRedirectCallback = async (appState?: AppState, user?: User) => {
 };
 
 export const authParams: AuthorizationParams = {
-    redirect_uri: trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)!,
-}
+    redirect_uri: trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)!
+};
+
+export const loginAuthorizationScopes = ['openid', 'offline_access', 'profile', 'email'];
+
+export const loginAuthorizationParams: AuthorizationParams = {
+    ...authParams,
+    scope: [...loginAuthorizationScopes].join(' ')
+};
 
 export const loginWithRedirectOptions = {
-    authorizationParams: {
-        ...authParams,
-        // audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE,
-        scope: 'openid offline_access profile email'
-    }
+    authorizationParams: loginAuthorizationParams
 };
 
 export const getAccessToken = async (requiredScopes: string[] = []): Promise<string | undefined> => {
@@ -40,102 +42,72 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
         domain: getWindowEnv().VITE_AUTH0_DOMAIN,
         clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
         useRefreshTokens: false,
-        cacheLocation: "localstorage"
+        cacheLocation: 'localstorage'
     });
 
     if (!auth0Client) {
-        console.log("Auth0 client not initialized");
+        logger.logWarning('Auth0 client not initialized');
         return undefined;
     }
 
     const isAuthenticated = await auth0Client.isAuthenticated();
     if (!isAuthenticated) {
-        console.log("User not authenticated");
+        logger.logWarning('User not authenticated');
         return undefined;
     }
 
-    const accounts = await auth0Client.getIdTokenClaims() ? [auth0Client.getIdTokenClaims()!] : [];
+    const accounts = (await auth0Client.getIdTokenClaims()) ? [auth0Client.getIdTokenClaims()!] : [];
     if (!accounts || accounts.length === 0) {
-        console.log("No accounts found");
+        logger.logWarning('No accounts found');
         return undefined;
     }
 
     const user = await auth0Client.getUser();
 
     if (!user) {
-        console.log("User not found");
+        logger.logWarning('User not found');
         return undefined;
     }
 
     if (accounts && accounts.length > 0) {
         const authorizationParms: AuthorizationParams = {
             ...authParams,
-            scope: ['openid', 'offline_access', 'profile', 'email', ...requiredScopes].join(' '),
+            scope: [...loginAuthorizationScopes, ...requiredScopes].join(' '),
             audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
         };
 
         try {
             const accessToken = await auth0Client.getTokenSilently({
                 detailedResponse: false,
-                authorizationParams: authorizationParms,
+                authorizationParams: authorizationParms
             });
 
             return accessToken;
-
         } catch (error) {
             // Fallback to interaction when silent call fails
             // (e.g. when the session expires)
             try {
                 const accessToken = await auth0Client.getTokenWithPopup({
-                    authorizationParams: authorizationParms,
+                    authorizationParams: authorizationParms
                 });
 
-                console.log("Acquired access token with popup fallback", accessToken);
-
+                logger.logWarning('Acquired access token with popup fallback');
                 return accessToken;
-
-
             } catch (error) {
-                console.error("Error acquiring access token: ", error);
-                logger.logException(error as Error);
+                logger.logException('Failed to acquire access token with popup fallback', error as Error);
                 return undefined;
             }
         }
     }
+
+    return undefined;
 };
 
-
-// msalInstance.addEventCallback(async (event: EventMessage) => {
-//     const sessionStorageService = new SessionStorageService();
-
-//     if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-//         if ((event.payload as AuthenticationResult).account) {
-//             const activeAccount = (event.payload as AuthenticationResult).account;
-//             msalInstance.setActiveAccount(activeAccount);
-//             idToken = (event.payload as AuthenticationResult).idToken;
-
-//             if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-//                 if (activeAccount && activeAccount.idTokenClaims && activeAccount.idTokenClaims.sub) {
-//                     await loginOwnedAccountProfile();
-//                     await getAccountCocktailRatings(true);
-//                 }
-//             }
-//         }
-//     } else if (event.eventType === EventType.LOGOUT_SUCCESS) {
-//         sessionStorageService.ClearOwnedAccountProfileRequestData();
-//         msalInstance.setActiveAccount(null);
-//         idToken = '';
-//     }
-// });
-
-// export const resetPassword = async () => {
-//     await msalInstance
-//         .loginRedirect({
-//             authority: ciamPolicies.authorities.passwordReset.authority,
-//             scopes: [ciamPolicies.authorities.passwordReset.scope],
-//             redirectUri: ciamPolicies.authorities.passwordReset.redirectUri
-//         })
-//         .catch((error) => {
-//             logger.logException(error as Error);
-//         });
-//};
+export const auth0ProviderOptions: Auth0ProviderOptions = {
+    domain: getWindowEnv().VITE_AUTH0_DOMAIN,
+    clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
+    authorizationParams: loginAuthorizationParams,
+    onRedirectCallback,
+    useRefreshTokens: true,
+    cacheLocation: 'localstorage'
+};

@@ -7,8 +7,8 @@ import { sendRecommendation } from '../../services/AccountService';
 import { getWindowEnv } from '../../utils/envConfig';
 import { resetRecaptcha, executeRecaptcha } from '../../services/RecaptchaService';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { useAuth0 } from '@auth0/auth0-react';
 import { loginWithRedirectOptions } from '../../utils/authConfig';
+import { useAuth0 } from '../../components/Auth0Provider';
 
 interface CocktailRecommendationFormState {
     sendingRecommendation: boolean;

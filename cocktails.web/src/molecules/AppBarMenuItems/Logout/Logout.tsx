@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem, Typography } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '../../../components/Auth0Provider';
 
 interface LogoutProps {
     testId: string;

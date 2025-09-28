@@ -2,28 +2,30 @@ import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainFooterBar from './MainFooterBar';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { auth0ProviderOptions } from '../../utils/authConfig';
+import { Auth0Provider } from '../../components/Auth0Provider';
 
 describe('Main Footer Bar', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders correctly', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -34,11 +36,11 @@ describe('Main Footer Bar', () => {
     test('renders cocktails search link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -50,11 +52,11 @@ describe('Main Footer Bar', () => {
     test('renders cocktails list link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -66,11 +68,11 @@ describe('Main Footer Bar', () => {
     test('renders about us link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -82,11 +84,11 @@ describe('Main Footer Bar', () => {
     test('renders contact link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -98,11 +100,11 @@ describe('Main Footer Bar', () => {
     test('renders terms of service link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -114,11 +116,11 @@ describe('Main Footer Bar', () => {
     test('renders privacy link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -130,11 +132,11 @@ describe('Main Footer Bar', () => {
     test('renders cookies link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -144,15 +146,15 @@ describe('Main Footer Bar', () => {
     });
 
     test('renders myaccount link when not authd', async () => {
-        await msalTester.isNotLogged();
+        await auth0Tester.isNotLogged();
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -162,15 +164,15 @@ describe('Main Footer Bar', () => {
     });
 
     test('doesnt render myaccount link when authd', async () => {
-        await msalTester.isLogged();
+        await auth0Tester.isLogged();
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -179,15 +181,15 @@ describe('Main Footer Bar', () => {
     });
 
     test('does not render logout link when not authd', async () => {
-        await msalTester.isNotLogged();
+        await auth0Tester.isNotLogged();
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -196,15 +198,15 @@ describe('Main Footer Bar', () => {
     });
 
     test('renders logout link when authd', async () => {
-        await msalTester.isLogged();
+        await auth0Tester.isLogged();
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -216,11 +218,11 @@ describe('Main Footer Bar', () => {
     test('renders copywrite with current year', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -231,11 +233,11 @@ describe('Main Footer Bar', () => {
     test('clicks cookies link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -249,11 +251,11 @@ describe('Main Footer Bar', () => {
     test('clicks myaccount link', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 

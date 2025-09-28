@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { AppState, Auth0Provider } from '@auth0/auth0-react';
 import { setupTelemetry } from './utils/otelConfig';
 import AppErrorBoundary from './components/AppErrorBoundary/AppErrorBoundary';
 import { getWindowEnv } from './utils/envConfig';
-import trimWhack from './utils/trimWhack';
-import { onRedirectCallback } from './utils/authConfig';
+import { loginAuthorizationParams, onRedirectCallback } from './utils/authConfig';
+import { Auth0Provider } from './components/Auth0Provider';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -18,13 +17,10 @@ root.render(
         <Auth0Provider
             domain={getWindowEnv().VITE_AUTH0_DOMAIN}
             clientId={getWindowEnv().VITE_AUTH0_CLIENT_ID}
-            authorizationParams={{
-                redirect_uri: trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)!,
-                scope: 'openid offline_access profile email',
-            }}
+            authorizationParams={loginAuthorizationParams}
             onRedirectCallback={onRedirectCallback}
-            useRefreshTokens={true}
-            cacheLocation="localstorage"
+            useRefreshTokens
+            cacheLocation='localstorage'
         >
             <AppErrorBoundary onError={() => <h1>Something went wrong</h1>}>
                 <App />

@@ -10,7 +10,7 @@ import UserSettings from '../../molecules/AppBarMenuItems/UserSettings/UserSetti
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import AccessibilitySettings from '../../molecules/AppBarMenuItems/AccessibilitySettings/AccessibilitySettings';
 import MenuFooter from '../../molecules/AppBarMenuItems/MenuFooter/MenuFooter';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '../../components/Auth0Provider';
 
 interface LoggedInAppBarMenuProps {
     testId: string;

@@ -3,19 +3,21 @@ import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import MainAppBar from './MainAppBar';
-import { getTestAccountInfo } from '../../../tests/setup';
+import { getTestUser } from '../../../tests/setup';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0ProviderOptions } from '../../utils/authConfig';
 
 describe('Main App Bar', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test.each([
@@ -24,11 +26,11 @@ describe('Main App Bar', () => {
     ])('renders correctly for xs:%s', async (isXs) => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBar testId='app-bar' isXs={isXs} />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -42,11 +44,11 @@ describe('Main App Bar', () => {
     ])('renders logo correctly for xs:%s', async (isXs) => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBar testId='app-bar' isXs={isXs} />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -66,17 +68,17 @@ describe('Main App Bar', () => {
         [false, false, true] // not xs and un-authed
     ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            await auth0Tester.isLogged();
+            auth0Tester.user = [getTestUser()];
         }
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBar testId='app-bar' isXs={isXs} />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -97,17 +99,17 @@ describe('Main App Bar', () => {
         [false, false, true] // not xs and un-authed
     ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            await auth0Tester.isLogged();
+            auth0Tester.user = [getTestUser()];
         }
 
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBar testId='app-bar' isXs={isXs} />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 

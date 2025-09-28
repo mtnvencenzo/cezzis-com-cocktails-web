@@ -5,10 +5,11 @@ import { http, HttpResponse } from 'msw';
 import FavoriteCocktailsPage from './FavoriteCocktailsPage';
 import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
-import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser, server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import SessionStorageService from '../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../auth0Mocks';
 
 const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
     const items: CocktailsListModel[] = [];
@@ -33,21 +34,20 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
 };
 
 describe('Favorite Cocktails List Page', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders and fetches favorite cocktails data', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);

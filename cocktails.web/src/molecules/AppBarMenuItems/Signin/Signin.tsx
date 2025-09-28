@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, MenuItem, Typography } from '@mui/material';
-import { useAuth0 } from '@auth0/auth0-react';
 import { loginWithRedirectOptions } from '../../../utils/authConfig';
+import { useAuth0 } from '../../../components/Auth0Provider';
 
 interface SigninProps {
     testId: string;

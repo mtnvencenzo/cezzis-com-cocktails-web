@@ -18,6 +18,8 @@ import {
     PreparationTypeModel,
     UofMTypeModel
 } from '../src/api/cocktailsApi/cocktailsApiClient';
+import { User } from '../src/components/Auth0Provider';
+import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -41,7 +43,7 @@ vi.mock('../src/utils/envConfig', () => {
 });
 /* eslint-enable arrow-body-style */
 
-MsalReactTesterPlugin.init({
+Auth0ReactTesterPlugin.init({
     spyOn: vi.spyOn,
     expect,
     resetAllMocks: vi.resetAllMocks,
@@ -97,16 +99,17 @@ export const getTestOwnedAccountCocktailRatings = (ratings: AccountCocktailRatin
     ratings: ratings ?? []
 });
 
-export const getTestAccountInfo = (): AccountInfo => ({
-    homeAccountId: '',
-    username: '',
-    localAccountId: '',
-    environment: '',
-    tenantId: '',
-    idTokenClaims: {
-        given_name: 'Billy',
-        family_name: 'Simms'
-    }
+export const getTestUser = (): User => ({
+    sub: 'auth0|123456789',
+    email: 'john.doe@example.com',
+    name: 'John Doe',
+    picture: 'https://example.com/john-doe.jpg',
+    updated_at: '2021-01-01T00:00:00.000Z',
+    nickname: 'johnny',
+    email_verified: true,
+    given_name: 'John',
+    family_name: 'Doe',
+    locale: 'en-US'
 });
 
 export const getTestCocktails = (): CocktailModel[] => [

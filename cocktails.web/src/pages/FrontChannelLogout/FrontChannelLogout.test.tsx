@@ -5,18 +5,20 @@ import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../components/GlobalContexts';
 import FrontChannelLogout from './FrontChannelLogout';
 import { server } from '../../../tests/setup';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0ProviderOptions } from '../../utils/authConfig';
 
 describe('Front channel logout', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
+
         Object.defineProperty(window, 'location', {
             value: { assign: vi.fn() }
         });
-
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
 
         server.use(
             http.get('https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/v2.0/.well-known/openid-configuration', () =>
@@ -66,24 +68,24 @@ describe('Front channel logout', () => {
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account page', async () => {
         window.location.href = '/relative-url';
-        await msalTester.isLogged();
+        await auth0Tester.isLogged();
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FrontChannelLogout />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
-        await msalTester.waitForRedirect();
+        await auth0Tester.waitForRedirect();
 
         const content = await screen.findByText('Logging out...');
         expect(content).toBeTruthy();

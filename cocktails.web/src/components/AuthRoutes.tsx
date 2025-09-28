@@ -1,16 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import { AuthenticationGuard } from './AuthenticationGuard';
+import { Auth0AuthenticationGuard } from './Auth0Provider';
 
-const AuthRoutes = () => {
-    return (
-        <AuthenticationGuard component={() => (
+const AuthRoutes = () => (
+    <Auth0AuthenticationGuard
+        component={() => (
             <div id='auth-routes'>
                 <Outlet />
             </div>
-        )}>
-                
-        </AuthenticationGuard>
-    );
-};
+        )}
+    />
+);
 
 export default AuthRoutes;

@@ -21,7 +21,7 @@ export default class AppErrorBoundary extends React.Component<IAppErrorBoundaryP
     }
 
     componentDidCatch(error: Error) {
-        logger.logException(error);
+        logger.logException(undefined, error);
     }
 
     render() {

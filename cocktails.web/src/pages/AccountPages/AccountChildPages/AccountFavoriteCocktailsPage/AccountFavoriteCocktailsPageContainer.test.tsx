@@ -4,27 +4,29 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import AccountFavoriteCocktailsPageContainer from './AccountFavoriteCocktailsPageContainer';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { getTestCocktailsList, getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
 import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
 
 describe('Account Interactions Favorite Cocktails Page Container', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders default content when no favorites', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = [];
@@ -57,13 +59,13 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');
@@ -72,8 +74,8 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
     });
 
     test('renders account profile favorites', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -107,13 +109,13 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');
@@ -124,8 +126,8 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
     });
 
     test('renders multiple account profile favorites', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -160,13 +162,13 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');
@@ -178,8 +180,8 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites even if in returned response', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -214,13 +216,13 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');
@@ -234,8 +236,8 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites only if has search image', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -274,13 +276,13 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');

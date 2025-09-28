@@ -4,8 +4,8 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import logo from '../../assets/logo-32x32.png';
 import FooterLink from '../../atoms/FooterLink/FooterLink';
 import showCookieBot from '../../utils/cookiebot';
-import { useAuth0 } from '@auth0/auth0-react';
 import { loginWithRedirectOptions } from '../../utils/authConfig';
+import { useAuth0 } from '../../components/Auth0Provider';
 
 interface MainFooterBarProps {
     testId: string;

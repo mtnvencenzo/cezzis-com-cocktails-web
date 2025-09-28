@@ -7,16 +7,19 @@ import { http, HttpResponse } from 'msw';
 import { ToastContainer } from 'react-toastify';
 import CocktailRecommendationForm from './CocktailRecommendationForm';
 import GlobalContext from '../../components/GlobalContexts';
-import { getTestAccountInfo, getTestOwnedAccountProfile, requestSpy, server } from '../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser, requestSpy, server } from '../../../tests/setup';
 import { CocktailRecommendationRq } from '../../api/cocktailsApi/cocktailsApiClient';
 import { executeRecaptcha, resetRecaptcha } from '../../services/RecaptchaService';
 import SessionStorageService from '../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { auth0ProviderOptions } from '../../utils/authConfig';
+import { Auth0Provider } from '../../components/Auth0Provider';
 
 vi.mock('../../services/RecaptchaService.ts');
 vi.mocked(resetRecaptcha).mockImplementation(() => vi.fn());
 
 describe('Cocktail Recommendation Form', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
     const sessionStorageService = new SessionStorageService();
 
     const expectProgress = async (inProgress: boolean = true) => {
@@ -30,9 +33,8 @@ describe('Cocktail Recommendation Form', () => {
     };
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
 
         server.use(
             http.post('http://localhost:0/api/v1/accounts/owned/profile/cocktails/recommendations', async ({ request }) => {
@@ -79,17 +81,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders default cocktail name textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -116,17 +118,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders default cocktail ingredients textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -152,17 +154,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders default cocktail directions textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -188,17 +190,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders cocktail name textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -221,17 +223,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders cocktail ingredients textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -254,17 +256,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders cocktail directions textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -287,17 +289,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders cocktail submit button in default disabled form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -310,17 +312,17 @@ describe('Cocktail Recommendation Form', () => {
 
     test('renders cocktail submit button in enabled state only after all fields have values', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -346,8 +348,8 @@ describe('Cocktail Recommendation Form', () => {
 
     test('calls recommendation api successfully and resets form when recaptcha token retrieved', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -356,12 +358,12 @@ describe('Cocktail Recommendation Form', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -403,8 +405,8 @@ describe('Cocktail Recommendation Form', () => {
 
     test('sets cocktail name required error when recommendation api fails with name error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -413,12 +415,12 @@ describe('Cocktail Recommendation Form', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -461,8 +463,8 @@ describe('Cocktail Recommendation Form', () => {
 
     test('sets cocktail ingredients required error when recommendation api fails with error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -471,12 +473,12 @@ describe('Cocktail Recommendation Form', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -520,8 +522,8 @@ describe('Cocktail Recommendation Form', () => {
 
     test('sets cocktail directions required error when recommendation api fails with name error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -530,12 +532,12 @@ describe('Cocktail Recommendation Form', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -580,8 +582,8 @@ describe('Cocktail Recommendation Form', () => {
 
     test('doesnt call api when recaptcha token comes back empty', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('');
@@ -590,12 +592,12 @@ describe('Cocktail Recommendation Form', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRecommendationForm />
                         <ToastContainer />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 

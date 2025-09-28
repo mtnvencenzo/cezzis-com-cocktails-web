@@ -4,35 +4,37 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountAccessibilityPageContainer from './AccountAccessibilityPageContainer';
-import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { AccountOwnedProfileRs, DisplayThemeModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
 
 describe('Account Accessibility Page Container', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account accessibility page container', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');
@@ -42,8 +44,8 @@ describe('Account Accessibility Page Container', () => {
     });
 
     test('toggle > dark mode > works when initially Light', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Light;
@@ -51,13 +53,13 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');
@@ -76,8 +78,8 @@ describe('Account Accessibility Page Container', () => {
     });
 
     test('toggle > dark mode > works when initially Dark', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Dark;
@@ -85,13 +87,13 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');
@@ -125,8 +127,8 @@ describe('Account Accessibility Page Container', () => {
             )
         );
 
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Light;
@@ -134,13 +136,13 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');

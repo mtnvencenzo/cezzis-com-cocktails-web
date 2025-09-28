@@ -26,13 +26,6 @@
     "@csstools/css-tokenizer" "^3.0.3"
     lru-cache "^10.4.3"
 
-"@auth0/auth0-react@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@auth0/auth0-react/-/auth0-react-2.5.0.tgz#0718750ad79fa06074b674405fea13a1ee8c412d"
-  integrity sha512-o2nuJ85D4ESRybh3zbA5Dl1Oe17fRZL+/Q17b1qQdS+0QWZrXTEzTMD0wb0tYGST5rJb8rt7pVh6Tj4cWhdTCQ==
-  dependencies:
-    "@auth0/auth0-spa-js" "^2.4.1"
-
 "@auth0/auth0-spa-js@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-2.4.1.tgz#48fcde461684be720a664746a3eaf6c1aca7e7d7"

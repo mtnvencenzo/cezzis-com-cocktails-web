@@ -4,27 +4,29 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import AccountCocktailRatingsPage from './AccountCocktailRatingsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
 import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
 
 describe('Account Interactions Cocktail Ratings Page', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account interactions cocktail ratings page', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         const ratings = getTestOwnedAccountCocktailRatings([]);
@@ -57,13 +59,13 @@ describe('Account Interactions Cocktail Ratings Page', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountCocktailRatingsPage />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Cocktail Ratings');

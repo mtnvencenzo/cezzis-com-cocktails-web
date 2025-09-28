@@ -1,45 +1,47 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { User } from '@auth0/auth0-spa-js';
 import AuthRoutes from './AuthRoutes';
 import AccountPage from '../pages/AccountPages/AccountPage/AccountPage';
 import AnonymousRoutes from './AnonymousRoutes';
 import WelcomePage from '../pages/WelcomePage/WelcomePage';
 import GlobalContext from './GlobalContexts';
+import { Auth0ReactTester } from '../auth0Mocks';
+import { auth0ProviderOptions } from '../utils/authConfig';
+import { Auth0Provider } from './Auth0Provider';
 
-const testAccount: AccountInfo = {
-    homeAccountId: '',
-    localAccountId: '',
-    environment: '',
-    tenantId: '',
-    username: '',
-    idTokenClaims: {
-        emails: ['rvecchi-test1@mailinator.com'],
-        given_name: 'Billy',
-        family_name: 'Briggs'
-    }
+const testUser: User = {
+    name: 'John Doe',
+    email: 'rvecchi-test1@mailinator.com',
+    picture: 'https://example.com/john-doe.jpg',
+    sub: 'auth0|123456789',
+    updated_at: '2021-01-01T00:00:00.000Z',
+    nickname: 'johnny',
+    email_verified: true,
+    given_name: 'Billy',
+    family_name: 'Briggs',
+    locale: 'en-US'
 };
 
 describe('Auth routes', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect', testUser);
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account page for already logged in user', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [testAccount];
+        await auth0Tester.isLogged();
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter initialEntries={['/account']}>
                         <Routes>
                             <Route element={<AnonymousRoutes />} path='/'>
@@ -50,23 +52,22 @@ describe('Auth routes', () => {
                             </Route>
                         </Routes>
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
-        await msalTester.waitForRedirect();
+        await auth0Tester.waitForRedirect();
 
         await screen.findByText('Manage your Cezzis.com profile and security settings across all of your devices.');
         expect(document.title).toBe('My Account');
     });
 
     test('shows not authorized with no account data', async () => {
-        await msalTester.isNotLogged();
-        msalTester.accounts = [];
+        await auth0Tester.isNotLogged();
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter initialEntries={['/account']}>
                         <Routes>
                             <Route element={<AnonymousRoutes />} path='/'>
@@ -77,33 +78,32 @@ describe('Auth routes', () => {
                             </Route>
                         </Routes>
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
-        msalTester.waitForLogin();
+        auth0Tester.waitForLogin();
 
         await screen.findByText('Account does not have access.');
     });
 
     test('shows not authorized with account data but no email', async () => {
-        const badAccount: AccountInfo = {
-            homeAccountId: '',
-            localAccountId: '',
-            environment: '',
-            tenantId: '',
-            username: '',
-            idTokenClaims: {
-                emails: []
-            }
+        const badUser: User = {
+            name: '',
+            email: '',
+            picture: '',
+            sub: 'auth0|123456789',
+            updated_at: '2021-01-01T00:00:00.000Z',
+            given_name: '',
+            family_name: ''
         };
 
-        await msalTester.isNotLogged();
-        msalTester.accounts = [badAccount];
+        await auth0Tester.isNotLogged();
+        auth0Tester.user = [badUser];
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter initialEntries={['/account']}>
                         <Routes>
                             <Route element={<AnonymousRoutes />} path='/'>
@@ -114,11 +114,11 @@ describe('Auth routes', () => {
                             </Route>
                         </Routes>
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
-        msalTester.waitForLogin();
+        auth0Tester.waitForLogin();
 
         await screen.findByText('Account does not have access.');
     });

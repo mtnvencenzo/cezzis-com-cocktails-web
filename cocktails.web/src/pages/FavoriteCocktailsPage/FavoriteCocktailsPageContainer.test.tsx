@@ -5,10 +5,13 @@ import { http, HttpResponse } from 'msw';
 import FavoriteCocktailsPageContainer from './FavoriteCocktailsPageContainer';
 import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
-import { getTestAccountInfo, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../tests/setup';
+import { getTestUser, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import SessionStorageService from '../../services/SessionStorageService';
+import { auth0ProviderOptions } from '../../utils/authConfig';
+import { Auth0Provider } from '../../components/Auth0Provider';
+import { Auth0ReactTester } from '../../auth0Mocks';
 
 const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
     const items: CocktailsListModel[] = [];
@@ -33,21 +36,20 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
 };
 
 describe('Favorite Cocktails Page Container', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders and fetches cocktails data', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
 
@@ -102,8 +104,8 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails.push('Test-1');
@@ -176,8 +178,8 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders account profile favorites', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -211,13 +213,13 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('My Favorite Cocktails');
@@ -226,8 +228,8 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders multiple account profile favorites', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -262,13 +264,13 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('My Favorite Cocktails');
@@ -278,8 +280,8 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites even if in returned response', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -314,13 +316,13 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('My Favorite Cocktails');
@@ -332,8 +334,8 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites only if has search image', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -372,13 +374,13 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         expect(document.title).toBe('My Favorite Cocktails');

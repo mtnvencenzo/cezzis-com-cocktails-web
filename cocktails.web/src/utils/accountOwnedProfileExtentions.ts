@@ -1,5 +1,21 @@
-import { User } from '@auth0/auth0-react';
 import { AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
+import { User } from '../components/Auth0Provider';
+
+export const getGivenName = (user: User): string => {
+    if (user) {
+        return ((user.given_name ?? '') as string).trim();
+    }
+
+    return '';
+};
+
+export const getFamilyName = (user: User): string => {
+    if (user) {
+        return ((user.family_name ?? '') as string).trim();
+    }
+
+    return '';
+};
 
 export const getOwnedAccountGivenName = (account: AccountOwnedProfileRs | undefined, user: User | undefined): string => {
     if (account) {
@@ -44,22 +60,6 @@ export const getSubjectId = (user: User): string | undefined => {
     }
 
     return undefined;
-};
-
-export const getGivenName = (user: User): string => {
-    if (user) {
-        return ((user.given_name ?? '') as string).trim();
-    }
-
-    return '';
-};
-
-export const getFamilyName = (user: User): string => {
-    if (user) {
-        return ((user.family_name ?? '') as string).trim();
-    }
-    
-    return '';
 };
 
 export const getDisplayName = (user: User): string => `${getGivenName(user)} ${getFamilyName(user)}`.trim();

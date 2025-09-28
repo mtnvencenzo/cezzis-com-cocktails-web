@@ -4,27 +4,29 @@ import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../components/GlobalContexts';
-import { getTestAccountInfo, getTestCocktails, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, server } from '../../../tests/setup';
+import { getTestCocktails, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, getTestUser, server } from '../../../tests/setup';
 import SessionStorageService from '../../services/SessionStorageService';
 import CocktailRatingDialog from './CocktailRatingDialog';
 import { AccountCocktailRatingsRs, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { auth0ProviderOptions } from '../../utils/authConfig';
+import { Auth0Provider } from '../../components/Auth0Provider';
 
 describe('Cocktail Rating Dialog', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
     const sessionStorageService = new SessionStorageService();
     const cocktails = getTestCocktails();
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     test('renders modal with no matched cocktail rating for account', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'americano', stars: 1 }]));
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -32,7 +34,7 @@ describe('Cocktail Rating Dialog', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRatingDialog
                             open
@@ -45,7 +47,7 @@ describe('Cocktail Rating Dialog', () => {
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -56,8 +58,8 @@ describe('Cocktail Rating Dialog', () => {
     test('renders modal with matched cocktail rating for account', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'adonis', stars: 3 }]));
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         let cancelClickCount = 0;
 
@@ -69,7 +71,7 @@ describe('Cocktail Rating Dialog', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRatingDialog
                             open
@@ -82,7 +84,7 @@ describe('Cocktail Rating Dialog', () => {
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -107,8 +109,8 @@ describe('Cocktail Rating Dialog', () => {
     test('renders modal and selects all stars one by one', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'americano', stars: 1 }]));
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -116,7 +118,7 @@ describe('Cocktail Rating Dialog', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRatingDialog
                             open
@@ -129,7 +131,7 @@ describe('Cocktail Rating Dialog', () => {
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -194,8 +196,8 @@ describe('Cocktail Rating Dialog', () => {
     test('renders modal with correct buttons', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([]));
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -203,7 +205,7 @@ describe('Cocktail Rating Dialog', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRatingDialog
                             open
@@ -216,7 +218,7 @@ describe('Cocktail Rating Dialog', () => {
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 
@@ -236,8 +238,8 @@ describe('Cocktail Rating Dialog', () => {
     test('renders modal and selects stars and submits rating', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([]));
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
         const cocktailId = 'adonis';
 
         const serverRatingRs: RateCocktailRs = {
@@ -305,7 +307,7 @@ describe('Cocktail Rating Dialog', () => {
 
         render(
             <GlobalContext>
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <CocktailRatingDialog
                             open
@@ -319,7 +321,7 @@ describe('Cocktail Rating Dialog', () => {
                             onConfirm={onConfirm}
                         />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             </GlobalContext>
         );
 

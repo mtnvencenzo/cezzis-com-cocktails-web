@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, MenuItem, Typography } from '@mui/material';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 import { useOwnedAccount } from '../../../components/OwnedAccountContext';
 import { getOwnedAccountName } from '../../../utils/accountOwnedProfileExtentions';
+import { useAuth0 } from '../../../components/Auth0Provider';
 
 interface LoggedInUserWithAvatarProps {
     testId: string;

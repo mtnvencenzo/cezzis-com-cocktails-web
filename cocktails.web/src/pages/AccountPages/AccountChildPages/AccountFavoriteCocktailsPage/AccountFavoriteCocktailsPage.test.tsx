@@ -4,27 +4,29 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import AccountFavoriteCocktailsPage from './AccountFavoriteCocktailsPage';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
 import { CocktailsListRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
 
 describe('Account Interactions Favorite Cocktails Page', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account interactions favorite cocktails page', async () => {
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = [];
@@ -56,13 +58,13 @@ describe('Account Interactions Favorite Cocktails Page', () => {
         );
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountFavoriteCocktailsPage />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Favorite Cocktail Recipes');

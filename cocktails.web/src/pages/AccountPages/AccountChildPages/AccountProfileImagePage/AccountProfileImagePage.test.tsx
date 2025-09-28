@@ -3,19 +3,21 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import AccountProfileImagePage from './AccountProfileImagePage';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo } from '../../../../../tests/setup';
+import { getTestUser } from '../../../../../tests/setup';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
 
 describe('Account Profile Image Page', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders profile image page', async () => {
@@ -23,15 +25,15 @@ describe('Account Profile Image Page', () => {
             initialEntries: ['/account/profile-center/avatar']
         });
 
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        await auth0Tester.isLogged();
+        auth0Tester.user = [getTestUser()];
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <RouterProvider router={router} />
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import startPageViewSpan from '../../services/Tracer';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '../../components/Auth0Provider';
 
 const FrontChannelLogout = () => {
     const { logout, isAuthenticated } = useAuth0();

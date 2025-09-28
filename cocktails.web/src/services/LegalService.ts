@@ -8,7 +8,7 @@ const getPrivacyPolicy = async (): Promise<LegalDocumentRs | undefined> => {
         const cocktailsApiClient = new CocktailsApiClient();
         result = await cocktailsApiClient.getPrivacyPolicy(undefined);
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve privacy policy', e as Error);
         throw e;
     }
 
@@ -22,7 +22,7 @@ const getTermsOfService = async (): Promise<LegalDocumentRs | undefined> => {
         const cocktailsApiClient = new CocktailsApiClient();
         result = await cocktailsApiClient.getTermsOfService(undefined);
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve terms of service', e as Error);
         throw e;
     }
 
