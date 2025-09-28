@@ -1,9 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { AccountInfo } from '@azure/msal-browser';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import AuthRoutes from './AuthRoutes';
 import AccountPage from '../pages/AccountPages/AccountPage/AccountPage';
 import AnonymousRoutes from './AnonymousRoutes';

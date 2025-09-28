@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import AccountProfileImagePage from './AccountProfileImagePage';
 import GlobalContext from '../../../../components/GlobalContexts';
 import { getTestAccountInfo } from '../../../../../tests/setup';

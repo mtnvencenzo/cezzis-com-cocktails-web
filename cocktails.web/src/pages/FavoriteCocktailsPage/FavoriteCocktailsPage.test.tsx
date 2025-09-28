@@ -2,7 +2,6 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
-import { MsalReactTester } from 'msal-react-tester';
 import FavoriteCocktailsPage from './FavoriteCocktailsPage';
 import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';

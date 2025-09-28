@@ -5,8 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { http, HttpResponse } from 'msw';
 import { ToastContainer } from 'react-toastify';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import CocktailRecommendationForm from './CocktailRecommendationForm';
 import GlobalContext from '../../components/GlobalContexts';
 import { getTestAccountInfo, getTestOwnedAccountProfile, requestSpy, server } from '../../../tests/setup';

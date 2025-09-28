@@ -1,8 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import MainFooterBar from './MainFooterBar';
 
 describe('Main Footer Bar', () => {

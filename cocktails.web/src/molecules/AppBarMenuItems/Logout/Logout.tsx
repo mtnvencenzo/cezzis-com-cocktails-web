@@ -15,8 +15,8 @@ const Logout = ({ setAnchorEl, testId }: LogoutProps) => {
         setAnchorEl(null);
         await logout({
             logoutParams: {
-                returnTo: window.location.origin,
-            },
+                returnTo: window.location.origin
+            }
         });
     };
 

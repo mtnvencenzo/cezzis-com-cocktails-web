@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import { http, HttpResponse } from 'msw';
 import AccountFavoriteCocktailsPageContainer from './AccountFavoriteCocktailsPageContainer';
 import GlobalContext from '../../../../components/GlobalContexts';

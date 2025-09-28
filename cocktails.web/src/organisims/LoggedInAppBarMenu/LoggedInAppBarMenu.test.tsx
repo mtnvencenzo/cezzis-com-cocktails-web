@@ -2,8 +2,6 @@ import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import LoggedInAppBarMenu from './LoggedInAppBarMenu';
 import GlobalContext from '../../components/GlobalContexts';
 import SessionStorageService from '../../services/SessionStorageService';

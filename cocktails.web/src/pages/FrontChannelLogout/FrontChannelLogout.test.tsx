@@ -1,8 +1,6 @@
 import { describe, test, beforeEach, afterEach, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../components/GlobalContexts';
 import FrontChannelLogout from './FrontChannelLogout';
