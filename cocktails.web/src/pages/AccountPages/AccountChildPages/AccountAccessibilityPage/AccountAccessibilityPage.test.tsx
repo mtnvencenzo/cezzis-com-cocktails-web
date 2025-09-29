@@ -6,7 +6,7 @@ import GlobalContext from '../../../../components/GlobalContexts';
 import { getTestUser } from '../../../../../tests/setup';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
-import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
 describe('Account Accessibility Page', () => {
     let auth0Tester: Auth0ReactTester;
@@ -25,11 +25,11 @@ describe('Account Accessibility Page', () => {
             initialEntries: ['/account/profile-center/accessibility']
         });
 
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <RouterProvider router={router} />
                 </GlobalContext>

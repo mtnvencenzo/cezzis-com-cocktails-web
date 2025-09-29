@@ -1,4 +1,6 @@
 import { AuthenticationError, GetTokenSilentlyVerboseResponse, User } from '@auth0/auth0-spa-js';
+import { Auth0ProviderOptions } from '../components/Auth0Provider';
+import { loginAuthorizationParams, onRedirectCallback } from '../utils/authConfig';
 
 export const TEST_ACCESS_TOKEN =
     'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InRlc3Qta2V5LWlkIn0.eyJpc3MiOiJodHRwczovL3Rlc3QuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDEyMzQ1Njc4OSIsImF1ZCI6InRlc3QtY2xpZW50LWlkIiwiZXhwIjoxNjU2NjA0NzY3LCJpYXQiOjE2NTY1OTk2MjYsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhenAiOiJ0ZXN0LWNsaWVudC1pZCIsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IkRvZSIsInBpY3R1cmUiOiJodHRwczovL2V4YW1wbGUuY29tL2pvaG4tZG9lLmpwZyIsIm5pY2tuYW1lIjoiam9obm55IiwibG9jYWxlIjoiZW4tVVMifQ.signature-would-go-here';
@@ -63,4 +65,13 @@ export const defaultTestAuthenticationResult: GetTokenSilentlyVerboseResponse = 
     scope: 'openid profile email',
     expires_in: 3600,
     token_type: 'Bearer'
+};
+
+export const auth0TestProviderOptions: Auth0ProviderOptions = {
+    domain: 'https://test-domain.auth0.com',
+    clientId: 'test-client-id',
+    authorizationParams: loginAuthorizationParams,
+    onRedirectCallback,
+    useRefreshTokens: true,
+    cacheLocation: 'localstorage'
 };

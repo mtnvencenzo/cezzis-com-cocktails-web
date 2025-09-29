@@ -8,8 +8,8 @@ import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../
 import { AccountOwnedProfileRs, DisplayThemeModel, UpdateAccountOwnedAccessibilitySettingsRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
-import { auth0ProviderOptions } from '../../../../utils/authConfig';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
 describe('Account Accessibility Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -24,11 +24,11 @@ describe('Account Accessibility Page Container', () => {
     });
 
     test('renders account accessibility page container', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
@@ -44,7 +44,7 @@ describe('Account Accessibility Page Container', () => {
     });
 
     test('toggle > dark mode > works when initially Light', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -53,7 +53,7 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
@@ -78,7 +78,7 @@ describe('Account Accessibility Page Container', () => {
     });
 
     test('toggle > dark mode > works when initially Dark', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -87,7 +87,7 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />
@@ -132,7 +132,7 @@ describe('Account Accessibility Page Container', () => {
             )
         );
 
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -141,7 +141,7 @@ describe('Account Accessibility Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountAccessibilityPageContainer />

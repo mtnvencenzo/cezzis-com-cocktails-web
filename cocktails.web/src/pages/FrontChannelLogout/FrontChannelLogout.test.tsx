@@ -7,7 +7,7 @@ import FrontChannelLogout from './FrontChannelLogout';
 import { server } from '../../../tests/setup';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { Auth0Provider } from '../../components/Auth0Provider';
-import { auth0ProviderOptions } from '../../utils/authConfig';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Front channel logout', () => {
     let auth0Tester: Auth0ReactTester;
@@ -73,10 +73,10 @@ describe('Front channel logout', () => {
 
     test('renders account page', async () => {
         window.location.href = '/relative-url';
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FrontChannelLogout />

@@ -46,7 +46,7 @@ describe('Favorite Cocktails List Page', () => {
     });
 
     test('renders and fetches favorite cocktails data', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();

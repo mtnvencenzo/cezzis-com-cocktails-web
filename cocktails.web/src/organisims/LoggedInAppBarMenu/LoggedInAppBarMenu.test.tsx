@@ -7,8 +7,8 @@ import GlobalContext from '../../components/GlobalContexts';
 import SessionStorageService from '../../services/SessionStorageService';
 import { getTestOwnedAccountProfile, getTestUser } from '../../../tests/setup';
 import { Auth0ReactTester } from '../../auth0Mocks';
-import { auth0ProviderOptions } from '../../utils/authConfig';
 import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('LoggedIn App Bar Menu', () => {
     let auth0Tester: Auth0ReactTester;
@@ -25,7 +25,7 @@ describe('LoggedIn App Bar Menu', () => {
 
     test('renders correctly', () => {
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <LoggedInAppBarMenu testId='loggedin-app-bar-menu' />
                 </MemoryRouter>
@@ -46,14 +46,14 @@ describe('LoggedIn App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <LoggedInAppBarMenu testId='app-bar-menu' />
                         </MemoryRouter>
@@ -95,14 +95,14 @@ describe('LoggedIn App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <LoggedInAppBarMenu testId='app-bar-menu' />
                         </MemoryRouter>
@@ -144,14 +144,14 @@ describe('LoggedIn App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <LoggedInAppBarMenu testId='app-bar-menu' />
                         </MemoryRouter>
@@ -193,14 +193,14 @@ describe('LoggedIn App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <LoggedInAppBarMenu testId='app-bar-menu' />
                         </MemoryRouter>

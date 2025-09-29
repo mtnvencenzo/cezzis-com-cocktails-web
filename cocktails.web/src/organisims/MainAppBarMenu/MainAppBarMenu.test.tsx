@@ -7,8 +7,8 @@ import SessionStorageService from '../../services/SessionStorageService';
 import GlobalContext from '../../components/GlobalContexts';
 import { getTestOwnedAccountProfile, getTestUser } from '../../../tests/setup';
 import { Auth0ReactTester } from '../../auth0Mocks';
-import { auth0ProviderOptions } from '../../utils/authConfig';
 import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Main App Bar Menu', () => {
     let auth0Tester: Auth0ReactTester;
@@ -26,7 +26,7 @@ describe('Main App Bar Menu', () => {
     test('renders correctly', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBarMenu testId='app-bar-menu' isXs={false} />
                     </MemoryRouter>
@@ -52,14 +52,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
@@ -105,14 +105,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
@@ -158,14 +158,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
@@ -211,14 +211,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
@@ -264,14 +264,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
@@ -317,14 +317,14 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>

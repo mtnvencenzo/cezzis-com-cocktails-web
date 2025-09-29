@@ -3,8 +3,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainFooterBar from './MainFooterBar';
 import { Auth0ReactTester } from '../../auth0Mocks';
-import { auth0ProviderOptions } from '../../utils/authConfig';
 import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Main Footer Bar', () => {
     let auth0Tester: Auth0ReactTester;
@@ -20,7 +20,7 @@ describe('Main Footer Bar', () => {
 
     test('renders correctly', () => {
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <MainFooterBar testId='footer-bar' />
                 </MemoryRouter>
@@ -34,7 +34,7 @@ describe('Main Footer Bar', () => {
     test('renders cocktails search link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -50,7 +50,7 @@ describe('Main Footer Bar', () => {
     test('renders cocktails list link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -66,7 +66,7 @@ describe('Main Footer Bar', () => {
     test('renders about us link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -82,7 +82,7 @@ describe('Main Footer Bar', () => {
     test('renders contact link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -98,7 +98,7 @@ describe('Main Footer Bar', () => {
     test('renders terms of service link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -114,7 +114,7 @@ describe('Main Footer Bar', () => {
     test('renders privacy link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -130,7 +130,7 @@ describe('Main Footer Bar', () => {
     test('renders cookies link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -144,11 +144,11 @@ describe('Main Footer Bar', () => {
     });
 
     test('renders myaccount link when not authd', async () => {
-        await auth0Tester.isNotLogged();
+        auth0Tester.isNotLogged();
 
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -162,11 +162,11 @@ describe('Main Footer Bar', () => {
     });
 
     test('doesnt render myaccount link when authd', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
 
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -179,11 +179,11 @@ describe('Main Footer Bar', () => {
     });
 
     test('does not render logout link when not authd', async () => {
-        await auth0Tester.isNotLogged();
+        auth0Tester.isNotLogged();
 
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -196,11 +196,11 @@ describe('Main Footer Bar', () => {
     });
 
     test('renders logout link when authd', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
 
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -216,7 +216,7 @@ describe('Main Footer Bar', () => {
     test('renders copywrite with current year', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -231,7 +231,7 @@ describe('Main Footer Bar', () => {
     test('clicks cookies link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>
@@ -249,7 +249,7 @@ describe('Main Footer Bar', () => {
     test('clicks myaccount link', async () => {
         await act(async () =>
             render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainFooterBar testId='footer-bar' />
                     </MemoryRouter>

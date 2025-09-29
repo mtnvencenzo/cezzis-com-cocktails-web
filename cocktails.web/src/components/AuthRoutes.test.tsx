@@ -8,8 +8,8 @@ import AnonymousRoutes from './AnonymousRoutes';
 import WelcomePage from '../pages/WelcomePage/WelcomePage';
 import GlobalContext from './GlobalContexts';
 import { Auth0ReactTester } from '../auth0Mocks';
-import { auth0ProviderOptions } from '../utils/authConfig';
 import { Auth0Provider } from './Auth0Provider';
+import { auth0TestProviderOptions } from '../auth0Mocks/testerConstants';
 
 const testUser: User = {
     name: 'John Doe',
@@ -37,12 +37,12 @@ describe('Auth routes', () => {
     });
 
     test('renders account page for already logged in user', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = testUser;
 
         render(
             <GlobalContext>
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter initialEntries={['/account']}>
                         <Routes>
                             <Route element={<AnonymousRoutes />} path='/'>
@@ -64,11 +64,11 @@ describe('Auth routes', () => {
     });
 
     test('shows not authorized with no account data', async () => {
-        await auth0Tester.isNotLogged();
+        auth0Tester.isNotLogged();
 
         render(
             <GlobalContext>
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter initialEntries={['/account']}>
                         <Routes>
                             <Route element={<AnonymousRoutes />} path='/'>

@@ -6,7 +6,7 @@ import MainAppBar from './MainAppBar';
 import { getTestUser } from '../../../tests/setup';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { Auth0Provider } from '../../components/Auth0Provider';
-import { auth0ProviderOptions } from '../../utils/authConfig';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Main App Bar', () => {
     let auth0Tester: Auth0ReactTester;
@@ -25,7 +25,7 @@ describe('Main App Bar', () => {
         [false] // xs
     ])('renders correctly for xs:%s', (isXs) => {
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <MainAppBar testId='app-bar' isXs={isXs} />
                 </MemoryRouter>
@@ -41,7 +41,7 @@ describe('Main App Bar', () => {
         [false] // xs
     ])('renders logo correctly for xs:%s', async (isXs) => {
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <MainAppBar testId='app-bar' isXs={isXs} />
                 </MemoryRouter>
@@ -62,14 +62,14 @@ describe('Main App Bar', () => {
         [true, false, false], // xs and un-authed
         [false, true, true], // not xs and authed
         [false, false, true] // not xs and un-authed
-    ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
+    ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', (isXs, authed, expected) => {
         if (authed) {
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <MainAppBar testId='app-bar' isXs={isXs} />
                 </MemoryRouter>
@@ -91,14 +91,14 @@ describe('Main App Bar', () => {
         [true, false, true], // xs and un-authed
         [false, true, true], // not xs and authed
         [false, false, true] // not xs and un-authed
-    ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
+    ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', (isXs, authed, expected) => {
         if (authed) {
-            await auth0Tester.isLogged();
+            auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
         }
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
                     <MainAppBar testId='app-bar' isXs={isXs} />
                 </MemoryRouter>

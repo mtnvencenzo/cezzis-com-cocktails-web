@@ -68,21 +68,18 @@ class Auth0ReactTester {
     /**
      * Initialize the IPublicClientApplication with an active account.
      */
-    async isLogged() {
+    isLogged() {
         this.user = this.testUser;
         // ensuring that render (that should come right after) will not be too fast
         // and raise an error with act() => ....
-        await this.actAwait(1);
+        // this.actAwait(10);
     }
 
     /**
-     * Initialize the IPublicClientApplication with no active account
+     * Initialize with no active account.
      */
-    async isNotLogged() {
+    isNotLogged() {
         this.user = undefined;
-        // ensuring that render (that should come right after) will not be too fast
-        // and raise an error with act() => ....
-        await this.actAwait(1);
     }
 
     /**

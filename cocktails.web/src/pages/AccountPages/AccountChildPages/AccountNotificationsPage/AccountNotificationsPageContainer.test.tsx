@@ -8,8 +8,8 @@ import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, UpdateAccountO
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
-import { auth0ProviderOptions } from '../../../../utils/authConfig';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
 describe('Account Notifications Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -24,11 +24,11 @@ describe('Account Notifications Page Container', () => {
     });
 
     test('renders account notifications page container', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
@@ -43,7 +43,7 @@ describe('Account Notifications Page Container', () => {
     });
 
     test('toggle > notify me when new cocktails are added > works when initially Always', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -52,7 +52,7 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
@@ -75,7 +75,7 @@ describe('Account Notifications Page Container', () => {
     });
 
     test('toggle > notify me when new cocktails are added > works when initially Never', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -84,7 +84,7 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />
@@ -127,7 +127,7 @@ describe('Account Notifications Page Container', () => {
             )
         );
 
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -136,7 +136,7 @@ describe('Account Notifications Page Container', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountNotificationsPageContainer />

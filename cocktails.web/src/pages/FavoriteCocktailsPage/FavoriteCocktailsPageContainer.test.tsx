@@ -9,9 +9,9 @@ import { getTestUser, getTestCocktailsList, getTestOwnedAccountProfile, server }
 import GlobalContext from '../../components/GlobalContexts';
 import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import SessionStorageService from '../../services/SessionStorageService';
-import { auth0ProviderOptions } from '../../utils/authConfig';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { Auth0ReactTester } from '../../auth0Mocks';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
     const items: CocktailsListModel[] = [];
@@ -48,7 +48,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders and fetches cocktails data', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -104,7 +104,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -178,7 +178,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders account profile favorites', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -213,7 +213,7 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
@@ -228,7 +228,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders multiple account profile favorites', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -264,7 +264,7 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
@@ -280,7 +280,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites even if in returned response', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -316,7 +316,7 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />
@@ -334,7 +334,7 @@ describe('Favorite Cocktails Page Container', () => {
     });
 
     test('renders only account profile favorites only if has search image', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
@@ -374,7 +374,7 @@ describe('Favorite Cocktails Page Container', () => {
         );
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FavoriteCocktailsPageContainer />

@@ -5,8 +5,8 @@ import GlobalContext from '../../../../components/GlobalContexts';
 import AccountPersonalDetailsPageContainer from './AccountPersonalDetailsPageContainer';
 import { getTestUser } from '../../../../../tests/setup';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
-import { auth0ProviderOptions } from '../../../../utils/authConfig';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
 describe('Account Personal Details Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -21,11 +21,11 @@ describe('Account Personal Details Page Container', () => {
     });
 
     test('renders account personal details page container', async () => {
-        await auth0Tester.isLogged();
+        auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
         render(
-            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <AccountPersonalDetailsPageContainer />
