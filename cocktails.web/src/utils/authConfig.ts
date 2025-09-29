@@ -46,7 +46,6 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
         useRefreshTokens: false,
         cacheLocation: 'localstorage'
     });
-
     if (!auth0Client) {
         logger.logWarning('Auth0 client not initialized');
         return undefined;
@@ -58,51 +57,32 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
         return undefined;
     }
 
-    const accounts = (await auth0Client.getIdTokenClaims()) ? [auth0Client.getIdTokenClaims()!] : [];
-    if (!accounts || accounts.length === 0) {
-        logger.logWarning('No accounts found');
+    const idTokenClaims = await auth0Client.getIdTokenClaims();
+    if (!idTokenClaims) {
+        logger.logInformation('No ID token claims found');
         return undefined;
     }
 
-    const user = await auth0Client.getUser();
-
-    if (!user) {
-        logger.logWarning('User not found');
-        return undefined;
-    }
-
-    if (accounts && accounts.length > 0) {
-        const authorizationParms: AuthorizationParams = {
-            ...authParams,
-            scope: [...loginAuthorizationScopes, ...requiredScopes].join(' '),
-            audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
-        };
-
+    const authorizationParams: AuthorizationParams = {
+        ...authParams,
+        scope: [...loginAuthorizationScopes, ...requiredScopes].join(' '),
+        audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
+    };
+    try {
+        return await auth0Client.getTokenSilently({
+            detailedResponse: false,
+            authorizationParams
+        });
+    } catch {
         try {
-            const accessToken = await auth0Client.getTokenSilently({
-                detailedResponse: false,
-                authorizationParams: authorizationParms
-            });
-
-            return accessToken;
-        } catch (error) {
-            // Fallback to interaction when silent call fails
-            // (e.g. when the session expires)
-            try {
-                const accessToken = await auth0Client.getTokenWithPopup({
-                    authorizationParams: authorizationParms
-                });
-
-                logger.logWarning('Acquired access token with popup fallback');
-                return accessToken;
-            } catch (error) {
-                logger.logException('Failed to acquire access token with popup fallback', error as Error);
-                return undefined;
-            }
+            const token = await auth0Client.getTokenWithPopup({ authorizationParams });
+            logger.logInformation('Acquired access token with popup fallback');
+            return token;
+        } catch (err) {
+            logger.logException('Unable to retrieve access token through popup fallback', err as Error);
+            return undefined;
         }
     }
-
-    return undefined;
 };
 
 export const logoutParams: LogoutOptions = {

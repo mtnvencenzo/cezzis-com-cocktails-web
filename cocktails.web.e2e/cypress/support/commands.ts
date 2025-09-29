@@ -56,43 +56,12 @@ Cypress.Commands.addAll({
         cy.get('[id="CybotCookiebotDialogBodyButtonAccept"]').click();
     },
     validateSession: () => {
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke('getItem', `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-${Cypress.env('auth0TenantId')}`)
-        //     .should('exist');
+        cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', `@@auth0spajs@@::${Cypress.env('auth0ClientId')}::@@user@@`)
+            .should('exist');
 
-        // cy.window().its('sessionStorage').invoke('getItem', `msal.account.keys`).should('exist');
-
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke(
-        //         'getItem',
-        //         `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-idtoken-${Cypress.env('auth0ClientId')}-sisu-p---`
-        //     )
-        //     .should('exist');
-
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke('getItem', `msal.token.keys.${Cypress.env('auth0ClientId')}`)
-        //     .should('exist');
-
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke('getItem', `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-refreshtoken-${Cypress.env('auth0ClientId')}----`)
-        //     .should('exist');
-
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke('getItem', `msal.${Cypress.env('auth0ClientId')}.active-account-filters`)
-        //     .should('exist');
-
-        // cy.window()
-        //     .its('sessionStorage')
-        //     .invoke(
-        //         'getItem',
-        //         `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-accesstoken-${Cypress.env('auth0ClientId')}-sisu-p-https://cezzis.onmicrosoft.com/cocktailsapi/account.read https://cezzis.onmicrosoft.com/cocktailsapi/account.write--`
-        //     )
-        //     .should('exist');
+        cy.window().its('sessionStorage').invoke('getItem', `@@auth0spajs@@::{Cypress.env('auth0ClientId')}::default::openid offline_access profile email`).should('exist');
 
         cy.window().its('sessionStorage').invoke('getItem', `account-profile-data-group`).should('exist');
     }

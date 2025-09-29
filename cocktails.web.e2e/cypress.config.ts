@@ -50,7 +50,6 @@ export default defineConfig({
     },
     env: {
         auth0Url: 'https://cezzis.us.auth0.com/',
-        auth0TenantId: '',
         auth0ClientId: 'HZXyiZxjHgkQqeb6UJxmikCGYpSz5iPb',
         auth0UserObjectId: 'auth0|68d6d6b0a6ae4a44f05ec21f',
         auth0UserEmail: 'rvecchi+cypress@gmail.com',
