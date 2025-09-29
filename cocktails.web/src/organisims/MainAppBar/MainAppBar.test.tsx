@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import MainAppBar from './MainAppBar';
@@ -23,15 +23,13 @@ describe('Main App Bar', () => {
     test.each([
         [true], // xs
         [false] // xs
-    ])('renders correctly for xs:%s', async (isXs) => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainAppBar testId='app-bar' isXs={isXs} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+    ])('renders correctly for xs:%s', (isXs) => {
+        render(
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainAppBar testId='app-bar' isXs={isXs} />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
         const el = screen.getByTestId('app-bar');
@@ -42,14 +40,12 @@ describe('Main App Bar', () => {
         [true], // xs
         [false] // xs
     ])('renders logo correctly for xs:%s', async (isXs) => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainAppBar testId='app-bar' isXs={isXs} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainAppBar testId='app-bar' isXs={isXs} />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
         const el = (await screen.findAllByTestId('logo-text-link'))[0] as HTMLAnchorElement;
@@ -72,14 +68,12 @@ describe('Main App Bar', () => {
             auth0Tester.user = getTestUser();
         }
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainAppBar testId='app-bar' isXs={isXs} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainAppBar testId='app-bar' isXs={isXs} />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
         const menu = screen.queryByTestId('loggedin-app-bar-menu');
@@ -103,14 +97,12 @@ describe('Main App Bar', () => {
             auth0Tester.user = getTestUser();
         }
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainAppBar testId='app-bar' isXs={isXs} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainAppBar testId='app-bar' isXs={isXs} />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
         const menu = screen.queryByTestId('main-app-bar-menu');
