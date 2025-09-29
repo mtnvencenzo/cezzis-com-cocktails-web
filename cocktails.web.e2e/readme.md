@@ -64,9 +64,8 @@ The following environment variables are used in the tests:
 | Variable | Description | Required |
 |----------|-------------|----------|
 | cypressUserPassword | Password for CIAM test user | Yes |
-| ciamUserEmail | Email for CIAM test user | Yes |
-| ciamClientId | CIAM client ID | Yes |
-| ciamTenantId | CIAM tenant ID | Yes |
+| auth0UserEmail | Email for CIAM test user | Yes |
+| auth0ClientId | CIAM client ID | Yes |
 
 ## Test User Account
 
