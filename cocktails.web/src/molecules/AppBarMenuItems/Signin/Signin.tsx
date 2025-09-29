@@ -15,7 +15,7 @@ const Signin = ({ setAnchorEl, testId }: SigninProps) => {
 
     const handleCloseUserMenu = async () => {
         setAnchorEl(null);
-        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname);
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname + window.location.search);
 
         await loginWithRedirect(loginWithRedirectOptions());
     };

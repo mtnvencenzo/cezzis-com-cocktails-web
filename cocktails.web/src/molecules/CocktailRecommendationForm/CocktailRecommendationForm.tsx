@@ -138,7 +138,7 @@ const CocktailRecommendationForm = () => {
     };
 
     const handleLoginClick = async () => {
-        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname);
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname + window.location.search);
 
         await loginWithRedirect(loginWithRedirectOptions());
     };

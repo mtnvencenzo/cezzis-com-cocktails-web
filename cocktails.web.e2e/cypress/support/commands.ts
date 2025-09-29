@@ -20,10 +20,10 @@ Cypress.Commands.addAll({
                 cy.visit('/');
 
                 cy.visit('/account').then(() => {
-                    cy.origin(Cypress.env('ciamUrl'), { args: { username, password } }, ({ username, password }) => {
-                        cy.get('#email').type(username, { delay: 100 });
+                    cy.origin(Cypress.env('auth0Url'), { args: { username, password } }, ({ username, password }) => {
+                        cy.get('#username').type(username, { delay: 100 });
                         cy.get('#password').type(password, { delay: 100 });
-                        cy.get('#next').click();
+                        cy.get('button[name="action"]').click();
                     });
 
                     cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/personal-details`);
@@ -56,43 +56,43 @@ Cypress.Commands.addAll({
         cy.get('[id="CybotCookiebotDialogBodyButtonAccept"]').click();
     },
     validateSession: () => {
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('ciamUserObjectId')}-sisu-p.${Cypress.env('ciamTenantId')}-login.cezzis.com-${Cypress.env('ciamTenantId')}`)
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke('getItem', `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-${Cypress.env('auth0TenantId')}`)
+        //     .should('exist');
 
-        cy.window().its('sessionStorage').invoke('getItem', `msal.account.keys`).should('exist');
+        // cy.window().its('sessionStorage').invoke('getItem', `msal.account.keys`).should('exist');
 
-        cy.window()
-            .its('sessionStorage')
-            .invoke(
-                'getItem',
-                `${Cypress.env('ciamUserObjectId')}-sisu-p.${Cypress.env('ciamTenantId')}-login.cezzis.com-idtoken-${Cypress.env('ciamClientId')}-sisu-p---`
-            )
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke(
+        //         'getItem',
+        //         `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-idtoken-${Cypress.env('auth0ClientId')}-sisu-p---`
+        //     )
+        //     .should('exist');
 
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `msal.token.keys.${Cypress.env('ciamClientId')}`)
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke('getItem', `msal.token.keys.${Cypress.env('auth0ClientId')}`)
+        //     .should('exist');
 
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('ciamUserObjectId')}-sisu-p.${Cypress.env('ciamTenantId')}-login.cezzis.com-refreshtoken-${Cypress.env('ciamClientId')}----`)
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke('getItem', `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-refreshtoken-${Cypress.env('auth0ClientId')}----`)
+        //     .should('exist');
 
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `msal.${Cypress.env('ciamClientId')}.active-account-filters`)
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke('getItem', `msal.${Cypress.env('auth0ClientId')}.active-account-filters`)
+        //     .should('exist');
 
-        cy.window()
-            .its('sessionStorage')
-            .invoke(
-                'getItem',
-                `${Cypress.env('ciamUserObjectId')}-sisu-p.${Cypress.env('ciamTenantId')}-login.cezzis.com-accesstoken-${Cypress.env('ciamClientId')}-sisu-p-https://cezzis.onmicrosoft.com/cocktailsapi/account.read https://cezzis.onmicrosoft.com/cocktailsapi/account.write--`
-            )
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke(
+        //         'getItem',
+        //         `${Cypress.env('auth0UserObjectId')}-sisu-p.${Cypress.env('auth0TenantId')}-login.cezzis.com-accesstoken-${Cypress.env('auth0ClientId')}-sisu-p-https://cezzis.onmicrosoft.com/cocktailsapi/account.read https://cezzis.onmicrosoft.com/cocktailsapi/account.write--`
+        //     )
+        //     .should('exist');
 
         cy.window().its('sessionStorage').invoke('getItem', `account-profile-data-group`).should('exist');
     }

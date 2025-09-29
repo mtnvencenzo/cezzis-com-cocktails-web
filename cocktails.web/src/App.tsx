@@ -197,14 +197,6 @@ const router = createBrowserRouter(
                                     )
                                 },
                                 {
-                                    path: '/account/auth/redirect',
-                                    element: (
-                                        <React.Suspense>
-                                            <LoginRedirect />
-                                        </React.Suspense>
-                                    )
-                                },
-                                {
                                     path: '/account/profile-center',
                                     element: (
                                         <React.Suspense>
@@ -297,6 +289,34 @@ const router = createBrowserRouter(
                                     element: <PathNotFound />
                                 }
                             ]
+                        },
+                        {
+                            path: '*',
+                            element: <PathNotFound />
+                        }
+                    ]
+                },
+                {
+                    path: '*',
+                    element: <PathNotFound />
+                }
+            ]
+        },
+        {
+            path: '/iam',
+            element: <AuthRoutes />,
+            children: [
+                {
+                    path: '/iam',
+                    element: <FullScreenLayout />,
+                    children: [
+                        {
+                            path: '/iam/auth/redirect',
+                            element: (
+                                <React.Suspense>
+                                    <LoginRedirect />
+                                </React.Suspense>
+                            )
                         },
                         {
                             path: '*',

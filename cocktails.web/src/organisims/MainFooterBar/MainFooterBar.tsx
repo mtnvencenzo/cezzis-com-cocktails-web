@@ -22,7 +22,7 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
     };
 
     const handleLoginRedirect = async () => {
-        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname);
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname + window.location.search);
         await loginWithRedirect(loginWithRedirectOptions());
     };
 

@@ -123,7 +123,7 @@ describe('Cocktails page', () => {
     });
 
     it('authenticated user rates a cocktail', () => {
-        cy.login(Cypress.env('ciamUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('auth0UserEmail'), Cypress.env('cypressUserPassword'));
         cy.visit('/');
 
         cy.get('[data-testid="search-box"]').within(() => {
@@ -162,7 +162,7 @@ describe('Cocktails page', () => {
     });
 
     it('authenticated user rates a cocktail but can only do it once', () => {
-        cy.login(Cypress.env('ciamUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('auth0UserEmail'), Cypress.env('cypressUserPassword'));
         cy.visit('/');
 
         cy.get('[data-testid="search-box"]').within(() => {

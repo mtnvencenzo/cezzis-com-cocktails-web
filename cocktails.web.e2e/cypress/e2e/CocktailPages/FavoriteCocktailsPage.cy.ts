@@ -1,7 +1,7 @@
 describe('Favorite Cocktails Page', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('ciamUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('auth0UserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates to the favorite cocktails page', () => {
