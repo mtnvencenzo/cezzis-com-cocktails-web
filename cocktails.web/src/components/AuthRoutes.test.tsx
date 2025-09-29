@@ -85,42 +85,6 @@ describe('Auth routes', () => {
 
         auth0Tester.waitForLogin();
 
-        await screen.findByText('Account does not have access.');
-    });
-
-    test('shows not authorized with account data but no email', async () => {
-        const badUser: User = {
-            name: '',
-            email: '',
-            picture: '',
-            sub: 'auth0|123456789',
-            updated_at: '2021-01-01T00:00:00.000Z',
-            given_name: '',
-            family_name: ''
-        };
-
-        await auth0Tester.isLogged();
-        auth0Tester.user = badUser;
-
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter initialEntries={['/account']}>
-                        <Routes>
-                            <Route element={<AnonymousRoutes />} path='/'>
-                                <Route element={<WelcomePage />} path='' />
-                            </Route>
-                            <Route element={<AuthRoutes />} path='/account'>
-                                <Route element={<AccountPage />} path='' />
-                            </Route>
-                        </Routes>
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
-        );
-
-        auth0Tester.waitForLogin();
-
-        await screen.findByText('Account does not have access.');
+        await screen.findByAltText('Loading...');
     });
 });

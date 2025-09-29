@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountNotificationsPageContainer from './AccountNotificationsPageContainer';
-import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, UpdateAccountOwnedNotificationSettingsRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
@@ -113,11 +113,16 @@ describe('Account Notifications Page Container', () => {
         server.use(
             http.put(
                 'http://localhost:0/api/v1/accounts/owned/profile/notifications',
-                () =>
-                    HttpResponse.json<AccountOwnedProfileRs>(savedProfile, {
+                async ({ request }) => {
+                    // Verify the request body contains the expected data
+                    const body = (await request.json()) as UpdateAccountOwnedNotificationSettingsRq;
+                    expect(body.onNewCocktailAdditions).toBe('never'); // Verify it's sending lowercase
+
+                    return HttpResponse.json<AccountOwnedProfileRs>(savedProfile, {
                         status: 200,
                         statusText: 'OK'
-                    }),
+                    });
+                },
                 { once: true }
             )
         );
@@ -160,5 +165,9 @@ describe('Account Notifications Page Container', () => {
 
         const btn = await screen.findByTestId('btnSubmitNotifications');
         fireEvent.click(btn);
+
+        // Wait for the API call to complete to avoid unhandled promise rejection
+        // You can adjust this wait condition based on what your component shows after successful save
+        await new Promise((resolve) => setTimeout(resolve, 100)); // Small delay to let async operation complete
     });
 });

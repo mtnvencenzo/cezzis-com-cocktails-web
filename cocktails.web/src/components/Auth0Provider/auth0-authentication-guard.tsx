@@ -12,7 +12,7 @@ const Auth0AuthenticationGuard = ({ component }: Auth0AuthenticationGuardProps) 
             <div className='page-layout'>
                 <PageLoader />
             </div>
-        )
+        ),
     });
 
     return <Component />;
