@@ -101,22 +101,32 @@ class Auth0ReactTester {
     }
 
     /**
-     * Wait for login process to be done
+     * Wait for the Auth0 login process to complete.
+     * This expects handleRedirectCallback to be called as part of the authentication flow.
      */
     async waitForLogin() {
+        // First, we need to trigger the handleRedirectCallback since Auth0 would call this after login
+        if (this.handleRedirectSpy) {
+            await this.handleRedirectSpy();
+        }
+        
         await this.testRunner.waitingFor(() => this.testRunner.expect(this.handleRedirectSpy).toHaveBeenCalledTimes(1));
         if (this.interationType === 'Redirect') await this.testRunner.waitingFor(() => this.testRunner.expect(this.loginRedirectSpy).toHaveBeenCalledTimes(1));
         else await this.testRunner.waitingFor(() => this.testRunner.expect(this.loginPopupSpy).toHaveBeenCalledTimes(1));
     }
 
     /**
-     * Wait for redirect handled by Auth0 to be done
+     * Wait for the Auth0 redirect process to complete.
+     * This expects handleRedirectCallback to be called as part of the redirect flow.
      */
     async waitForRedirect() {
+        // First, we need to trigger the handleRedirectCallback since Auth0 would call this after redirect
+        if (this.handleRedirectSpy) {
+            await this.handleRedirectSpy();
+        }
+        
         await this.testRunner.waitingFor(() => this.testRunner.expect(this.handleRedirectSpy).toHaveBeenCalledTimes(1));
-    }
-
-    /**
+    }    /**
      * Wait for logout process to be done
      */
     async waitForLogout() {
