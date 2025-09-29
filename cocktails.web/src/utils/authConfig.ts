@@ -5,19 +5,23 @@ import trimWhack from './trimWhack';
 import { getWindowEnv } from './envConfig';
 import logger from '../services/Logger';
 import { AppState, Auth0ProviderOptions } from '../components/Auth0Provider/auth0-provider';
+import { LogoutOptions } from '../components/Auth0Provider';
+
+export const clearOwnedAccountLoginSession = () => {
+    const sessionStorageService = new SessionStorageService();
+    sessionStorageService.ClearOwnedAccountProfileRequestData();
+};
 
 export const onRedirectCallback = async (appState?: AppState, user?: User) => {
-    const sessionStorageService = new SessionStorageService();
-
-    if (appState?.returnTo) {
-        // window.history.replaceState({}, document.title, appState.returnTo);
-    }
-
     if (user) {
         await loginOwnedAccountProfile();
         await getAccountCocktailRatings(true);
     } else {
-        sessionStorageService.ClearOwnedAccountProfileRequestData();
+        clearOwnedAccountLoginSession();
+    }
+
+    if (appState?.returnTo) {
+        window.history.replaceState({}, document.title, appState.returnTo);
     }
 };
 
@@ -101,6 +105,12 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
     }
 
     return undefined;
+};
+
+export const logoutParams: LogoutOptions = {
+    logoutParams: {
+        returnTo: window.location.origin
+    }
 };
 
 export const auth0ProviderOptions: Auth0ProviderOptions = {

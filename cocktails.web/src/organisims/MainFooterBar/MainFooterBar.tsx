@@ -4,7 +4,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import logo from '../../assets/logo-32x32.png';
 import FooterLink from '../../atoms/FooterLink/FooterLink';
 import showCookieBot from '../../utils/cookiebot';
-import { loginWithRedirectOptions } from '../../utils/authConfig';
+import { clearOwnedAccountLoginSession, loginWithRedirectOptions, logoutParams } from '../../utils/authConfig';
 import { useAuth0 } from '../../components/Auth0Provider';
 
 interface MainFooterBarProps {
@@ -15,13 +15,8 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
     const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
 
     const handleLogout = async () => {
-        if (isAuthenticated) {
-            await logout({
-                logoutParams: {
-                    returnTo: window.location.origin
-                }
-            });
-        }
+        clearOwnedAccountLoginSession();
+        await logout(logoutParams);
     };
 
     return (

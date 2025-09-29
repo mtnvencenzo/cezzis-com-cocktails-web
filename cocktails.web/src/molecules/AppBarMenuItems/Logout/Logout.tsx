@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuItem, Typography } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useAuth0 } from '../../../components/Auth0Provider';
+import { clearOwnedAccountLoginSession, logoutParams } from '../../../utils/authConfig';
 
 interface LogoutProps {
     testId: string;
@@ -13,11 +14,8 @@ const Logout = ({ setAnchorEl, testId }: LogoutProps) => {
 
     const handleCloseUserMenu = async () => {
         setAnchorEl(null);
-        await logout({
-            logoutParams: {
-                returnTo: window.location.origin
-            }
-        });
+        clearOwnedAccountLoginSession();
+        await logout(logoutParams);
     };
 
     return (
