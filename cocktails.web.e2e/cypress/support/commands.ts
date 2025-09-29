@@ -20,10 +20,10 @@ Cypress.Commands.addAll({
                 cy.visit('/');
 
                 cy.visit('/account').then(() => {
-                    cy.origin(Cypress.env('b2cUrl'), { args: { username, password } }, ({ username, password }) => {
-                        cy.get('#email').type(username, { delay: 100 });
+                    cy.origin(Cypress.env('auth0Url'), { args: { username, password } }, ({ username, password }) => {
+                        cy.get('#username').type(username, { delay: 100 });
                         cy.get('#password').type(password, { delay: 100 });
-                        cy.get('#next').click();
+                        cy.get('button[name="action"]').click();
                     });
 
                     cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/personal-details`);
@@ -58,41 +58,10 @@ Cypress.Commands.addAll({
     validateSession: () => {
         cy.window()
             .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-${Cypress.env('b2cTenantId')}`)
+            .invoke('getItem', `@@auth0spajs@@::${Cypress.env('auth0ClientId')}::@@user@@`)
             .should('exist');
 
-        cy.window().its('sessionStorage').invoke('getItem', `msal.account.keys`).should('exist');
-
-        cy.window()
-            .its('sessionStorage')
-            .invoke(
-                'getItem',
-                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-idtoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy---`
-            )
-            .should('exist');
-
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `msal.token.keys.${Cypress.env('b2cClientId')}`)
-            .should('exist');
-
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-refreshtoken-${Cypress.env('b2cClientId')}----`)
-            .should('exist');
-
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `msal.${Cypress.env('b2cClientId')}.active-account-filters`)
-            .should('exist');
-
-        cy.window()
-            .its('sessionStorage')
-            .invoke(
-                'getItem',
-                `${Cypress.env('b2cUserObjectId')}-b2c_1_signinsignup_policy.${Cypress.env('b2cTenantId')}-login.cezzis.com-accesstoken-${Cypress.env('b2cClientId')}-b2c_1_signinsignup_policy-https://cezzis.onmicrosoft.com/cocktailsapi/account.read https://cezzis.onmicrosoft.com/cocktailsapi/account.write--`
-            )
-            .should('exist');
+        cy.window().its('sessionStorage').invoke('getItem', `@@auth0spajs@@::{Cypress.env('auth0ClientId')}::default::openid offline_access profile email`).should('exist');
 
         cy.window().its('sessionStorage').invoke('getItem', `account-profile-data-group`).should('exist');
     }

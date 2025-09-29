@@ -21,7 +21,7 @@ const AboutUsPageContainer = () => {
     return (
         <>
             <title>About Cezzis.com</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/about-us`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/about-us`} />
             <meta name='description' content='Learn what Cezzis.com is all about and what sets us apart.  Meet Cezzi and learn how to contribute a cocktail recipe to the community.' />
             <meta property='article:section' content='Cezzis.com' />
             <meta property='og:type' content='article' />

@@ -1,40 +1,67 @@
 import { AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
-import { getFamilyName, getGivenName, msalInstance } from './authConfig';
+import { User } from '../components/Auth0Provider';
 
-export const getOwnedAccountGivenName = (account: AccountOwnedProfileRs | undefined, useIdentityFallback: boolean = true): string => {
+export const getGivenName = (user: User): string => {
+    if (user) {
+        return ((user.given_name ?? '') as string).trim();
+    }
+
+    return '';
+};
+
+export const getFamilyName = (user: User): string => {
+    if (user) {
+        return ((user.family_name ?? '') as string).trim();
+    }
+
+    return '';
+};
+
+export const getOwnedAccountGivenName = (account: AccountOwnedProfileRs | undefined, user: User | undefined): string => {
     if (account) {
         return ((account.givenName ?? '') as string).trim();
     }
 
-    if (useIdentityFallback) {
-        const activeAccount = msalInstance?.getActiveAccount();
-
-        if (activeAccount) {
-            return getGivenName([activeAccount]);
-        }
+    if (user) {
+        return getGivenName([user]);
     }
 
     return '';
 };
 
-export const getOwnedAccountFamilyName = (account: AccountOwnedProfileRs | undefined, useIdentityFallback: boolean = true): string => {
+export const getOwnedAccountFamilyName = (account: AccountOwnedProfileRs | undefined, user: User | undefined): string => {
     if (account) {
         return ((account.familyName ?? '') as string).trim();
     }
 
-    if (useIdentityFallback) {
-        const activeAccount = msalInstance?.getActiveAccount();
-
-        if (activeAccount) {
-            return getFamilyName([activeAccount]);
-        }
+    if (user) {
+        return getFamilyName([user]);
     }
 
     return '';
 };
 
-export const getOwnedAccountName = (account: AccountOwnedProfileRs | undefined, useIdentityFallback: boolean = true): string =>
-    `${getOwnedAccountGivenName(account, useIdentityFallback)} ${getOwnedAccountFamilyName(account, useIdentityFallback)}`.trim();
+export const getOwnedAccountName = (account: AccountOwnedProfileRs | undefined, user: User | undefined): string => {
+    const name = `${getOwnedAccountGivenName(account, user)} ${getOwnedAccountFamilyName(account, user)}`.trim();
 
-export const getOwnedAccountInitials = (account: AccountOwnedProfileRs | undefined, useIdentityFallback: boolean = true): string =>
-    (`${getOwnedAccountGivenName(account, useIdentityFallback)} `.substring(0, 1) + `${getOwnedAccountFamilyName(account, useIdentityFallback)} `.substring(0, 1)).trim();
+    if (name.length > 0) {
+        return name;
+    }
+
+    return 'New User';
+};
+
+export const getOwnedAccountInitials = (account: AccountOwnedProfileRs | undefined, user: User | undefined): string =>
+    (`${getOwnedAccountGivenName(account, user)} `.substring(0, 1) + `${getOwnedAccountFamilyName(account, user)} `.substring(0, 1)).trim();
+
+export const getSubjectId = (user: User): string | undefined => {
+    if (user) {
+        return user.sub;
+    }
+
+    return undefined;
+};
+
+export const getDisplayName = (user: User): string => `${getGivenName(user)} ${getFamilyName(user)}`.trim();
+
+export const getInitials = (user: User): string => (`${getGivenName(user)} `.substring(0, 1) + `${getFamilyName(user)} `.substring(0, 1)).trim();

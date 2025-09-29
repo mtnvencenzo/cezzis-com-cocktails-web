@@ -1,20 +1,20 @@
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { MsalProvider } from '@azure/msal-react';
 import App from './App';
-import { msalInstance } from './utils/authConfig';
 import AppErrorBoundary from './components/AppErrorBoundary/AppErrorBoundary';
+import { Auth0Provider } from './components/Auth0Provider';
+import { auth0TestProviderOptions } from './auth0Mocks/testerConstants';
 
 describe('App', () => {
     test('renders app', async () => {
         render(
             <React.StrictMode>
-                <MsalProvider instance={msalInstance}>
+                <Auth0Provider {...auth0TestProviderOptions}>
                     <AppErrorBoundary onError={() => <h1>Something went wrong</h1>}>
                         <App />
                     </AppErrorBoundary>
-                </MsalProvider>
+                </Auth0Provider>
             </React.StrictMode>
         );
 

@@ -19,6 +19,7 @@ const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage/Pri
 const TermsOfServicePage = React.lazy(() => import('./pages/TermsOfServicePage/TermsOfServicePage'));
 
 const AccountPage = React.lazy(() => import('./pages/AccountPages/AccountPage/AccountPage'));
+const LoginRedirect = React.lazy(() => import('./pages/LoginRedirect/LoginRedirect'));
 const AccountIndexPageNavigator = React.lazy(() => import('./pages/AccountPages/AccountIndexPageNavigator/AccountIndexPageNavigator'));
 const AccountNavigationPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountNavigationPage/AccountNavigationPage'));
 const AccountProfileImagePage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountProfileImagePage/AccountProfileImagePage'));
@@ -42,6 +43,14 @@ const router = createBrowserRouter(
             path: '/',
             element: <AnonymousRoutes />,
             children: [
+                {
+                    path: '/iam/auth/redirect',
+                    element: (
+                        <React.Suspense>
+                            <LoginRedirect />
+                        </React.Suspense>
+                    )
+                },
                 {
                     path: '',
                     element: <Layout />,

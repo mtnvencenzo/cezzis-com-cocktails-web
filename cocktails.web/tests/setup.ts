@@ -1,10 +1,8 @@
 import { afterEach, vi, expect, beforeAll, afterAll } from 'vitest';
 import { cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MsalReactTesterPlugin } from 'msal-react-tester';
 import { setupServer } from 'msw/node';
 import 'vitest-location-mock';
-import { AccountInfo } from '@azure/msal-browser';
 import {
     AccountCocktailRatingsModel,
     AccountCocktailRatingsRs,
@@ -20,6 +18,8 @@ import {
     PreparationTypeModel,
     UofMTypeModel
 } from '../src/api/cocktailsApi/cocktailsApiClient';
+import { User } from '../src/components/Auth0Provider';
+import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -27,25 +27,25 @@ vi.mock('../src/utils/envConfig', () => {
         getWindowEnv: vi.fn(() => ({
             VITE_NODE_ENV: 'test',
             VITE_PORT: '123',
-            VITE_REDIRECT_URI: 'http://localhost:123/',
-            VITE_RESET_PASSWORD_REDIRECT_URI: 'https://localhost:123/account/profile-center/',
+
             VITE_TELEMETRY_KEY: '00000000-0000-0000-0000-000000000000',
             VITE_TELEMETRY_URL: '',
-            VITE_B2C_TENANT: 'cezzis',
-            VITE_B2C_CLIENT_ID: '00000000-0000-0000-0000-000000000000',
-            VITE_B2C_POLICY: 'B2C_1_SignInSignUp_Policy',
-            VITE_B2C_RESET_PASSWORD_POLICY: 'B2C_1_ResetPassword_Policy',
+
+            VITE_AUTH0_DOMAIN: 'cezzis.us.auth0.com',
+            VITE_AUTH0_CLIENT_ID: '00000000000000000000000000000000',
+            VITE_AUTH0_REDIRECT_URI: 'https://localhost:0000/iam/auth/redirect/',
+            VITE_AUTH0_COCKTAILS_API_AUDIENCE: 'https://cezzis-cocktails-api',
+
             VITE_COCKTAILS_API_URL: 'http://localhost:0000',
             VITE_COCKTAILS_IMAGE_URL: 'http://localhost:0000/images',
-            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
             VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY: '383hudiudhUJK984jdus7HDY',
-            VITE_LOGIN_SUBDOMAIN: 'login'
+            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
         }))
     };
 });
 /* eslint-enable arrow-body-style */
 
-MsalReactTesterPlugin.init({
+Auth0ReactTesterPlugin.init({
     spyOn: vi.spyOn,
     expect,
     resetAllMocks: vi.resetAllMocks,
@@ -101,16 +101,17 @@ export const getTestOwnedAccountCocktailRatings = (ratings: AccountCocktailRatin
     ratings: ratings ?? []
 });
 
-export const getTestAccountInfo = (): AccountInfo => ({
-    homeAccountId: '',
-    username: '',
-    localAccountId: '',
-    environment: '',
-    tenantId: '',
-    idTokenClaims: {
-        given_name: 'Billy',
-        family_name: 'Simms'
-    }
+export const getTestUser = (): User => ({
+    sub: 'auth0|123456789',
+    email: 'john.doe@example.com',
+    name: 'John Doe',
+    picture: 'https://example.com/john-doe.jpg',
+    updated_at: '2021-01-01T00:00:00.000Z',
+    nickname: 'johnny',
+    email_verified: true,
+    given_name: 'John',
+    family_name: 'Doe',
+    locale: 'en-US'
 });
 
 export const getTestCocktails = (): CocktailModel[] => [

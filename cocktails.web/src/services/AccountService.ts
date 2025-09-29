@@ -12,12 +12,11 @@ import {
     UpdateAccountOwnedProfileRq,
     UploadProfileImageRs
 } from '../api/cocktailsApi/cocktailsApiClient';
-import { getWindowEnv } from '../utils/envConfig';
 import LocalStorageService from './LocalStorageService';
 import SessionStorageService from './SessionStorageService';
 
-const accountReadScope = `https://${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/cocktailsapi/Account.Read`;
-const accountWriteScope = `https://${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/cocktailsapi/Account.Write`;
+const accountReadScope = `read:owned-account`;
+const accountWriteScope = `write:owned-account`;
 
 const getOwnedAccountProfile = async (reload: boolean = false): Promise<AccountOwnedProfileRs | undefined> => {
     const sessionStorageService = new SessionStorageService();

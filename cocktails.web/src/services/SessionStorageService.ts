@@ -49,6 +49,26 @@ class SessionStorageService extends StorageCache {
         window.dispatchEvent(new Event('owned-account-cocktail-ratings-storage-changed')); // Dispatch custom event
     };
 
+    public GetOwnedAccountPostLoginRedirectUrl = (): string | undefined => {
+        if (!this.IsStorageEnabled()) {
+            return undefined;
+        }
+
+        return this.GetCachedGroupItem<string>(SessionStorageService.OwnedAccountProfileGroupCacheKey, `post-login-redirect-url`);
+    };
+
+    public SetOwnedAccountPostLoginRedirectUrl = (url: string): void => {
+        if (!this.IsStorageEnabled()) {
+            return;
+        }
+
+        const group = this.GetOrCreateCachedGroup<string>(SessionStorageService.OwnedAccountProfileGroupCacheKey, Date.now() + 86_400_000 * 15); // adding 15 days from now
+
+        group.Items[`post-login-redirect-url`] = url;
+
+        this.StorageProvider.setItem(SessionStorageService.OwnedAccountProfileGroupCacheKey, JSON.stringify(group));
+    };
+
     public ClearOwnedAccountProfileRequestData = (): void => {
         if (!this.IsStorageEnabled()) {
             return;
@@ -58,6 +78,7 @@ class SessionStorageService extends StorageCache {
 
         unset(group.Items, `owned-account`);
         unset(group.Items, `owned-account-cocktail-ratings`);
+        unset(group.Items, `post-login-redirect-url`);
 
         this.StorageProvider.setItem(SessionStorageService.OwnedAccountProfileGroupCacheKey, JSON.stringify(group));
         window.dispatchEvent(new Event('owned-account-storage-changed')); // Dispatch custom event

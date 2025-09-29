@@ -1,26 +1,26 @@
-import { useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
 import { useEffect } from 'react';
-import { logout } from '../../utils/authConfig';
 import startPageViewSpan from '../../services/Tracer';
+import { useAuth0 } from '../../components/Auth0Provider';
+import { clearOwnedAccountLoginSession, logoutParams } from '../../utils/authConfig';
 
 const FrontChannelLogout = () => {
-    const { inProgress } = useMsal();
+    const { logout, isAuthenticated } = useAuth0();
 
-    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        startPageViewSpan((span) => {
+        if (!isAuthenticated) {
+            return;
+        }
+
+        startPageViewSpan(async (span) => {
             const handleLogout = async () => {
-                if (inProgress === InteractionStatus.None || inProgress === InteractionStatus.Startup) {
-                    await logout();
-                }
+                clearOwnedAccountLoginSession();
+                await logout(logoutParams);
             };
 
             span.end();
-            handleLogout();
+            await handleLogout();
         });
-    }, []);
-    /* eslint-enable react-hooks/exhaustive-deps */
+    }, [isAuthenticated, logout]);
 
     return <div>Logging out...</div>;
 };

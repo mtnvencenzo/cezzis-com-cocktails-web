@@ -1,23 +1,23 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import AccountAccessibilityPage from './AccountAccessibilityPage';
 import GlobalContext from '../../../../components/GlobalContexts';
-import { getTestAccountInfo } from '../../../../../tests/setup';
+import { getTestUser } from '../../../../../tests/setup';
+import { Auth0ReactTester } from '../../../../auth0Mocks';
+import { Auth0Provider } from '../../../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
 describe('Account Accessibility Page', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account accessibility page', async () => {
@@ -25,15 +25,15 @@ describe('Account Accessibility Page', () => {
             initialEntries: ['/account/profile-center/accessibility']
         });
 
-        await msalTester.isLogged();
-        msalTester.accounts = [getTestAccountInfo()];
+        auth0Tester.isLogged();
+        auth0Tester.user = getTestUser();
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <RouterProvider router={router} />
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');

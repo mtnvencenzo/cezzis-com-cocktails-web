@@ -1,34 +1,34 @@
 import { describe, test, beforeEach, afterEach, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../components/GlobalContexts';
 import FrontChannelLogout from './FrontChannelLogout';
 import { server } from '../../../tests/setup';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Front channel logout', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
+
         Object.defineProperty(window, 'location', {
             value: { assign: vi.fn() }
         });
 
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
-
         server.use(
-            http.get('https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/v2.0/.well-known/openid-configuration', () =>
+            http.get('https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/v2.0/.well-known/openid-configuration', () =>
                 HttpResponse.json(
                     {
                         issuer: 'https://login.cezzis.com/fb512a9c-5b44-41ab-8042-6465769f16c9/v2.0/',
-                        authorization_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/authorize',
-                        token_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/token',
-                        end_session_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/oauth2/v2.0/logout',
-                        jwks_uri: 'https://login.cezzis.com/cezzis.onmicrosoft.com/b2c_1_signinsignup_policy/discovery/v2.0/keys',
+                        authorization_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/oauth2/v2.0/authorize',
+                        token_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/oauth2/v2.0/token',
+                        end_session_endpoint: 'https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/oauth2/v2.0/logout',
+                        jwks_uri: 'https://login.cezzis.com/cezzis.onmicrosoft.com/cicu-p/discovery/v2.0/keys',
                         response_modes_supported: ['query', 'fragment', 'form_post'],
                         response_types_supported: ['code', 'code id_token', 'code token', 'code id_token token', 'id_token', 'id_token token', 'token', 'token id_token'],
                         scopes_supported: ['openid'],
@@ -68,24 +68,24 @@ describe('Front channel logout', () => {
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders account page', async () => {
         window.location.href = '/relative-url';
-        await msalTester.isLogged();
+        auth0Tester.isLogged();
 
         render(
-            <MsalProvider instance={msalTester.client}>
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
                         <FrontChannelLogout />
                     </MemoryRouter>
                 </GlobalContext>
-            </MsalProvider>
+            </Auth0Provider>
         );
 
-        await msalTester.waitForRedirect();
+        await auth0Tester.waitForRedirect();
 
         const content = await screen.findByText('Logging out...');
         expect(content).toBeTruthy();

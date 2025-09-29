@@ -21,7 +21,7 @@ const ContactPageContainer = () => {
     return (
         <>
             <title>Contact Cezzis.com</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/contact`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/contact`} />
             <meta name='description' content='Contact Cezzis.com for information related to marketing or advertising with us.  Or, just to contribute to the community a new cocktail recipe.' />
             <meta property='article:section' content='Cezzis.com' />
             <meta property='og:type' content='article' />

@@ -23,7 +23,7 @@
 
 ### Authentication & Security
 - **Authentication**: Microsoft Authentication Library (MSAL)
-- **Azure B2C**: User authentication and management
+- **Azure Entra External Id**: User authentication and management
 - **reCAPTCHA**: Form protection
 - **Cookie Management**: Cookiebot integration
 
@@ -132,7 +132,7 @@ yarn preview
 
 ## 🔒 Security Features
 
-- Azure B2C authentication
+- Azure Entra External Id authentication
 - HTTPS enforcement
 - reCAPTCHA integration
 - Cookie consent management

@@ -26,22 +26,14 @@
     "@csstools/css-tokenizer" "^3.0.3"
     lru-cache "^10.4.3"
 
-"@azure/msal-browser@^4.12.0":
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-4.12.0.tgz#0f6568c40fc1bef4153a1f29fce1fc6ff09d75b4"
-  integrity sha512-WD1lmVWchg7wn1mI7Tr4v7QPyTwK+8Nuyje3jRpOFENLRLEBsdK8VVdTw3C+TypZmYn4cOAdj3zREnuFXgvfIA==
+"@auth0/auth0-spa-js@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-2.4.1.tgz#48fcde461684be720a664746a3eaf6c1aca7e7d7"
+  integrity sha512-GE1XPLEgEUeqYBw5VcA52+3ubJDh4VKZFqdu0mr6h7anu+rFZb389cDbfpW145I23T1knZB/jvQtuRrkcLuT+Q==
   dependencies:
-    "@azure/msal-common" "15.6.0"
-
-"@azure/msal-common@15.6.0":
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-15.6.0.tgz#0764d6446eeff3970221995e25f265fdb218da66"
-  integrity sha512-EotmBz42apYGjqiIV9rDUdptaMptpTn4TdGf3JfjLvFvinSe9BJ6ywU92K9ky+t/b0ghbeTSe9RfqlgLh8f2jA==
-
-"@azure/msal-react@^3.0.12":
-  version "3.0.12"
-  resolved "https://registry.yarnpkg.com/@azure/msal-react/-/msal-react-3.0.12.tgz#84a2f4a85021d9a23fd3a92fe1c4d55e9c8ebf20"
-  integrity sha512-Rnw1hcx/ILYmbhcPZbhQNdBpf0jE3P0nMiwLKRMqgjnACqOiHQ5+ZZzEIXwEPiva9TPSrW34yvNBTLx8k/5pVg==
+    browser-tabs-lock "^1.2.15"
+    dpop "^2.1.1"
+    es-cookie "~1.3.2"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.27.1":
   version "7.27.1"
@@ -1904,6 +1896,13 @@ braces@^3.0.3:
   dependencies:
     fill-range "^7.1.1"
 
+browser-tabs-lock@^1.2.15:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/browser-tabs-lock/-/browser-tabs-lock-1.3.0.tgz#4c0381b47b55cd29feaaea5846b7bb97aac76053"
+  integrity sha512-g6nHaobTiT0eMZ7jh16YpD2kcjAp+PInbiVq3M1x6KKaEIVhT4v9oURNIpZLOZ3LQbQ3XYfNhMAb/9hzNLIWrw==
+  dependencies:
+    lodash ">=4.17.21"
+
 browserslist@^4.24.0, browserslist@^4.24.4:
   version "4.24.5"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.24.5.tgz#aa0f5b8560fe81fde84c6dcb38f759bafba0e11b"
@@ -2378,6 +2377,11 @@ dom-helpers@^5.0.1:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
 
+dpop@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/dpop/-/dpop-2.1.1.tgz#f132df2bdf97b8fd5f13afe14ef659d072d8d051"
+  integrity sha512-J0Of2JTiM4h5si0tlbPQ/lkqfZ5wAEVkKYBhkwyyANnPJfWH4VsR5uIkZ+T+OSPIwDYUg1fbd5Mmodd25HjY1w==
+
 dunder-proto@^1.0.0, dunder-proto@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dunder-proto/-/dunder-proto-1.0.1.tgz#d7ae667e1dc83482f8b70fd0f6eefc50da30f58a"
@@ -2475,6 +2479,11 @@ es-abstract@^1.17.5, es-abstract@^1.23.2, es-abstract@^1.23.3, es-abstract@^1.23
     typed-array-length "^1.0.7"
     unbox-primitive "^1.1.0"
     which-typed-array "^1.1.18"
+
+es-cookie@~1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/es-cookie/-/es-cookie-1.3.2.tgz#80e831597f72a25721701bdcb21d990319acd831"
+  integrity sha512-UTlYYhXGLOy05P/vKVT2Ui7WtC7NiRzGtJyAKKn32g5Gvcjn7KAClLPWlipCtxIus934dFg9o9jXiBL0nP+t9Q==
 
 es-define-property@^1.0.0, es-define-property@^1.0.1:
   version "1.0.1"
@@ -3834,7 +3843,7 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash@^4.17.21:
+lodash@>=4.17.21, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -4273,11 +4282,6 @@ ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
-
-msal-react-tester@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/msal-react-tester/-/msal-react-tester-0.3.1.tgz#6be2319237cd807ee3a51dc5517ee51804ea32e3"
-  integrity sha512-XCJLrZqguWpR3LLUglg6RU+Vtl7xAfTwq8tYbEH+haj4SUVn8SaULTOgZRZv6LioVtyDDlxTs5VtaPhHsMbcQQ==
 
 msw@^2.8.0:
   version "2.8.0"

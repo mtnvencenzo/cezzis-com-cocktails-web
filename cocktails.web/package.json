@@ -15,8 +15,7 @@
         "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=http://localhost:7177/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts"
     },
     "dependencies": {
-        "@azure/msal-browser": "^4.12.0",
-        "@azure/msal-react": "^3.0.12",
+        "@auth0/auth0-spa-js": "^2.4.1",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
         "@mtnvencenzo/kelso-component-library": "^1.0.4",
@@ -53,10 +52,10 @@
         "rehype-raw": "^7.0.0"
     },
     "devDependencies": {
+        "@testing-library/dom": "^10.4.0",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.3.0",
         "@testing-library/user-event": "^14.6.1",
-        "@testing-library/dom": "^10.4.0",
         "@types/lodash": "^4.17.16",
         "@types/node": "^22.15.17",
         "@types/react": "^19.1.3",
@@ -80,7 +79,6 @@
         "eslint-plugin-vitest": "^0.5.4",
         "history": "^5.3.0",
         "jsdom": "26.1.0",
-        "msal-react-tester": "^0.3.1",
         "msw": "^2.8.0",
         "nswag": "14.4.0",
         "prettier": "^3.5.3",

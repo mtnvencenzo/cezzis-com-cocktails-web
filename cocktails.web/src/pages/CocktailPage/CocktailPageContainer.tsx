@@ -77,12 +77,12 @@ const CocktailPageContainer = () => {
             {!loading && !apiCallFailed && cocktailRs?.item && (
                 <>
                     <title>{`${cocktailRs?.item?.title} Cocktail Recipe`}</title>
-                    <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/cocktails/${cocktailRs?.item?.id}`} />
+                    <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/cocktails/${cocktailRs?.item?.id}`} />
                     <meta name='description' content={cocktailRs?.item?.description} />
                     <meta property='article:section' content='Cezzis.com' />
                     <meta property='og:type' content='article' />
                     <meta property='og:site_name' content='Cezzis.com' />
-                    <meta property='og:url' content={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/cocktails/${cocktailRs?.item?.id}`} />
+                    <meta property='og:url' content={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/cocktails/${cocktailRs?.item?.id}`} />
                     <meta property='og:title' content={`${cocktailRs?.item?.title} Cocktail Recipe`} />
                     <meta property='og:image' content={cocktailRs?.item?.mainImages && cocktailRs?.item?.mainImages?.length > 0 ? cocktailRs.item.mainImages[0].uri : ''} />
                     <meta property='og:description' content={cocktailRs?.item?.description} />

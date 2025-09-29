@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import AppsIcon from '@mui/icons-material/Apps';
 import { Divider } from '@mui/material';
-import { useIsAuthenticated } from '@azure/msal-react';
 import LoggedInUserWithAvatar from '../../molecules/AppBarMenuItems/LoggedInUserWithAvatar/LoggedInUserWithAvatar';
 import Logout from '../../molecules/AppBarMenuItems/Logout/Logout';
 import Signin from '../../molecules/AppBarMenuItems/Signin/Signin';
@@ -16,6 +15,7 @@ import MyFavoriteCocktails from '../../molecules/AppBarMenuItems/MyFavoriteCockt
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import AccessibilitySettings from '../../molecules/AppBarMenuItems/AccessibilitySettings/AccessibilitySettings';
 import MenuFooter from '../../molecules/AppBarMenuItems/MenuFooter/MenuFooter';
+import { useAuth0 } from '../../components/Auth0Provider';
 
 interface MainAppBarMenuProps {
     testId: string;
@@ -24,7 +24,7 @@ interface MainAppBarMenuProps {
 
 const MainAppBarMenu = ({ testId, isXs }: MainAppBarMenuProps) => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const isAuthenticated = useIsAuthenticated();
+    const { isAuthenticated } = useAuth0();
     const { ownedAccount } = useOwnedAccount();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {

@@ -34,7 +34,7 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailsListModel
 
         callBack(results);
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktails search results', e as Error);
         throw e;
     }
 };
@@ -47,7 +47,7 @@ const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
         result = await cocktailsApiClient.getCocktail(id, undefined);
         return result;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktail', e as Error);
         throw e;
     }
 };
@@ -71,7 +71,7 @@ const getCocktailsList = async (skip: number, take: number, include: CocktailDat
 
         return results;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktail list', e as Error);
         throw e;
     }
 };
@@ -88,7 +88,7 @@ const getCocktailFavorites = async (
         const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
         return results;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktail favorites', e as Error);
         throw e;
     }
 };
@@ -105,7 +105,7 @@ const getCocktailsWithRatings = async (
         const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
         return results;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktails with ratings', e as Error);
         throw e;
     }
 };
@@ -119,7 +119,7 @@ const searchCocktails = async (freeText: string, skip: number, take: number, inc
 
         return results;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to search cocktails', e as Error);
         throw e;
     }
 };
@@ -142,7 +142,7 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
 
         return results;
     } catch (e: unknown) {
-        logger.logException(e as Error);
+        logger.logException('Failed to retrieve cocktail search filters', e as Error);
         throw e;
     }
 };

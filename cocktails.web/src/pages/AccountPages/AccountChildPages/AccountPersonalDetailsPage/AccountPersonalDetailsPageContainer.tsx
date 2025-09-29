@@ -109,7 +109,7 @@ const AccountPersonalDetailsPageContainer = () => {
     return (
         <>
             <title>Profile Center - Personal Details</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/account/profile-center/personal-details`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/profile-center/personal-details`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}

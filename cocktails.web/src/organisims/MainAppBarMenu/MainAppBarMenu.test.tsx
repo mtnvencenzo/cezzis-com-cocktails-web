@@ -2,35 +2,35 @@ import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
-import { MsalReactTester } from 'msal-react-tester';
-import { MsalProvider } from '@azure/msal-react';
 import MainAppBarMenu from './MainAppBarMenu';
 import SessionStorageService from '../../services/SessionStorageService';
 import GlobalContext from '../../components/GlobalContexts';
-import { getTestAccountInfo, getTestOwnedAccountProfile } from '../../../tests/setup';
+import { getTestOwnedAccountProfile, getTestUser } from '../../../tests/setup';
+import { Auth0ReactTester } from '../../auth0Mocks';
+import { Auth0Provider } from '../../components/Auth0Provider';
+import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
 
 describe('Main App Bar Menu', () => {
-    let msalTester: MsalReactTester;
+    let auth0Tester: Auth0ReactTester;
     const sessionStorageService = new SessionStorageService();
 
     beforeEach(() => {
-        msalTester = new MsalReactTester();
-        msalTester.interationType = 'Redirect';
-        msalTester.spyMsal();
+        auth0Tester = new Auth0ReactTester('Redirect');
+        auth0Tester.spyAuth0();
     });
 
     afterEach(() => {
-        msalTester.resetSpyMsal();
+        auth0Tester.resetSpyAuth0();
     });
 
     test('renders correctly', async () => {
         await act(async () =>
             render(
-                <MsalProvider instance={msalTester.client}>
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                     <MemoryRouter>
                         <MainAppBarMenu testId='app-bar-menu' isXs={false} />
                     </MemoryRouter>
-                </MsalProvider>
+                </Auth0Provider>
             )
         );
 
@@ -52,18 +52,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -105,18 +105,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -158,18 +158,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -211,18 +211,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -264,18 +264,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -317,18 +317,18 @@ describe('Main App Bar Menu', () => {
 
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-            await msalTester.isLogged();
-            msalTester.accounts = [getTestAccountInfo()];
+            auth0Tester.isLogged();
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
             render(
                 <GlobalContext>
-                    <MsalProvider instance={msalTester.client}>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                         <MemoryRouter>
                             <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
                         </MemoryRouter>
-                    </MsalProvider>
+                    </Auth0Provider>
                 </GlobalContext>
             )
         );
@@ -355,64 +355,4 @@ describe('Main App Bar Menu', () => {
             expect(el).toBeNull();
         }
     });
-
-    // test.each([
-    //     [true, false, false, false, false], // xs and un-authenticated and not popped
-    //     [true, false, true, false, false], // xs and un-authenticated and popped
-    //     [true, true, false, true, false], // xs and authenticated and not popped
-    //     [true, true, true, true, true], // xs and authenticated and popped
-    //     [false, true, true, false, false], // not-xs and authenticated and popped
-    //     [false, true, false, false, false], // not-xs and authenticated and not-popped
-    //     [false, false, true, false, false], // not-xs and un-authenticated and popped
-    //     [false, false, false, false, false] // not-xs and un-authenticated and not-popped
-    // ])('renders darkmode menu item when xs:%s and authed:%s and menu popped:%s => defined:(%s) visibility:(%s)', async (isXs, authed, popped, expectedDefined, expectedVisible) => {
-    //     if (authed) {
-    //         await msalTester.isLogged();
-    //         msalTester.accounts = [
-    //             {
-    //                 homeAccountId: '',
-    //                 username: '',
-    //                 localAccountId: '',
-    //                 environment: '',
-    //                 tenantId: '',
-    //                 idTokenClaims: {
-    //                     given_name: 'Billy',
-    //                     family_name: 'Simms'
-    //                 }
-    //             }
-    //         ];
-    //     }
-
-    //     await act(async () =>
-    //         render(
-    //             <MsalProvider instance={msalTester.client}>
-    //                 <MemoryRouter>
-    //                     <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
-    //                 </MemoryRouter>
-    //             </MsalProvider>
-    //         )
-    //     );
-
-    //     if (popped) {
-    //         await act(async () => {
-    //             const hamburger = await screen.findByTestId('menu-hamburger');
-    //             hamburger.click();
-    //         });
-    //     }
-
-    //     const el = screen.queryByTestId('m-menu-darkmode');
-
-    //     if (expectedDefined) {
-    //         expect(el).toBeDefined();
-    //         expect(el).toHaveTextContent('Dark Mode');
-
-    //         if (expectedVisible) {
-    //             expect(el).toBeVisible();
-    //         } else {
-    //             expect(el).not.toBeVisible();
-    //         }
-    //     } else {
-    //         expect(el).toBeNull();
-    //     }
-    // });
 });

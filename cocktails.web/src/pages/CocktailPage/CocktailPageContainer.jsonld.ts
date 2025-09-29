@@ -29,7 +29,7 @@ const jsonld = (model: CocktailModel | undefined): string => {
             publisher: {
                 '@type': 'Organization',
                 name: 'Cezzis.com',
-                url: `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}`,
+                url: `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}`,
                 brand: 'Cezzis.com'
             },
             name: `${model?.title}`,
@@ -58,7 +58,7 @@ const jsonld = (model: CocktailModel | undefined): string => {
             totalTime: `PT${model?.prepTimeMinutes}M`,
             mainEntityOfPage: {
                 '@type': ['WebPage'],
-                '@id': `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/cocktails/${model?.id}`,
+                '@id': `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/cocktails/${model?.id}`,
                 breadcrumb: {
                     '@type': 'BreadcrumbList',
                     itemListElement: [
@@ -66,7 +66,7 @@ const jsonld = (model: CocktailModel | undefined): string => {
                             '@type': 'ListItem',
                             position: 1,
                             item: {
-                                '@id': `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/cocktails/list`,
+                                '@id': `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/cocktails/list`,
                                 name: 'Complete Cocktail List'
                             }
                         }

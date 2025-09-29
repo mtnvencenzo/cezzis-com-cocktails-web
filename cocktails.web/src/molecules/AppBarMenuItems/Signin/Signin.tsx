@@ -1,6 +1,8 @@
 import React from 'react';
 import { Avatar, MenuItem, Typography } from '@mui/material';
-import { login } from '../../../utils/authConfig';
+import { loginWithRedirectOptions } from '../../../utils/authConfig';
+import { useAuth0 } from '../../../components/Auth0Provider';
+import SessionStorageService from '../../../services/SessionStorageService';
 
 interface SigninProps {
     testId: string;
@@ -8,10 +10,14 @@ interface SigninProps {
 }
 
 const Signin = ({ setAnchorEl, testId }: SigninProps) => {
+    const { loginWithRedirect } = useAuth0();
+    const sessionStorageService = new SessionStorageService();
+
     const handleCloseUserMenu = async () => {
         setAnchorEl(null);
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname + window.location.search);
 
-        await login();
+        await loginWithRedirect(loginWithRedirectOptions());
     };
 
     return (

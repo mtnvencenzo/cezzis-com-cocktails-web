@@ -3,7 +3,7 @@ import { randomInt } from '../../support/utils';
 describe('Profile center primary email', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('auth0UserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates from menu user account to the personal details primary email', () => {
@@ -36,8 +36,6 @@ describe('Profile center primary email', () => {
         cy.title().should('eq', 'Profile Center - Change Email');
         cy.url().should('eq', `${Cypress.config().baseUrl}/account/profile-center/change-email`);
         cy.contains('Manage your Cezzis.com profile and security settings across all of your devices.');
-
-        //b2cUserEmail
 
         cy.get('[data-testid="txtLoginEmail"]').should('have.value', 'rvecchi+cypress@gmail.com');
         cy.get('[data-testid="txtEmail"]')

@@ -65,54 +65,19 @@ variable "global_environment" {
   default     = "glo"
 }
 
-variable "global_domain" {
-  type        = string
-  description = "The global domain name"
-  default     = "shared"
-}
-
-variable "b2c_login_redirect_uri" {
+variable "auth0_client_id" {
   type = string
 }
 
-variable "b2c_tenant_id" {
-  type        = string
-  description = "The b2c tenant id for this environment"
-}
-
-variable "b2c_tenant_name" {
-  type        = string
-  description = "The b2c tenant name (typeically the first part of the hostname)"
-}
-
-variable "b2c_signin_policy" {
-  type        = string
-  description = "The main signin policy for the cocktails webapp"
-  default     = "B2C_1_SignInSignUp_Policy"
-}
-
-variable "b2c_resetpassword_policy" {
-  type        = string
-  description = "The main password reset for the cocktails webapp"
-  default     = "B2C_1_ResetPassword_Policy"
-}
-
-
-variable "b2c_resetpassword_redirect_uri" {
-  type        = string
-  description = "The redirect uri  to use when returning from the reset password user flow"
-}
-
-variable "b2c_tenant_domain_name" {
-  type        = string
-  description = "The b2c tenant domain name for this environment"
-}
-
-variable "b2c_terraform_app_registration_client_id" {
+variable "auth0_redirect_uri" {
   type = string
 }
 
-variable "b2c_terraform_app_registration_client_secret" {
+variable "auth0_domain" {
+  type = string
+}
+
+variable "auth0_cocktails_api_audience" {
   type = string
 }
 
@@ -120,36 +85,9 @@ variable "image_tag" {
   type = string
 }
 
-variable "webapp_redirect_uris" {
-  type        = list(string)
-  description = "The redirect uris available for the web app registration and b2c integration"
-}
-
-variable "webapp_logout_url" {
-  type        = string
-  description = "The logout url for the website used by the front channel logout process"
-}
-
-variable "webapp_homepage_url" {
-  type        = string
-  description = "The homepage url for the website"
-}
-
 variable "cezzis_site_subdomain" {
   type        = string
   description = "The subdomain to create dns records for (ex. www or dev)"
-}
-
-variable "cocktails_api_scope_account_read" {
-  type = string
-}
-
-variable "cocktails_api_scope_account_write" {
-  type = string
-}
-
-variable "cocktails_api_client_id" {
-  type = string
 }
 
 variable "cocktails_api_hostname" {
@@ -170,65 +108,7 @@ variable "cocktail_images_route_hostname" {
   type = string
 }
 
-variable "cezzis_cdn_subdomain" {
-  type = string
-}
-
-variable "cocktail_images_cdn_default_hostname" {
-  type = string
-}
-
-variable "cezzis_cdn_custom_domain_verification_name" {
-  type = string
-}
-
-variable "cezzis_cdn_custom_domain_verification_id" {
-  type = string
-}
-
 variable "include_google_verification_txt_record" {
   type    = bool
   default = false
-}
-
-variable "login_subdomain" {
-  type = string
-}
-
-# Entra External Ids Configuration
-variable "entra_tenant_domain_name" {
-  type        = string
-  description = "The entra tenant domain name for this environment"
-}
-
-variable "entra_login_redirect_uri" {
-  type = string
-}
-
-variable "entra_tenant_id" {
-  type        = string
-  description = "The entra tenant id for this environment"
-}
-
-variable "entra_tenant_name" {
-  type        = string
-  description = "The entra tenant name (typeically the first part of the hostname)"
-}
-
-variable "entra_signin_policy" {
-  type        = string
-  description = "The main signin policy for the cocktails webapp"
-  default     = "sisu-policy"
-}
-
-variable "entra_resetpassword_policy" {
-  type        = string
-  description = "The main password reset for the cocktails webapp"
-  default     = "B2C_1_ResetPassword_Policy"
-}
-
-
-variable "entra_resetpassword_redirect_uri" {
-  type        = string
-  description = "The redirect uri  to use when returning from the reset password user flow"
 }

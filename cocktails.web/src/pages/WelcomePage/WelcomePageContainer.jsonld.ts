@@ -8,7 +8,7 @@ const jsonld = (): string =>
             '@type': 'WebPage',
             mainEntityOfPage: {
                 '@type': 'Webpage',
-                '@id': `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}`
+                '@id': `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}`
             },
             potentialAction: {
                 '@type': 'SearchAction',
@@ -19,7 +19,7 @@ const jsonld = (): string =>
             publisher: {
                 '@type': 'Organization',
                 name: 'Cezzis.com',
-                url: `${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}`,
+                url: `${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}`,
                 brand: 'Cezzis.com',
                 sameAs: []
             },

@@ -3,7 +3,7 @@ import { randomInt } from '../../support/utils';
 describe('Profile center profile image', () => {
     before(() => {
         cy.cookieConsent();
-        cy.login(Cypress.env('b2cUserEmail'), Cypress.env('cypressUserPassword'));
+        cy.login(Cypress.env('auth0UserEmail'), Cypress.env('cypressUserPassword'));
     });
 
     it('navigates from menu user account to the personal details profile image', () => {

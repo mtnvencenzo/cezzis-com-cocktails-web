@@ -1,25 +1,29 @@
 import { Box, Grid, Typography, Container, IconButton } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { useIsAuthenticated, useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
 import logo from '../../assets/logo-32x32.png';
 import FooterLink from '../../atoms/FooterLink/FooterLink';
-import { login, logout } from '../../utils/authConfig';
 import showCookieBot from '../../utils/cookiebot';
+import { clearOwnedAccountLoginSession, loginWithRedirectOptions, logoutParams } from '../../utils/authConfig';
+import { useAuth0 } from '../../components/Auth0Provider';
+import SessionStorageService from '../../services/SessionStorageService';
 
 interface MainFooterBarProps {
     testId: string;
 }
 
 const MainFooterBar = ({ testId }: MainFooterBarProps) => {
-    const { inProgress } = useMsal();
-    const isAuthenticated = useIsAuthenticated();
+    const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+    const sessionStorageService = new SessionStorageService();
 
     const handleLogout = async () => {
-        if (inProgress === InteractionStatus.None) {
-            await logout();
-        }
+        clearOwnedAccountLoginSession();
+        await logout(logoutParams);
+    };
+
+    const handleLoginRedirect = async () => {
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname + window.location.search);
+        await loginWithRedirect(loginWithRedirectOptions());
     };
 
     return (
@@ -90,7 +94,7 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
                     </Grid>
                     <Grid size={{ xs: 2, sm: 2, md: 2, lg: 2 }} sx={{ paddingLeft: '0px' }}>
                         {!isAuthenticated && (
-                            <IconButton size='small' onClick={() => login()} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
+                            <IconButton size='small' onClick={() => handleLoginRedirect()} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
                                 <AccountCircleOutlinedIcon color='primary' />
                                 <Typography data-testid='footer-myaccount' color='text.primary' noWrap gutterBottom className='footerLink' sx={{ paddingLeft: '5px', paddingTop: '5px' }}>
                                     Signin

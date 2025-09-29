@@ -49,7 +49,7 @@ const TermsOfServicePageContainer = ({ enableWidePadding = false }: TermsOfServi
     return (
         <>
             <title>Terms Of Service - Cezzis.com</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_REDIRECT_URI)}/terms-of-service`} />
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/terms-of-service`} />
             <meta name='description' content='null' />
             <meta property='article:section' content='Cezzis.com' />
             <meta property='og:type' content='article' />

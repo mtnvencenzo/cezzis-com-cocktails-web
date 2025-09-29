@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
-import { getAccessToken } from '../../utils/authConfig';
 import { getWindowEnv } from '../../utils/envConfig';
 import logger from '../../services/Logger';
 import { CocktailsApiClientException, ProblemDetails, UploadProfileImageRs } from './cocktailsApiClient';
+import { getAccessToken } from '../../utils/authConfig';
 
 export class CocktailsApiClientBase {
 
@@ -18,7 +18,6 @@ export class CocktailsApiClientBase {
             ? await getAccessToken(this.requiredScopes)
             : undefined;
 
-        //const authHeader = token && { 'Authorization': `Bearer ${token}` } ??
         options.headers = {
             ...options.headers,
             'X-Key': `${getWindowEnv().VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY}`
@@ -42,7 +41,7 @@ export class CocktailsApiClientBase {
         try {
             return processor(response);
         } catch (e: unknown) {
-            logger.logException(e as Error);
+            logger.logException(undefined, e as Error);
             throw e;
         }
     }

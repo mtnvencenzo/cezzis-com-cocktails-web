@@ -16,7 +16,7 @@ terraform init \
 # to validate the current config
 terraform validate
 
-terraform plan -var "b2c_terraform_app_registration_client_id=--get-clientid--" -var "b2c_terraform_app_registration_client_secret=--get-secret--" -var="image_tag=abc" -var-file="environment_vars/prd.tfvars"
+terraform plan -var "ciam_terraform_app_registration_client_id=--get-clientid--" -var "ciam_terraform_app_registration_client_secret=--get-secret--" -var="image_tag=abc" -var-file="environment_vars/prd.tfvars"
 
 # terraform import -var-file="environment_vars/prd.tfvars" azurerm_container_app_custom_domain.cocktails_web_container_app_custom_domain_www_cezzis_com "/subscriptions/1d9ecc00-242a-460d-8b08-b71db19f094e/resourceGroups/rg-vec-eus-prd-cocktails-001/providers/Microsoft.App/containerApps/aca-vec-eus-prd-cocktailsweb-001/customDomainName/www.cezzis.com"
 ```
@@ -33,15 +33,15 @@ resource "azurerm_dns_txt_record" "cezzis_domain_zoho_txt_dkim_record" {
 }
 ```
 
-# Azure AD B2C Tenant Setup
-The Azure B2C Tenant needs to first be created manually in the resource group of your choice.
+# Azure Entra External Id Tenant Setup
+The Azure Entra External Id Tenant needs to first be created manually in the resource group of your choice.
 
 > This is largely due to the way the tenant needs to be provisioned before terraform can even access any of the values.
 > Also, at the time I beleive the newly create tenant would be owned by the pipeline principal which will cause issues later on.
 > So it's better to just login to Azure manually and create the tenant using an admin account.
 
 ### Step 1 (create the tenant)
-Login to Azure portal as an admin and create the Azure AD B2C tenant in the resource group of your choosing.
+Login to Azure portal as an admin and create the Azure Entra External Id tenant in the resource group of your choosing.
 
 ### Step 2 (setup a terraform app registration in the tenant)
 Terraform will need to have it's own app registration in the tenant so
@@ -53,7 +53,7 @@ it can authenticate and manage resources in the tenant. This should be done manu
 	- Use `Accounts in this organizational directory only`	
 	- Use `Allow public client flows (native/web) - No need to provide a redirect uri`  
 <!-- 2. Create a service principal for the app by clicking 'Create Service Principal' from the overview page. -->
-3. Create a secret in the app registration (name: ADO B2C Terraform Client Secret)
+3. Create a secret in the app registration (name: Entra External Id Tenant Terraform Client Secret)
 4. Set the following api permissions
 	- `Azure Active Directory Graph`
 		- Application.ReadWrite.All (Application)
@@ -71,14 +71,14 @@ it can authenticate and manage resources in the tenant. This should be done manu
 		- openid (Delegated)
 
 
-### Step 3 (create the B2C Tenant User Flows and Login Experience)
+### Step 3 (create the Entra External Id Tenant User Flows and Login Experience)
 This must be done before running any application terraforms because APIM policy fragments referencing the Login Policys of the tenant will validate that it exists first (terraform will fail during applying if the user flow has not already been setup)
 
 > The user flow must be manually configured outside of terraform
 
 1. Open the tenant and click on `Policies > User Flows` and then click on `New User Flow`.
 2. Choose the `Sign up and Sign in` user flow type and then choose the `Recommended` version (not the legacy) Then click `Create`
-- Use the name `SignInSignUp_Policy` which should give it a full name of `B2C_1_SignInSignUp_Policy`.  (Azure automatically show a prefix of `B2C_1_`)
+- Use the name `sisu-p` which should give it a full name of `sisu-p`.
 - Select `Local accounts` > `Email signup` as the identity provider.
 - Type of method shoud be `Email`
 - Mfa enforcement should be `Off`
@@ -98,7 +98,7 @@ This must be done before running any application terraforms because APIM policy 
     - Refresh token sliding window lifetime `Bounded`
     - Lifetime length `90` days
   - **Token compatibility settings**
-    - Issuer (iss) claim > `https://<domain>/<<The b2c tenant id>>`
+    - Issuer (iss) claim > `https://<domain>/<<The ciam tenant id>>`
 	- Subject (sub) claim > `ObjectId`
 	- Claim representing user flow > `tfp`
   - **Session Behavior**
@@ -131,7 +131,7 @@ This must be done before running any application terraforms because APIM policy 
 - Click on `Customize` > `Page Layouts`
   - Customize `Unified sign up or sign in page`
     - Use Custom Page Content > `Yes`
-	- Custom Page Uri > `https://stvecprdcocktailsimages1.blob.core.windows.net/cocktails/azure-b2c-signinsignup-content.html`
+	- Custom Page Uri > `https://stvecprdcocktailsimages1.blob.core.windows.net/cocktails/azure-ciam-signinsignup-content.html`
 	- Page Layout Version `2.1.9`
   - Use version `2.1.9` for the following pages (no custom content)
     - Local account sign up page
@@ -145,11 +145,11 @@ This must be done before running any application terraforms because APIM policy 
     - Error page
 - Click on `Company Branding` > `Default sign-in` and click `Edit`
   - In the `Basics` tab
-    - Change the background image to `D:\GIT\Latest\Cocktails-Images\Images\AzureB2c\azure-b2c-background.png`
+    - Change the background image to `D:\GIT\Latest\Cocktails-Images\Images\AzureCIAM\azure-ciam-background.png`
 	- The background color should be white #ffffff (255,255,255)
   - In the `Sign-in form` tab
-    - Change the banner logo image to > `D:\GIT\Latest\Cocktails-Images\Images\AzureB2c\azure-b2c-banner-245x60.png`
-	- Square logo (light theme) should be set to `D:\GIT\Latest\Cocktails-Images\Images\AzureB2c\azureb2csquare-240x240.png`
+    - Change the banner logo image to > `D:\GIT\Latest\Cocktails-Images\Images\AzureCIAM\azure-ciam-banner-245x60.png`
+	- Square logo (light theme) should be set to `D:\GIT\Latest\Cocktails-Images\Images\AzureCIAM\azureciamsquare-240x240.png`
 	- Sign-in page text should be set to `Cancel and go back to [Cezzis.com](https://www.cezzis.com)` 
 - Everything under the Security Menu is defaulted and not customized
 
@@ -161,12 +161,8 @@ Update all the $/deployment/iac/terraform/environment_vars/\<env>.tfvars files w
 Update the $/deployment/iac/terraform/main.tf file and uncomment the `azuread` provider
 
 ``` text
-b2c_tenant_id					= "d96c6cca-626a-49e7-98c8-fcc2f7220123"
-b2c_tenant_name					= "cezzis"
-b2c_tenant_domain_name			= "cezzis.onmicrosoft.com"
-terraform_app_client_id			= "2957a4f0-bd36-4a35-90a1-96322a5eb321"
-terraform_app_client_secret		= "123Q~cdMjE-2346d_5fHD-SifIQrFNAfg234"
+auth0_tenant_name					= "cezzis"
 ```
 
 ### Step 5 (run terraform)
-Run terraform and if all goes well terraform will successfully authenticate to the azure b2c tenant and finish the rest of the setup.
+Run terraform and if all goes well terraform will successfully authenticate to the azure ciam tenant and finish the rest of the setup.

@@ -49,11 +49,10 @@ export default defineConfig({
         }
     },
     env: {
-        b2cUrl: 'https://login.cezzis.com/',
-        b2cTenantId: 'fb512a9c-5b44-41ab-8042-6465769f16c9',
-        b2cClientId: '84744194-da27-410f-ae0e-74f5589d4c96',
-        b2cUserObjectId: '41598664-1466-4e3e-b28c-dfe9837e462e',
-        b2cUserEmail: 'rvecchi+cypress@gmail.com',
+        auth0Url: 'https://cezzis.us.auth0.com/',
+        auth0ClientId: 'HZXyiZxjHgkQqeb6UJxmikCGYpSz5iPb',
+        auth0UserObjectId: 'auth0|68d6d6b0a6ae4a44f05ec21f',
+        auth0UserEmail: 'rvecchi+cypress@gmail.com',
         cypressUserPassword: '',
         cocktailsApiBaseUrl: 'https://localhost:7176',
         cypressApiKey: ''

@@ -1,182 +1,101 @@
-import { LogLevel, PublicClientApplication, EventType, EventMessage, AuthenticationResult, InteractionRequiredAuthError, AccountInfo, BrowserCacheLocation } from '@azure/msal-browser';
-import { getWindowEnv } from './envConfig';
-import logger from '../services/Logger';
+import { Auth0Client, AuthorizationParams, RedirectLoginOptions, User } from '@auth0/auth0-spa-js';
 import SessionStorageService from '../services/SessionStorageService';
 import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services/AccountService';
+import trimWhack from './trimWhack';
+import { getWindowEnv } from './envConfig';
+import logger from '../services/Logger';
+import { AppState, Auth0ProviderOptions } from '../components/Auth0Provider/auth0-provider';
+import { LogoutOptions } from '../components/Auth0Provider';
 
-let idToken = '';
-
-const b2cPolicies = {
-    names: {
-        signIn: getWindowEnv().VITE_B2C_POLICY,
-        resetPassword: getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY
-    },
-    authorities: {
-        signIn: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_POLICY}`
-        },
-        passwordReset: {
-            authority: `https://${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com/${getWindowEnv().VITE_B2C_TENANT}.onmicrosoft.com/${getWindowEnv().VITE_B2C_RESET_PASSWORD_POLICY}`,
-            scope: 'openid',
-            redirectUri: getWindowEnv().VITE_RESET_PASSWORD_REDIRECT_URI
-        }
-    },
-    authorityDomain: `${getWindowEnv().VITE_LOGIN_SUBDOMAIN}.cezzis.com`
-};
-
-const msalConfig = {
-    auth: {
-        clientId: getWindowEnv().VITE_B2C_CLIENT_ID,
-        redirectUri: getWindowEnv().VITE_REDIRECT_URI,
-        authority: b2cPolicies.authorities.signIn.authority,
-        knownAuthorities: [b2cPolicies.authorityDomain],
-        navigateToLoginRequestUrl: true
-    },
-    cache: {
-        cacheLocation: BrowserCacheLocation.SessionStorage,
-        storeAuthStateInCookie: false
-    },
-    system: {
-        allowRedirectInIframe: false,
-        loggerOptions: {
-            loggerCallback: (level: LogLevel, message: string, containsPii: boolean) => {
-                if (containsPii) {
-                    return;
-                }
-
-                if (level === LogLevel.Error) {
-                    const dontlogEx = getWindowEnv().VITE_NODE_ENV === 'test' && message.includes('Clearing keystore failed with error');
-
-                    if (!dontlogEx) {
-                        logger.logException(new Error(`Login failed.  Please check your username and or password. ${message}`));
-                    }
-                }
-            }
-        }
-    }
-};
-
-export const msalInstance = new PublicClientApplication(msalConfig);
-await msalInstance.initialize();
-msalInstance.enableAccountStorageEvents();
-
-msalInstance
-    .handleRedirectPromise()
-    .then(() => {})
-    .catch(() => {
-        sessionStorage.removeItem('msal.interaction.status');
-        return undefined;
-    });
-
-msalInstance.addEventCallback(async (event: EventMessage) => {
+export const clearOwnedAccountLoginSession = () => {
     const sessionStorageService = new SessionStorageService();
+    sessionStorageService.ClearOwnedAccountProfileRequestData();
+};
 
-    if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-        if ((event.payload as AuthenticationResult).account) {
-            const activeAccount = (event.payload as AuthenticationResult).account;
-            msalInstance.setActiveAccount(activeAccount);
-            idToken = (event.payload as AuthenticationResult).idToken;
-
-            if (event.eventType === EventType.LOGIN_SUCCESS || event.eventType === EventType.SSO_SILENT_SUCCESS) {
-                if (activeAccount && activeAccount.idTokenClaims && activeAccount.idTokenClaims.sub) {
-                    await loginOwnedAccountProfile();
-                    await getAccountCocktailRatings(true);
-                }
-            }
-        }
-    } else if (event.eventType === EventType.LOGOUT_SUCCESS) {
-        sessionStorageService.ClearOwnedAccountProfileRequestData();
-        msalInstance.setActiveAccount(null);
-        idToken = '';
+export const onRedirectCallback = async (_?: AppState, user?: User) => {
+    if (user) {
+        await loginOwnedAccountProfile();
+        await getAccountCocktailRatings(true);
+    } else {
+        clearOwnedAccountLoginSession();
     }
+};
+
+export const authParams: AuthorizationParams = {
+    redirect_uri: trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)!
+};
+
+export const loginAuthorizationScopes = ['openid', 'offline_access', 'profile', 'email'];
+
+export const loginAuthorizationParams: AuthorizationParams = {
+    ...authParams,
+    returnTo: window.location.href,
+    scope: [...loginAuthorizationScopes].join(' ')
+};
+
+export const loginWithRedirectOptions = (): RedirectLoginOptions => ({
+    authorizationParams: loginAuthorizationParams,
+    appState: { targetUrl: window.location.href }
 });
 
 export const getAccessToken = async (requiredScopes: string[] = []): Promise<string | undefined> => {
-    const accounts = msalInstance.getAllAccounts();
-
-    if (accounts && accounts.length > 0) {
-        const request = {
-            scopes: requiredScopes ?? [],
-            account: accounts[0]
-        };
-
-        const accessToken = await msalInstance
-            .acquireTokenSilent(request)
-            .then((response) => response.accessToken)
-            .catch((error) => {
-                logger.logException(error as Error);
-
-                if (error instanceof InteractionRequiredAuthError) {
-                    // fallback to interaction when silent call fails
-                    return msalInstance.acquireTokenPopup({ ...request }).catch((err) => {
-                        logger.logException(err as Error);
-                    });
-                }
-                return undefined;
-            });
-
-        if (accessToken === undefined) {
-            msalInstance.logoutRedirect();
-            throw new Error('acquireTokenSilent return undefined!');
-        }
-
-        return accessToken as string;
-    }
-
-    return undefined;
-};
-
-export const resetPassword = async () => {
-    await msalInstance
-        .loginRedirect({
-            authority: b2cPolicies.authorities.passwordReset.authority,
-            scopes: [b2cPolicies.authorities.passwordReset.scope],
-            redirectUri: b2cPolicies.authorities.passwordReset.redirectUri
-        })
-        .catch((error) => {
-            logger.logException(error as Error);
-        });
-};
-
-export const logout = async () => {
-    const sessionStorageService = new SessionStorageService();
-    sessionStorageService.ClearOwnedAccountProfileRequestData();
-
-    await msalInstance.logoutRedirect({
-        postLogoutRedirectUri: msalConfig.auth.redirectUri,
-        account: msalInstance.getActiveAccount(),
-        idTokenHint: idToken
+    let auth0Client: Auth0Client | null = null;
+    auth0Client = new Auth0Client({
+        domain: getWindowEnv().VITE_AUTH0_DOMAIN,
+        clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
+        useRefreshTokens: false,
+        cacheLocation: 'localstorage'
     });
-};
-
-export const login = async () => {
-    await msalInstance.loginRedirect();
-};
-
-export const getSubjectId = (accounts: AccountInfo[]): string | undefined => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims?.sub) {
-        return accounts[0].idTokenClaims.sub;
+    if (!auth0Client) {
+        logger.logWarning('Auth0 client not initialized');
+        return undefined;
     }
 
-    return undefined;
-};
-
-export const getGivenName = (accounts: AccountInfo[]): string => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims) {
-        return ((accounts[0].idTokenClaims.given_name ?? '') as string).trim();
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        logger.logWarning('User not authenticated');
+        return undefined;
     }
 
-    return '';
-};
-
-export const getFamilyName = (accounts: AccountInfo[]): string => {
-    if (accounts && accounts.length > 0 && accounts[0].idTokenClaims) {
-        return ((accounts[0].idTokenClaims.family_name ?? '') as string).trim();
+    const idTokenClaims = await auth0Client.getIdTokenClaims();
+    if (!idTokenClaims) {
+        logger.logInformation('No ID token claims found');
+        return undefined;
     }
 
-    return '';
+    const authorizationParams: AuthorizationParams = {
+        ...authParams,
+        scope: [...loginAuthorizationScopes, ...requiredScopes].join(' '),
+        audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
+    };
+    try {
+        return await auth0Client.getTokenSilently({
+            detailedResponse: false,
+            authorizationParams
+        });
+    } catch {
+        try {
+            const token = await auth0Client.getTokenWithPopup({ authorizationParams });
+            logger.logInformation('Acquired access token with popup fallback');
+            return token;
+        } catch (err) {
+            logger.logException('Unable to retrieve access token through popup fallback', err as Error);
+            return undefined;
+        }
+    }
 };
 
-export const getDisplayName = (accounts: AccountInfo[]): string => `${getGivenName(accounts)} ${getFamilyName(accounts)}`.trim();
+export const logoutParams: LogoutOptions = {
+    logoutParams: {
+        returnTo: window.location.origin
+    }
+};
 
-export const getInitials = (accounts: AccountInfo[]): string => (`${getGivenName(accounts)} `.substring(0, 1) + `${getFamilyName(accounts)} `.substring(0, 1)).trim();
+export const auth0ProviderOptions: Auth0ProviderOptions = {
+    domain: getWindowEnv().VITE_AUTH0_DOMAIN,
+    clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
+    authorizationParams: loginAuthorizationParams,
+    onRedirectCallback,
+    useRefreshTokens: true,
+    cacheLocation: 'localstorage'
+};
