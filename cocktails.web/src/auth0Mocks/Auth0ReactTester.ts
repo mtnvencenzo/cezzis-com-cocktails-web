@@ -26,8 +26,6 @@ class Auth0ReactTester {
 
     private loginPopupSpy: any;
 
-    private logoutPopupSpy: any;
-
     private logoutRedirectSpy: any;
 
     private testUser: User;
@@ -63,7 +61,7 @@ class Auth0ReactTester {
     }
 
     async actAwait(interval?: number): Promise<void> {
-        const awaiter = (interval?: number): Promise<void> => new Promise((r, s) => setTimeout(r, interval));
+        const awaiter = (interval?: number): Promise<void> => new Promise((r, _) => setTimeout(r, interval));
         await awaiter(interval);
     }
 
@@ -151,28 +149,25 @@ class Auth0ReactTester {
         this.handleRedirectSpy = this.testRunner.spyOn(this.client, 'handleRedirectCallback').mockImplementation(() => Promise.resolve({ appState: undefined }));
 
         // Spy on loginWithRedirect (Auth0 method name)
-        this.loginRedirectSpy = this.testRunner.spyOn(this.client, 'loginWithRedirect').mockImplementation(async (options?: any) => {
+        this.loginRedirectSpy = this.testRunner.spyOn(this.client, 'loginWithRedirect').mockImplementation(async (_?: any) => {
             // Set user as logged in
             this.user = this.testUser;
             return Promise.resolve();
         });
 
         // Spy on loginWithPopup (Auth0 method name)
-        this.loginPopupSpy = this.testRunner.spyOn(this.client, 'loginWithPopup').mockImplementation(async (options?: any, config?: any) => {
+        this.loginPopupSpy = this.testRunner.spyOn(this.client, 'loginWithPopup').mockImplementation(async (_?: any, __?: any) => {
             // Set user as logged in
             this.user = this.testUser;
             return Promise.resolve();
         });
 
         // Spy on logout
-        this.logoutRedirectSpy = this.testRunner.spyOn(this.client, 'logout').mockImplementation(async (options?: any) => {
+        this.logoutRedirectSpy = this.testRunner.spyOn(this.client, 'logout').mockImplementation(async (_?: any) => {
             // Clear user
             this.user = undefined;
             return Promise.resolve();
         });
-
-        // Note: Auth0 only has one logout method, so we'll use the same spy for both redirect and popup
-        this.logoutPopupSpy = this.logoutRedirectSpy;
 
         // Spy on getUser to return our test user or undefined based on login state
         this.testRunner.spyOn(this.client, 'getUser').mockImplementation(() => Promise.resolve(this.user as any));
@@ -201,14 +196,14 @@ class Auth0ReactTester {
         if (this.interationType === 'Redirect') {
             if (this.loginRedirectSpy) this.loginRedirectSpy.mockClear();
 
-            this.loginRedirectSpy = this.testRunner.spyOn(this.client, 'loginWithRedirect').mockImplementation(async (options?: any) => {
+            this.loginRedirectSpy = this.testRunner.spyOn(this.client, 'loginWithRedirect').mockImplementation(async (_?: any) => {
                 // Simulate login failure by throwing an error
                 throw this.error || new Error('Login failed');
             });
         } else {
             if (this.loginPopupSpy) this.loginPopupSpy.mockClear();
 
-            this.loginPopupSpy = this.testRunner.spyOn(this.client, 'loginWithPopup').mockImplementation(async (options?: any, config?: any) => {
+            this.loginPopupSpy = this.testRunner.spyOn(this.client, 'loginWithPopup').mockImplementation(async (_?: any, __?: any) => {
                 // Simulate login failure by throwing an error
                 throw this.error || new Error('Login failed');
             });
@@ -218,15 +213,15 @@ class Auth0ReactTester {
     static GetNewClient = (testUser: User, getTokenResponset: GetTokenSilentlyVerboseResponse): Auth0Client =>
         ({
             // Core authentication methods
-            loginWithPopup: (options?: PopupLoginOptions, config?: PopupConfigOptions) => Promise.resolve(),
-            loginWithRedirect: <TAppState = any>(options?: RedirectLoginOptions<TAppState>) => Promise.resolve(),
-            handleRedirectCallback: <TAppState = any>(url?: string) => Promise.resolve({ appState: undefined as unknown as TAppState }),
-            logout: (options?: LogoutOptions | undefined) => Promise.resolve(),
+            loginWithPopup: (_?: PopupLoginOptions, __?: PopupConfigOptions) => Promise.resolve(),
+            loginWithRedirect: <TAppState = any>(_?: RedirectLoginOptions<TAppState>) => Promise.resolve(),
+            handleRedirectCallback: <TAppState = any>(_?: string) => Promise.resolve({ appState: undefined as unknown as TAppState }),
+            logout: (_?: LogoutOptions | undefined) => Promise.resolve(),
 
             // User and token methods
             getUser: <TUser extends User>() => Promise.resolve(testUser as TUser | undefined),
             getIdTokenClaims: () => Promise.resolve(undefined),
-            getTokenWithPopup: (options?: GetTokenWithPopupOptions, config?: PopupConfigOptions) => Promise.resolve(getTokenResponset.access_token),
+            getTokenWithPopup: (__?: GetTokenWithPopupOptions, _?: PopupConfigOptions) => Promise.resolve(getTokenResponset.access_token),
 
             // Handle both overloads of getTokenSilently
             getTokenSilently: ((options?: Auth0GetTokenSilentlyOptions & { detailedResponse?: boolean }) => {
@@ -238,10 +233,10 @@ class Auth0ReactTester {
 
             // Authentication state
             isAuthenticated: () => Promise.resolve(!!testUser),
-            checkSession: (options?: GetTokenSilentlyOptions) => Promise.resolve(),
+            checkSession: (_?: GetTokenSilentlyOptions) => Promise.resolve(),
 
             // Token exchange (for advanced scenarios)
-            exchangeToken: (options: any): Promise<TokenEndpointResponse> =>
+            exchangeToken: (_: any): Promise<TokenEndpointResponse> =>
                 Promise.resolve({
                     access_token: getTokenResponset.access_token,
                     id_token: getTokenResponset.id_token || '',
@@ -250,12 +245,12 @@ class Auth0ReactTester {
                 }),
 
             // DPoP methods (for advanced security features)
-            getDpopNonce: (id?: string) => Promise.resolve(undefined),
-            setDpopNonce: (nonce: string, id?: string) => Promise.resolve(),
-            generateDpopProof: (params: any) => Promise.resolve('mock-dpop-proof'),
+            getDpopNonce: (_?: string) => Promise.resolve(undefined),
+            setDpopNonce: (__: string, _?: string) => Promise.resolve(),
+            generateDpopProof: (_: any) => Promise.resolve('mock-dpop-proof'),
 
             // Fetcher creation
-            createFetcher: (config?: any) => ({
+            createFetcher: (_?: any) => ({
                 fetchWithAuth: (url: string, options?: RequestInit) => fetch(url, options)
             })
         }) as Auth0Client;
