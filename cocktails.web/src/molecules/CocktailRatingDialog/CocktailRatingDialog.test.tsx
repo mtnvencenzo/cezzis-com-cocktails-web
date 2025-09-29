@@ -26,7 +26,7 @@ describe('Cocktail Rating Dialog', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'americano', stars: 1 }]));
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -59,7 +59,7 @@ describe('Cocktail Rating Dialog', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'adonis', stars: 3 }]));
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         let cancelClickCount = 0;
 
@@ -110,7 +110,7 @@ describe('Cocktail Rating Dialog', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: 'americano', stars: 1 }]));
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -197,7 +197,7 @@ describe('Cocktail Rating Dialog', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([]));
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const cocktail = cocktails.find((c) => c.id === 'adonis')!;
         const onCancel = async () => {};
@@ -239,7 +239,7 @@ describe('Cocktail Rating Dialog', () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([]));
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
         const cocktailId = 'adonis';
 
         const serverRatingRs: RateCocktailRs = {

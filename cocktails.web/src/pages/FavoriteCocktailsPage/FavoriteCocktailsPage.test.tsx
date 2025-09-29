@@ -47,7 +47,7 @@ describe('Favorite Cocktails List Page', () => {
 
     test('renders and fetches favorite cocktails data', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);

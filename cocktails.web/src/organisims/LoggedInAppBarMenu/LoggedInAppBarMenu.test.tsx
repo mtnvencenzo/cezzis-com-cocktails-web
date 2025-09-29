@@ -49,7 +49,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -98,7 +98,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -147,7 +147,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -196,7 +196,7 @@ describe('LoggedIn App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -233,60 +233,4 @@ describe('LoggedIn App Bar Menu', () => {
             expect(el).toBeNull();
         }
     });
-
-    // test.each([
-    //     [false, false, false, false], // un-authenticated and not popped
-    //     [false, true, false, false], // un-authenticated and popped
-    //     [true, false, true, false], // authenticated and not popped
-    //     [true, true, true, true] // authenticated and popped
-    // ])('renders darkmode menu item when authed:%s and menu popped:%s => defined:(%s) visibility:(%s)', async (authed, popped, expectedDefined, expectedVisible) => {
-    //     if (authed) {
-    //         await auth0Tester.isLogged();
-    //         msalTester.accounts = [
-    //             {
-    //                 homeAccountId: '',
-    //                 username: '',
-    //                 localAccountId: '',
-    //                 environment: '',
-    //                 tenantId: '',
-    //                 idTokenClaims: {
-    //                     given_name: 'Billy',
-    //                     family_name: 'Simmy'
-    //                 }
-    //             }
-    //         ];
-    //     }
-
-    //     await act(async () =>
-    //         render(
-    //             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-    //                 <MemoryRouter>
-    //                     <LoggedInAppBarMenu testId='app-bar-menu' />
-    //                 </MemoryRouter>
-    //             </Auth0Provider>
-    //         )
-    //     );
-
-    //     if (popped) {
-    //         await act(async () => {
-    //             const hamburger = await screen.findByTestId('menu-avatar');
-    //             hamburger.click();
-    //         });
-    //     }
-
-    //     const el = screen.queryByTestId('l-menu-darkmode');
-
-    //     if (expectedDefined) {
-    //         expect(el).toBeDefined();
-    //         expect(el).toHaveTextContent('Dark Mode');
-
-    //         if (expectedVisible) {
-    //             expect(el).toBeVisible();
-    //         } else {
-    //             expect(el).not.toBeVisible();
-    //         }
-    //     } else {
-    //         expect(el).toBeNull();
-    //     }
-    // });
 });

@@ -25,7 +25,7 @@ describe('Account Accessibility Page Container', () => {
 
     test('renders account accessibility page container', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
@@ -45,7 +45,7 @@ describe('Account Accessibility Page Container', () => {
 
     test('toggle > dark mode > works when initially Light', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Light;
@@ -79,7 +79,7 @@ describe('Account Accessibility Page Container', () => {
 
     test('toggle > dark mode > works when initially Dark', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Dark;
@@ -128,7 +128,7 @@ describe('Account Accessibility Page Container', () => {
         );
 
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.accessibility.theme = DisplayThemeModel.Light;

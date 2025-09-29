@@ -6,6 +6,7 @@ import AccountProfileImagePageContainer from './AccountProfileImagePageContainer
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { auth0ProviderOptions } from '../../../../utils/authConfig';
+import { getTestUser } from '../../../../../tests/setup';
 
 describe('Account Profile Image Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -28,19 +29,7 @@ describe('Account Profile Image Page Container', () => {
         });
 
         await auth0Tester.isLogged();
-        msalTester.accounts = [
-            {
-                homeAccountId: '',
-                username: '',
-                localAccountId: '',
-                environment: '',
-                tenantId: '',
-                idTokenClaims: {
-                    given_name: 'Bob',
-                    family_name: 'Briggs'
-                }
-            }
-        ];
+        auth0Tester.user = getTestUser();
 
         render(
             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>

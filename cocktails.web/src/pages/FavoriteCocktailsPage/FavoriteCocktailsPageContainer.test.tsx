@@ -49,7 +49,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders and fetches cocktails data', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
 
@@ -105,7 +105,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails.push('Test-1');
@@ -179,7 +179,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders account profile favorites', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -229,7 +229,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders multiple account profile favorites', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -281,7 +281,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders only account profile favorites even if in returned response', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -335,7 +335,7 @@ describe('Favorite Cocktails Page Container', () => {
 
     test('renders only account profile favorites only if has search image', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];

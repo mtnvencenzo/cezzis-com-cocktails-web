@@ -69,7 +69,7 @@ describe('Main App Bar', () => {
     ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -100,7 +100,7 @@ describe('Main App Bar', () => {
     ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>

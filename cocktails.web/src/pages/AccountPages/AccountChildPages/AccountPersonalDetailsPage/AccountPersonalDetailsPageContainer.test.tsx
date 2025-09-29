@@ -22,7 +22,7 @@ describe('Account Personal Details Page Container', () => {
 
     test('renders account personal details page container', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>

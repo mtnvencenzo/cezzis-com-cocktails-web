@@ -28,7 +28,7 @@ describe('Auth routes', () => {
     let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
-        auth0Tester = new Auth0ReactTester('Redirect', testUser);
+        auth0Tester = new Auth0ReactTester('Redirect');
         auth0Tester.spyAuth0();
     });
 
@@ -38,6 +38,7 @@ describe('Auth routes', () => {
 
     test('renders account page for already logged in user', async () => {
         await auth0Tester.isLogged();
+        auth0Tester.user = testUser;
 
         render(
             <GlobalContext>
@@ -98,8 +99,8 @@ describe('Auth routes', () => {
             family_name: ''
         };
 
-        await auth0Tester.isNotLogged();
-        auth0Tester.user = [badUser];
+        await auth0Tester.isLogged();
+        auth0Tester.user = badUser;
 
         render(
             <GlobalContext>

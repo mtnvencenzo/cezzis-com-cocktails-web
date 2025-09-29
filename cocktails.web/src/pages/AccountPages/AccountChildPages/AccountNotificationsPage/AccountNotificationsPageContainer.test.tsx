@@ -25,7 +25,7 @@ describe('Account Notifications Page Container', () => {
 
     test('renders account notifications page container', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
@@ -44,7 +44,7 @@ describe('Account Notifications Page Container', () => {
 
     test('toggle > notify me when new cocktails are added > works when initially Always', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
@@ -76,7 +76,7 @@ describe('Account Notifications Page Container', () => {
 
     test('toggle > notify me when new cocktails are added > works when initially Never', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
@@ -123,7 +123,7 @@ describe('Account Notifications Page Container', () => {
         );
 
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;

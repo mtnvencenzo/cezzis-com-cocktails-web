@@ -26,7 +26,7 @@ describe('Account Interactions Cocktail Ratings Page', () => {
 
     test('renders account interactions cocktail ratings page', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         const ratings = getTestOwnedAccountCocktailRatings([]);

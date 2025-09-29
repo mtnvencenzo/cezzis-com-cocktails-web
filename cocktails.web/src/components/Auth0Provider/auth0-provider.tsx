@@ -65,12 +65,6 @@ export interface Auth0ProviderOptions<TUser extends User = User> extends Auth0Cl
 }
 
 /**
- * Replaced by the package version at build time.
- * @ignore
- */
-declare const __VERSION__: string;
-
-/**
  * @ignore
  */
 const toAuth0ClientOptions = (opts: Auth0ProviderOptions): Auth0ClientOptions => {
@@ -80,7 +74,7 @@ const toAuth0ClientOptions = (opts: Auth0ProviderOptions): Auth0ClientOptions =>
         ...opts,
         auth0Client: {
             name: 'auth0-react',
-            version: __VERSION__
+            version: '1.0.0'
         }
     };
 };

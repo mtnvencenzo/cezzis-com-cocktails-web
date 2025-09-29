@@ -26,7 +26,7 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
 
     test('renders default content when no favorites', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = [];
@@ -75,7 +75,7 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
 
     test('renders account profile favorites', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -127,7 +127,7 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
 
     test('renders multiple account profile favorites', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];
@@ -181,7 +181,7 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
 
     test('renders only account profile favorites even if in returned response', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis'];
@@ -237,7 +237,7 @@ describe('Account Interactions Favorite Cocktails Page Container', () => {
 
     test('renders only account profile favorites only if has search image', async () => {
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
         profile.favoriteCocktails = ['adonis', 'absinthe-frappe'];

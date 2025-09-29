@@ -53,7 +53,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -106,7 +106,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -159,7 +159,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -212,7 +212,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -265,7 +265,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -318,7 +318,7 @@ describe('Main App Bar Menu', () => {
         if (authed) {
             sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
             await auth0Tester.isLogged();
-            auth0Tester.user = [getTestUser()];
+            auth0Tester.user = getTestUser();
         }
 
         await act(async () =>
@@ -355,64 +355,4 @@ describe('Main App Bar Menu', () => {
             expect(el).toBeNull();
         }
     });
-
-    // test.each([
-    //     [true, false, false, false, false], // xs and un-authenticated and not popped
-    //     [true, false, true, false, false], // xs and un-authenticated and popped
-    //     [true, true, false, true, false], // xs and authenticated and not popped
-    //     [true, true, true, true, true], // xs and authenticated and popped
-    //     [false, true, true, false, false], // not-xs and authenticated and popped
-    //     [false, true, false, false, false], // not-xs and authenticated and not-popped
-    //     [false, false, true, false, false], // not-xs and un-authenticated and popped
-    //     [false, false, false, false, false] // not-xs and un-authenticated and not-popped
-    // ])('renders darkmode menu item when xs:%s and authed:%s and menu popped:%s => defined:(%s) visibility:(%s)', async (isXs, authed, popped, expectedDefined, expectedVisible) => {
-    //     if (authed) {
-    //         await auth0Tester.isLogged();
-    //         msalTester.accounts = [
-    //             {
-    //                 homeAccountId: '',
-    //                 username: '',
-    //                 localAccountId: '',
-    //                 environment: '',
-    //                 tenantId: '',
-    //                 idTokenClaims: {
-    //                     given_name: 'Billy',
-    //                     family_name: 'Simms'
-    //                 }
-    //             }
-    //         ];
-    //     }
-
-    //     await act(async () =>
-    //         render(
-    //             <Auth0Provider {...auth0ProviderOptions} onClientCreated={() => auth0Tester.client}>
-    //                 <MemoryRouter>
-    //                     <MainAppBarMenu testId='app-bar-menu' isXs={isXs} />
-    //                 </MemoryRouter>
-    //             </Auth0Provider>
-    //         )
-    //     );
-
-    //     if (popped) {
-    //         await act(async () => {
-    //             const hamburger = await screen.findByTestId('menu-hamburger');
-    //             hamburger.click();
-    //         });
-    //     }
-
-    //     const el = screen.queryByTestId('m-menu-darkmode');
-
-    //     if (expectedDefined) {
-    //         expect(el).toBeDefined();
-    //         expect(el).toHaveTextContent('Dark Mode');
-
-    //         if (expectedVisible) {
-    //             expect(el).toBeVisible();
-    //         } else {
-    //             expect(el).not.toBeVisible();
-    //         }
-    //     } else {
-    //         expect(el).toBeNull();
-    //     }
-    // });
 });

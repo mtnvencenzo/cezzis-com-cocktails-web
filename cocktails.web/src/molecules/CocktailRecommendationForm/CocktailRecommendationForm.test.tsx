@@ -82,7 +82,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders default cocktail name textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -119,7 +119,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders default cocktail ingredients textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -155,7 +155,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders default cocktail directions textbox form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -191,7 +191,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders cocktail name textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -224,7 +224,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders cocktail ingredients textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -257,7 +257,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders cocktail directions textbox in errored state when modified to blank', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -290,7 +290,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders cocktail submit button in default disabled form state', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -313,7 +313,7 @@ describe('Cocktail Recommendation Form', () => {
     test('renders cocktail submit button in enabled state only after all fields have values', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         render(
             <GlobalContext>
@@ -349,7 +349,7 @@ describe('Cocktail Recommendation Form', () => {
     test('calls recommendation api successfully and resets form when recaptcha token retrieved', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -406,7 +406,7 @@ describe('Cocktail Recommendation Form', () => {
     test('sets cocktail name required error when recommendation api fails with name error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -464,7 +464,7 @@ describe('Cocktail Recommendation Form', () => {
     test('sets cocktail ingredients required error when recommendation api fails with error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -523,7 +523,7 @@ describe('Cocktail Recommendation Form', () => {
     test('sets cocktail directions required error when recommendation api fails with name error', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('my-token');
@@ -583,7 +583,7 @@ describe('Cocktail Recommendation Form', () => {
     test('doesnt call api when recaptcha token comes back empty', async () => {
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
         await auth0Tester.isLogged();
-        auth0Tester.user = [getTestUser()];
+        auth0Tester.user = getTestUser();
 
         vi.mocked(executeRecaptcha).mockImplementation(async (_recaptchaRef: React.RefObject<ReCAPTCHA | null>, callback?: (token: string | null) => Promise<void>) => {
             callback!('');
