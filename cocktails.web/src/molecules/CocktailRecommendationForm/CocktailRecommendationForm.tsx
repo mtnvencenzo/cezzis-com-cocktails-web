@@ -9,6 +9,7 @@ import { resetRecaptcha, executeRecaptcha } from '../../services/RecaptchaServic
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import { loginWithRedirectOptions } from '../../utils/authConfig';
 import { useAuth0 } from '../../components/Auth0Provider';
+import SessionStorageService from '../../services/SessionStorageService';
 
 interface CocktailRecommendationFormState {
     sendingRecommendation: boolean;
@@ -24,6 +25,7 @@ const CocktailRecommendationForm = () => {
     const recaptchaRef = React.createRef<ReCAPTCHA>();
     const { isAuthenticated, loginWithRedirect } = useAuth0();
     const { ownedAccount } = useOwnedAccount();
+    const sessionStorageService = new SessionStorageService();
 
     const [formState, setFormState] = useState<CocktailRecommendationFormState>({
         sendingRecommendation: false,
@@ -136,7 +138,9 @@ const CocktailRecommendationForm = () => {
     };
 
     const handleLoginClick = async () => {
-        await loginWithRedirect(loginWithRedirectOptions);
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname);
+
+        await loginWithRedirect(loginWithRedirectOptions());
     };
 
     return (

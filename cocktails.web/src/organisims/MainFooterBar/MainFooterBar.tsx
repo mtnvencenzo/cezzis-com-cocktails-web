@@ -6,6 +6,7 @@ import FooterLink from '../../atoms/FooterLink/FooterLink';
 import showCookieBot from '../../utils/cookiebot';
 import { clearOwnedAccountLoginSession, loginWithRedirectOptions, logoutParams } from '../../utils/authConfig';
 import { useAuth0 } from '../../components/Auth0Provider';
+import SessionStorageService from '../../services/SessionStorageService';
 
 interface MainFooterBarProps {
     testId: string;
@@ -13,10 +14,16 @@ interface MainFooterBarProps {
 
 const MainFooterBar = ({ testId }: MainFooterBarProps) => {
     const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+    const sessionStorageService = new SessionStorageService();
 
     const handleLogout = async () => {
         clearOwnedAccountLoginSession();
         await logout(logoutParams);
+    };
+
+    const handleLoginRedirect = async () => {
+        sessionStorageService.SetOwnedAccountPostLoginRedirectUrl(window.location.pathname);
+        await loginWithRedirect(loginWithRedirectOptions());
     };
 
     return (
@@ -87,7 +94,7 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
                     </Grid>
                     <Grid size={{ xs: 2, sm: 2, md: 2, lg: 2 }} sx={{ paddingLeft: '0px' }}>
                         {!isAuthenticated && (
-                            <IconButton size='small' onClick={() => loginWithRedirect(loginWithRedirectOptions)} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
+                            <IconButton size='small' onClick={() => handleLoginRedirect()} data-testid='ft-button-myaccount' sx={{ paddingLeft: '0px', paddingTop: '0px' }}>
                                 <AccountCircleOutlinedIcon color='primary' />
                                 <Typography data-testid='footer-myaccount' color='text.primary' noWrap gutterBottom className='footerLink' sx={{ paddingLeft: '5px', paddingTop: '5px' }}>
                                     Signin

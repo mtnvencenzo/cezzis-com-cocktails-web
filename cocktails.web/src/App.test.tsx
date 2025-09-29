@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import App from './App';
 import AppErrorBoundary from './components/AppErrorBoundary/AppErrorBoundary';
-import { auth0ProviderOptions } from './utils/authConfig';
 import { Auth0Provider } from './components/Auth0Provider';
+import { auth0TestProviderOptions } from './auth0Mocks/testerConstants';
 
 describe('App', () => {
     test('renders app', async () => {
         render(
             <React.StrictMode>
-                <Auth0Provider {...auth0ProviderOptions}>
+                <Auth0Provider {...auth0TestProviderOptions}>
                     <AppErrorBoundary onError={() => <h1>Something went wrong</h1>}>
                         <App />
                     </AppErrorBoundary>

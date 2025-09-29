@@ -85,6 +85,6 @@ describe('Auth routes', () => {
 
         auth0Tester.waitForLogin();
 
-        await screen.findByAltText('Loading...');
+        await screen.findByText('Loading...');
     });
 });

@@ -1,4 +1,4 @@
-import { Auth0Client, AuthorizationParams, User } from '@auth0/auth0-spa-js';
+import { Auth0Client, AuthorizationParams, RedirectLoginOptions, User } from '@auth0/auth0-spa-js';
 import SessionStorageService from '../services/SessionStorageService';
 import { getAccountCocktailRatings, loginOwnedAccountProfile } from '../services/AccountService';
 import trimWhack from './trimWhack';
@@ -12,16 +12,12 @@ export const clearOwnedAccountLoginSession = () => {
     sessionStorageService.ClearOwnedAccountProfileRequestData();
 };
 
-export const onRedirectCallback = async (appState?: AppState, user?: User) => {
+export const onRedirectCallback = async (_?: AppState, user?: User) => {
     if (user) {
         await loginOwnedAccountProfile();
         await getAccountCocktailRatings(true);
     } else {
         clearOwnedAccountLoginSession();
-    }
-
-    if (appState?.returnTo) {
-        window.history.replaceState({}, document.title, appState.returnTo);
     }
 };
 
@@ -33,12 +29,14 @@ export const loginAuthorizationScopes = ['openid', 'offline_access', 'profile', 
 
 export const loginAuthorizationParams: AuthorizationParams = {
     ...authParams,
+    returnTo: window.location.href,
     scope: [...loginAuthorizationScopes].join(' ')
 };
 
-export const loginWithRedirectOptions = {
-    authorizationParams: loginAuthorizationParams
-};
+export const loginWithRedirectOptions = (): RedirectLoginOptions => ({
+    authorizationParams: loginAuthorizationParams,
+    appState: { targetUrl: window.location.href }
+});
 
 export const getAccessToken = async (requiredScopes: string[] = []): Promise<string | undefined> => {
     let auth0Client: Auth0Client | null = null;
