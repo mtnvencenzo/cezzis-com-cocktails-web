@@ -58,10 +58,6 @@ module "aca_cocktails_web" {
       value = "3000"
     },
     {
-      name  = "VITE_AUTH0_REDIRECT_URI"
-      value = var.ciamlogin_redirect_uri
-    },
-    {
       name  = "VITE_TELEMETRY_KEY"
       value = data.azurerm_key_vault_secret.otel_collector_web_key.value
     },
@@ -70,20 +66,20 @@ module "aca_cocktails_web" {
       value = "https://${data.azurerm_container_app.otel_collector.ingress[0].fqdn}"
     },
     {
-      name  = "VITE_CIAM_TENANT"
-      value = var.ciam_tenant_name
+      name  = "VITE_AUTH0_DOMAIN"
+      value = var.auth0_client_id
     },
     {
-      name  = "VITE_CIAM_CLIENT_ID"
-      value = module.webapp_ciam_tenant.cocktails_web_app_registration_client_id
+      name  = "VITE_AUTH0_CLIENT_ID"
+      value = var.auth0_client_id
     },
     {
-      name  = "VITE_CIAM_POLICY"
-      value = var.ciam_signin_policy
+      name  = "VITE_AUTH0_REDIRECT_URI"
+      value = var.auth0_redirect_uri
     },
     {
-      name  = "VITE_CIAM_RESET_PASSWORD_POLICY"
-      value = var.ciam_resetpassword_policy
+      name  = "VITE_AUTH0_COCKTAILS_API_AUDIENCE"
+      value = var.auth0_cocktails_api_audience
     },
     {
       name  = "VITE_COCKTAILS_API_URL"
@@ -92,10 +88,6 @@ module "aca_cocktails_web" {
     {
       name  = "VITE_COCKTAILS_IMAGE_URL"
       value = "${var.cocktail_images_route_hostname}/cocktails"
-    },
-    {
-      name  = "VITE_LOGIN_SUBDOMAIN"
-      value = "${var.login_subdomain}"
     }
   ]
 

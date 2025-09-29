@@ -161,11 +161,7 @@ Update all the $/deployment/iac/terraform/environment_vars/\<env>.tfvars files w
 Update the $/deployment/iac/terraform/main.tf file and uncomment the `azuread` provider
 
 ``` text
-ciam_tenant_id					= "d96c6cca-626a-49e7-98c8-fcc2f7220123"
-ciam_tenant_name					= "cezzis"
-ciam_tenant_domain_name			= "cezzis.onmicrosoft.com"
-terraform_app_client_id			= "2957a4f0-bd36-4a35-90a1-96322a5eb321"
-terraform_app_client_secret		= "123Q~cdMjE-2346d_5fHD-SifIQrFNAfg234"
+auth0_tenant_name					= "cezzis"
 ```
 
 ### Step 5 (run terraform)

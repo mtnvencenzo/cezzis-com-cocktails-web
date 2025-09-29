@@ -27,17 +27,19 @@ vi.mock('../src/utils/envConfig', () => {
         getWindowEnv: vi.fn(() => ({
             VITE_NODE_ENV: 'test',
             VITE_PORT: '123',
-            VITE_AUTH0_REDIRECT_URI: 'http://localhost:123/',
 
             VITE_TELEMETRY_KEY: '00000000-0000-0000-0000-000000000000',
             VITE_TELEMETRY_URL: '',
 
+            VITE_AUTH0_DOMAIN: 'cezzis.us.auth0.com',
+            VITE_AUTH0_CLIENT_ID: '00000000000000000000000000000000',
+            VITE_AUTH0_REDIRECT_URI: 'https://localhost:0000/iam/auth/redirect/',
+            VITE_AUTH0_COCKTAILS_API_AUDIENCE: 'https://cezzis-cocktails-api',
+
             VITE_COCKTAILS_API_URL: 'http://localhost:0000',
             VITE_COCKTAILS_IMAGE_URL: 'http://localhost:0000/images',
             VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY: '383hudiudhUJK984jdus7HDY',
-
-            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-            VITE_LOGIN_SUBDOMAIN: 'login'
+            VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
         }))
     };
 });
