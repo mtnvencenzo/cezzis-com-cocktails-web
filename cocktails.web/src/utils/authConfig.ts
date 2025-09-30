@@ -47,7 +47,7 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
     auth0Client = new Auth0Client({
         domain: getWindowEnv().VITE_AUTH0_DOMAIN,
         clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
-        useRefreshTokens: false,
+        useRefreshTokens: true,
         cacheLocation: 'localstorage'
     });
     if (!auth0Client) {
