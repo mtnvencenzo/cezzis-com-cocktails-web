@@ -12,10 +12,14 @@ export const clearOwnedAccountLoginSession = () => {
     sessionStorageService.ClearOwnedAccountProfileRequestData();
 };
 
+export const loadOwnedAccountProfileData = async () => {
+    await loginOwnedAccountProfile();
+    await getAccountCocktailRatings(true);
+};
+
 export const onRedirectCallback = async (_?: AppState, user?: User) => {
     if (user) {
-        await loginOwnedAccountProfile();
-        await getAccountCocktailRatings(true);
+        await loadOwnedAccountProfileData();
     } else {
         clearOwnedAccountLoginSession();
     }

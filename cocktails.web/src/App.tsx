@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import AuthRoutes from './components/AuthRoutes';
@@ -6,6 +6,9 @@ import AnonymousRoutes from './components/AnonymousRoutes';
 import Layout from './templates/Layout/Layout';
 import GlobalContext from './components/GlobalContexts';
 import './App.css';
+import { useAuth0 } from './components/Auth0Provider';
+import { useOwnedAccount } from './components/OwnedAccountContext';
+import { loadOwnedAccountProfileData } from './utils/authConfig';
 
 const FullScreenLayout = React.lazy(() => import('./templates/FullScreenLayout/FullScreenLayout'));
 const FrontChannelLogout = React.lazy(() => import('./pages/FrontChannelLogout/FrontChannelLogout'));
@@ -328,11 +331,22 @@ const router = createBrowserRouter(
     }
 );
 
-const App: React.FC = () => (
-    <GlobalContext>
-        <CssBaseline />
-        <RouterProvider router={router} />
-    </GlobalContext>
-);
+const App: React.FC = () => {
+    const { isAuthenticated } = useAuth0();
+    const { ownedAccount } = useOwnedAccount();
+
+    useEffect(() => {
+        if (isAuthenticated === true && !ownedAccount) {
+            loadOwnedAccountProfileData();
+        }
+    }, [isAuthenticated, ownedAccount]);
+
+    return (
+        <GlobalContext>
+            <CssBaseline />
+            <RouterProvider router={router} />
+        </GlobalContext>
+    );
+};
 
 export default App;
