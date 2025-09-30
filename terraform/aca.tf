@@ -67,7 +67,7 @@ module "aca_cocktails_web" {
     },
     {
       name  = "VITE_AUTH0_DOMAIN"
-      value = var.auth0_client_id
+      value = var.auth0_domain
     },
     {
       name  = "VITE_AUTH0_CLIENT_ID"
