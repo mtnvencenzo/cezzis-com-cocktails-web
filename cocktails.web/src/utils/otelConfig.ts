@@ -101,13 +101,15 @@ export const setupTelemetry = () => {
         new FetchInstrumentation({
             propagateTraceHeaderCorsUrls: [/.*$/],
             ignoreUrls: [
-                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/ // Exclude a specific third-party API
+                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
+                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/ // Exclude a specific third-party API
             ]
         }),
         new XMLHttpRequestInstrumentation({
             propagateTraceHeaderCorsUrls: [/.*$/],
             ignoreUrls: [
-                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/ // Exclude a specific third-party API
+                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
+                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/ // Exclude a specific third-party API
             ]
         })
     ];

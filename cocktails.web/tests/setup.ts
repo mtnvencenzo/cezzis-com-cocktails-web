@@ -31,7 +31,7 @@ vi.mock('../src/utils/envConfig', () => {
             VITE_TELEMETRY_KEY: '00000000-0000-0000-0000-000000000000',
             VITE_TELEMETRY_URL: '',
 
-            VITE_AUTH0_DOMAIN: 'cezzis.us.auth0.com',
+            VITE_AUTH0_DOMAIN: 'login.cezzis.com',
             VITE_AUTH0_CLIENT_ID: '00000000000000000000000000000000',
             VITE_AUTH0_REDIRECT_URI: 'https://localhost:0000/iam/auth/redirect/',
             VITE_AUTH0_COCKTAILS_API_AUDIENCE: 'https://cezzis-cocktails-api',

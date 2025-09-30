@@ -73,5 +73,5 @@ export const auth0TestProviderOptions: Auth0ProviderOptions = {
     authorizationParams: loginAuthorizationParams,
     onRedirectCallback,
     useRefreshTokens: true,
-    cacheLocation: 'localstorage'
+    cacheLocation: 'memory'
 };
