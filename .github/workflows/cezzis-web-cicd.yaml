@@ -106,7 +106,7 @@ jobs:
       working_directory: cocktails.web.e2e
       environment_name: prd
       allow_run: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
-      command_line_args: '--env auth0Url=https://cezzis.us.auth0.com/,auth0ClientId=HZXyiZxjHgkQqeb6UJxmikCGYpSz5iPb,auth0UserObjectId=auth0|68d6d6b0a6ae4a44f05ec21f,auth0UserEmail=rvecchi+cypress@gmail.com,cocktailsApiBaseUrl=''https://api.cezzis.com/prd/cocktails'''
+      command_line_args: "--env auth0Url=https://cezzis.us.auth0.com/,auth0ClientId=HZXyiZxjHgkQqeb6UJxmikCGYpSz5iPb,auth0UserObjectId='auth0|68d6d6b0a6ae4a44f05ec21f',auth0UserEmail=rvecchi+cypress@gmail.com,cocktailsApiBaseUrl='https://api.cezzis.com/prd/cocktails'"
     secrets:
       cypressUserPassword: '${{ secrets.PRD_CYPRESS_USER_PASSWORD }}'
       cypressApiKey: '${{ secrets.PRD_CYPRESS_COCKTAILS_API_KEY }}'
