@@ -15,7 +15,7 @@ include_google_verification_txt_record = true
 
 cocktail_images_route_hostname = "https://cdn.cezzis.com"
 
-auth0_domain                 = "cezzis.us.auth0.com"
+auth0_domain                 = "login.cezzis.com"
 auth0_client_id              = "HZXyiZxjHgkQqeb6UJxmikCGYpSz5iPb"
 auth0_redirect_uri           = "https://www.cezzis.com/iam/auth/redirect/"
 auth0_cocktails_api_audience = "https://cezzis-cocktails-api"

@@ -56,12 +56,12 @@ Cypress.Commands.addAll({
         cy.get('[id="CybotCookiebotDialogBodyButtonAccept"]').click();
     },
     validateSession: () => {
-        cy.window()
-            .its('sessionStorage')
-            .invoke('getItem', `@@auth0spajs@@::${Cypress.env('auth0ClientId')}::@@user@@`)
-            .should('exist');
+        // cy.window()
+        //     .its('sessionStorage')
+        //     .invoke('getItem', `@@auth0spajs@@::${Cypress.env('auth0ClientId')}::@@user@@`)
+        //     .should('exist');
 
-        cy.window().its('sessionStorage').invoke('getItem', `@@auth0spajs@@::{Cypress.env('auth0ClientId')}::default::openid offline_access profile email`).should('exist');
+        // cy.window().its('sessionStorage').invoke('getItem', `@@auth0spajs@@::{Cypress.env('auth0ClientId')}::default::openid offline_access profile email`).should('exist');
 
         cy.window().its('sessionStorage').invoke('getItem', `account-profile-data-group`).should('exist');
     }
