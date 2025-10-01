@@ -34,6 +34,7 @@ export const loginAuthorizationScopes = ['openid', 'offline_access', 'profile', 
 export const loginAuthorizationParams: AuthorizationParams = {
     ...authParams,
     returnTo: window.location.href,
+    audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE,
     scope: [...loginAuthorizationScopes].join(' ')
 };
 
@@ -77,13 +78,13 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
             detailedResponse: false,
             authorizationParams
         });
-    } catch {
+    } catch (err1) {
+        logger.logException('Unable to retrieve access token through silent flow', err1 as Error);
         try {
             const token = await auth0Client.getTokenWithPopup({ authorizationParams });
-            logger.logInformation('Acquired access token with popup fallback');
             return token;
-        } catch (err) {
-            logger.logException('Unable to retrieve access token through popup fallback', err as Error);
+        } catch (err2) {
+            logger.logException('Unable to retrieve access token through popup fallback', err2 as Error);
             return undefined;
         }
     }

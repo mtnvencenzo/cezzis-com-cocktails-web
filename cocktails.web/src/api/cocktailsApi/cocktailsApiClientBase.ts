@@ -13,10 +13,12 @@ export class CocktailsApiClientBase {
         this.requiredScopes = scopes;
     }
 
-    async transformOptions(options: RequestInit): Promise<RequestInit> {
+    transformOptions = async (options: RequestInit): Promise<RequestInit> => {
         const token = this.requiredScopes && this.requiredScopes.length > 0
             ? await getAccessToken(this.requiredScopes)
             : undefined;
+
+        console.log('transformOptions > token:', token);
 
         options.headers = {
             ...options.headers,
