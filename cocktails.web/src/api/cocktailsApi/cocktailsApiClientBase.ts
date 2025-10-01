@@ -18,8 +18,6 @@ export class CocktailsApiClientBase {
             ? await getAccessToken(this.requiredScopes)
             : undefined;
 
-        console.log('transformOptions > token:', token);
-
         options.headers = {
             ...options.headers,
             'X-Key': `${getWindowEnv().VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY}`
