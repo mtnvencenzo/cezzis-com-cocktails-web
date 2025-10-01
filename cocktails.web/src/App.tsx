@@ -8,6 +8,7 @@ import GlobalContext from './components/GlobalContexts';
 import './App.css';
 import { useAuth0 } from './components/Auth0Provider';
 import { useOwnedAccount } from './components/OwnedAccountContext';
+import { loadOwnedAccountProfileData } from './utils/authConfig';
 
 const FullScreenLayout = React.lazy(() => import('./templates/FullScreenLayout/FullScreenLayout'));
 const FrontChannelLogout = React.lazy(() => import('./pages/FrontChannelLogout/FrontChannelLogout'));
@@ -335,9 +336,12 @@ const App: React.FC = () => {
     const { ownedAccount } = useOwnedAccount();
 
     useEffect(() => {
+        if (window.location.pathname === '/iam/auth/redirect') {
+            return;
+        }
+
         if (isAuthenticated === true && !ownedAccount) {
-            // console.log('App > useEffect - loading owned account profile data...');
-            // loadOwnedAccountProfileData();
+            loadOwnedAccountProfileData();
         }
     }, [isAuthenticated, ownedAccount]);
 

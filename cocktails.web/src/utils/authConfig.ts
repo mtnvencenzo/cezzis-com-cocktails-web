@@ -70,7 +70,8 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
     const authorizationParams: AuthorizationParams = {
         ...authParams,
         scope: [...loginAuthorizationScopes, ...requiredScopes].join(' '),
-        audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE
+        audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE,
+        silent_forms: 'on'
     };
     try {
         return await auth0Client.getTokenSilently({
