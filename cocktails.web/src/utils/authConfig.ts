@@ -34,7 +34,6 @@ export const loginAuthorizationScopes = ['openid', 'offline_access', 'profile', 
 export const loginAuthorizationParams: AuthorizationParams = {
     ...authParams,
     returnTo: window.location.href,
-    audience: getWindowEnv().VITE_AUTH0_COCKTAILS_API_AUDIENCE,
     scope: [...loginAuthorizationScopes].join(' ')
 };
 
@@ -48,7 +47,7 @@ export const getAccessToken = async (requiredScopes: string[] = []): Promise<str
     auth0Client = new Auth0Client({
         domain: getWindowEnv().VITE_AUTH0_DOMAIN,
         clientId: getWindowEnv().VITE_AUTH0_CLIENT_ID,
-        useRefreshTokens: true,
+        useRefreshTokens: false,
         cacheLocation: 'localstorage'
     });
     if (!auth0Client) {
