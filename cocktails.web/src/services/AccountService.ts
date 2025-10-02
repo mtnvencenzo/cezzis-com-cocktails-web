@@ -1,7 +1,9 @@
 import {
     AccountCocktailRatingsRs,
     AccountOwnedProfileRs,
+    ChangeAccountOwnedEmailRq,
     ChangeAccountOwnedPasswordRq,
+    ChangeAccountOwnedUsernameRq,
     CocktailsApiClient,
     ManageFavoriteCocktailsRq,
     ProblemDetails,
@@ -9,7 +11,6 @@ import {
     RateCocktailRs,
     UpdateAccountOwnedAccessibilitySettingsRq,
     UpdateAccountOwnedNotificationSettingsRq,
-    UpdateAccountOwnedProfileEmailRq,
     UpdateAccountOwnedProfileRq,
     UploadProfileImageRs
 } from '../api/cocktailsApi/cocktailsApiClient';
@@ -110,19 +111,32 @@ const updateOwnedAccountProfile = async (request: UpdateAccountOwnedProfileRq): 
     }
 };
 
-const updateOwnedAccountProfileEmail = async (request: UpdateAccountOwnedProfileEmailRq): Promise<AccountOwnedProfileRs | undefined> => {
+const changeOwnedAccountProfileEmail = async (request: ChangeAccountOwnedEmailRq): Promise<AccountOwnedProfileRs | undefined> => {
     const sessionStorageService = new SessionStorageService();
 
     try {
         const cocktailsApiClient = new CocktailsApiClient();
         cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
-        const results = await cocktailsApiClient.updateAccountOwnedProfileEmail(request, undefined);
+        const results = await cocktailsApiClient.changeAccountOwnedEmail(request, undefined);
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
         }
 
         return results;
+    } catch (e: unknown) {
+        const apiError: ProblemDetails = e as ProblemDetails;
+        const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
+        const error = new Error(errorMessage);
+        throw error;
+    }
+};
+
+const changeOwnedAccountProfileUsername = async (request: ChangeAccountOwnedUsernameRq): Promise<void> => {
+    try {
+        const cocktailsApiClient = new CocktailsApiClient();
+        cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
+        await cocktailsApiClient.changeAccountOwnedUsername(request, undefined);
     } catch (e: unknown) {
         const apiError: ProblemDetails = e as ProblemDetails;
         const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
@@ -288,12 +302,13 @@ export {
     loginOwnedAccountProfile,
     uploadProfileImage,
     updateOwnedAccountProfile,
-    updateOwnedAccountProfileEmail,
+    changeOwnedAccountProfileEmail,
     updateOwnedAccountAccessibilitySettings,
     manageOwnedAccountFavoriteCocktails,
     rateCocktail,
     getAccountCocktailRatings,
     sendRecommendation,
     updateOwnedAccountNotificationsSettings,
-    changeOwnedAccountProfilePassword
+    changeOwnedAccountProfilePassword,
+    changeOwnedAccountProfileUsername
 };

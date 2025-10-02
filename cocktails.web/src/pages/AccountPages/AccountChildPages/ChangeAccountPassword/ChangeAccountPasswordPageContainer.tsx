@@ -58,7 +58,7 @@ const ChangeAccountPasswordPageContainer = () => {
                 <Grid size={12} sx={{ pt: '5px' }}>
                     <Typography variant='h6'>Profile Center</Typography>
                 </Grid>
-                <Grid id='change-email' size={12} sx={{ pb: '50px' }}>
+                <Grid id='change-password' size={12} sx={{ pb: '50px' }}>
                     <Grid
                         container
                         sx={{

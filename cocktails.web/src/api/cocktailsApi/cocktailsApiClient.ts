@@ -480,7 +480,7 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
      * @param x_Key (optional) Subscription key
      * @return OK
      */
-    updateAccountOwnedProfileEmail(body: UpdateAccountOwnedProfileEmailRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
+    changeAccountOwnedEmail(body: ChangeAccountOwnedEmailRq, x_Key?: string | undefined): Promise<AccountOwnedProfileRs> {
         let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/email";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -499,11 +499,11 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processUpdateAccountOwnedProfileEmail(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processChangeAccountOwnedEmail(_response));
         });
     }
 
-    protected processUpdateAccountOwnedProfileEmail(response: Response): Promise<AccountOwnedProfileRs> {
+    protected processChangeAccountOwnedEmail(response: Response): Promise<AccountOwnedProfileRs> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -882,6 +882,49 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
             });
         }
     }
+
+    /**
+     * @param body The account username update request body
+     * @param x_Key (optional) Subscription key
+     * @return No Content
+     */
+    changeAccountOwnedUsername(body: ChangeAccountOwnedUsernameRq, x_Key?: string | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/username";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "X-Key": x_Key !== undefined && x_Key !== null ? "" + x_Key : "",
+                "Content-Type": "application/json; x-api-version=1.0",
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processChangeAccountOwnedUsername(_response));
+        });
+    }
+
+    protected processChangeAccountOwnedUsername(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else {
+            return response.text().then((_responseText) => {
+            let resultdefault: any = null;
+            resultdefault = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ProblemDetails;
+            return throwException("A server side error occurred.", status, _responseText, _headers, resultdefault);
+            });
+        }
+    }
 }
 
 /** The accessibility settings for the account */
@@ -980,9 +1023,23 @@ export interface AccountOwnedProfileRs {
     [key: string]: any;
 }
 
+export interface ChangeAccountOwnedEmailRq {
+    /** The email address for the account */
+    email: string;
+
+    [key: string]: any;
+}
+
 export interface ChangeAccountOwnedPasswordRq {
     /** The email address for the account */
     email: string;
+
+    [key: string]: any;
+}
+
+export interface ChangeAccountOwnedUsernameRq {
+    /** The username to change to for the account */
+    username: string;
 
     [key: string]: any;
 }
@@ -1485,13 +1542,6 @@ export interface UpdateAccountOwnedAccessibilitySettingsRq {
 
 export interface UpdateAccountOwnedNotificationSettingsRq {
     onNewCocktailAdditions: CocktailUpdatedNotificationModel;
-
-    [key: string]: any;
-}
-
-export interface UpdateAccountOwnedProfileEmailRq {
-    /** The email address for the account */
-    email: string;
 
     [key: string]: any;
 }
