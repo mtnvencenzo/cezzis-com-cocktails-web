@@ -1,6 +1,7 @@
 import {
     AccountCocktailRatingsRs,
     AccountOwnedProfileRs,
+    ChangeAccountOwnedPasswordRq,
     CocktailsApiClient,
     ManageFavoriteCocktailsRq,
     ProblemDetails,
@@ -122,6 +123,19 @@ const updateOwnedAccountProfileEmail = async (request: UpdateAccountOwnedProfile
         }
 
         return results;
+    } catch (e: unknown) {
+        const apiError: ProblemDetails = e as ProblemDetails;
+        const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
+        const error = new Error(errorMessage);
+        throw error;
+    }
+};
+
+const changeOwnedAccountProfilePassword = async (request: ChangeAccountOwnedPasswordRq): Promise<void> => {
+    try {
+        const cocktailsApiClient = new CocktailsApiClient();
+        cocktailsApiClient.setRequiredScopes([accountReadScope, accountWriteScope]);
+        await cocktailsApiClient.changeAccountOwnedPassword(request, undefined);
     } catch (e: unknown) {
         const apiError: ProblemDetails = e as ProblemDetails;
         const errorMessage = apiError?.errors?.length > 0 ? apiError.errors[0] : 'unknown error';
@@ -280,5 +294,6 @@ export {
     rateCocktail,
     getAccountCocktailRatings,
     sendRecommendation,
-    updateOwnedAccountNotificationsSettings
+    updateOwnedAccountNotificationsSettings,
+    changeOwnedAccountProfilePassword
 };

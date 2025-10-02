@@ -34,7 +34,7 @@ const AccountNavigationBar = ({ testId, fullScreen = false }: AccountNavigationB
                     </Typography>
                     <ProfileSettingItemLink icon={<PersonIcon />} text='Personal details' testId='p-settings-personal-details' navigatePath='/account/profile-center/personal-details' />
                     <ProfileSettingItemLink icon={<FaceIcon />} text='Profile Image' testId='p-settings-profile-image' navigatePath='/account/profile-center/avatar' />
-                    <ProfileSettingItemLink icon={<SecurityIcon />} text='Change Password' testId='p-settings-password' navigatePath='/account/profile-center#' onClick={() => {}} />
+                    <ProfileSettingItemLink icon={<SecurityIcon />} text='Change Password' testId='p-settings-password' navigatePath='/account/profile-center/change-password' onClick={() => {}} />
                     <ProfileSettingItemLink icon={<MailLockIcon />} text='Change Email' testId='p-settings-email' navigatePath='/account/profile-center/change-email' />
                     <ProfileSettingItemLink icon={<NightlightIcon />} text='Display & accessibility' testId='p-settings-accessibility' navigatePath='/account/profile-center/accessibility' />
                 </CardContent>
