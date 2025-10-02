@@ -8,7 +8,7 @@ import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
-describe('Account Change Email Page Container', () => {
+describe('Account Change Username Page Container', () => {
     let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe('Account Change Email Page Container', () => {
         auth0Tester.resetSpyAuth0();
     });
 
-    test('renders account change email page container', async () => {
+    test('renders account change username page container', async () => {
         auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
@@ -35,7 +35,8 @@ describe('Account Change Email Page Container', () => {
         );
 
         await screen.findByText('Profile Center');
-        await screen.findByText('Change Username');
+        const elements = screen.getAllByText('Change Username');
+        expect(elements.length).toBe(2);
 
         expect(document.title).toBe('Profile Center - Change Username');
     });

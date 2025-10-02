@@ -8,7 +8,7 @@ import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
-describe('Account Change Email Page', () => {
+describe('Account Change Username Page', () => {
     let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
@@ -37,7 +37,8 @@ describe('Account Change Email Page', () => {
         );
 
         await screen.findByText('Profile Center');
-        await screen.findByText('Change Username');
+        const elements = screen.getAllByText('Change Username');
+        expect(elements.length).toBe(2);
 
         expect(document.title).toBe('Profile Center - Change Username');
     });

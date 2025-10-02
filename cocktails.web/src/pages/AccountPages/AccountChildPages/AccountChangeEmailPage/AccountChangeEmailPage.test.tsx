@@ -37,7 +37,8 @@ describe('Account Change Email Page', () => {
         );
 
         await screen.findByText('Profile Center');
-        await screen.findByText('Change Email');
+        const elements = screen.getAllByText('Change Email');
+        expect(elements.length).toBe(2);
 
         expect(document.title).toBe('Profile Center - Change Email');
     });
