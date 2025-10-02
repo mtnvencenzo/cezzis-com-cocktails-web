@@ -28,6 +28,7 @@ const AccountNavigationPage = React.lazy(() => import('./pages/AccountPages/Acco
 const AccountProfileImagePage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountProfileImagePage/AccountProfileImagePage'));
 const AccountPersonalDetailsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountPersonalDetailsPage/AccountPersonalDetailsPage'));
 const AccountChangeEmailPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountChangeEmailPage/AccountChangeEmailPage'));
+const ChangeAccountPasswordPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/ChangeAccountPassword/ChangeAccountPasswordPage'));
 const AccountAccessibilityPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountAccessibilityPage/AccountAccessibilityPage'));
 const AccountFavoriteCocktailsPage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountFavoriteCocktailsPage/AccountFavoriteCocktailsPage'));
 const AccountTermsOfServicePage = React.lazy(() => import('./pages/AccountPages/AccountChildPages/AccountTermsOfServicePage/AccountTermsOfServicePage'));
@@ -244,6 +245,14 @@ const router = createBrowserRouter(
                                     element: (
                                         <React.Suspense>
                                             <AccountChangeEmailPage />
+                                        </React.Suspense>
+                                    )
+                                },
+                                {
+                                    path: '/account/profile-center/change-password',
+                                    element: (
+                                        <React.Suspense>
+                                            <ChangeAccountPasswordPage />
                                         </React.Suspense>
                                     )
                                 },

@@ -839,6 +839,49 @@ export class CocktailsApiClient extends CocktailsApiClientBase {
             });
         }
     }
+
+    /**
+     * @param body The account password update request body
+     * @param x_Key (optional) Subscription key
+     * @return No Content
+     */
+    changeAccountOwnedPassword(body: ChangeAccountOwnedPasswordRq, x_Key?: string | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/accounts/owned/profile/password";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "X-Key": x_Key !== undefined && x_Key !== null ? "" + x_Key : "",
+                "Content-Type": "application/json; x-api-version=1.0",
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processChangeAccountOwnedPassword(_response));
+        });
+    }
+
+    protected processChangeAccountOwnedPassword(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else {
+            return response.text().then((_responseText) => {
+            let resultdefault: any = null;
+            resultdefault = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ProblemDetails;
+            return throwException("A server side error occurred.", status, _responseText, _headers, resultdefault);
+            });
+        }
+    }
 }
 
 /** The accessibility settings for the account */
@@ -933,6 +976,13 @@ export interface AccountOwnedProfileRs {
     /** The list of favorite cocktails */
     favoriteCocktails: string[];
     notifications: AccountNotificationSettingsModel;
+
+    [key: string]: any;
+}
+
+export interface ChangeAccountOwnedPasswordRq {
+    /** The email address for the account */
+    email: string;
 
     [key: string]: any;
 }
