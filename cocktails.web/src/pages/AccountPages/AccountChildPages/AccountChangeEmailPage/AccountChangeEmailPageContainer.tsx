@@ -97,7 +97,7 @@ const AccountChangeEmailPageContainer = () => {
                                     slotProps={{ htmlInput: { 'data-testid': 'txtEmail' } }}
                                     data-testid='divEmail'
                                     autoComplete='email'
-                                    label='New Email / Username'
+                                    label='New email address'
                                     variant='standard'
                                     error={email.hasError}
                                     required
