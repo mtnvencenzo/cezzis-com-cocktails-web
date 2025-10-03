@@ -9,6 +9,7 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import startPageViewSpan from '../../../../services/Tracer';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
+import logger from '../../../../services/Logger';
 
 const ChangeAccountPasswordPageContainer = () => {
     const { ownedAccount } = useOwnedAccount();
@@ -25,12 +26,17 @@ const ChangeAccountPasswordPageContainer = () => {
     };
 
     const handleChangePassword = async () => {
-        await changeOwnedAccountProfilePassword({
-            email: ownedAccount?.email ?? ''
-        });
+        try {
+            await changeOwnedAccountProfilePassword({
+                email: ownedAccount?.email ?? ''
+            });
 
-        setOpenConfirmation(false);
-        toast.success('An email to change your password has been sent!', { position: 'top-left' });
+            setOpenConfirmation(false);
+            toast.success('An email to change your password has been sent!', { position: 'top-left' });
+        } catch (error) {
+            logger.logException('Failed changing a user account password', error as Error);
+            toast.error(`We were unable to initiate the password reset. Please try again.`, { position: 'top-left' });
+        }
     };
 
     useEffect(() => {

@@ -9,6 +9,7 @@ import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrow
 import startPageViewSpan from '../../../../services/Tracer';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
 import { useAuth0 } from '../../../../components/Auth0Provider';
+import logger from '../../../../services/Logger';
 
 interface FieldValueState<T> {
     value: T;
@@ -38,12 +39,17 @@ const AccountChangeUsernamePageContainer = () => {
     };
 
     const handleChangeUsername = async () => {
-        await changeOwnedAccountProfileUsername({
-            username: username.value ?? ''
-        });
+        try {
+            await changeOwnedAccountProfileUsername({
+                username: username.value ?? ''
+            });
 
-        setOpenConfirmation(false);
-        toast.success('Your username has been changed!', { position: 'top-left' });
+            setOpenConfirmation(false);
+            toast.success('Your username has been changed!', { position: 'top-left' });
+        } catch (error) {
+            logger.logException('Failed changing a user account username', error as Error);
+            toast.error(`We were unable to change your username. Please try again.`, { position: 'top-left' });
+        }
     };
 
     useEffect(() => {

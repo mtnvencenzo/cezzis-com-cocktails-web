@@ -9,6 +9,7 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import startPageViewSpan from '../../../../services/Tracer';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
+import logger from '../../../../services/Logger';
 
 interface FieldValueState<T> {
     value: T;
@@ -37,12 +38,17 @@ const AccountChangeEmailPageContainer = () => {
     };
 
     const handleChangeEmail = async () => {
-        await changeOwnedAccountProfileEmail({
-            email: email.value ?? ''
-        });
+        try {
+            await changeOwnedAccountProfileEmail({
+                email: email.value ?? ''
+            });
 
-        setOpenConfirmation(false);
-        toast.success('Your email has been changed!', { position: 'top-left' });
+            setOpenConfirmation(false);
+            toast.success('Your email has been changed!', { position: 'top-left' });
+        } catch (error) {
+            logger.logException('Failed changing a user account email', error as Error);
+            toast.error(`We were unable to change your email. Please try again.`, { position: 'top-left' });
+        }
     };
 
     useEffect(() => {
