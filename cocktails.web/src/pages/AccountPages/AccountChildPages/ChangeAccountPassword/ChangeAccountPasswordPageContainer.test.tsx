@@ -10,6 +10,7 @@ import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { ChangeAccountOwnedPasswordRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 
 vi.mock('react-toastify', async () => {
     const actual = await vi.importActual('react-toastify');
@@ -136,8 +137,7 @@ describe('Account Change Password Page Container', () => {
         server.use(
             http.put('http://localhost:0/api/v1/accounts/owned/profile/password', async ({ request }) => {
                 apiCallMade = true;
-                const body = await request.json();
-                expect(body).toHaveProperty('email');
+                const body = (await request.json()) as ChangeAccountOwnedPasswordRq;
                 expect(body.email).toBe('test@tester.com');
 
                 return HttpResponse.json(null, {
