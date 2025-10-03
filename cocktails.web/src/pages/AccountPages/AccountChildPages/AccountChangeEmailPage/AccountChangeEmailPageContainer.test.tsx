@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
@@ -118,14 +118,11 @@ describe('Account Change Email Page Container', () => {
         const cancelButton = await screen.findByTestId('alert-modal-cancel');
         fireEvent.click(cancelButton);
 
-        // Verify the dialog is closed - the alert dialog text should no longer be in the document
-        // Note: We can't use queryByText directly because the dialog component may still be in the DOM but hidden
-        // We need to wait a moment for the state to update
-        await new Promise((resolve) => setTimeout(resolve, 100));
-
-        // The button text "Cancel" should still exist, but the dialog title should not be visible
-        const dialogTitle = screen.queryByText('Change your email?');
-        expect(dialogTitle).toBeNull();
+        // Alert dialog should be closed
+        await waitFor(() => {
+            expect(screen.queryByText('Change your email?')).not.toBeInTheDocument();
+            expect(screen.queryByText('Are you sure you would like to change your email?')).not.toBeInTheDocument();
+        });
     });
 
     test('calls API endpoint when user confirms email change', async () => {
