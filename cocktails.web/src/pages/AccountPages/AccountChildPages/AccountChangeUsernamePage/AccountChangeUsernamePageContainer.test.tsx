@@ -172,15 +172,15 @@ describe('Account Change Username Page Container', () => {
 
         // Mock the API endpoint for failed username change
         server.use(
-            http.put('http://localhost:0/api/v1/accounts/owned/profile/username', async () => {
-                return HttpResponse.json(
+            http.put('http://localhost:0/api/v1/accounts/owned/profile/username', async () =>
+                HttpResponse.json(
                     { errors: ['Username is already taken'] },
                     {
                         status: 400,
                         statusText: 'Bad Request'
                     }
-                );
-            })
+                )
+            )
         );
 
         render(
