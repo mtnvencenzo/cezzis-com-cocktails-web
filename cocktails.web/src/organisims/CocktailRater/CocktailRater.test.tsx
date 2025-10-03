@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailRater from './CocktailRater';
@@ -25,19 +25,21 @@ describe('Cocktail Rater', () => {
         auth0Tester.resetSpyAuth0();
     });
 
-    test('renders correctly when user is not logged in', () => {
+    test('renders correctly when user is not logged in', async () => {
         auth0Tester.isNotLogged();
-        
+
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         // Check that the rating button is present
@@ -53,7 +55,7 @@ describe('Cocktail Rater', () => {
         expect(screen.getByText(`${testCocktail.rating.ratingCount} Ratings`)).toBeInTheDocument();
     });
 
-    test('renders correctly when user is logged in with no ratings', () => {
+    test('renders correctly when user is logged in with no ratings', async () => {
         auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
@@ -61,14 +63,16 @@ describe('Cocktail Rater', () => {
 
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         // Check that the rating button is present
@@ -79,24 +83,24 @@ describe('Cocktail Rater', () => {
         expect(screen.getByText(`${testCocktail.rating.ratingCount} Ratings`)).toBeInTheDocument();
     });
 
-    test('renders correctly when user is logged in with existing rating', () => {
+    test('renders correctly when user is logged in with existing rating', async () => {
         auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
         sessionStorageService.SetOwnedAccountProfileRequestData(getTestOwnedAccountProfile());
-        sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(
-            getTestOwnedAccountCocktailRatings([{ cocktailId: testCocktail.id, stars: 4 }])
-        );
+        sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(getTestOwnedAccountCocktailRatings([{ cocktailId: testCocktail.id, stars: 4 }]));
 
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         // Check that the rating button is present
@@ -109,21 +113,23 @@ describe('Cocktail Rater', () => {
 
     test('clicking rating button when not logged in', async () => {
         auth0Tester.isNotLogged();
-        
+
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         const ratingButton = screen.getByTestId(`cocktail-rating-${testCocktail.id}`);
-        
+
         // Click the rating button
         await userEvent.click(ratingButton);
 
@@ -139,18 +145,20 @@ describe('Cocktail Rater', () => {
 
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         const ratingButton = screen.getByTestId(`cocktail-rating-${testCocktail.id}`);
-        
+
         // Click the rating button
         await userEvent.click(ratingButton);
 
@@ -160,38 +168,42 @@ describe('Cocktail Rater', () => {
         expect(ratingButton).toBeInTheDocument(); // Basic check that component is still rendered
     });
 
-    test('displays correct rating count from cocktail data', () => {
+    test('displays correct rating count from cocktail data', async () => {
         auth0Tester.isNotLogged();
-        
+
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         // Verify the correct rating count is displayed
         expect(screen.getByText(`${testCocktail.rating.ratingCount} Ratings`)).toBeInTheDocument();
     });
 
-    test('rating component displays cocktail rating value', () => {
+    test('rating component displays cocktail rating value', async () => {
         auth0Tester.isNotLogged();
-        
+
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         // Check that the rating element exists and displays the correct aria-label
@@ -199,26 +211,28 @@ describe('Cocktail Rater', () => {
         expect(ratingElement).toHaveAttribute('aria-label', `${testCocktail.rating.rating} Stars`);
     });
 
-    test('component uses correct CSS classes and test IDs', () => {
+    test('component uses correct CSS classes and test IDs', async () => {
         auth0Tester.isNotLogged();
-        
+
         const mockOnCocktailRated = vi.fn();
 
-        render(
-            <GlobalContext>
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
-                    </MemoryRouter>
-                </Auth0Provider>
-            </GlobalContext>
+        await act(async () =>
+            render(
+                <GlobalContext>
+                    <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                        <MemoryRouter>
+                            <CocktailRater cocktail={testCocktail} onCocktailRated={mockOnCocktailRated} />
+                        </MemoryRouter>
+                    </Auth0Provider>
+                </GlobalContext>
+            )
         );
 
         const ratingButton = screen.getByTestId(`cocktail-rating-${testCocktail.id}`);
-        
+
         // Check that the button has the correct CSS class for tooltip targeting
         expect(ratingButton).toHaveClass(`tip-cocktail-rating-${testCocktail.id}`);
-        
+
         // Check that the rating element has the correct test ID
         const ratingElement = screen.getByTestId(`rating-${testCocktail.id}`);
         expect(ratingElement).toBeInTheDocument();
