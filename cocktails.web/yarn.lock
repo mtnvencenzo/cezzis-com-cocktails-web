@@ -667,11 +667,6 @@
     outvariant "^1.4.3"
     strict-event-emitter "^0.5.1"
 
-"@mtnvencenzo/kelso-component-library@^1.0.4":
-  version "1.0.4"
-  resolved "https://npm.pkg.github.com/download/@mtnvencenzo/kelso-component-library/1.0.4/5fafad4100e9330f0438427b188c7a479b3d8965#5fafad4100e9330f0438427b188c7a479b3d8965"
-  integrity sha512-aDSSB51mcrDDP8aJfbMiAvGNZER62VmKW1fyZ72PNYYzDVVrd/FPDD7g0GDcduiqDfnlixQc1XmMldiqmvXYYQ==
-
 "@mui/core-downloads-tracker@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-7.1.0.tgz#0767bad9a74aaeb0032da7390d1d1c32653e31d8"
