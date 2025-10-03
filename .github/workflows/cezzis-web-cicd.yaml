@@ -38,6 +38,7 @@ jobs:
   build:
     name: Build app
     uses: mtnvencenzo/workflows/.github/workflows/ui-build.yaml@main
+    needs: [gitVersion]
     with:
       working_directory: 'cocktails.web'
       node_version: '23.5.x'
