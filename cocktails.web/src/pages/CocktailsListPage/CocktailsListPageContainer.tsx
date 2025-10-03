@@ -166,7 +166,7 @@ const CocktailsListPageContainer = () => {
                         next={throttledFetchData}
                         hasMore={hasMore && !isFetching && !fetchingRef.current}
                         loader={<h4>Loading...</h4>}
-                        scrollThreshold={0.5}
+                        scrollThreshold={0.7}
                         endMessage={
                             <p style={{ textAlign: 'center', marginTop: '20px' }}>
                                 <b>You&apos;ve seen all cocktails!</b>

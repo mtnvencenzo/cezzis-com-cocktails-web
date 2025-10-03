@@ -48,8 +48,9 @@ const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue,
                         .join(', ')}
                 </Typography>
                 {cocktail.ingredients &&
-                    cocktail.ingredients.map((i) => (
-                        <Typography key={`${(i.types ?? []).map((x) => x[0]).join('')}-${i.name}`} noWrap gutterBottom>
+                    cocktail.ingredients.map((i, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <Typography key={`${cocktail.id}-${index}-${(i.types ?? []).map((x) => x[0]).join('')}-${i.name}`} noWrap gutterBottom>
                             <li>{i.display}</li>
                         </Typography>
                     ))}
