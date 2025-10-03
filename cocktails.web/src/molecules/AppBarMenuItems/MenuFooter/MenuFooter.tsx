@@ -1,4 +1,5 @@
-import { MenuItem, Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import MenuLink from '../../../atoms/MenuLink/MenuLink';
 import showCookieBot from '../../../utils/cookiebot';
 

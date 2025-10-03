@@ -1,4 +1,5 @@
-import { Button, SxProps, Theme } from '@mui/material';
+import Button from '@mui/material/Button';
+import type { SxProps, Theme } from '@mui/material/styles';
 import CocktailFiltersLocalStorageService from '../../services/CocktailFiltersLocalStorageService';
 
 const filtersStorageService = new CocktailFiltersLocalStorageService();

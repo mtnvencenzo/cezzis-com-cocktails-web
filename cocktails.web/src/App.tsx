@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import AuthRoutes from './components/AuthRoutes';
 import AnonymousRoutes from './components/AnonymousRoutes';
 import Layout from './templates/Layout/Layout';

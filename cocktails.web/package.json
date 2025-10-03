@@ -12,7 +12,8 @@
         "build:prod": "tsc -p tsconfig.prod.json && vite build --mode prod",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=http://localhost:7177/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts"
+        "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=http://localhost:7177/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts",
+        "analyze": "vite-bundle-visualizer --template=treemap --open"
     },
     "dependencies": {
         "@auth0/auth0-spa-js": "^2.4.1",
@@ -85,6 +86,7 @@
         "typescript": "^5.9.3",
         "vite": "^7.1.9",
         "vite-bundle-visualizer": "^1.2.1",
+        "vite-plugin-compression": "^0.5.1",
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-mkcert": "^1.17.8",
         "vite-tsconfig-paths": "^5.1.4",

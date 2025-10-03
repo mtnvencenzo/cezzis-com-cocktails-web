@@ -1,5 +1,6 @@
 import React from 'react';
-import { MenuItem, Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { useNavigate } from 'react-router-dom';
 

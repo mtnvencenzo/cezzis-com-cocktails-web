@@ -1,5 +1,6 @@
 import React from 'react';
-import { MenuItem, Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useAuth0 } from '../../../components/Auth0Provider';
 import { clearOwnedAccountLoginSession, logoutParams } from '../../../utils/authConfig';

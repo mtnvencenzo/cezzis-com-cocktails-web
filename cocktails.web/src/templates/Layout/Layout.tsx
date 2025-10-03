@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { Box, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
 import MainAppBar from '../../organisims/MainAppBar/MainAppBar';
 import theme from '../../theme';

@@ -1,4 +1,9 @@
-import { Card, Typography, CardContent, CardActions, CardMedia, CardActionArea } from '@mui/material';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import CardMedia from '@mui/material/CardMedia';
+import CardActionArea from '@mui/material/CardActionArea';
 import './CocktailTile.css';
 import { Link } from 'react-router-dom';
 import React from 'react';

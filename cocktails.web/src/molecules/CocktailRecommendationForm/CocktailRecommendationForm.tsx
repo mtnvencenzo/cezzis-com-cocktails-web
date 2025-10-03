@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Button, CircularProgress, TextField, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { sendRecommendation } from '../../services/AccountService';

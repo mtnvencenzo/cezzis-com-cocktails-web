@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, useMediaQuery, IconButton, useTheme, Card, Grid, Skeleton } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
 import { getCocktailsSearchFilters } from '../../services/CocktailsService';
 import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import CocktailFiltersLocalStorageService from '../../services/CocktailFiltersLocalStorageService';

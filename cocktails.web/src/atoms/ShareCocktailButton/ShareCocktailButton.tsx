@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import ShareIcon from '@mui/icons-material/Share';
 import { TooltipRefProps } from 'react-tooltip';
 import logger from '../../services/Logger';

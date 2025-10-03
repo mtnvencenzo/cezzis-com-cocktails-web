@@ -1,4 +1,5 @@
-import { Paper, PaperProps } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import type { PaperProps } from '@mui/material/Paper';
 
 const SearchBoxAutocompletePaper = (props: PaperProps) => {
     const { children } = props;

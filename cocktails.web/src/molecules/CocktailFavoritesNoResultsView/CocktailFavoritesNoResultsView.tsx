@@ -1,4 +1,6 @@
-import { Grid, IconButton, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import './CocktailFavoritesNoResultsView.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';

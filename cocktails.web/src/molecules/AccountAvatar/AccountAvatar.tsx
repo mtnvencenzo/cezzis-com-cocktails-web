@@ -1,4 +1,7 @@
-import { Avatar, Box, ButtonBase, styled } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import ButtonBase from '@mui/material/ButtonBase';
+import { styled } from '@mui/material/styles';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 
 const ImageButton = styled(ButtonBase)({

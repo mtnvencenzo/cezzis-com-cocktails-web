@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Box, Rating } from '@mui/material';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 import AlertDialog from '../AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import { CocktailModel, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';

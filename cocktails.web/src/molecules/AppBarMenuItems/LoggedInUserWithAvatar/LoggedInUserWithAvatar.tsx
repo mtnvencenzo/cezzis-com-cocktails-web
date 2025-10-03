@@ -1,5 +1,7 @@
 import React from 'react';
-import { Avatar, MenuItem, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { useOwnedAccount } from '../../../components/OwnedAccountContext';
 import { getOwnedAccountName } from '../../../utils/accountOwnedProfileExtentions';

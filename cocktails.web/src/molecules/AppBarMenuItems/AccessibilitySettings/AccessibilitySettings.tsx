@@ -1,4 +1,6 @@
-import { Grid, MenuItem, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import { useNavigate } from 'react-router-dom';
 

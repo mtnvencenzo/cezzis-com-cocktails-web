@@ -1,4 +1,7 @@
-import { Grid, MenuItem, Switch, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import MenuItem from '@mui/material/MenuItem';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 interface DarkModeProps {

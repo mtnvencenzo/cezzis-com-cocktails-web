@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import React, { useRef, useState } from 'react';
 import { TooltipRefProps } from 'react-tooltip';

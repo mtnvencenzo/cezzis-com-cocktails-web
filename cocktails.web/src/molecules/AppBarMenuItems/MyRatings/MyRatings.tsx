@@ -1,5 +1,6 @@
 import React from 'react';
-import { MenuItem, Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { useNavigate } from 'react-router-dom';
 

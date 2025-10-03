@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import compression from 'vite-plugin-compression';
 // eslint-disable-next-line import/no-unresolved
 import react from '@vitejs/plugin-react';
 
@@ -12,8 +13,20 @@ export default ({ mode }) => {
         build: {
             assetsDir: '',
             target: 'esnext',
+            // Enable minification optimizations
+            minify: 'esbuild',
+            // Split CSS into separate files for better caching
+            cssCodeSplit: true,
+            // Reduce chunk size warning threshold
+            chunkSizeWarningLimit: 600,
+            // Enable tree-shaking for better bundle size
             rollupOptions: {
+                treeshake: {
+                    preset: 'recommended',
+                    moduleSideEffects: false
+                },
                 output: {
+                    experimentalMinChunkSize: 20000,
                     manualChunks(id) {
                         // 1. Group all Node.js modules into a 'vendor' chunk
                         if (id.includes('node_modules')) {
@@ -22,14 +35,25 @@ export default ({ mode }) => {
                             if (id.includes('react') || id.includes('react-dom')) {
                                 return 'vendor-react';
                             }
-                            // 2. Create a specific chunk for a large utility library
-                            if (id.includes('mui')) {
-                                return 'vendor-mui';
+                            // 2. Split MUI into smaller chunks for better caching
+                            if (id.includes('@mui/material')) {
+                                return 'vendor-mui-material';
+                            }
+                            if (id.includes('@mui/icons-material')) {
+                                return 'vendor-mui-icons';
+                            }
+                            if (id.includes('@mui/system') || id.includes('@mui/utils') || id.includes('@emotion')) {
+                                return 'vendor-mui-system';
                             }
 
                             // 2. Create a specific chunk for a large utility library
                             if (id.includes('kelso-component')) {
                                 return 'vendor-mtnvencenzo';
+                            }
+
+                            // 2. Create a specific chunk for OpenTelemetry (likely large)
+                            if (id.includes('@opentelemetry')) {
+                                return 'vendor-telemetry';
                             }
 
                             // 2. Create a specific chunk for a large utility library
@@ -43,6 +67,11 @@ export default ({ mode }) => {
                         // 4. Group common components or shared logic
                         if (id.includes('src/components') || id.includes('src/utils') || id.includes('src/services')) {
                             return 'common-components';
+                        }
+
+                        // 4. Group routing-related code
+                        if (id.includes('react-router') || (id.includes('src/pages') && !id.includes('src/pages/'))) {
+                            return 'routing';
                         }
 
                         // 4. Group common components or shared logic
@@ -68,9 +97,28 @@ export default ({ mode }) => {
         resolve: {
             conditions: ['mui-modern', 'module', 'browser', 'local|development|production']
         },
-        plugins: [react(), tsconfigPaths(), mkcert()],
+        plugins: [
+            react(),
+            tsconfigPaths(),
+            mkcert(),
+            // Gzip compression for production builds
+            compression({
+                algorithm: 'gzip',
+                threshold: 10240, // Only compress files larger than 10KB
+                deleteOriginFile: false
+            }),
+            // Brotli compression for modern browsers
+            compression({
+                algorithm: 'brotliCompress',
+                ext: '.br',
+                threshold: 10240,
+                deleteOriginFile: false
+            })
+        ],
         optimizeDeps: {
-            include: ['@mui/material', '@mui/system', '@mui/utils', '@mui/base', '@mui/icons-material', 'lodash']
+            include: ['@mui/material', '@mui/system', '@mui/utils', '@mui/base', '@mui/icons-material', 'lodash-es', 'react', 'react-dom', 'react-router-dom'],
+            // Exclude OpenTelemetry from pre-bundling for better chunking
+            exclude: ['@opentelemetry/api', '@opentelemetry/sdk-trace-web']
         }
     });
 };

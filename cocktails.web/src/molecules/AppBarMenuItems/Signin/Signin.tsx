@@ -1,5 +1,7 @@
 import React from 'react';
-import { Avatar, MenuItem, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { loginWithRedirectOptions } from '../../../utils/authConfig';
 import { useAuth0 } from '../../../components/Auth0Provider';
 import SessionStorageService from '../../../services/SessionStorageService';

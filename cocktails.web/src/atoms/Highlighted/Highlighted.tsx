@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { escapeRegExp } from 'lodash';
 import { Link } from 'react-router-dom';
