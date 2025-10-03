@@ -1,53 +1,54 @@
 import { Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
-import { changeOwnedAccountProfileEmail } from '../../../../services/AccountService';
+import { changeOwnedAccountProfileUsername } from '../../../../services/AccountService';
 import theme from '../../../../theme';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import startPageViewSpan from '../../../../services/Tracer';
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
+import { useAuth0 } from '../../../../components/Auth0Provider';
 import logger from '../../../../services/Logger';
 
 interface FieldValueState<T> {
     value: T;
     hasError: boolean;
 }
-const AccountChangeEmailPageContainer = () => {
-    const { ownedAccount } = useOwnedAccount();
+
+const AccountChangeUsernamePageContainer = () => {
+    const { user } = useAuth0();
     const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
-    const [email, setEmail] = useState<FieldValueState<string | null>>({ value: ownedAccount?.email ?? '', hasError: false });
+    const [username, setUsername] = useState<FieldValueState<string | null>>({ value: user?.username ?? '', hasError: false });
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail({
+    const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername({
             value: event.target.value,
             hasError: false
         });
     };
 
-    const handleCancelChangeEmail = async () => {
+    const handleCancelChangeUsername = async () => {
         setOpenConfirmation(false);
     };
 
-    const confirmChangeEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const confirmChangeUsername = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setOpenConfirmation(true);
     };
 
-    const handleChangeEmail = async () => {
+    const handleChangeUsername = async () => {
         try {
-            await changeOwnedAccountProfileEmail({
-                email: email.value ?? ''
+            await changeOwnedAccountProfileUsername({
+                username: username.value ?? ''
             });
 
             setOpenConfirmation(false);
-            toast.success('Your email has been changed!', { position: 'top-left' });
+            toast.success('Your username has been changed!', { position: 'top-left' });
         } catch (error) {
-            logger.logException('Failed changing a user account email', error as Error);
-            toast.error(`We were unable to change your email. Please try again.`, { position: 'top-left' });
+            logger.logException('Failed changing a user account username', error as Error);
+            toast.error(`We were unable to change your username. Please try again.`, { position: 'top-left' });
         }
     };
 
@@ -57,8 +58,8 @@ const AccountChangeEmailPageContainer = () => {
 
     return (
         <>
-            <title>Profile Center - Change Email</title>
-            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/profile-center/change-email`} />
+            <title>Profile Center - Change Username</title>
+            <link rel='canonical' href={`${trimWhack(getWindowEnv().VITE_AUTH0_REDIRECT_URI)}/account/profile-center/change-username`} />
             <meta name='robots' content='noindex,follow' />
 
             {isSmOrXs && <BackArrowLinkItem />}
@@ -76,7 +77,7 @@ const AccountChangeEmailPageContainer = () => {
                 <Grid size={12} sx={{ pt: '5px' }}>
                     <Typography variant='h6'>Profile Center</Typography>
                 </Grid>
-                <Grid id='change-email' size={12} sx={{ pb: '50px' }}>
+                <Grid id='change-username' size={12} sx={{ pb: '50px' }}>
                     <Grid
                         container
                         sx={{
@@ -84,33 +85,33 @@ const AccountChangeEmailPageContainer = () => {
                         }}
                     >
                         <Grid size={12} sx={{ pb: '10px' }}>
-                            <Typography variant='h6'>Change Email</Typography>
+                            <Typography variant='h6'>Change Username</Typography>
                             <Divider />
                             <Typography sx={{ pt: '10px', color: 'text.secondary' }}>
-                                Enter your new email address below and click the Change Email button.
+                                Enter your new username below and click the Change Username button.
                                 <br />
                                 <br />
                             </Typography>
                             <Grid size={{ md: 4, sm: 6 }}>
                                 <br />
                                 <TextField
-                                    slotProps={{ htmlInput: { 'data-testid': 'txtEmail' } }}
-                                    data-testid='divEmail'
-                                    autoComplete='email'
-                                    label='New Email / Username'
+                                    slotProps={{ htmlInput: { 'data-testid': 'txtUsername' } }}
+                                    data-testid='divUsername'
+                                    autoComplete='username'
+                                    label='New username'
                                     variant='standard'
-                                    error={email.hasError}
+                                    error={username.hasError}
                                     required
-                                    value={email.value}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(event)}
+                                    value={username.value}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsernameChange(event)}
                                     sx={{ marginTop: '0px', paddingTop: '0px', marginBottom: '30px', paddingBottom: '0px' }}
                                 />
                             </Grid>
                         </Grid>
 
                         <Grid size={12} sx={{ backgroundColor: 'rgba(245,245,245,.5)' }}>
-                            <Button data-testid='btnChangeEmail' variant='outlined' color='primary' onClick={confirmChangeEmail}>
-                                Change Email
+                            <Button data-testid='btnChangeUsername' variant='outlined' color='primary' onClick={confirmChangeUsername}>
+                                Change Username
                             </Button>
                         </Grid>
                     </Grid>
@@ -118,15 +119,15 @@ const AccountChangeEmailPageContainer = () => {
             </Grid>
             <AlertDialog
                 open={openConfirmation}
-                title='Change your email?'
-                content='Are you sure you would like to change your email?'
+                title='Change your username?'
+                content='Are you sure you would like to change your username?'
                 cancelButtonText='Cancel'
-                confirmButtonText='Change Email'
-                onCancel={handleCancelChangeEmail}
-                onConfirm={handleChangeEmail}
+                confirmButtonText='Change Username'
+                onCancel={handleCancelChangeUsername}
+                onConfirm={handleChangeUsername}
             />
         </>
     );
 };
 
-export default AccountChangeEmailPageContainer;
+export default AccountChangeUsernamePageContainer;

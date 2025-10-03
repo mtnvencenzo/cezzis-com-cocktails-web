@@ -2,13 +2,13 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import GlobalContext from '../../../../components/GlobalContexts';
-import AccountChangeEmailPageContainer from './AccountChangeEmailPageContainer';
+import AccountChangeUsernamePageContainer from './AccountChangeUsernamePageContainer';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 
-describe('Account Change Email Page Container', () => {
+describe('Account Change Username Page Container', () => {
     let auth0Tester: Auth0ReactTester;
 
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe('Account Change Email Page Container', () => {
         auth0Tester.resetSpyAuth0();
     });
 
-    test('renders account change email page container', async () => {
+    test('renders account change username page container', async () => {
         auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
@@ -28,16 +28,16 @@ describe('Account Change Email Page Container', () => {
             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <GlobalContext>
                     <MemoryRouter>
-                        <AccountChangeEmailPageContainer />
+                        <AccountChangeUsernamePageContainer />
                     </MemoryRouter>
                 </GlobalContext>
             </Auth0Provider>
         );
 
         await screen.findByText('Profile Center');
-        const elements = screen.getAllByText('Change Email');
+        const elements = screen.getAllByText('Change Username');
         expect(elements.length).toBe(2);
 
-        expect(document.title).toBe('Profile Center - Change Email');
+        expect(document.title).toBe('Profile Center - Change Username');
     });
 });
