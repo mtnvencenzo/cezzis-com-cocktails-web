@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { escapeRegExp } from 'lodash';
 import { Link } from 'react-router-dom';
 

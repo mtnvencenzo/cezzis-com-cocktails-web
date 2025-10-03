@@ -35,9 +35,6 @@ const AccountNavigationBar = ({ testId, fullScreen = false }: AccountNavigationB
                     </Typography>
                     <ProfileSettingItemLink icon={<PersonIcon />} text='Personal details' testId='p-settings-personal-details' navigatePath='/account/profile-center/personal-details' />
                     <ProfileSettingItemLink icon={<FaceIcon />} text='Profile Image' testId='p-settings-profile-image' navigatePath='/account/profile-center/avatar' />
-                    <ProfileSettingItemLink icon={<MailLockIcon />} text='Change Email' testId='p-settings-email' navigatePath='/account/profile-center/change-email' />
-                    <ProfileSettingItemLink icon={<SecurityIcon />} text='Change Password' testId='p-settings-password' navigatePath='/account/profile-center/change-password' onClick={() => {}} />
-                    <ProfileSettingItemLink icon={<BadgeIcon />} text='Change Username' testId='p-settings-username' navigatePath='/account/profile-center/change-username' onClick={() => {}} />
                     <ProfileSettingItemLink icon={<NightlightIcon />} text='Display & accessibility' testId='p-settings-accessibility' navigatePath='/account/profile-center/accessibility' />
                 </CardContent>
             </Card>
@@ -54,6 +51,21 @@ const AccountNavigationBar = ({ testId, fullScreen = false }: AccountNavigationB
                     <ProfileSettingItemLink icon={<FavoriteIcon />} text='Favorite Cocktail Recipes' testId='p-settings-favorite-cocktails' navigatePath='/account/interactions/favorite-cocktails' />
                     <ProfileSettingItemLink icon={<GradeIcon />} text='My Cocktail Ratings' testId='p-settings-my-ratings' navigatePath='/account/interactions/cocktail-ratings' />
                     <ProfileSettingItemLink icon={<NotificationsIcon />} text='Notification Settings' testId='p-settings-notifications' navigatePath='/account/interactions/notifications' />
+                </CardContent>
+            </Card>
+        </Box>
+        <Box sx={{ mt: '20px' }}>
+            <Card variant='outlined' sx={{ borderRadius: '10px' }}>
+                <CardContent>
+                    <Typography component='div'>
+                        <b>Account / Security</b>
+                    </Typography>
+                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 16 }}>
+                        Modify and update your account security settings and preferences.
+                    </Typography>
+                    <ProfileSettingItemLink icon={<MailLockIcon />} text='Change Email' testId='p-settings-email' navigatePath='/account/profile-center/change-email' />
+                    <ProfileSettingItemLink icon={<SecurityIcon />} text='Change Password' testId='p-settings-password' navigatePath='/account/profile-center/change-password' onClick={() => {}} />
+                    <ProfileSettingItemLink icon={<BadgeIcon />} text='Change Username' testId='p-settings-username' navigatePath='/account/profile-center/change-username' onClick={() => {}} />
                 </CardContent>
             </Card>
         </Box>

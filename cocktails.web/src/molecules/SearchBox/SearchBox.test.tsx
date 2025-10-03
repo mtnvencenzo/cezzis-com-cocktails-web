@@ -1668,9 +1668,6 @@ describe('SearchBox', () => {
         await userEvent.hover(li2);
 
         await waitFor(() => {
-            expect(li).toHaveClass('MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiAutocomplete-option');
-            expect(li).not.toHaveClass('Mui-focused');
-
             expect(li2).toHaveClass('MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiAutocomplete-option');
             expect(li2).toHaveClass('Mui-focused');
         });

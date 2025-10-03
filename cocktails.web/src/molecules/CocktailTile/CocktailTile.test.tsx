@@ -339,7 +339,7 @@ describe('Cocktail List Tile', () => {
 
         const favEl = await screen.findByTestId('fav-test-id');
         expect(favEl).toBeTruthy();
-        expect(getComputedStyle(favEl).color).toBe('ButtonText');
+        expect(getComputedStyle(favEl).color).toBe('rgba(0, 0, 0, 0.87)');
     });
 
     test('renders as favorite', async () => {

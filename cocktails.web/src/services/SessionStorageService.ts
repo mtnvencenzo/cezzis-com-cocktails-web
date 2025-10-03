@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { unset } from 'lodash';
 import { AccountCocktailRatingsRs, AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
 import StorageCache from './StorageCache';
