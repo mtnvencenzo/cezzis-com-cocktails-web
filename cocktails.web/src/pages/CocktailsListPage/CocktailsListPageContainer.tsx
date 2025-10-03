@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import './CocktailsListPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
-import { DEFAULT_TAKE, getCocktailsList } from '../../services/CocktailsService';
+import { getCocktailsList } from '../../services/CocktailsService';
 import { CocktailsListModel, CocktailDataIncludeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
@@ -22,43 +22,109 @@ const CocktailsListPageContainer = () => {
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();
+    const TAKE = 20;
 
-    const fetchData = async (span?: Span) => {
-        if (isFetching) {
+    // Use a ref to track if a fetch is in progress to prevent race conditions
+    const fetchingRef = useRef<boolean>(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const lastFetchTimeRef = useRef<number>(0);
+    const lastSkipFetchedRef = useRef<number>(-1);
+    const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const minFetchIntervalMs = 800; // Minimum 800ms between fetches
+
+    const fetchData = useCallback(
+        async (span?: Span) => {
+            const now = Date.now();
+
+            // Use ref for immediate check and state for UI
+            if (fetchingRef.current || isFetching) {
+                return;
+            }
+
+            // Prevent fetches that are too close together
+            if (now - lastFetchTimeRef.current < minFetchIntervalMs) {
+                return;
+            }
+
+            // Prevent duplicate fetches for the same skip value
+            if (lastSkipFetchedRef.current === skip) {
+                return;
+            }
+
+            try {
+                // Set both ref and state immediately to prevent race conditions
+                fetchingRef.current = true;
+                setIsFetching(true);
+                lastFetchTimeRef.current = now;
+                lastSkipFetchedRef.current = skip;
+
+                const rs = await getCocktailsList(skip, TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
+                const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
+
+                setSkip((prev) => prev + TAKE);
+                setApiCallFailed(false);
+                setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
+                setHasMore((rs?.items && rs?.items.length === TAKE) ?? false);
+            } catch (e: unknown) {
+                setApiCallFailed(true);
+                setHasMore(false);
+                span?.recordException(e as Error);
+                span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
+            }
+
+            setLoading(false);
+            fetchingRef.current = false;
+            setIsFetching(false);
+            span?.end();
+        },
+        [skip, isFetching]
+    );
+
+    // Throttled wrapper for infinite scroll that enforces timing
+    const throttledFetchData = useCallback(() => {
+        if (fetchingRef.current) {
             return;
         }
 
-        try {
-            setIsFetching(true);
-
-            const rs = await getCocktailsList(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
-            const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
-
-            setSkip((prev) => prev + DEFAULT_TAKE);
-            setApiCallFailed(false);
-            setCocktailListModels((prevModels) => [...prevModels, ...(items?.filter((x) => prevModels.find((p) => p.id === x.id) === undefined) ?? [])]);
-            setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
-        } catch (e: unknown) {
-            setApiCallFailed(true);
-            setHasMore(false);
-            span?.recordException(e as Error);
-            span?.setStatus({ code: SpanStatusCode.ERROR, message: (e as Error).message });
+        if (!hasMore) {
+            return;
         }
 
-        setLoading(false);
-        setIsFetching(false);
-        span?.end();
-    };
+        // Clear any existing timeout
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
+        // Set a new timeout to throttle API calls
+        timeoutRef.current = setTimeout(() => fetchData(), 800); // 800ms delay to prevent rapid calls
+    }, [fetchData, hasMore]);
+
+    useEffect(
+        () => () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        },
+        []
+    );
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        startPageViewSpan((span) => {
-            fetchData(span);
-        });
+        // Fetch data on initial load
+        startPageViewSpan((span) => fetchData(span));
+
         // setting dom directly due to react v19 & react-helmet-async breaking
         // and react not hoisting the script and cert meta tag to the top
         setMetaItemProp('Complete Cocktail List');
-    }, [ownedAccountCocktailRatings]);
+
+        // Cleanup timeout on unmount
+        return () => {
+            if (fetchTimeoutRef.current) {
+                clearTimeout(fetchTimeoutRef.current);
+                fetchTimeoutRef.current = null;
+            }
+        };
+    }, []);
     /* eslint-enable react-hooks/exhaustive-deps */
 
     return (
@@ -81,11 +147,9 @@ const CocktailsListPageContainer = () => {
             <Box
                 component='div'
                 sx={{
-                    overflow: 'auto',
                     backgroundColor: 'rgba(255, 255, 255, 0.9)',
                     paddingTop: '10px',
                     minHeight: '100vh',
-                    height: '100%',
                     paddingRight: '10px',
                     paddingLeft: '10px',
                     width: '100%',
@@ -97,7 +161,18 @@ const CocktailsListPageContainer = () => {
             >
                 {loading && <LoadingSkeleton rowCount={3} />}
                 {!loading && !apiCallFailed && cocktailListModels && (
-                    <InfiniteScroll dataLength={cocktailListModels.length} next={fetchData} hasMore={hasMore && !isFetching} loader={<h4>Loading...</h4>} scrollThreshold={0.8}>
+                    <InfiniteScroll
+                        dataLength={cocktailListModels.length}
+                        next={throttledFetchData}
+                        hasMore={hasMore && !isFetching && !fetchingRef.current}
+                        loader={<h4>Loading...</h4>}
+                        scrollThreshold={0.5}
+                        endMessage={
+                            <p style={{ textAlign: 'center', marginTop: '20px' }}>
+                                <b>You&apos;ve seen all cocktails!</b>
+                            </p>
+                        }
+                    >
                         <Grid
                             container
                             spacing={{

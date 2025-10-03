@@ -7,7 +7,6 @@ import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cock
 import LocalStorageService from '../../services/LocalStorageService';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
 
 const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
     const items: CocktailsListModel[] = [];
@@ -33,6 +32,8 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
 };
 
 describe('Cocktails List Page', () => {
+    const TAKE = 20;
+
     test('renders and fetches cocktails data', async () => {
         localStorage.removeItem(LocalStorageService.CocktailsListGroupCacheKey);
 
@@ -42,13 +43,13 @@ describe('Cocktails List Page', () => {
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
-                    expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
+                    expect(url.searchParams.get('take')).toBe(`${TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
                     return HttpResponse.json<CocktailsListRs>(
                         {
-                            items: getCocktailItems('Adonis', DEFAULT_TAKE)
+                            items: getCocktailItems('Adonis', TAKE)
                         },
                         {
                             status: 200,
@@ -69,7 +70,7 @@ describe('Cocktails List Page', () => {
         );
 
         /* eslint-disable no-await-in-loop */
-        for (let i = 0; i < DEFAULT_TAKE; i += 1) {
+        for (let i = 0; i < TAKE; i += 1) {
             const el = await screen.findByText(`The Adonis ${i}`);
             expect(el).toBeTruthy();
             expect(el.classList).toContain('cocktailLink');
