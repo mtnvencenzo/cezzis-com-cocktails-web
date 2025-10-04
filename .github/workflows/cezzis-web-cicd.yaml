@@ -46,7 +46,7 @@ jobs:
       upload_artifact: true
       artifact_name: 'cocktails-web'
       version: ${{ needs.gitVersion.outputs.semVer }}
-      version_file_path: 'public/gitversion.json'
+      version_file_path: 'public/version.json'
       version_tag: '${{ github.sha }}'
     secrets:
       github_packages_pat_token: ${{ secrets.GH_PACKAGES_PAT_TOKEN_READ }}

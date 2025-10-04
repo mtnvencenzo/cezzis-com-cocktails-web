@@ -50,7 +50,7 @@ Before you begin, ensure you have the following installed:
    yarn install
    ```
 
-4. **Start Development Server**
+3. **Start Development Server**
    ```bash
    cd cocktails.web
    
@@ -61,7 +61,7 @@ Before you begin, ensure you have the following installed:
    yarn cy
    ```
 
-5. **Docker Development (Alternative)**
+4. **Docker Development (Alternative)**
    ```bash
    cd cocktails.web
    docker build -f Dockerfile -t cocktails-web .
