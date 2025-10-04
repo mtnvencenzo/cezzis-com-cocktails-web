@@ -1,0 +1,42 @@
+version: 2
+updates:
+  # Frontend dependencies
+  - package-ecosystem: "npm"
+    directory: "/cocktails.web"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    assignees:
+      - "mtnvencenzo"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # E2E test dependencies
+  - package-ecosystem: "npm"
+    directory: "/cocktails.web.e2e"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    assignees:
+      - "mtnvencenzo"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    assignees:
+      - "mtnvencenzo"
+    commit-message:
+      prefix: "chore"
+      include: "scope"

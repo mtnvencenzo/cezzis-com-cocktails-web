@@ -4,9 +4,11 @@ This directory contains end-to-end tests for the Cezzis Cocktails web applicatio
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- Yarn package manager
-- Entra External Id credentials (for authentication tests)
+- Node.js v18 or higher (matches the main app requirement)
+- Yarn (Classic)
+- Access to the Auth0 tenant and test user credentials used by the project
+- Cocktails web app running locally at `https://localhost:4001` (use `yarn cy` from `cocktails.web`)
+- Cocktails API running locally at `https://localhost:7176` (required for test account seeding)
 
 ## Installation
 
@@ -19,12 +21,12 @@ yarn install
 
 ### Run All Tests
 ```bash
-yarn cypress run --env cypressUserPassword=<your-password>
+yarn cypress run --env cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 ```
 
 ### Run Specific Test File
 ```bash
-yarn cypress run --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env cypressUserPassword=<your-password>
+yarn cypress run --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts' --env cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 ```
 
 ### Run Tests in Interactive Mode
@@ -39,15 +41,15 @@ yarn cypress open --spec 'cypress/e2e/**/ProfileCenter-ProfileImage.cy.ts'
 ### Run Tests with Specific Browser
 ```bash
 # Run tests in Chrome
-yarn cypress run --browser chrome --env cypressUserPassword=<your-password>
+yarn cypress run --browser chrome --env cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 
 # Run tests in Firefox
-yarn cypress run --browser firefox -- --env cypressUserPassword=<your-password>
+yarn cypress run --browser firefox --env cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 ```
 
 ### Run Tests in Headless Mode
 ```bash
-yarn cypress run --headless --env cypressUserPassword=<your-password>
+yarn cypress run --headless --env cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 ```
 
 ## Test Reports
@@ -63,9 +65,17 @@ The following environment variables are used in the tests:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| cypressUserPassword | Password for CIAM test user | Yes |
-| auth0UserEmail | Email for CIAM test user | Yes |
-| auth0ClientId | CIAM client ID | Yes |
+| cypressUserPassword | Password for the Auth0 test user | Yes |
+| auth0UserEmail | Email for the Auth0 test user | Yes |
+| auth0ClientId | Auth0 SPA client ID | Yes |
+| cocktailsApiBaseUrl | Base URL for the cocktails API used during tests | Yes (defaults to `https://localhost:7176` if not overridden) |
+| cypressApiKey | API key used to seed/reset the test account before runs | Yes |
+
+You can provide these values by:
+
+- Passing them inline via the `--env` flag (for example: `yarn cypress run --env cypressUserPassword=...,cypressApiKey=...`)
+- Creating a `cypress.env.json` file in this directory with the required keys
+- Defining environment variables in your CI pipeline configuration
 
 ## Test User Account
 
@@ -97,6 +107,9 @@ yarn cypress run --config-file cypress.config.ts --config video=true,trashAssets
 
 ### Test Maintenance
 ```bash
+# Lint the test suite
+yarn lint
+
 # Clear Cypress cache
 yarn cypress cache clear
 
@@ -110,7 +123,7 @@ yarn cypress verify
 yarn cypress run --config-file cypress.config.ts --config video=true,trashAssetsBeforeRuns=true
 
 # Run tests with specific environment
-yarn cypress run --env type=staging,cypressUserPassword=<your-password>
+yarn cypress run --env type=staging,cypressUserPassword=<your-password>,cypressApiKey=<your-api-key>
 ```
 
 ## Best Practices
