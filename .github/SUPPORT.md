@@ -48,13 +48,13 @@ We aim to respond to:
 
 Found a bug? Help us fix it!
 
-### Before Reporting
+### 📝 Before Reporting
 
 1. **Search existing issues** to avoid duplicates
 2. **Update to the latest version** to see if it's already fixed
 3. **Check the documentation** to ensure it's actually a bug
 
-### How to Report
+### 📮 How to Report
 
 1. Use our **[Bug Report Template](../../issues/new?template=bug_report.md)**
 2. Provide detailed information:
@@ -64,7 +64,7 @@ Found a bug? Help us fix it!
    - Environment details
    - Screenshots (if applicable)
 
-### What Happens Next
+### 🔄 What Happens Next
 
 1. 🏷️ **Triage**: We'll label and prioritize your issue
 2. 🔍 **Investigation**: We'll investigate and may ask for more details
@@ -75,13 +75,13 @@ Found a bug? Help us fix it!
 
 Have an idea for improving Cezzis Cocktails Web?
 
-### Before Requesting
+### 🧠 Before Requesting
 
 1. **Check existing issues** for similar requests
 2. **Consider the scope** - does it fit the project's goals?
 3. **Think about implementation** - how would it work?
 
-### How to Request
+### 📨 How to Request
 
 1. Use our **[User Story Template](../../issues/new?template=user-story-template.md)**
 2. Provide clear information:
@@ -90,7 +90,7 @@ Have an idea for improving Cezzis Cocktails Web?
    - Why is it important?
    - Any implementation ideas?
 
-### Evaluation Process
+### 📊 Evaluation Process
 
 1. 📋 **Review**: We'll review your request
 2. 💬 **Discussion**: We may ask questions or start a discussion
@@ -101,14 +101,14 @@ Have an idea for improving Cezzis Cocktails Web?
 
 Want to contribute code, documentation, or other improvements?
 
-### Get Started
+### 🚀 Get Started
 
 1. 📖 **Read our [Contributing Guide](./CONTRIBUTING.md)**
 2. 🍴 **Fork the repository**
 3. 💻 **Make your changes**
 4. 📬 **Submit a pull request**
 
-### Types of Contributions
+### 🧾 Types of Contributions
 
 - 🐛 **Bug fixes**
 - ✨ **New features**
@@ -117,7 +117,7 @@ Want to contribute code, documentation, or other improvements?
 - 🎨 **UI/UX improvements**
 - 🔧 **Build and tooling**
 
-### Approval Process
+### ✅ Approval Process
 
 ⚠️ **Important**: Contributors must be approved by maintainers before making changes to this repository.
 
@@ -125,13 +125,13 @@ Want to contribute code, documentation, or other improvements?
 
 Join our community of cocktail enthusiasts and developers!
 
-### Stay Updated
+### 📣 Stay Updated
 
 - ⭐ **Star the repository** to show support
 - 👀 **Watch releases** for updates
 - 🐦 **Follow us on social media** (coming soon)
 
-### Code of Conduct
+### 🤗 Code of Conduct
 
 We're committed to providing a welcoming and inclusive experience for everyone. Please be respectful and constructive in all interactions.
 
@@ -139,13 +139,13 @@ We're committed to providing a welcoming and inclusive experience for everyone. 
 
 Need professional support or custom development?
 
-### Contact Options
+### 📬 Contact Options
 
 - 📧 **Email**: support@cezzis.com
 - 💼 **Business Inquiries**: marketing@cezzis.com
 - 🌐 **Website**: [www.cezzis.com](https://www.cezzis.com)
 
-### Services Available
+### 🛠️ Services Available
 
 - 🛠️ **Custom Development**
 - 🏗️ **Architecture Consulting**

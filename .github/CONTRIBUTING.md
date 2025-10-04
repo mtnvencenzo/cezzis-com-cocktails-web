@@ -14,7 +14,7 @@ Thank you for your interest in contributing to the Cezzis Cocktails Web project!
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🧰 Prerequisites
 
 Before you begin, ensure you have the following installed:
 - Node.js (v18 or higher)
@@ -22,7 +22,7 @@ Before you begin, ensure you have the following installed:
 - Docker (for containerized development)
 - Git
 
-### Project Structure
+### 🗂️ Project Structure
 
 ```
 ├── cocktails.web/          # React frontend application
@@ -70,13 +70,13 @@ Before you begin, ensure you have the following installed:
 
 ## 🔄 Contributing Process
 
-### 1. Before You Start
+### 1. 📝 Before You Start
 
 - **Check for existing issues** to avoid duplicate work
 - **Create or comment on an issue** to discuss your proposed changes
 - **Wait for approval** from maintainers before starting work (required for this repository)
 
-### 2. Making Changes
+### 2. 🛠️ Making Changes
 
 1. **Create a feature branch**
    ```bash
@@ -118,7 +118,7 @@ Before you begin, ensure you have the following installed:
    - `test:` for adding tests
    - `chore:` for maintenance tasks
 
-### 3. Submitting Changes
+### 3. 📬 Submitting Changes
 
 1. **Push your branch**
    ```bash
@@ -133,7 +133,7 @@ Before you begin, ensure you have the following installed:
 
 ## 📏 Code Standards
 
-### Frontend (React/TypeScript)
+### 🧩 Frontend (React/TypeScript)
 
 - **TypeScript**: Use TypeScript for all new code
 - **ESLint**: Follow the existing ESLint configuration
@@ -141,7 +141,7 @@ Before you begin, ensure you have the following installed:
 - **File Naming**: Use PascalCase for components, camelCase for utilities
 - **Testing**: Write unit tests for new components and utilities
 
-### Code Quality
+### 🧪 Code Quality
 
 ```bash
 # Lint your code
@@ -160,7 +160,7 @@ yarn coverage
 yarn analyze
 ```
 
-### Infrastructure (Terraform)
+### 🌱 Infrastructure (Terraform)
 
 - **Terraform**: Use Terraform best practices
 - **Variables**: Define all variables in `variables.tf`
@@ -169,7 +169,7 @@ yarn analyze
 
 ## 🧪 Testing
 
-### Unit Tests
+### 🧪 Unit Tests
 ```bash
 cd cocktails.web
 yarn test          # Run tests
@@ -177,14 +177,14 @@ yarn coverage      # Run with coverage
 yarn testui        # Interactive test UI
 ```
 
-### E2E Tests
+### 🌐 E2E Tests
 ```bash
 cd cocktails.web.e2e
 yarn cypress open  # Interactive mode
 yarn cypress run   # Headless mode
 ```
 
-### Test Requirements
+### 📏 Test Requirements
 
 - **Unit Tests**: All new features must include unit tests
 - **E2E Tests**: Critical user flows should have E2E test coverage
@@ -193,19 +193,19 @@ yarn cypress run   # Headless mode
 
 ## 🆘 Getting Help
 
-### Communication Channels
+### 📡 Communication Channels
 
 - **Issues**: Use GitHub issues for bugs and feature requests
 - **Discussions**: Use GitHub Discussions for questions and ideas
 - **Email**: Contact maintainers directly for sensitive issues
 
-### Issue Templates
+### 📄 Issue Templates
 
 Use our issue templates for:
 - [Task Stories](./ISSUE_TEMPLATE/task-template.md)
 - [User Stories](./ISSUE_TEMPLATE/user-story-template.md)
 
-### Common Questions
+### ❓ Common Questions
 
 **Q: How do I run the application locally?**
 A: Follow the [Development Setup](#-development-setup) section above. Use `yarn loc` for local development.
