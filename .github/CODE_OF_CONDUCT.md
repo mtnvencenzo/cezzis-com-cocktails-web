@@ -25,7 +25,7 @@ Examples of unacceptable behavior include:
 
 ## Enforcement Responsibilities
 
-Project maintainers (currently @mtnvencenzo) are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
+Project maintainers (currently [@mtnvencenzo](https://github.com/mtnvencenzo)) are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
 
 Maintainers have the right and responsibility to remove, edit, or reject contributions that are not aligned to this Code of Conduct, or to temporarily or permanently ban any contributor for behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
@@ -35,7 +35,7 @@ This Code of Conduct applies within all community spaces, including GitHub issue
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at **conduct@cezzis.com** or directly to **mtnvencenzo@github.com**. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting [@mtnvencenzo](https://github.com/mtnvencenzo). All complaints will be reviewed and investigated promptly and fairly.
 
 All maintainers are obligated to respect the privacy and security of the reporter of any incident.
 

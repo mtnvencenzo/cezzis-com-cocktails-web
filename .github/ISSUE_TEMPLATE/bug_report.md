@@ -1,6 +1,6 @@
 ---
 name: Bug report
-description: Report a bug or unexpected behavior in Cezzis Cocktails Web
+description: Report a bug or unexpected behavior
 labels: bug
 assignees: ''
 ---

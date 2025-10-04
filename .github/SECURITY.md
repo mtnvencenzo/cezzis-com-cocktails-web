@@ -17,7 +17,7 @@ The Cezzis Cocktails Web team takes security bugs seriously. We appreciate your 
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them to the maintainer at **mtnvencenzo@github.com** or to security@cezzis.com
+Instead, please report them to the maintainer [@mtnvencenzo](https://github.com/mtnvencenzo) or to security@cezzis.com
 
 ### What to Include
 
