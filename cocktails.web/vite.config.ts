@@ -16,10 +16,6 @@ export default ({ mode }) => {
         server: {
             port: parseInt(process.env.VITE_PORT, 10)
         },
-        plugins: [
-            react(),
-            tsconfigPaths(),
-            mkcert()
-        ]
+        plugins: [react(), tsconfigPaths(), mkcert()]
     });
 };
