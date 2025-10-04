@@ -165,4 +165,4 @@ yarn preview
 
 ## 📄 License
 
-This project is proprietary software. All rights reserved.
+This project is proprietary software. All rights reserved. See the full license in [LICENSE](./LICENSE).
