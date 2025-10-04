@@ -202,8 +202,8 @@ yarn cypress run   # Headless mode
 ### Issue Templates
 
 Use our issue templates for:
-- [Task Stories](.github/ISSUE_TEMPLATE/task-template.md)
-- [User Stories](.github/ISSUE_TEMPLATE/user-story-template.md)
+- [Task Stories](./ISSUE_TEMPLATE/task-template.md)
+- [User Stories](./ISSUE_TEMPLATE/user-story-template.md)
 
 ### Common Questions
 
