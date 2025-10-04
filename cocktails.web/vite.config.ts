@@ -35,15 +35,9 @@ export default ({ mode }) => {
                             if (id.includes('react') || id.includes('react-dom')) {
                                 return 'vendor-react';
                             }
-                            // 2. Split MUI into smaller chunks for better caching
-                            if (id.includes('@mui/material')) {
-                                return 'vendor-mui-material';
-                            }
-                            if (id.includes('@mui/icons-material')) {
-                                return 'vendor-mui-icons';
-                            }
-                            if (id.includes('@mui/system') || id.includes('@mui/utils') || id.includes('@emotion')) {
-                                return 'vendor-mui-system';
+                            // 2. Keep MUI packages together to avoid initialization issues
+                            if (id.includes('@mui/') || id.includes('@emotion/')) {
+                                return 'vendor-mui';
                             }
 
                             // 2. Create a specific chunk for a large utility library
