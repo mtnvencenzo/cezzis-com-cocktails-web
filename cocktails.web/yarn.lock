@@ -1053,10 +1053,10 @@
     "@opentelemetry/sdk-trace-web" "2.1.0"
     "@opentelemetry/semantic-conventions" "^1.29.0"
 
-"@opentelemetry/instrumentation-user-interaction@^0.50.0":
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-user-interaction/-/instrumentation-user-interaction-0.50.0.tgz#34f8c62f30b1c7656326d35b254f0f4d2061544d"
-  integrity sha512-LQBL7IFuDXXGbcJb4wrEN24+2zBR9nDinGr14nFZxBTFKrrQcAkptZ9Un4Z+y4jU/s6TuDtv9mPn7/1hfcc/qg==
+"@opentelemetry/instrumentation-user-interaction@^0.50.2":
+  version "0.50.2"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-user-interaction/-/instrumentation-user-interaction-0.50.2.tgz#30d6437ed2a71d8c8df1bb62a536772e0049897c"
+  integrity sha512-R5IZOc+54fLIi5CW3f4eP4ylOjN4Is0obzbOT6MUsWqTJ7eM7/9AwqQZl3D/PFtkt899ZYV1Yk1X63e2BFpICA==
   dependencies:
     "@opentelemetry/core" "^2.0.0"
     "@opentelemetry/instrumentation" "^0.205.0"
