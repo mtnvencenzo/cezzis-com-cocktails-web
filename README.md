@@ -156,6 +156,13 @@ yarn preview
 4. Test thoroughly
 5. Submit a pull request
 
+## 🌐 Community & Support
+
+- 🤝 **Contributing Guide** – review expectations and workflow in [CONTRIBUTING.md](./.github/CONTRIBUTING.md)
+- 🤗 **Code of Conduct** – help us keep the community welcoming by reading [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- 🆘 **Support Guide** – find help channels in [SUPPORT.md](./.github/SUPPORT.md)
+- 🔒 **Security Policy** – report vulnerabilities responsibly via [SECURITY.md](./.github/SECURITY.md)
+
 ## 📄 License
 
-This project is proprietary software. All rights reserved. 
+This project is proprietary software. All rights reserved.
