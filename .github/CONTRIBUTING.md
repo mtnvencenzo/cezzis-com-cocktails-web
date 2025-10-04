@@ -223,10 +223,6 @@ A: Please email the maintainers directly rather than creating a public issue.
 
 By contributing to this project, you agree that your contributions will be licensed under the same license as the project (see [LICENSE](../LICENSE)).
 
-## 🙏 Recognition
-
-All contributors will be recognized in our [Contributors](#) section. Thank you for helping make Cezzis Cocktails Web better!
-
 ---
 
 **Happy Contributing! 🍸**
