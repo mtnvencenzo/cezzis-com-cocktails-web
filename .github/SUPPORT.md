@@ -18,9 +18,9 @@ Need help with Cezzis Cocktails Web? We're here to help! This document provides 
 Before asking for help, please check our documentation:
 
 - 📖 **[README](../README.md)** - Project overview and quick start
-- 🤝 **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
-- 🤗 **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines and expectations
-- 🔒 **[Security Policy](SECURITY.md)** - Security guidelines and reporting
+- 🤝 **[Contributing Guide](./CONTRIBUTING.md)** - How to contribute to the project
+- 🤗 **[Code of Conduct](./CODE_OF_CONDUCT.md)** - Community guidelines and expectations
+- 🔒 **[Security Policy](./SECURITY.md)** - Security guidelines and reporting
 
 ### 💬 Ask Questions
 
@@ -103,7 +103,7 @@ Want to contribute code, documentation, or other improvements?
 
 ### Get Started
 
-1. 📖 **Read our [Contributing Guide](.github/CONTRIBUTING.md)**
+1. 📖 **Read our [Contributing Guide](./CONTRIBUTING.md)**
 2. 🍴 **Fork the repository**
 3. 💻 **Make your changes**
 4. 📬 **Submit a pull request**
