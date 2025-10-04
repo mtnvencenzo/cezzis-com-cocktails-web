@@ -4,35 +4,34 @@
 
 ### Core Framework
 - **Framework**: React 19 with TypeScript
-- **UI Library**: Material-UI (MUI) v7
+- **UI Library**: Material-UI (MUI) v7 plus the custom `@mtnvencenzo/kelso-component-library`
 - **State Management**: React Hooks and Context API
 - **Routing**: React Router v7
-- **Build Tool**: Vite v6
+- **Build Tool**: Vite v7
 - **Package Manager**: Yarn
 
 ### UI Components
-- **Component Library**: Material-UI (MUI)
+- **Component Library**: Material-UI (MUI) and Kelso component library
 - **Icons**: Material Icons
-- **Charts**: Recharts
-- **Markdown**: React Markdown
-- **Image Handling**: React Avatar Editor
+- **Markdown**: React Markdown with rehype-raw
+- **Image Handling**: React Avatar Editor and React Image File Resizer
 - **Infinite Scroll**: React Infinite Scroll Component
 - **Notifications**: React Toastify
 - **Tooltips**: React Tooltip
 - **Country Selection**: Countries List
 
 ### Authentication & Security
-- **Authentication**: Microsoft Authentication Library (MSAL)
-- **Azure Entra External Id**: User authentication and management
+- **Authentication**: Auth0 SPA SDK with a custom Auth0 provider wrapper
 - **reCAPTCHA**: Form protection
 - **Cookie Management**: Cookiebot integration
+- **Telemetry**: OpenTelemetry traces and logs exported via OTLP
 
 ### Testing
 - **Unit Testing**: Vitest with React Testing Library
 - **E2E Testing**: Cypress
 - **Test Coverage**: Istanbul
 - **Mock Service Worker**: API mocking
-- **MSAL Testing**: MSAL React Tester
+- **Auth Testing Utilities**: Auth0 React tester harness
 
 ### Development Tools
 - **TypeScript**: Static type checking
@@ -40,10 +39,11 @@
 - **Prettier**: Code formatting
 - **NSwag**: API client generation (fetch and typescript)
 - **Vite Plugins**:
-  - ESLint
-  - TypeScript paths
-  - MKCert (HTTPS)
-  - Vendor chunk splitting
+   - `vite-plugin-eslint`
+   - `vite-tsconfig-paths`
+   - `vite-plugin-mkcert` (local HTTPS)
+   - `vite-plugin-compression`
+   - `vite-bundle-visualizer`
 
 ## 🎨 Design System
 
@@ -71,10 +71,11 @@ cocktails.web/           # Main web application
 │   ├── molecules/      # Composite components
 │   ├── organisms/      # Complex components
 │   ├── pages/          # Page components
-│   ├── services/       # Business logic
+│   ├── services/       # Business logic and API clients
 │   ├── templates/      # Layout templates
-│   └── utils/          # Utility functions
-│   └── tests/              # Test setup and utilities
+│   ├── utils/          # Helpers (auth config, telemetry, cookiebot, etc.)
+│   └── auth0Mocks/     # Auth0 testing utilities
+├── tests/              # Vitest setup and shared test utilities
 cocktails.web.e2e/      # End-to-end tests
 terraform/              # terraform for the projects infrastructure
 ```
@@ -82,35 +83,45 @@ terraform/              # terraform for the projects infrastructure
 ## 🚀 Development Setup
 
 1. **Prerequisites**
-   - Node.js 23.5.x
-   - Yarn package manager
-   - .NET Core SDK 9.0 (for API)
-   - Azure CLI
-   - Dapr CLI
+   - Node.js 18.18 or newer
+   - Yarn (Classic)
+   - Optional: Docker and Docker Compose (for containerized runs)
 
-2. **Environment Setup**
-   See [Environment Setup Guide](.readme/env-setup.md) for detailed instructions on configuring your development environment.
-
-3. **Local Development**
+2. **Install Dependencies**
    ```bash
-   # Install dependencies
+   # Frontend
+   cd cocktails.web
    yarn install
    
-   # Start development server
-   yarn loc
+   # Cypress E2E suite
+   cd ../cocktails.web.e2e
+   yarn install
    ```
 
-4. **Testing**
+3. **Environment Setup**
+   - Copy and customize the environment files in `cocktails.web` (for example `.env.loc`, `.env.cypress`).
+   - The `env.sh` script generates `public/env-config.js` based on the selected `.env` file.
+
+4. **Local Development**
    ```bash
-   # Run unit tests
-   yarn test
-   
-   # Run unit tests with UI
-   yarn testui
-   
-   # Run E2E tests
-   yarn cy
+   cd cocktails.web
+   yarn loc           # runs env.sh .env.loc and starts Vite dev server
    ```
+
+5. **Testing**
+   ```bash
+   # Unit tests
+   yarn test          # run from cocktails.web
+   yarn testui        # launch Vitest UI
+   yarn coverage      # collect coverage
+
+   # E2E tests
+   cd ../cocktails.web.e2e
+   yarn cypress open  # interactive mode
+   yarn cypress run   # headless mode
+   ```
+
+   > Tip: from `cocktails.web`, run `yarn cy` to start the app with the Cypress-specific configuration when executing browser tests locally.
 
 ## 📦 Build & Deployment
 
@@ -132,21 +143,19 @@ yarn preview
 
 ## 🔒 Security Features
 
-- Azure Entra External Id authentication
-- HTTPS enforcement
-- reCAPTCHA integration
-- Cookie consent management
-- Secure API communication
-- XSS protection
-- CSRF protection
+- Auth0 SPA authentication with secure token handling
+- Google reCAPTCHA integration for high-risk forms
+- Cookiebot-powered cookie consent management
+- HTTPS-friendly local development via vite-plugin-mkcert
+- Environment-driven API configuration for secure communication
+- Defensive coding patterns to mitigate XSS
 
 ## 📈 Monitoring
 
-- Application Insights integration
-- Error tracking
-- Performance monitoring
-- User analytics
-- Custom event tracking
+- OpenTelemetry instrumentation for traces and logs
+- OTLP exporters for backend observability pipelines
+- Custom spans around key user flows and API interactions
+- Client-side logging helpers for diagnosing production issues
 
 ## 🤝 Contributing
 
@@ -158,10 +167,10 @@ yarn preview
 
 ## 🌐 Community & Support
 
-- 🤝 **Contributing Guide** – review expectations and workflow in [CONTRIBUTING.md](./.github/CONTRIBUTING.md)
-- 🤗 **Code of Conduct** – help us keep the community welcoming by reading [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
-- 🆘 **Support Guide** – find help channels in [SUPPORT.md](./.github/SUPPORT.md)
-- 🔒 **Security Policy** – report vulnerabilities responsibly via [SECURITY.md](./.github/SECURITY.md)
+- 🤝 **Contributing Guide** – review expectations and workflow in [CONTRIBUTING.md](./.github/CONTRIBUTING.md)  
+- 🤗 **Code of Conduct** – help us keep the community welcoming by reading [CODE_OF_CONDUCT.md](./.github/CODE_OF_CONDUCT.md)  
+- 🆘 **Support Guide** – find help channels in [SUPPORT.md](./.github/SUPPORT.md)  
+- 🔒 **Security Policy** – report vulnerabilities responsibly via [SECURITY.md](./.github/SECURITY.md) 
 
 ## 📄 License
 
