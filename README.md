@@ -1,4 +1,32 @@
-# Cocktails Frontend
+# Cezzis.com Cocktails Frontend
+
+> Part of the broader [Cezzis.com](https://www.cezzis.com) digital experience for discovering and sharing cocktail recipes with a broad community of cocktail enthusiasts and aficionados.
+
+## 🧩 Cezzis.com Project Ecosystem
+
+This frontend works alongside several sibling repositories:
+
+- **cocktails-web** (this repo) – React SPA for the public experience
+- [**cocktails-api**](https://github.com/mtnvencenzo/cezzis-com-cocktails-api) – ASP.NET Core backend and REST API consumed by the site and integrations
+- [**cocktails-mcp**](https://github.com/mtnvencenzo/cezzis-com-cocktails-mcp) – Model Context Protocol services that expose cocktail data to AI agents
+- [**cocktails-common**](https://github.com/mtnvencenzo/cezzis-com-cocktails-common) – Shared libraries and utilities reused across frontends, APIs, and tooling
+- [**cocktails-images**](https://github.com/mtnvencenzo/cezzis-com-cocktails-images) *(private)* – Source of curated cocktail imagery and CDN assets
+- [**cocktails-shared-infra**](https://github.com/mtnvencenzo/cezzis-com-cocktails-shared-infra) – Terraform compositions specific to the cocktails platform
+- [**shared-infrastructure**](https://github.com/mtnvencenzo/shared-infrastructure) – Global Terraform modules that underpin multiple Cezzis.com workloads
+
+
+## ☁️ Cloud-Native Footprint (Azure)
+
+Infrastructure is provisioned with Terraform (`/terraform`) and deployed into Azure using shared modules:
+
+- **Azure Container Apps** – Hosts the `cocktails-web` SPA with automatic scaling and HTTPS ingress.
+- **Azure Container Apps Environment** – Shared runtime for the web frontend and observability services (e.g., OpenTelemetry collector).
+- **Azure Container Registry** – Stores container images published from CI/CD before deployment.
+- **Azure API Management** – Fronts the cocktails API; subscription keys are injected into the app via Key Vault secrets.
+- **Azure Key Vault** – Manages application secrets (recaptcha keys, API subscription keys, Cypress test credentials).
+- **Azure DNS Zone (cezzis.com)** – Provides apex/subdomain records, Google site verification, and Zoho Mail MX entries.
+- **Custom Domains & Certificates** – Bound to the container app through Terraform-managed DNS and domain modules.
+- **Shared Infrastructure Modules** – All modules are sourced from the reusable Terraform modules repo under `mtnvencenzo` for consistency.
 
 ## 🛠️ Technology Stack
 
@@ -156,14 +184,6 @@ yarn preview
 - OTLP exporters for backend observability pipelines
 - Custom spans around key user flows and API interactions
 - Client-side logging helpers for diagnosing production issues
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
 ## 🌐 Community & Support
 
