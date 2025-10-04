@@ -1,6 +1,11 @@
 FROM nginx:1.27.3-alpine
 
+# Copy nginx configuration
 COPY ./nginx-default.conf /etc/nginx/conf.d/default.conf
+
+# Ensure proper MIME types for JavaScript modules
+RUN echo 'application/javascript js mjs;' >> /etc/nginx/mime.types
+
 COPY ./dist /usr/share/nginx/html
 RUN mkdir -p /usr/share/nginx/html/public
 
