@@ -92,7 +92,7 @@ The tests require a specific CIAM test user account with the following details:
 | Postal Code | 3860 |
 | Country | United States |
 
-This test user account should be created in your CIAM tenant before running the tests. The tests will modify some of these values during execution but will maintain the basic structure.
+This test user account is automatically seeded when cypress runs.
 
 ## Useful Cypress Commands
 

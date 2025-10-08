@@ -16,7 +16,7 @@ terraform init \
 # to validate the current config
 terraform validate
 
-terraform plan -var "ciam_terraform_app_registration_client_id=--get-clientid--" -var "ciam_terraform_app_registration_client_secret=--get-secret--" -var="image_tag=abc" -var-file="environment_vars/prd.tfvars"
+terraform plan -var="image_tag=abc" -var-file="environment_vars/prd.tfvars"
 
 # terraform import -var-file="environment_vars/prd.tfvars" azurerm_container_app_custom_domain.cocktails_web_container_app_custom_domain_www_cezzis_com "/subscriptions/1d9ecc00-242a-460d-8b08-b71db19f094e/resourceGroups/rg-vec-eus-prd-cocktails-001/providers/Microsoft.App/containerApps/aca-vec-eus-prd-cocktailsweb-001/customDomainName/www.cezzis.com"
 ```
