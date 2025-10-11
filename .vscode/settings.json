@@ -2,5 +2,10 @@
     "dotnet.defaultSolution": "disable",
     "yaml.schemas": {
         "https://raw.githubusercontent.com/GitTools/GitVersion/main/schemas/6.3/GitVersion.json": "GitVersion.yml"
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true
     }
 }
