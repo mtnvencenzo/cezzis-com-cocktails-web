@@ -103,7 +103,8 @@ jobs:
 
   verify_prd:
     name: Verify prd
-    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
+    # if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
+    if: ${{ 'disabled' == 'yes' }} # disabled for now until re-deployed to an environment
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -121,6 +122,7 @@ jobs:
   cypress_e2e_prd:
     name: Cypress e2e prd
     uses: mtnvencenzo/workflows/.github/workflows/cypress-runner.yaml@main
+    if: ${{ 'disabled' == 'yes' }} # disabled for now until re-deployed to an environment
     needs: [verify_prd]
     with:
       base_url: 'https://www.cezzis.com'

@@ -1,64 +1,64 @@
-# ================================
-# APEX DOMAIN
-# ================================
-module "cocktails_dns_apex_domain_record" {
-  source                        = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-apex-domain-record"
-  count                         = var.include_apex_domain_records == true ? 1 : 0
-  custom_domain_verification_id = module.aca_cocktails_web.custom_domain_verification_id
-  host_ip_address               = data.azurerm_container_app_environment.cae_shared.static_ip_address
+# # ================================
+# # APEX DOMAIN
+# # ================================
+# module "cocktails_dns_apex_domain_record" {
+#   source                        = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-apex-domain-record"
+#   count                         = var.include_apex_domain_records == true ? 1 : 0
+#   custom_domain_verification_id = module.aca_cocktails_web.custom_domain_verification_id
+#   host_ip_address               = data.azurerm_container_app_environment.cae_shared.static_ip_address
 
-  dns_zone = {
-    name                = data.azurerm_dns_zone.cezzis_dns_zone.name
-    resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
-  }
+#   dns_zone = {
+#     name                = data.azurerm_dns_zone.cezzis_dns_zone.name
+#     resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
+#   }
 
-  tags = local.tags
+#   tags = local.tags
 
-  providers = {
-    azurerm = azurerm
-  }
-}
+#   providers = {
+#     azurerm = azurerm
+#   }
+# }
 
-module "aca_cocktails_custom_apex_domain" {
-  source           = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/container-app-custom-domain"
-  count            = var.include_apex_domain_records == true ? 1 : 0
-  name             = "cezzis.com"
-  container_app_id = module.aca_cocktails_web.id
-  depends_on       = [module.cocktails_dns_apex_domain_record, module.aca_cocktails_web]
+# module "aca_cocktails_custom_apex_domain" {
+#   source           = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/container-app-custom-domain"
+#   count            = var.include_apex_domain_records == true ? 1 : 0
+#   name             = "cezzis.com"
+#   container_app_id = module.aca_cocktails_web.id
+#   depends_on       = [module.cocktails_dns_apex_domain_record, module.aca_cocktails_web]
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 
-# ================================
-# SUB DOMAIN
-# ================================
-module "cocktails_dns_sub_domain_record" {
-  source                        = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-sub-domain-record"
-  custom_domain_verification_id = lower(module.aca_cocktails_web.custom_domain_verification_id)
-  sub_domain                    = var.cezzis_site_subdomain
-  record_fqdn                   = module.aca_cocktails_web.ingress_fqdn
+# # ================================
+# # SUB DOMAIN
+# # ================================
+# module "cocktails_dns_sub_domain_record" {
+#   source                        = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-sub-domain-record"
+#   custom_domain_verification_id = lower(module.aca_cocktails_web.custom_domain_verification_id)
+#   sub_domain                    = var.cezzis_site_subdomain
+#   record_fqdn                   = module.aca_cocktails_web.ingress_fqdn
 
-  dns_zone = {
-    name                = data.azurerm_dns_zone.cezzis_dns_zone.name
-    resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
-  }
+#   dns_zone = {
+#     name                = data.azurerm_dns_zone.cezzis_dns_zone.name
+#     resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
+#   }
 
-  tags = local.tags
+#   tags = local.tags
 
-  providers = {
-    azurerm = azurerm
-  }
-}
+#   providers = {
+#     azurerm = azurerm
+#   }
+# }
 
-module "aca_cocktails_custom_sub_domain" {
-  source           = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/container-app-custom-domain"
-  name             = "${var.cezzis_site_subdomain}.cezzis.com"
-  container_app_id = module.aca_cocktails_web.id
-  depends_on       = [module.cocktails_dns_sub_domain_record, module.aca_cocktails_web]
+# module "aca_cocktails_custom_sub_domain" {
+#   source           = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/container-app-custom-domain"
+#   name             = "${var.cezzis_site_subdomain}.cezzis.com"
+#   container_app_id = module.aca_cocktails_web.id
+#   depends_on       = [module.cocktails_dns_sub_domain_record, module.aca_cocktails_web]
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 
 # ================================
@@ -101,23 +101,23 @@ module "cocktails_dns_zoho_mx_record" {
   ]
 }
 
-# ================================
-# Google Site Verification
-# ================================
-module "cocktails_dns_google_site_verification_txt" {
-  source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-txt-record"
-  count  = var.include_google_verification_txt_record == true ? 1 : 0
-  name   = "google-site-verification"
-  value  = "google-site-verification=w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
+# # ================================
+# # Google Site Verification
+# # ================================
+# module "cocktails_dns_google_site_verification_txt" {
+#   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-txt-record"
+#   count  = var.include_google_verification_txt_record == true ? 1 : 0
+#   name   = "google-site-verification"
+#   value  = "google-site-verification=w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
 
-  tags = local.tags
+#   tags = local.tags
 
-  dns_zone = {
-    name                = data.azurerm_dns_zone.cezzis_dns_zone.name
-    resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
-  }
+#   dns_zone = {
+#     name                = data.azurerm_dns_zone.cezzis_dns_zone.name
+#     resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
+#   }
 
-  providers = {
-    azurerm = azurerm
-  }
-}
+#   providers = {
+#     azurerm = azurerm
+#   }
+# }
