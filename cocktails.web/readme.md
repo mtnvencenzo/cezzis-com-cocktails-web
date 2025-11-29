@@ -1,7 +1,25 @@
 # create a docker image
-docker image build -f "Dockerfile" -t cocktails-web:latest --rm .
+Ensure your .bashrc is exporting GH_PKG_READ_TOKEN with the actual value
+
+```bash
+# Build the container
+sudo docker image build \
+    -f Dockerfile \
+    -t cocktails-web:latest \
+    --rm \
+    --build-arg GH_PKG_READ_TOKEN=$GH_PKG_READ_TOKEN \
+    --build-arg VITE_NODE_ENV=docker \
+    .
+```
 
 # create a docker container (running an image)
-docker container run -p 8080:80 -p 443:443 cocktails-web:latest
-docker container run -d -p 4000:80 -p 4001:443 --name cocktails-web-test-1 cocktails-web:latest
+```bash
+sudo docker container run -d \
+    --name cocktails-web \
+    -p 4000:80 \
+    -p 4001:443 \
+    -v "$PWD/certs:/etc/nginx/certs:ro" \
+    cocktails-web:latest
+```
+
 

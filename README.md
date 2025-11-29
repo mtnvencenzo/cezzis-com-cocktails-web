@@ -149,6 +149,24 @@ terraform/              # terraform for the projects infrastructure
    yarn cypress open  # interactive mode
    yarn cypress run   # headless mode
    ```
+6. **SSL (local nginx ssl)**
+   ```bash
+   mkdir ./certs
+
+   openssl req -x509 -nodes -days 10000 -newkey rsa:2048   -keyout ./certs/local.key -out ./certs/local.crt   -subj "/CN=localhost"
+
+   # Build the container
+   sudo docker image build -f Dockerfile -t cocktails-web:latest --rm --build-arg GH_PKG_READ_TOKEN=$GH_PKG_READ_TOKEN --build-arg VITE_NODE_ENV=docker .
+
+   # Mount the cert when running the container
+   sudo docker container run -d \
+      --name cocktails-web \
+      -p 4000:80 \
+      -p 4001:443 \
+      -v "$PWD/certs:/etc/nginx/certs:ro" \
+      cocktails-web:latest
+
+   ```
 
    > Tip: from `cocktails.web`, run `yarn cy` to start the app with the Cypress-specific configuration when executing browser tests locally.
 
