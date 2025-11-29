@@ -1,6 +1,12 @@
 FROM node:23.5.0 AS builder
 WORKDIR /app
 
+ARG GH_PKG_READ_TOKEN
+ENV GH_PKG_READ_TOKEN=${GH_PKG_READ_TOKEN}
+
+ARG ENV
+ENV VITE_NODE_ENV=${ENV}
+
 COPY . .
 RUN yarn install
 RUN yarn run build:prod
@@ -19,6 +25,7 @@ WORKDIR /usr/share/nginx/html
 COPY ./env.sh .
 RUN sed -i -e 's/\r$//' env.sh
 COPY .env .
+COPY .env.loc .
 
 # Add bash
 RUN apk add --no-cache bash
