@@ -53,7 +53,7 @@ jobs:
 
   docker:
     name: Containerize app
-    needs: [build]
+    needs: [build, gitVersion]
     uses: mtnvencenzo/workflows/.github/workflows/docker-build-and-push.yaml@main
     with:
       working_directory: 'cocktails.web'
