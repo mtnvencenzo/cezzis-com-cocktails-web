@@ -1,11 +1,8 @@
 FROM node:23.5.0 AS builder
 WORKDIR /app
 
-ARG GH_PKG_READ_TOKEN
-ENV GH_PKG_READ_TOKEN=${GH_PKG_READ_TOKEN}
-
-ARG ENV
-ENV VITE_NODE_ENV=${ENV}
+ARG GH_PACKAGES_PAT_TOKEN_READ
+ENV GH_PACKAGES_PAT_TOKEN_READ=${GH_PACKAGES_PAT_TOKEN_READ}
 
 COPY . .
 RUN yarn install
@@ -26,6 +23,7 @@ COPY ./env.sh .
 RUN sed -i -e 's/\r$//' env.sh
 COPY .env .
 COPY .env.loc .
+COPY .env.docker .
 
 # Add bash
 RUN apk add --no-cache bash
