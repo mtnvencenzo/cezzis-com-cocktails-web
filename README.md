@@ -151,12 +151,17 @@ terraform/              # terraform for the projects infrastructure
    ```
 6. **SSL (local nginx ssl)**
    ```bash
+   # Initial ssl certs need to be created
    mkdir ./certs
-
    openssl req -x509 -nodes -days 10000 -newkey rsa:2048   -keyout ./certs/local.key -out ./certs/local.crt   -subj "/CN=localhost"
 
    # Build the container
-   sudo docker image build -f Dockerfile -t cocktails-web:latest --rm --build-arg GH_PKG_READ_TOKEN=$GH_PKG_READ_TOKEN --build-arg VITE_NODE_ENV=docker .
+   sudo docker image build \
+      -f Dockerfile \
+      -t cocktails-web:latest \
+      --rm \
+      --build-arg GH_PACKAGES_PAT_TOKEN_READ=$GH_PACKAGES_PAT_TOKEN_READ \
+      .
 
    # Mount the cert when running the container
    sudo docker container run -d \
@@ -164,6 +169,7 @@ terraform/              # terraform for the projects infrastructure
       -p 4000:80 \
       -p 4001:443 \
       -v "$PWD/certs:/etc/nginx/certs:ro" \
+      -e VITE_NODE_ENV=docker \
       cocktails-web:latest
 
    ```
