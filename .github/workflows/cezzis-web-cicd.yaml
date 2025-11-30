@@ -17,23 +17,23 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     outputs:
-      semVer: ${{ steps.gitVersion.outputs.semVer }}
+      semVer: ${{ steps.gitVersion.outputs.MajorMinorPatch }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with: 
           fetch-depth: 0
       
-      - name: Install GetVersion
-        uses: gittools/actions/gitversion/setup@v1.1.1
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v4.1.0
         with:
-          versionSpec: "5.x"
+          versionSpec: "6.x"
 
       - name: Use GitVersion
         id: gitVersion
-        uses: gittools/actions/gitversion/execute@v1.1.1
+        uses: gittools/actions/gitversion/execute@v4.1.0
         with:
-          useConfigFile: true
+          configFilePath: ./GitVersion.yml
 
   build:
     name: Build app
