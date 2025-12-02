@@ -42,7 +42,7 @@ jobs:
     with:
       working_directory: 'cocktails.web'
       node_version: '23.5.x'
-      setup_files: '[".env", "env.sh", "nginx-default.conf", "Dockerfile-CI"]' # Must be a string representation of a json array with items separated by ', '
+      setup_files: '[".env", ".env.docker", "env.sh", "nginx-default.conf", "Dockerfile-CI"]' # Must be a string representation of a json array with items separated by ', '
       upload_artifact: true
       artifact_name: 'cocktails-web'
       version: ${{ needs.gitVersion.outputs.semVer }}
