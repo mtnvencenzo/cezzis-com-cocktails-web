@@ -168,7 +168,7 @@ terraform/              # terraform for the projects infrastructure
       --name cocktails-web \
       -p 4000:80 \
       -p 4001:443 \
-      -v "$PWD/certs:/etc/nginx/certs:ro" \
+      -v "$PWD/.certs:/etc/nginx/certs:ro" \
       -e VITE_NODE_ENV=docker \
       cocktails-web:latest
 
