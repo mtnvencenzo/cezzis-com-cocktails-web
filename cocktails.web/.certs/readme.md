@@ -14,6 +14,6 @@ certutil -d sql:$HOME/.pki/nssdb -A -t "CP,CP," -n "localhost-dev" -i ./local.cr
 # 4. Verify it was added:
 certutil -d sql:$HOME/.pki/nssdb -L | grep localhost
 
-# 5. Optionally convert to a pfx for use with .net and kesttrel
-openssl pkcs12 -export -out local.pfx -inkey local.key -in local.crt -passout pass:YourPassword
+# 5. Optionally convert to a pfx for use with .net and kestrel
+openssl pkcs12 -export -out local.pfx -inkey local.key -in local.crt -passout pass:password
 ```
