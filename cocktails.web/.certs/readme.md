@@ -16,4 +16,8 @@ certutil -d sql:$HOME/.pki/nssdb -L | grep cocktails-web
 
 # 5. Optionally convert to a pfx for use with .net and kestrel
 openssl pkcs12 -export -out cocktails-web.pfx -inkey cocktails-web.key -in cocktails-web.crt -passout pass:password
+
+chmod 644 ./cocktails-web.crt
+chmod 644 ./cocktails-web.key
+chmod 644 ./cocktails-web.pfx
 ```
