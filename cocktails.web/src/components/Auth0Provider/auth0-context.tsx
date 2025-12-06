@@ -9,7 +9,8 @@ import {
     User,
     GetTokenSilentlyVerboseResponse,
     RedirectLoginOptions as SPARedirectLoginOptions,
-    type Auth0Client
+    type Auth0Client,
+    ConnectAccountRedirectResult
 } from '@auth0/auth0-spa-js';
 import { createContext } from 'react';
 import { AuthState, initialAuthState } from './auth-state';
@@ -125,7 +126,7 @@ export interface Auth0ContextInterface<TUser extends User = User> extends AuthSt
      *
      * @param url The URL to that should be used to retrieve the `state` and `code` values. Defaults to `window.location.href` if not given.
      */
-    handleRedirectCallback: (url?: string) => Promise<RedirectLoginResult>;
+    handleRedirectCallback: (url?: string) => Promise<RedirectLoginResult | ConnectAccountRedirectResult<any>>;
 
     /**
      * Returns the current DPoP nonce used for making requests to Auth0.

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import { Auth0Client, Auth0ClientOptions, PopupLoginOptions, PopupConfigOptions, GetTokenWithPopupOptions, RedirectLoginResult, GetTokenSilentlyOptions, User } from '@auth0/auth0-spa-js';
+import { Auth0Client, Auth0ClientOptions, PopupLoginOptions, PopupConfigOptions, GetTokenWithPopupOptions, RedirectLoginResult, GetTokenSilentlyOptions, User, ConnectAccountRedirectResult } from '@auth0/auth0-spa-js';
 import Auth0Context, { Auth0ContextInterface, LogoutOptions, RedirectLoginOptions } from './auth0-context';
 import { hasAuthParams, loginError, tokenError, deprecateRedirectUri } from './utils';
 import { reducer } from './reducer';
@@ -214,7 +214,7 @@ const Auth0Provider = <TUser extends User = User>(opts: Auth0ProviderOptions<TUs
     const getIdTokenClaims = useCallback(() => client.getIdTokenClaims(), [client]);
 
     const handleRedirectCallback = useCallback(
-        async (url?: string): Promise<RedirectLoginResult> => {
+        async (url?: string): Promise<RedirectLoginResult<any> | ConnectAccountRedirectResult<any>> => {
             try {
                 return await client.handleRedirectCallback(url);
             } catch (error) {
