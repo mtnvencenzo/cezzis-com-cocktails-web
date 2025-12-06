@@ -49,11 +49,11 @@ Cypress.Commands.addAll({
         );
     },
     cookieConsent: () => {
-        cy.clearCookie('CookieConsent');
+        // Disabled cy.clearCookie('CookieConsent');
 
-        cy.visit('/');
+        // cy.visit('/');
 
-        cy.get('[id="CybotCookiebotDialogBodyButtonAccept"]').click();
+        // cy.get('[id="CybotCookiebotDialogBodyButtonAccept"]').click();
     },
     validateSession: () => {
         // cy.window()

@@ -127,21 +127,21 @@ describe('Main Footer Bar', () => {
         expect(el.textContent).toBe('Privacy Policy');
     });
 
-    test('renders cookies link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
-        );
+    // Disabled test('renders cookies link', async () => {
+    //     await act(async () =>
+    //         render(
+    //             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+    //                 <MemoryRouter>
+    //                     <MainFooterBar testId='footer-bar' />
+    //                 </MemoryRouter>
+    //             </Auth0Provider>
+    //         )
+    //     );
 
-        const el = screen.getByTestId('footer-cookies');
-        expect(el).toBeDefined();
-        expect(el.textContent).toBe('Cookie Preferences');
-    });
+    //     const el = screen.getByTestId('footer-cookies');
+    //     expect(el).toBeDefined();
+    //     expect(el.textContent).toBe('Cookie Preferences');
+    // });
 
     test('renders myaccount link when not authd', async () => {
         auth0Tester.isNotLogged();
@@ -228,23 +228,23 @@ describe('Main Footer Bar', () => {
         expect(el).toBeDefined();
     });
 
-    test('clicks cookies link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
-        );
+    // Disabled test('clicks cookies link', async () => {
+    //     await act(async () =>
+    //         render(
+    //             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+    //                 <MemoryRouter>
+    //                     <MainFooterBar testId='footer-bar' />
+    //                 </MemoryRouter>
+    //             </Auth0Provider>
+    //         )
+    //     );
 
-        const el = screen.getByTestId('footer-cookies');
-        expect(el).toBeDefined();
-        expect(el.textContent).toBe('Cookie Preferences');
+    //     const el = screen.getByTestId('footer-cookies');
+    //     expect(el).toBeDefined();
+    //     expect(el.textContent).toBe('Cookie Preferences');
 
-        fireEvent.click(el);
-    });
+    //     fireEvent.click(el);
+    // });
 
     test('clicks myaccount link', async () => {
         await act(async () =>

@@ -8,11 +8,11 @@ import GradeIcon from '@mui/icons-material/Grade';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import NightlightIcon from '@mui/icons-material/Nightlight';
-import CookieIcon from '@mui/icons-material/Cookie';
+// Disabled import CookieIcon from '@mui/icons-material/Cookie';
 import ArticleIcon from '@mui/icons-material/Article';
 import MailLockIcon from '@mui/icons-material/MailLock';
 import ProfileSettingItemLink from '../../atoms/ProfileSettingItemLink/ProfileSettingItemLink';
-import showCookieBot from '../../utils/cookiebot';
+// Disabled import showCookieBot from '../../utils/cookiebot';
 
 interface AccountNavigationBarProps {
     testId: string;
@@ -80,7 +80,7 @@ const AccountNavigationBar = ({ testId, fullScreen = false }: AccountNavigationB
                     </Typography>
                     <ProfileSettingItemLink icon={<ArticleIcon />} text='Terms of Service' testId='p-settings-terms' navigatePath='/account/policies/terms-of-service' />
                     <ProfileSettingItemLink icon={<LockPersonIcon />} text='Privacy Policy' testId='p-settings-privacy' navigatePath='/account/policies/privacy-policy' />
-                    <ProfileSettingItemLink icon={<CookieIcon />} text='Cookie Preferences' testId='p-settings-coockies' navigatePath='#' onClick={(e) => showCookieBot(e)} />
+                    {/* Disabled <ProfileSettingItemLink icon={<CookieIcon />} text='Cookie Preferences' testId='p-settings-coockies' navigatePath='#' onClick={(e) => showCookieBot(e)} /> */}
                 </CardContent>
             </Card>
         </Box>

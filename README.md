@@ -52,7 +52,7 @@ Infrastructure is provisioned with Terraform (`/terraform`) and deployed into Az
 ### Authentication & Security
 - **Authentication**: Auth0 SPA SDK with a custom Auth0 provider wrapper
 - **reCAPTCHA**: Form protection
-- **Cookie Management**: Cookiebot integration
+- **Cookie Management**: Cookiebot integration (disabled)
 - **Telemetry**: OpenTelemetry traces and logs exported via OTLP
 
 ### Testing
@@ -102,7 +102,7 @@ cocktails.web/           # Main web application
 │   ├── pages/          # Page components
 │   ├── services/       # Business logic and API clients
 │   ├── templates/      # Layout templates
-│   ├── utils/          # Helpers (auth config, telemetry, cookiebot, etc.)
+│   ├── utils/          # Helpers (auth config, telemetry, cookiebot (disabled), etc.)
 │   └── auth0Mocks/     # Auth0 testing utilities
 ├── tests/              # Vitest setup and shared test utilities
 cocktails.web.e2e/      # End-to-end tests
@@ -198,7 +198,7 @@ yarn preview
 
 - Auth0 SPA authentication with secure token handling
 - Google reCAPTCHA integration for high-risk forms
-- Cookiebot-powered cookie consent management
+- Cookiebot-powered cookie consent management (disabled)
 - HTTPS-friendly local development via vite-plugin-mkcert
 - Environment-driven API configuration for secure communication
 - Defensive coding patterns to mitigate XSS

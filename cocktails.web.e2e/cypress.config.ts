@@ -4,7 +4,7 @@ import fs from 'fs';
 export default defineConfig({
     e2e: {
         chromeWebSecurity: false,
-        baseUrl: 'https://localhost:4001',
+        baseUrl: 'https://localhost:4002',
         userAgent: 'Cypress user-agent',
         testIsolation: false,
         experimentalStudio: true,
@@ -54,7 +54,7 @@ export default defineConfig({
         auth0UserObjectId: 'auth0|68d6d6b0a6ae4a44f05ec21f',
         auth0UserEmail: 'rvecchi+cypress@gmail.com',
         cypressUserPassword: '',
-        cocktailsApiBaseUrl: 'https://localhost:7176',
+        cocktailsApiBaseUrl: 'https://localhost:7178',
         cypressApiKey: ''
     },
     video: true,

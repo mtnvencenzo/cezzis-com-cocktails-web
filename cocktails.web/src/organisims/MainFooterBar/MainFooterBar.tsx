@@ -3,7 +3,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import logo from '../../assets/logo-32x32.png';
 import FooterLink from '../../atoms/FooterLink/FooterLink';
-import showCookieBot from '../../utils/cookiebot';
+// import showCookieBot from '../../utils/cookiebot';
 import { clearOwnedAccountLoginSession, loginWithRedirectOptions, logoutParams } from '../../utils/authConfig';
 import { useAuth0 } from '../../components/Auth0Provider';
 import SessionStorageService from '../../services/SessionStorageService';
@@ -89,8 +89,8 @@ const MainFooterBar = ({ testId }: MainFooterBarProps) => {
                         <FooterLink text='Terms of Service' testId='footer-terms' navigatePath='/terms-of-service' />
                         <br />
                         <FooterLink text='Privacy Policy' testId='footer-privacy' navigatePath='/privacy-policy' />
-                        <br />
-                        <FooterLink text='Cookie Preferences' testId='footer-cookies' navigatePath='#' onClick={(e) => showCookieBot(e)} />
+                        {/* Disbaled <br />
+                        <FooterLink text='Cookie Preferences' testId='footer-cookies' navigatePath='#' onClick={(e) => showCookieBot(e)} /> */}
                     </Grid>
                     <Grid size={{ xs: 2, sm: 2, md: 2, lg: 2 }} sx={{ paddingLeft: '0px' }}>
                         {!isAuthenticated && (

@@ -7,8 +7,8 @@ This directory contains end-to-end tests for the Cezzis Cocktails web applicatio
 - Node.js v18 or higher (matches the main app requirement)
 - Yarn (Classic)
 - Access to the Auth0 tenant and test user credentials used by the project
-- Cocktails web app running locally at `https://localhost:4001` (use `yarn cy` from `cocktails.web`)
-- Cocktails API running locally at `https://localhost:7176` (required for test account seeding)
+- Cocktails web app running locally at `https://localhost:4002` (use `yarn cy` from `cocktails.web`)
+- Cocktails API running locally at `https://localhost:7178` (required for test account seeding)
 
 ## Installation
 
@@ -68,7 +68,7 @@ The following environment variables are used in the tests:
 | cypressUserPassword | Password for the Auth0 test user | Yes |
 | auth0UserEmail | Email for the Auth0 test user | Yes |
 | auth0ClientId | Auth0 SPA client ID | Yes |
-| cocktailsApiBaseUrl | Base URL for the cocktails API used during tests | Yes (defaults to `https://localhost:7176` if not overridden) |
+| cocktailsApiBaseUrl | Base URL for the cocktails API used during tests | Yes (defaults to `https://localhost:7178` if not overridden) |
 | cypressApiKey | API key used to seed/reset the test account before runs | Yes |
 
 You can provide these values by:
