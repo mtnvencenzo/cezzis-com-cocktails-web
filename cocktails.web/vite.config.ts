@@ -33,6 +33,7 @@ export default ({ mode }) => {
         resolve: {
             conditions: ['mui-modern', 'module', 'browser', 'local|development|production']
         },
-        plugins: [react(), tsconfigPaths(), mkcert()]
+        plugins: [react(), tsconfigPaths()]
+        // plugins: [react(), tsconfigPaths(), mkcert()] // FOR SSL
     });
 };
