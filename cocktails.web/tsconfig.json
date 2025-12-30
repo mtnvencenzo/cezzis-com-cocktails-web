@@ -16,8 +16,9 @@
 
         /* Linting */
         "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        /* Disabled these two lines due to auto generated code from openapi-generator-cli */
+        //"noUnusedLocals": true,
+        //"noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "paths": {
             "react": [ "./node_modules/@types/react" ]

@@ -1,2 +1,4 @@
 src/auth0Mocks/**
 src/components/Auth0Provider/**
+src/api/aisearchApi/**
+src/api/cocktailsApi/**
