@@ -34,10 +34,10 @@ describe('Cocktails Search Page Container', () => {
     test('renders and fetches cocktails data', async () => {
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
-                    expect(url.searchParams.get('freeText')).toBe('');
+                    expect(url.searchParams.get('freetext')).toBe('');
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
@@ -105,7 +105,7 @@ describe('Cocktails Search Page Container', () => {
     test('renders and fetches cocktails data but doesnt show cocktails without image', async () => {
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 () =>
                     HttpResponse.json<CocktailsListRs>(
                         {

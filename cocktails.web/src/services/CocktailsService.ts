@@ -110,20 +110,6 @@ const getCocktailsWithRatings = async (
     }
 };
 
-const searchCocktails = async (freeText: string, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsListRs | undefined> => {
-    const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
-
-    try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        const results = await cocktailsApiClient.getCocktailsList(freeText, skip, take, [], false, include, searchFilters, undefined);
-
-        return results;
-    } catch (e: unknown) {
-        logger.logException('Failed to search cocktails', e as Error);
-        throw e;
-    }
-};
-
 const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs | undefined> => {
     const localStorageService = new LocalStorageService();
     const cached = localStorageService.GetCocktailsSearchFilters();
@@ -147,4 +133,4 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
     }
 };
 
-export { getCocktailsSearchResults, getCocktail, getCocktailsList, searchCocktails, getCocktailsSearchFilters, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };
+export { getCocktailsSearchResults, getCocktail, getCocktailsList, getCocktailsSearchFilters, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };

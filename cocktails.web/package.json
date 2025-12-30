@@ -13,7 +13,8 @@
         "build:prod": "tsc -p tsconfig.prod.json && vite build --mode prod",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "nswag-cocktails-api": "nswag run src/api/nswagConfig.json /variables:SpecUrl=https://localhost:7178/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts",
+        "gen-cocktails-api": "nswag run src/api/cocktailsApi/nswagConfig.json /variables:SpecUrl=http://localhost:7179/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=cocktailsApi,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts",
+        "gen-aisearch-api": "openapi-generator-cli generate -c ./src/api/aisearchApi/openapi-generator-config.yaml",
         "analyze": "vite-bundle-visualizer --template=treemap --open"
     },
     "dependencies": {
@@ -53,6 +54,7 @@
         "rehype-raw": "^7.0.0"
     },
     "devDependencies": {
+        "@openapitools/openapi-generator-cli": "^2.27.0",
         "@testing-library/dom": "^10.4.1",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.0",
