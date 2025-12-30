@@ -11,9 +11,10 @@ import { CocktailsListModel, IngredientApplicationModel } from '../../api/cockta
 import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteCocktailButton';
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
 import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
+import { CocktailModelOutput } from '../../api/aisearchApi';
 
 interface CocktailTileProps {
-    cocktail: CocktailsListModel;
+    cocktail: CocktailsListModel | CocktailModelOutput;
     isFavorite: boolean;
     indicatorValue?: number;
     testId: string;
