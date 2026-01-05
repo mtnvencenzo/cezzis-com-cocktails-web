@@ -694,10 +694,10 @@ crypt@0.0.2:
   resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
   integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
 
-cypress-localstorage-commands@^2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/cypress-localstorage-commands/-/cypress-localstorage-commands-2.2.7.tgz#62c26474902e430372d9dfecec7c75f5fcdfda24"
-  integrity sha512-hUe6hz/3TD9Ph70CUHJLSiTzL0INikUQ4W3CRd7XmaGCDjwR6jGAlvTCGmxZ6yGc4Mq/WN6L8xJAu+dOrIvYCA==
+cypress-localstorage-commands@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/cypress-localstorage-commands/-/cypress-localstorage-commands-2.2.8.tgz#e76c7b22fe9af32e137a205bda7e227aabaf2508"
+  integrity sha512-nqZ+SwNniT138lTWIhU4MjeKbn/81fwNY5AcxXQLgxyCThh2dyiHLhG1ybWQFKu21XaO2M1rL2gJdXl0qVp5Ew==
 
 cypress@14.2.1:
   version "14.2.1"
