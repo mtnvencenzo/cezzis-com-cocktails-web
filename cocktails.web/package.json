@@ -92,7 +92,7 @@
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-mkcert": "^1.17.8",
-        "vite-tsconfig-paths": "^5.1.4",
+        "vite-tsconfig-paths": "^6.0.3",
         "vitest": "^3.2.4",
         "vitest-location-mock": "^1.0.4"
     }
