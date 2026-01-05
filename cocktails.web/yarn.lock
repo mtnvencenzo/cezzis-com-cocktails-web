@@ -42,10 +42,10 @@
   resolved "https://registry.yarnpkg.com/@asamuzakjp/nwsapi/-/nwsapi-2.3.9.tgz#ad5549322dfe9d153d4b4dd6f7ff2ae234b06e24"
   integrity sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==
 
-"@auth0/auth0-spa-js@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-2.10.0.tgz#fa20dba65acf6770a6188f59d2369d3e3951618f"
-  integrity sha512-eQhtxp19foKD7csTUariaU7YgwElVAmSJQSk2USuaP1LCqzN/iWhQS/vtVYiSozvSZPv8IOwN5UkBUt+rJAg8w==
+"@auth0/auth0-spa-js@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-2.11.0.tgz#ad6824dc055d07f9ad4c64f67ca317449a2db966"
+  integrity sha512-MZuUkB6cYAWm2uswWhEj8aMS7sw6zx8cs5YyPbrHCF+MlScLgfOkUnGe0tbnv7592xQ6M2h4lB66WyemFQEmPA==
   dependencies:
     browser-tabs-lock "^1.2.15"
     dpop "^2.1.1"

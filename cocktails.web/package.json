@@ -18,7 +18,7 @@
         "analyze": "vite-bundle-visualizer --template=treemap --open"
     },
     "dependencies": {
-        "@auth0/auth0-spa-js": "^2.10.0",
+        "@auth0/auth0-spa-js": "^2.11.0",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
         "@mtnvencenzo/kelso-component-library": "^1.0.17",
