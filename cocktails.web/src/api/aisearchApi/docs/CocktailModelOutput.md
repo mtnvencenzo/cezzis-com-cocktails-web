@@ -16,6 +16,7 @@ Name | Type
 `prepTimeMinutes` | number
 `searchTiles` | Array&lt;string&gt;
 `glassware` | [Array&lt;GlasswareTypeModel&gt;](GlasswareTypeModel.md)
+`search_statistics` | [CocktailSearchStatistics](CocktailSearchStatistics.md)
 
 ## Example
 
@@ -34,6 +35,7 @@ const example = {
   "prepTimeMinutes": null,
   "searchTiles": null,
   "glassware": null,
+  "search_statistics": null,
 } satisfies CocktailModelOutput
 
 console.log(example)

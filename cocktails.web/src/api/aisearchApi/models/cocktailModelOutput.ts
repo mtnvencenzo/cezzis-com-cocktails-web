@@ -20,6 +20,13 @@ import {
     GlasswareTypeModelToJSON,
     GlasswareTypeModelToJSONTyped,
 } from './glasswareTypeModel';
+import type { CocktailSearchStatistics } from './cocktailSearchStatistics';
+import {
+    CocktailSearchStatisticsFromJSON,
+    CocktailSearchStatisticsFromJSONTyped,
+    CocktailSearchStatisticsToJSON,
+    CocktailSearchStatisticsToJSONTyped,
+} from './cocktailSearchStatistics';
 import type { IngredientModel } from './ingredientModel';
 import {
     IngredientModelFromJSON,
@@ -94,6 +101,12 @@ export interface CocktailModelOutput {
      * @memberof CocktailModelOutput
      */
     glassware: Array<GlasswareTypeModel>;
+    /**
+     * 
+     * @type {CocktailSearchStatistics}
+     * @memberof CocktailModelOutput
+     */
+    search_statistics?: CocktailSearchStatistics | null;
 }
 
 /**
@@ -133,6 +146,7 @@ export function CocktailModelOutputFromJSONTyped(json: any, ignoreDiscriminator:
         'prepTimeMinutes': json['prepTimeMinutes'],
         'searchTiles': json['searchTiles'],
         'glassware': ((json['glassware'] as Array<any>).map(GlasswareTypeModelFromJSON)),
+        'search_statistics': json['search_statistics'] == null ? undefined : CocktailSearchStatisticsFromJSON(json['search_statistics']),
     };
 }
 
@@ -157,6 +171,7 @@ export function CocktailModelOutputToJSONTyped(value?: CocktailModelOutput | nul
         'prepTimeMinutes': value['prepTimeMinutes'],
         'searchTiles': value['searchTiles'],
         'glassware': ((value['glassware'] as Array<any>).map(GlasswareTypeModelToJSON)),
+        'search_statistics': CocktailSearchStatisticsToJSON(value['search_statistics']),
     };
 }
 

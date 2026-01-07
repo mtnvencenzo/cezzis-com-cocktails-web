@@ -5,6 +5,8 @@ docs/CocktailDescriptionChunk.md
 docs/CocktailEmbeddingRq.md
 docs/CocktailModelInput.md
 docs/CocktailModelOutput.md
+docs/CocktailSearchStatistics.md
+docs/CocktailVectorSearchResult.md
 docs/CocktailsSearchRs.md
 docs/DefaultApi.md
 docs/GlasswareTypeModel.md
@@ -23,6 +25,8 @@ models/cocktailDescriptionChunk.ts
 models/cocktailEmbeddingRq.ts
 models/cocktailModelInput.ts
 models/cocktailModelOutput.ts
+models/cocktailSearchStatistics.ts
+models/cocktailVectorSearchResult.ts
 models/cocktailsSearchRs.ts
 models/glasswareTypeModel.ts
 models/hTTPValidationError.ts

@@ -1,10 +1,12 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './cocktailDataIncludeModel';
 export * from './cocktailDescriptionChunk';
 export * from './cocktailEmbeddingRq';
 export * from './cocktailModelInput';
 export * from './cocktailModelOutput';
+export * from './cocktailSearchStatistics';
+export * from './cocktailVectorSearchResult';
 export * from './cocktailsSearchRs';
 export * from './glasswareTypeModel';
 export * from './hTTPValidationError';

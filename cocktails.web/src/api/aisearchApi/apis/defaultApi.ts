@@ -53,21 +53,6 @@ export interface SearchV1CocktailsSearchGetRequest {
  */
 export interface DefaultApiInterface {
     /**
-     * AI powered conversational search for cocktails.
-     * @summary Chat
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    chatV1CocktailsChatGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
-
-    /**
-     * AI powered conversational search for cocktails.
-     * Chat
-     */
-    chatV1CocktailsChatGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
-
-    /**
      * Performs a semantic search for cocktails based on a free text query.
      * @summary Embed
      * @param {CocktailEmbeddingRq} CocktailEmbeddingRq 
@@ -111,41 +96,6 @@ export interface DefaultApiInterface {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
-
-    /**
-     * AI powered conversational search for cocktails.
-     * Chat
-     */
-    async chatV1CocktailsChatGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        let urlPath = `/v1/cocktails/chat`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * AI powered conversational search for cocktails.
-     * Chat
-     */
-    async chatV1CocktailsChatGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.chatV1CocktailsChatGetRaw(initOverrides);
-        return await response.value();
-    }
 
     /**
      * Performs a semantic search for cocktails based on a free text query.
