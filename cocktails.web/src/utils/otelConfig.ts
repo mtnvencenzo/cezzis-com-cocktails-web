@@ -102,14 +102,16 @@ export const setupTelemetry = () => {
             propagateTraceHeaderCorsUrls: [/.*$/],
             ignoreUrls: [
                 /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
-                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/ // Exclude a specific third-party API
+                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/,
+                /^https?:\/\/[^\/]+:4318\/v1\/(?:traces|logs|metrics)$/
             ]
         }),
         new XMLHttpRequestInstrumentation({
             propagateTraceHeaderCorsUrls: [/.*$/],
             ignoreUrls: [
                 /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
-                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/ // Exclude a specific third-party API
+                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/,
+                /^https?:\/\/[^\/]+:4318\/v1\/(?:traces|logs|metrics)$/
             ]
         })
     ];
