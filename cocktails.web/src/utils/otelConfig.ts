@@ -100,19 +100,11 @@ export const setupTelemetry = () => {
         new DocumentLoadInstrumentation(),
         new FetchInstrumentation({
             propagateTraceHeaderCorsUrls: [/.*$/],
-            ignoreUrls: [
-                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
-                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/,
-                /^https?:\/\/[^\/]+:4318\/v1\/(?:traces|logs|metrics)$/
-            ]
+            ignoreUrls: [/^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/, /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/, /^https?:\/\/[^/]+:4318\/v1\/(?:traces|logs|metrics)$/]
         }),
         new XMLHttpRequestInstrumentation({
             propagateTraceHeaderCorsUrls: [/.*$/],
-            ignoreUrls: [
-                /^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/,
-                /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/,
-                /^https?:\/\/[^\/]+:4318\/v1\/(?:traces|logs|metrics)$/
-            ]
+            ignoreUrls: [/^https:\/\/cezzis\.us\.auth0\.com(?:\/|$)/, /^https:\/\/.*?login\.cezzis\.com(?:\/|$)/, /^https?:\/\/[^/]+:4318\/v1\/(?:traces|logs|metrics)$/]
         })
     ];
 
