@@ -36,7 +36,7 @@ describe('Account Interactions Cocktail Ratings Page', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');

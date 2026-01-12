@@ -107,4 +107,36 @@ const getCocktailFavorites = async (
     }
 };
 
-export { searchCocktails, getCocktailsList, getCocktailFavorites, DEFAULT_TAKE };
+const getCocktailsWithRatings = async (
+    skip: number,
+    take: number,
+    include: CocktailDataIncludeModel[] | undefined,
+    matches: string[] | undefined,
+    matchExclusive: boolean = false
+): Promise<CocktailsSearchRs | undefined> => {
+    try {
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_AISEARCH_API_URL
+        });
+
+        const cocktailsApiClient = new DefaultApi(config);
+
+        const requestParameters = {
+            freetext: '',
+            skip,
+            take,
+            inc: include,
+            fi: [],
+            m: matches ?? [],
+            m_ex: matchExclusive
+        };
+
+        const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
+        return results;
+    } catch (e: unknown) {
+        logger.logException('Failed to retrieve cocktails with ratings', e as Error);
+        throw e;
+    }
+};
+
+export { searchCocktails, getCocktailsList, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };
