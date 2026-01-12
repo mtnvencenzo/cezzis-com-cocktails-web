@@ -1,4 +1,5 @@
-import { CocktailRs, CocktailsApiClient, CocktailsListRs, CocktailIngredientFiltersRs, CocktailDataIncludeModel, CocktailsListModel } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModelOutput } from '../api/aisearchApi';
+import { CocktailRs, CocktailsApiClient, CocktailsListRs, CocktailIngredientFiltersRs, CocktailDataIncludeModel } from '../api/cocktailsApi/cocktailsApiClient';
 import CocktailFiltersLocalStorageService from './CocktailFiltersLocalStorageService';
 import LocalStorageService from './LocalStorageService';
 import logger from './Logger';
@@ -6,7 +7,7 @@ import logger from './Logger';
 const cocktailFilterService = new CocktailFiltersLocalStorageService();
 const DEFAULT_TAKE: number = 10;
 
-const getCocktailsSearchResults = async (callBack: (results?: CocktailsListModel[]) => void, freeText: string, skip: number, take: number): Promise<void> => {
+const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutput[]) => void, freeText: string, skip: number, take: number): Promise<void> => {
     const localStorageService = new LocalStorageService();
     const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
 
@@ -20,7 +21,7 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailsListModel
         }
     }
 
-    let results: CocktailsListModel[] = [];
+    let results: CocktailModelOutput[] = [];
 
     try {
         const cocktailsApiClient = new CocktailsApiClient();
@@ -48,47 +49,6 @@ const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
         return result;
     } catch (e: unknown) {
         logger.logException('Failed to retrieve cocktail', e as Error);
-        throw e;
-    }
-};
-
-const getCocktailsList = async (skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsListRs | undefined> => {
-    const localStorageService = new LocalStorageService();
-    const cached = localStorageService.GetCocktailListRequestData(skip, take, include);
-    const matches: string[] | undefined = undefined; // must send null for not taking matches into account, empty string would result in empty list
-
-    if (cached) {
-        return cached;
-    }
-
-    try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches, false, include, [], undefined);
-
-        if (results) {
-            localStorageService.SetCocktailListRequestData(results, skip, take, include);
-        }
-
-        return results;
-    } catch (e: unknown) {
-        logger.logException('Failed to retrieve cocktail list', e as Error);
-        throw e;
-    }
-};
-
-const getCocktailFavorites = async (
-    skip: number,
-    take: number,
-    include: CocktailDataIncludeModel[] | undefined,
-    matches: string[] | undefined,
-    matchExclusive: boolean = false
-): Promise<CocktailsListRs | undefined> => {
-    try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        const results = await cocktailsApiClient.getCocktailsList('', skip, take, matches ?? [], matchExclusive, include, [], undefined);
-        return results;
-    } catch (e: unknown) {
-        logger.logException('Failed to retrieve cocktail favorites', e as Error);
         throw e;
     }
 };
@@ -133,4 +93,4 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
     }
 };
 
-export { getCocktailsSearchResults, getCocktail, getCocktailsList, getCocktailsSearchFilters, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };
+export { getCocktailsSearchResults, getCocktail, getCocktailsSearchFilters, getCocktailsWithRatings, DEFAULT_TAKE };

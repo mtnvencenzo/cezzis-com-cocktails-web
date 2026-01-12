@@ -4,8 +4,7 @@ import './CocktailsListPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
-import { getCocktailsList } from '../../services/CocktailsService';
-import { CocktailsListModel, CocktailDataIncludeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { getCocktailsList } from '../../services/CocktailsAISearchService';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
@@ -13,12 +12,13 @@ import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import startPageViewSpan from '../../services/Tracer';
+import { CocktailModelOutput, CocktailDataIncludeModel } from '../../api/aisearchApi';
 
 const CocktailsListPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [apiCallFailed, setApiCallFailed] = useState<boolean>(false);
-    const [cocktailListModels, setCocktailListModels] = useState<CocktailsListModel[]>([]);
+    const [cocktailListModels, setCocktailListModels] = useState<CocktailModelOutput[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();

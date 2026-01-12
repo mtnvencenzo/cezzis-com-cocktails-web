@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**embedV1CocktailsEmbeddingsPut**](DefaultApi.md#embedv1cocktailsembeddingsput) | **PUT** /v1/cocktails/embeddings | Embed |
+| [**healthCheckV1HealthGet**](DefaultApi.md#healthcheckv1healthget) | **GET** /v1/health | Health Check |
 | [**searchV1CocktailsSearchGet**](DefaultApi.md#searchv1cocktailssearchget) | **GET** /v1/cocktails/search | Search |
 
 
@@ -28,7 +29,11 @@ import type { EmbedV1CocktailsEmbeddingsPutRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new DefaultApi();
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: auth0 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+  });
+  const api = new DefaultApi(config);
 
   const body = {
     // CocktailEmbeddingRq
@@ -60,19 +65,79 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[auth0 accessCode](../README.md#auth0-accessCode)
 
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: Not defined
+- **Accept**: `application/problem+json`, `application/json`
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Embedding successful. No content returned. |  -  |
-| **422** | Invalid request or embedding failed. |  -  |
+| **0** | All non-success responses |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## healthCheckV1HealthGet
+
+> HealthCheckRs healthCheckV1HealthGet()
+
+Health Check
+
+Performs a health check of the API.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '';
+import type { HealthCheckV1HealthGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new DefaultApi();
+
+  try {
+    const data = await api.healthCheckV1HealthGet();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**HealthCheckRs**](HealthCheckRs.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`, `application/problem+json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful health check |  -  |
+| **0** | All non-success responses |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -151,14 +216,14 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/problem+json`
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
+| **200** | Successful search results |  -  |
+| **0** | All non-success responses |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

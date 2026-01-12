@@ -62,7 +62,7 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
@@ -117,7 +117,7 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 () =>
                     HttpResponse.json<CocktailsListRs>(
                         {
@@ -188,14 +188,14 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
-                    expect(url.searchParams.get('match-exclusive')).toBe('true');
+                    expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
 
                     return HttpResponse.json<CocktailsListRs>(
@@ -238,14 +238,14 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
-                    expect(url.searchParams.get('match-exclusive')).toBe('true');
+                    expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('absinthe-frappe');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
 
@@ -290,14 +290,14 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
-                    expect(url.searchParams.get('match-exclusive')).toBe('true');
+                    expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
                     expect(url.searchParams.getAll('m').length).toBe(1);
 
@@ -344,14 +344,14 @@ describe('Favorite Cocktails Page Container', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
                     expect(url.searchParams.getAll('inc')).toContain('searchTiles');
                     expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
-                    expect(url.searchParams.get('match-exclusive')).toBe('true');
+                    expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
                     expect(url.searchParams.getAll('m')).toContain('absinthe-frappe');
                     expect(url.searchParams.getAll('m').length).toBe(2);

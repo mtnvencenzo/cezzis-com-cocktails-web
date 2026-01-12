@@ -1,4 +1,5 @@
-import { CocktailIngredientFiltersRs, CocktailsListRs, CocktailsListModel, CocktailDataIncludeModel } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailsSearchRs, CocktailDataIncludeModel, CocktailModelOutput } from '../api/aisearchApi';
+import { CocktailIngredientFiltersRs } from '../api/cocktailsApi/cocktailsApiClient';
 import StorageCache from './StorageCache';
 
 /* eslint-disable class-methods-use-this */
@@ -11,22 +12,22 @@ class LocalStorageService extends StorageCache {
 
     private static storageEnabled: boolean | undefined = undefined;
 
-    public GetCocktailListRequestData = (skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): CocktailsListRs | undefined => {
+    public GetCocktailListRequestData = (skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): CocktailsSearchRs | undefined => {
         if (!this.IsStorageEnabled()) {
             return undefined;
         }
 
         const inc = include ? `&inc=${include?.join('&inc=')}` : '';
 
-        return this.GetCachedGroupItem<CocktailsListRs>(LocalStorageService.CocktailsListGroupCacheKey, `?skip=${skip}&take=${take}${inc}`);
+        return this.GetCachedGroupItem<CocktailsSearchRs>(LocalStorageService.CocktailsListGroupCacheKey, `?skip=${skip}&take=${take}${inc}`);
     };
 
-    public SetCocktailListRequestData = (response: CocktailsListRs, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): void => {
+    public SetCocktailListRequestData = (response: CocktailsSearchRs, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): void => {
         if (!this.IsStorageEnabled()) {
             return;
         }
 
-        const group = this.GetOrCreateCachedGroup<CocktailsListRs>(LocalStorageService.CocktailsListGroupCacheKey, Date.now() + 86_400_000); // adding one day from now
+        const group = this.GetOrCreateCachedGroup<CocktailsSearchRs>(LocalStorageService.CocktailsListGroupCacheKey, Date.now() + 86_400_000); // adding one day from now
 
         const inc = include ? `&inc=${include?.join('&inc=')}` : '';
 
@@ -35,20 +36,20 @@ class LocalStorageService extends StorageCache {
         this.StorageProvider.setItem(LocalStorageService.CocktailsListGroupCacheKey, JSON.stringify(group));
     };
 
-    public GetInitialCocktailsSearchData = (freeText: string, skip: number, take: number): CocktailsListModel[] | undefined => {
+    public GetInitialCocktailsSearchData = (freeText: string, skip: number, take: number): CocktailModelOutput[] | undefined => {
         if (!this.IsStorageEnabled()) {
             return undefined;
         }
 
-        return this.GetCachedGroupItem<CocktailsListModel[]>(LocalStorageService.CocktailsInitialSearchGroupCacheKey, `?freeText=${freeText}&skip=${skip}&take=${take}`);
+        return this.GetCachedGroupItem<CocktailModelOutput[]>(LocalStorageService.CocktailsInitialSearchGroupCacheKey, `?freeText=${freeText}&skip=${skip}&take=${take}`);
     };
 
-    public SetInitialCocktailsSearchData = (response: CocktailsListModel[], freeText: string, skip: number, take: number): void => {
+    public SetInitialCocktailsSearchData = (response: CocktailModelOutput[], freeText: string, skip: number, take: number): void => {
         if (!this.IsStorageEnabled()) {
             return;
         }
 
-        const group = this.GetOrCreateCachedGroup<CocktailsListModel[]>(LocalStorageService.CocktailsInitialSearchGroupCacheKey, Date.now() + 86_400_000); // adding one day from now
+        const group = this.GetOrCreateCachedGroup<CocktailModelOutput[]>(LocalStorageService.CocktailsInitialSearchGroupCacheKey, Date.now() + 86_400_000); // adding one day from now
 
         group.Items[`?freeText=${freeText}&skip=${skip}&take=${take}`] = response;
 
