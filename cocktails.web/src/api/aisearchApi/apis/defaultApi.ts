@@ -48,6 +48,13 @@ export interface SearchV1CocktailsSearchGetRequest {
     fi?: Array<string> | null;
 }
 
+export interface TypeaheadV1CocktailsTypeaheadGetRequest {
+    freetext?: string | null;
+    skip?: number | null;
+    take?: number | null;
+    fi?: Array<string> | null;
+}
+
 /**
  * DefaultApi - interface
  * 
@@ -107,6 +114,25 @@ export interface DefaultApiInterface {
      * Search
      */
     searchV1CocktailsSearchGet(requestParameters: SearchV1CocktailsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs>;
+
+    /**
+     * Performs a typeahead search for cocktails based on a free text query.
+     * @summary Typeahead
+     * @param {string} [freetext] The free text search term to match against
+     * @param {number} [skip] The number of cocktail recipes to skip from the paged response
+     * @param {number} [take] The number of cocktail recipes to take for pagination
+     * @param {Array<string>} [fi] An optional list of filters to use when quering the cocktail recipes
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    typeaheadV1CocktailsTypeaheadGetRaw(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>>;
+
+    /**
+     * Performs a typeahead search for cocktails based on a free text query.
+     * Typeahead
+     */
+    typeaheadV1CocktailsTypeaheadGet(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs>;
 
 }
 
@@ -247,6 +273,53 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async searchV1CocktailsSearchGet(requestParameters: SearchV1CocktailsSearchGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs> {
         const response = await this.searchV1CocktailsSearchGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Performs a typeahead search for cocktails based on a free text query.
+     * Typeahead
+     */
+    async typeaheadV1CocktailsTypeaheadGetRaw(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['freetext'] != null) {
+            queryParameters['freetext'] = requestParameters['freetext'];
+        }
+
+        if (requestParameters['skip'] != null) {
+            queryParameters['skip'] = requestParameters['skip'];
+        }
+
+        if (requestParameters['take'] != null) {
+            queryParameters['take'] = requestParameters['take'];
+        }
+
+        if (requestParameters['fi'] != null) {
+            queryParameters['fi'] = requestParameters['fi'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/v1/cocktails/typeahead`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CocktailsSearchRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Performs a typeahead search for cocktails based on a free text query.
+     * Typeahead
+     */
+    async typeaheadV1CocktailsTypeaheadGet(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs> {
+        const response = await this.typeaheadV1CocktailsTypeaheadGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -1404,22 +1404,22 @@ describe('SearchBox', () => {
         localStorage.clear();
 
         server.use(
-            http.get('http://localhost:0/api/v1/cocktails', ({ request }) => {
+            http.get('http://localhost:1/v1/cocktails/typeahead', ({ request }) => {
                 const url = new URL(request.url);
 
-                if (url.searchParams.get('freeText') === '') {
+                if (url.searchParams.get('freetext') === '') {
                     return HttpResponse.json<CocktailsListRs>(defaultSearchRs(), {
                         status: 200,
                         statusText: 'OK'
                     });
                 }
-                if (url.searchParams.get('freeText') === 'Aper') {
+                if (url.searchParams.get('freetext') === 'Aper') {
                     return HttpResponse.json<CocktailsListRs>(typedAsSearchRs(), {
                         status: 200,
                         statusText: 'OK'
                     });
                 }
-                if (url.searchParams.get('freeText') === 'zzz') {
+                if (url.searchParams.get('freetext') === 'zzz') {
                     return HttpResponse.json<CocktailsListRs>(
                         { items: [] },
                         {
@@ -1500,7 +1500,7 @@ describe('SearchBox', () => {
     test('renders correct no options text when enableFiltering enabled', async () => {
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/typeahead',
                 () =>
                     HttpResponse.json<CocktailsListRs>(
                         { items: [] },

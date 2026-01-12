@@ -1,5 +1,5 @@
 import { Configuration, DefaultApi, SearchV1CocktailsSearchGetRequest } from '../api/aisearchApi';
-import { CocktailsSearchRs, CocktailDataIncludeModel } from '../api/aisearchApi/models';
+import { CocktailsSearchRs, CocktailDataIncludeModel, CocktailModelOutput } from '../api/aisearchApi/models';
 import { getWindowEnv } from '../utils/envConfig';
 import CocktailFiltersLocalStorageService from './CocktailFiltersLocalStorageService';
 import LocalStorageService from './LocalStorageService';
@@ -139,4 +139,49 @@ const getCocktailsWithRatings = async (
     }
 };
 
-export { searchCocktails, getCocktailsList, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };
+const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutput[]) => void, freeText: string, skip: number, take: number): Promise<void> => {
+    const localStorageService = new LocalStorageService();
+    const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
+
+    // Only caching the initial , unfiltered search results for now
+    if (freeText === '' && skip === 0 && take === DEFAULT_TAKE && searchFilters.length === 0) {
+        const cached = localStorageService.GetInitialCocktailsSearchData(freeText, skip, take);
+
+        if (cached) {
+            callBack(cached);
+            return;
+        }
+    }
+
+    let results: CocktailModelOutput[] = [];
+
+    try {
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_AISEARCH_API_URL
+        });
+
+        const cocktailsApiClient = new DefaultApi(config);
+
+        const requestParameters = {
+            freetext: freeText,
+            skip,
+            take,
+            fi: []
+        };
+
+        const rs = await cocktailsApiClient.typeaheadV1CocktailsTypeaheadGet(requestParameters);
+        results = rs.items ?? [];
+
+        // Only caching the initial , unfiltered search results for now
+        if (results && results.length > 0 && freeText === '' && skip === 0 && take === DEFAULT_TAKE && searchFilters.length === 0) {
+            localStorageService.SetInitialCocktailsSearchData(results, freeText, skip, take);
+        }
+
+        callBack(results);
+    } catch (e: unknown) {
+        logger.logException('Failed to retrieve cocktails search results', e as Error);
+        throw e;
+    }
+};
+
+export { getCocktailsSearchResults, searchCocktails, getCocktailsList, getCocktailFavorites, getCocktailsWithRatings, DEFAULT_TAKE };

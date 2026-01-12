@@ -19,8 +19,7 @@ import { debounce } from '@mui/material/utils';
 
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { CocktailsListModel } from '../../api/cocktailsApi/cocktailsApiClient';
-import { DEFAULT_TAKE, getCocktailsSearchResults } from '../../services/CocktailsService';
+import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import Highlighted from '../../atoms/Highlighted/Highlighted';
 import { useScreenContext } from '../../components/ScreenContext';
 import SearchBoxAutocompletePaper from './SearchBoxAutocompletePaper';
@@ -28,6 +27,7 @@ import CocktailFiltersDialog from '../../organisims/CocktailFiltersDialog/Cockta
 import { useCocktailSearch } from '../../components/CocktailSearchContext';
 import { useCocktailFiltering } from '../../components/CocktailFilterContext';
 import { CocktailModelOutput } from '../../api/aisearchApi';
+import { getCocktailsSearchResults } from '../../services/CocktailsAISearchService';
 
 interface SearchBoxProps {
     testId: string;
@@ -38,9 +38,9 @@ interface SearchBoxProps {
 }
 
 interface SearchState {
-    value: NonNullable<string | CocktailsListModel | CocktailModelOutput> | null;
+    value: NonNullable<string | CocktailModelOutput> | null;
     inputValue: string;
-    options: readonly CocktailsListModel[] | readonly CocktailModelOutput[];
+    options: readonly CocktailModelOutput[];
     open: boolean;
     focused: boolean;
     hasRetrieved: boolean;
@@ -93,7 +93,7 @@ const GetCustomPopper = (props: PopperProps) => {
     );
 };
 
-const filter = createFilterOptions<NonNullable<string | CocktailsListModel | CocktailModelOutput> | null>();
+const filter = createFilterOptions<NonNullable<string | CocktailModelOutput> | null>();
 const retrievingOptionsText = 'Retrieving Cocktails List...';
 const noOptionsText = 'No matches found. Try reducing your search filters and search term';
 
@@ -223,7 +223,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
         }));
     };
 
-    const handleOnChange = (_: React.SyntheticEvent<Element, Event>, v: string | CocktailsListModel | CocktailModelOutput | null) => {
+    const handleOnChange = (_: React.SyntheticEvent<Element, Event>, v: string | CocktailModelOutput | null) => {
         setSearchState((prevState) => ({
             ...prevState,
             value: v
@@ -291,7 +291,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
         };
     }, [searchState.value, searchState.inputValue, fetchSearchResults, enableFiltering, setNoItems, searchState.preventOpen, isNavigating]);
 
-    const isEqualValue = (option: NonNullable<string | CocktailsListModel | CocktailModelOutput> | null, value: NonNullable<string | CocktailsListModel | CocktailModelOutput> | null): boolean =>
+    const isEqualValue = (option: NonNullable<string | CocktailModelOutput> | null, value: NonNullable<string | CocktailModelOutput> | null): boolean =>
         /* eslint-disable no-nested-ternary */
         typeof option === 'string' && typeof value === 'string'
             ? option === value
@@ -394,7 +394,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
                 }}
                 onInputChange={handleInputChange}
                 // no-nested-ternary
-                renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: NonNullable<string | CocktailsListModel | CocktailModelOutput> | null) => {
+                renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: NonNullable<string | CocktailModelOutput> | null) => {
                     if (typeof option === 'string') {
                         if (option === retrievingOptionsText) {
                             return (

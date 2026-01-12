@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**embedV1CocktailsEmbeddingsPut**](DefaultApi.md#embedv1cocktailsembeddingsput) | **PUT** /v1/cocktails/embeddings | Embed |
 | [**healthCheckV1HealthGet**](DefaultApi.md#healthcheckv1healthget) | **GET** /v1/health | Health Check |
 | [**searchV1CocktailsSearchGet**](DefaultApi.md#searchv1cocktailssearchget) | **GET** /v1/cocktails/search | Search |
+| [**typeaheadV1CocktailsTypeaheadGet**](DefaultApi.md#typeaheadv1cocktailstypeaheadget) | **GET** /v1/cocktails/typeahead | Typeahead |
 
 
 
@@ -203,6 +204,83 @@ example().catch(console.error);
 | **m** | `Array<string>` | A list of cocktails that can be included in the list | [Optional] |
 | **m_ex** | `boolean` | Whether or not the supplied matches must be exclusively returned | [Optional] [Defaults to `undefined`] |
 | **inc** | `Array<CocktailDataIncludeModel>` | The list of extension objects to include for each cocktail recipe | [Optional] |
+| **fi** | `Array<string>` | An optional list of filters to use when quering the cocktail recipes | [Optional] |
+
+### Return type
+
+[**CocktailsSearchRs**](CocktailsSearchRs.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`, `application/problem+json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful search results |  -  |
+| **0** | All non-success responses |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## typeaheadV1CocktailsTypeaheadGet
+
+> CocktailsSearchRs typeaheadV1CocktailsTypeaheadGet(freetext, skip, take, fi)
+
+Typeahead
+
+Performs a typeahead search for cocktails based on a free text query.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '';
+import type { TypeaheadV1CocktailsTypeaheadGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string | The free text search term to match against (optional)
+    freetext: freetext_example,
+    // number | The number of cocktail recipes to skip from the paged response (optional)
+    skip: 56,
+    // number | The number of cocktail recipes to take for pagination (optional)
+    take: 56,
+    // Array<string> | An optional list of filters to use when quering the cocktail recipes (optional)
+    fi: ...,
+  } satisfies TypeaheadV1CocktailsTypeaheadGetRequest;
+
+  try {
+    const data = await api.typeaheadV1CocktailsTypeaheadGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **freetext** | `string` | The free text search term to match against | [Optional] [Defaults to `undefined`] |
+| **skip** | `number` | The number of cocktail recipes to skip from the paged response | [Optional] [Defaults to `undefined`] |
+| **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `undefined`] |
 | **fi** | `Array<string>` | An optional list of filters to use when quering the cocktail recipes | [Optional] |
 
 ### Return type
