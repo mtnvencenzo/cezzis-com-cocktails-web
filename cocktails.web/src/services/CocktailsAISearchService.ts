@@ -38,7 +38,7 @@ const searchCocktails = async (freeText: string, skip: number, take: number): Pr
 
 const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSearchRs | undefined> => {
     const localStorageService = new LocalStorageService();
-    const cached = localStorageService.GetCocktailListRequestData(skip, take, undefined);
+    const cached = localStorageService.GetCocktailListRequestData(skip, take);
     const matches: string[] | undefined = undefined; // must send null for not taking matches into account, empty string would result in empty list
 
     if (cached) {
@@ -65,7 +65,7 @@ const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSe
         const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
 
         if (results) {
-            localStorageService.SetCocktailListRequestData(results, skip, take, undefined);
+            localStorageService.SetCocktailListRequestData(results, skip, take);
         }
 
         return results;
