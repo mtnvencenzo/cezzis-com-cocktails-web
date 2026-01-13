@@ -12,7 +12,7 @@ import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import startPageViewSpan from '../../services/Tracer';
-import { CocktailModelOutput, CocktailDataIncludeModel } from '../../api/aisearchApi';
+import { CocktailModelOutput } from '../../api/aisearchApi';
 
 const CocktailsListPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -58,7 +58,7 @@ const CocktailsListPageContainer = () => {
                 lastFetchTimeRef.current = now;
                 lastSkipFetchedRef.current = skip;
 
-                const rs = await getCocktailsList(skip, TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
+                const rs = await getCocktailsList(skip, TAKE);
                 const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
                 setSkip((prev) => prev + TAKE);

@@ -19,7 +19,6 @@ import { debounce } from '@mui/material/utils';
 
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import Highlighted from '../../atoms/Highlighted/Highlighted';
 import { useScreenContext } from '../../components/ScreenContext';
 import SearchBoxAutocompletePaper from './SearchBoxAutocompletePaper';
@@ -27,7 +26,7 @@ import CocktailFiltersDialog from '../../organisims/CocktailFiltersDialog/Cockta
 import { useCocktailSearch } from '../../components/CocktailSearchContext';
 import { useCocktailFiltering } from '../../components/CocktailFilterContext';
 import { CocktailModelOutput } from '../../api/aisearchApi';
-import { getCocktailsSearchResults } from '../../services/CocktailsAISearchService';
+import { DEFAULT_TAKE, getCocktailsSearchResults } from '../../services/CocktailsAISearchService';
 
 interface SearchBoxProps {
     testId: string;

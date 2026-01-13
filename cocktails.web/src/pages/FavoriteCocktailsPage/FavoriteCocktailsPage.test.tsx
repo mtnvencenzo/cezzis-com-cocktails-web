@@ -3,16 +3,16 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import FavoriteCocktailsPage from './FavoriteCocktailsPage';
-import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../auth0Mocks';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
+import { DEFAULT_TAKE } from '../../services/CocktailsAISearchService';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
+const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
+    const items: CocktailModelOutput[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -22,7 +22,6 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
             descriptiveTitle: `The Alt ${name} ${i}`,
             searchTiles: [`https://cd-images-vec/cocktails/traditional-adonis-cocktail-${i}-300x300.webp`],
             ingredients: [],
-            mainImages: [],
             rating: 0,
             serves: 1,
             glassware: [],
@@ -64,10 +63,8 @@ describe('Favorite Cocktails List Page', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: getCocktailItems('adonis', DEFAULT_TAKE)
                         },

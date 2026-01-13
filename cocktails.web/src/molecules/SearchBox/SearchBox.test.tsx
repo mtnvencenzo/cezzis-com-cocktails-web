@@ -4,20 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import userEvent from '@testing-library/user-event';
 import SearchBox from './SearchBox';
-import {
-    CocktailsListModel,
-    CocktailsListRs,
-    GlasswareTypeModel,
-    IngredientApplicationModel,
-    IngredientRequirementTypeModel,
-    IngredientTypeModel,
-    PreparationTypeModel,
-    UofMTypeModel
-} from '../../api/cocktailsApi/cocktailsApiClient';
+import { GlasswareTypeModel, IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
 
-const defaultSearchRs = (): CocktailsListRs => ({
+const defaultSearchRs = (): CocktailsSearchRs => ({
     items: [
         {
             id: 'absinthe-frappe',
@@ -74,7 +66,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -132,7 +123,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             rating: 0,
             descriptiveTitle: '',
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -201,7 +191,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             rating: 0,
             descriptiveTitle: '',
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -258,7 +247,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Collins, GlasswareTypeModel.Rocks],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -327,7 +315,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -407,7 +394,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -465,7 +451,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -523,7 +508,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.WineGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -592,7 +576,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -629,7 +612,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             rating: 0,
             descriptiveTitle: '',
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -686,7 +668,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.Collins],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -789,7 +770,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -847,7 +827,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -894,7 +873,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -951,7 +929,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -1010,7 +987,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -1068,7 +1044,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -1169,7 +1144,6 @@ const defaultSearchRs = (): CocktailsListRs => ({
             glassware: [],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         },
@@ -1261,13 +1235,12 @@ const defaultSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             descriptiveTitle: '',
             rating: 0,
-            mainImages: [],
             searchTiles: []
         }
     ]
 });
 
-const typedAsSearchRs = (): CocktailsListRs => ({
+const typedAsSearchRs = (): CocktailsSearchRs => ({
     items: [
         {
             id: 'aperol-spritz',
@@ -1324,7 +1297,6 @@ const typedAsSearchRs = (): CocktailsListRs => ({
             prepTimeMinutes: 10,
             rating: 0,
             descriptiveTitle: '',
-            mainImages: [],
             searchTiles: []
         },
         {
@@ -1392,7 +1364,6 @@ const typedAsSearchRs = (): CocktailsListRs => ({
             glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass],
             prepTimeMinutes: 10,
             descriptiveTitle: '',
-            mainImages: [],
             rating: 0,
             searchTiles: []
         }
@@ -1408,19 +1379,19 @@ describe('SearchBox', () => {
                 const url = new URL(request.url);
 
                 if (url.searchParams.get('freetext') === '') {
-                    return HttpResponse.json<CocktailsListRs>(defaultSearchRs(), {
+                    return HttpResponse.json<CocktailsSearchRs>(defaultSearchRs(), {
                         status: 200,
                         statusText: 'OK'
                     });
                 }
                 if (url.searchParams.get('freetext') === 'Aper') {
-                    return HttpResponse.json<CocktailsListRs>(typedAsSearchRs(), {
+                    return HttpResponse.json<CocktailsSearchRs>(typedAsSearchRs(), {
                         status: 200,
                         statusText: 'OK'
                     });
                 }
                 if (url.searchParams.get('freetext') === 'zzz') {
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         { items: [] },
                         {
                             status: 200,
@@ -1429,7 +1400,7 @@ describe('SearchBox', () => {
                     );
                 }
 
-                return HttpResponse.json<CocktailsListRs>(typedAsSearchRs(), {
+                return HttpResponse.json<CocktailsSearchRs>(typedAsSearchRs(), {
                     status: 200,
                     statusText: 'OK'
                 });
@@ -1437,7 +1408,7 @@ describe('SearchBox', () => {
         );
     });
 
-    const assertOption = async (x: CocktailsListModel, i: number, ul: HTMLUListElement) => {
+    const assertOption = async (x: CocktailModelOutput, i: number, ul: HTMLUListElement) => {
         const li = ul.querySelector(`#global-search-box-option-${i}`) as HTMLLIElement;
         expect(li).toBeTruthy();
         expect(li).toHaveClass('MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiAutocomplete-option');
@@ -1502,7 +1473,7 @@ describe('SearchBox', () => {
             http.get(
                 'http://localhost:1/v1/cocktails/typeahead',
                 () =>
-                    HttpResponse.json<CocktailsListRs>(
+                    HttpResponse.json<CocktailsSearchRs>(
                         { items: [] },
                         {
                             status: 200,

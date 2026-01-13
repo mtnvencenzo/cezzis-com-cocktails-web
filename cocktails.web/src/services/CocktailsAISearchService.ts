@@ -1,5 +1,5 @@
 import { Configuration, DefaultApi, SearchV1CocktailsSearchGetRequest } from '../api/aisearchApi';
-import { CocktailsSearchRs, CocktailDataIncludeModel, CocktailModelOutput } from '../api/aisearchApi/models';
+import { CocktailsSearchRs, CocktailModelOutput } from '../api/aisearchApi/models';
 import { getWindowEnv } from '../utils/envConfig';
 import CocktailFiltersLocalStorageService from './CocktailFiltersLocalStorageService';
 import LocalStorageService from './LocalStorageService';
@@ -8,7 +8,7 @@ import logger from './Logger';
 const cocktailFilterService = new CocktailFiltersLocalStorageService();
 const DEFAULT_TAKE: number = 10;
 
-const searchCocktails = async (freeText: string, skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsSearchRs | undefined> => {
+const searchCocktails = async (freeText: string, skip: number, take: number): Promise<CocktailsSearchRs | undefined> => {
     const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
 
     try {
@@ -20,7 +20,7 @@ const searchCocktails = async (freeText: string, skip: number, take: number, inc
             freetext: freeText,
             skip,
             take,
-            inc: include,
+            inc: undefined,
             fi: searchFilters,
             m: undefined, // must send null for not taking matches into account, empty string would result in empty list
             m_ex: false
@@ -36,9 +36,9 @@ const searchCocktails = async (freeText: string, skip: number, take: number, inc
     }
 };
 
-const getCocktailsList = async (skip: number, take: number, include: CocktailDataIncludeModel[] | undefined): Promise<CocktailsSearchRs | undefined> => {
+const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSearchRs | undefined> => {
     const localStorageService = new LocalStorageService();
-    const cached = localStorageService.GetCocktailListRequestData(skip, take, include);
+    const cached = localStorageService.GetCocktailListRequestData(skip, take, undefined);
     const matches: string[] | undefined = undefined; // must send null for not taking matches into account, empty string would result in empty list
 
     if (cached) {
@@ -56,7 +56,7 @@ const getCocktailsList = async (skip: number, take: number, include: CocktailDat
             freetext: '',
             skip,
             take,
-            inc: include,
+            inc: undefined,
             fi: [],
             m: matches,
             m_ex: false
@@ -65,7 +65,7 @@ const getCocktailsList = async (skip: number, take: number, include: CocktailDat
         const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
 
         if (results) {
-            localStorageService.SetCocktailListRequestData(results, skip, take, include);
+            localStorageService.SetCocktailListRequestData(results, skip, take, undefined);
         }
 
         return results;
@@ -75,13 +75,7 @@ const getCocktailsList = async (skip: number, take: number, include: CocktailDat
     }
 };
 
-const getCocktailFavorites = async (
-    skip: number,
-    take: number,
-    include: CocktailDataIncludeModel[] | undefined,
-    matches: string[] | undefined,
-    matchExclusive: boolean = false
-): Promise<CocktailsSearchRs | undefined> => {
+const getCocktailFavorites = async (skip: number, take: number, matches: string[] | undefined, matchExclusive: boolean = false): Promise<CocktailsSearchRs | undefined> => {
     try {
         const config = new Configuration({
             basePath: getWindowEnv().VITE_AISEARCH_API_URL
@@ -93,7 +87,7 @@ const getCocktailFavorites = async (
             freetext: '',
             skip,
             take,
-            inc: include,
+            inc: undefined,
             fi: [],
             m: matches ?? [],
             m_ex: matchExclusive
@@ -107,13 +101,7 @@ const getCocktailFavorites = async (
     }
 };
 
-const getCocktailsWithRatings = async (
-    skip: number,
-    take: number,
-    include: CocktailDataIncludeModel[] | undefined,
-    matches: string[] | undefined,
-    matchExclusive: boolean = false
-): Promise<CocktailsSearchRs | undefined> => {
+const getCocktailsWithRatings = async (skip: number, take: number, matches: string[] | undefined, matchExclusive: boolean = false): Promise<CocktailsSearchRs | undefined> => {
     try {
         const config = new Configuration({
             basePath: getWindowEnv().VITE_AISEARCH_API_URL
@@ -125,7 +113,7 @@ const getCocktailsWithRatings = async (
             freetext: '',
             skip,
             take,
-            inc: include,
+            inc: undefined,
             fi: [],
             m: matches ?? [],
             m_ex: matchExclusive

@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailTile from './CocktailTile';
-import { CocktailsListModel, IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModelOutput } from '../../api/aisearchApi';
 
 describe('Cocktail List Tile', () => {
     test('renders with short title text', async () => {
@@ -19,7 +20,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -45,7 +46,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -70,7 +71,6 @@ describe('Cocktail List Tile', () => {
             searchTiles: [],
             ingredients: [
                 {
-                    id: 'Rum',
                     name: 'Rum',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
@@ -87,7 +87,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -109,7 +109,6 @@ describe('Cocktail List Tile', () => {
             searchTiles: [],
             ingredients: [
                 {
-                    id: 'Rum',
                     name: 'Rum',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
@@ -138,7 +137,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -196,7 +195,6 @@ describe('Cocktail List Tile', () => {
                     units: 1
                 },
                 {
-                    id: 'Dry-Oloroso-Sherry',
                     name: 'Dry Oloroso Sherry',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Wine],
@@ -213,7 +211,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -242,7 +240,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -267,7 +265,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -297,7 +295,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -324,7 +322,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -355,7 +353,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>
@@ -386,7 +384,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 3,
             serves: 1
-        } as CocktailsListModel;
+        } as CocktailModelOutput;
 
         render(
             <MemoryRouter>

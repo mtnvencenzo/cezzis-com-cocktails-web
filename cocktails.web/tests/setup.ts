@@ -8,7 +8,6 @@ import {
     AccountCocktailRatingsRs,
     AccountOwnedProfileRs,
     CocktailModel,
-    CocktailsListModel,
     CocktailUpdatedNotificationModel,
     DisplayThemeModel,
     GlasswareTypeModel,
@@ -20,6 +19,7 @@ import {
 } from '../src/api/cocktailsApi/cocktailsApiClient';
 import { User } from '../src/components/Auth0Provider';
 import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
+import { CocktailModelOutput } from '../src/api/aisearchApi/models';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -180,7 +180,7 @@ export const getTestCocktails = (): CocktailModel[] => [
     }
 ];
 
-export const getTestCocktailsList = (): CocktailsListModel[] => [
+export const getTestCocktailsList = (): CocktailModelOutput[] => [
     {
         id: 'absinthe-frappe',
         title: 'Absinthe Frappé',
@@ -235,7 +235,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-absinthe-frappe-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Rocks, GlasswareTypeModel.Collins]
     },
@@ -293,7 +292,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-adonis-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
     },
@@ -362,7 +360,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-airmail-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Collins]
     },
@@ -420,7 +417,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-americano-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Rocks, GlasswareTypeModel.Collins]
     },
@@ -478,7 +474,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-aperol-spritz-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.WineGlass, GlasswareTypeModel.Collins]
     },
@@ -547,7 +542,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-aviation-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
     },
@@ -627,7 +621,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bamboo-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
     },
@@ -685,7 +678,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bees-knees-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
     },
@@ -743,7 +735,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bicicletta-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.WineGlass]
     },
@@ -812,7 +803,6 @@ export const getTestCocktailsList = (): CocktailsListModel[] => [
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
-        mainImages: [],
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bijou-cocktail-300x300.webp'],
         glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
     }

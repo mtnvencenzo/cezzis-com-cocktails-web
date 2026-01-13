@@ -7,7 +7,6 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
-import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
 import { CocktailFavoritingActionModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
@@ -15,8 +14,8 @@ import { manageOwnedAccountFavoriteCocktails } from '../../../../services/Accoun
 import AlertDialog from '../../../../molecules/AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import startPageViewSpan from '../../../../services/Tracer';
-import { getCocktailFavorites } from '../../../../services/CocktailsAISearchService';
-import { CocktailModelOutput, CocktailDataIncludeModel } from '../../../../api/aisearchApi';
+import { getCocktailFavorites, DEFAULT_TAKE } from '../../../../services/CocktailsAISearchService';
+import { CocktailModelOutput } from '../../../../api/aisearchApi';
 
 const AccountFavoriteCocktailsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -36,7 +35,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
         try {
             setIsFetching(true);
-            const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
+            const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, ownedAccount?.favoriteCocktails ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
             setSkip((s) => s + DEFAULT_TAKE);

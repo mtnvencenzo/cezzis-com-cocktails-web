@@ -2,8 +2,6 @@ import { CocktailRs, CocktailsApiClient, CocktailIngredientFiltersRs } from '../
 import LocalStorageService from './LocalStorageService';
 import logger from './Logger';
 
-const DEFAULT_TAKE: number = 10;
-
 const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
     let result: CocktailRs | undefined;
 
@@ -40,4 +38,4 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
     }
 };
 
-export { getCocktail, getCocktailsSearchFilters, DEFAULT_TAKE };
+export { getCocktail, getCocktailsSearchFilters };

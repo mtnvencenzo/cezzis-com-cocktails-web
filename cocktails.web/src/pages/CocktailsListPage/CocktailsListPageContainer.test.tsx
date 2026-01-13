@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import CocktailsListPageContainer from './CocktailsListPageContainer';
-import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi/models';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
+const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
+    const items: CocktailModelOutput[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -19,7 +19,6 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
             descriptiveTitle: `The ${name} ${i}`,
             searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
             ingredients: [],
-            mainImages: [],
             rating: 0,
             serves: 1,
             glassware: [],
@@ -43,10 +42,8 @@ describe('Cocktails List Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: getCocktailItems('Adonis', TAKE)
                         },
@@ -84,7 +81,7 @@ describe('Cocktails List Page Container', () => {
             http.get(
                 'http://localhost:1/v1/cocktails/search',
                 () =>
-                    HttpResponse.json<CocktailsListRs>(
+                    HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [
                                 {
@@ -94,7 +91,6 @@ describe('Cocktails List Page Container', () => {
                                     descriptiveTitle: 'Test Title 1',
                                     searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
                                     ingredients: [],
-                                    mainImages: [],
                                     rating: 1,
                                     serves: 1,
                                     glassware: [],
@@ -107,7 +103,6 @@ describe('Cocktails List Page Container', () => {
                                     descriptiveTitle: 'Test Title 2',
                                     searchTiles: [],
                                     ingredients: [],
-                                    mainImages: [],
                                     rating: 1,
                                     serves: 1,
                                     glassware: [],

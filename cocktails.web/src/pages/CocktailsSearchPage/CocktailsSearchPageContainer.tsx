@@ -5,9 +5,8 @@ import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
-import { searchCocktails } from '../../services/CocktailsAISearchService';
-import { CocktailDataIncludeModel, CocktailModelOutput } from '../../api/aisearchApi';
+import { DEFAULT_TAKE, searchCocktails } from '../../services/CocktailsAISearchService';
+import { CocktailModelOutput } from '../../api/aisearchApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
@@ -58,7 +57,7 @@ const CocktailsSearchPageContainer = () => {
                 isFetching: true
             });
 
-            const rs = await searchCocktails(searchParams.get('q') ?? '', useSkip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle]);
+            const rs = await searchCocktails(searchParams.get('q') ?? '', useSkip, DEFAULT_TAKE);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
 
             setNoItems(useSkip === 0 && items.length === 0);

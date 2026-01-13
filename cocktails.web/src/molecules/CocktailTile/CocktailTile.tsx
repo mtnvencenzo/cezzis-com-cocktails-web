@@ -7,14 +7,14 @@ import CardActionArea from '@mui/material/CardActionArea';
 import './CocktailTile.css';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { CocktailsListModel, IngredientApplicationModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { IngredientApplicationModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteCocktailButton';
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
 import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
 import { CocktailModelOutput } from '../../api/aisearchApi';
 
 interface CocktailTileProps {
-    cocktail: CocktailsListModel | CocktailModelOutput;
+    cocktail: CocktailModelOutput;
     isFavorite: boolean;
     indicatorValue?: number;
     testId: string;

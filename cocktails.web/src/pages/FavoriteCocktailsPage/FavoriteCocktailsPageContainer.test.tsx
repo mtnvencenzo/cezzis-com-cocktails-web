@@ -3,18 +3,18 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import FavoriteCocktailsPageContainer from './FavoriteCocktailsPageContainer';
-import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
 import { getTestUser, getTestCocktailsList, getTestOwnedAccountProfile, server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
+import { DEFAULT_TAKE } from '../../services/CocktailsAISearchService';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
+const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
+    const items: CocktailModelOutput[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -24,7 +24,6 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
             descriptiveTitle: `The ${name} ${i}`,
             searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
             ingredients: [],
-            mainImages: [],
             rating: 0,
             serves: 1,
             glassware: [],
@@ -67,10 +66,8 @@ describe('Favorite Cocktails Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: getCocktailItems('adonis', DEFAULT_TAKE)
                         },
@@ -119,7 +116,7 @@ describe('Favorite Cocktails Page Container', () => {
             http.get(
                 'http://localhost:1/v1/cocktails/search',
                 () =>
-                    HttpResponse.json<CocktailsListRs>(
+                    HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [
                                 {
@@ -129,7 +126,6 @@ describe('Favorite Cocktails Page Container', () => {
                                     descriptiveTitle: 'Test Title 1',
                                     searchTiles: ['https://cd-images-vec/cocktails/traditional-adonis-cocktail-300x300.webp'],
                                     ingredients: [],
-                                    mainImages: [],
                                     rating: 0,
                                     serves: 1,
                                     glassware: [],
@@ -142,7 +138,6 @@ describe('Favorite Cocktails Page Container', () => {
                                     descriptiveTitle: 'Test Title 2',
                                     searchTiles: [],
                                     ingredients: [],
-                                    mainImages: [],
                                     rating: 0,
                                     serves: 1,
                                     glassware: [],
@@ -193,12 +188,10 @@ describe('Favorite Cocktails Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
                     expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [getTestCocktailsList().filter((x) => x.id === 'adonis')[0]]
                         },
@@ -243,13 +236,11 @@ describe('Favorite Cocktails Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
                     expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('absinthe-frappe');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [getTestCocktailsList().filter((x) => x.id === 'absinthe-frappe')[0], getTestCocktailsList().filter((x) => x.id === 'adonis')[0]]
                         },
@@ -295,13 +286,11 @@ describe('Favorite Cocktails Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
                     expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
                     expect(url.searchParams.getAll('m').length).toBe(1);
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [getTestCocktailsList().filter((x) => x.id === 'absinthe-frappe')[0], getTestCocktailsList().filter((x) => x.id === 'adonis')[0]]
                         },
@@ -349,8 +338,6 @@ describe('Favorite Cocktails Page Container', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
                     expect(url.searchParams.get('m_ex')).toBe('true');
                     expect(url.searchParams.getAll('m')).toContain('adonis');
                     expect(url.searchParams.getAll('m')).toContain('absinthe-frappe');
@@ -359,7 +346,7 @@ describe('Favorite Cocktails Page Container', () => {
                     const cocktailNoImage = getTestCocktailsList().filter((x) => x.id === 'absinthe-frappe')[0];
                     cocktailNoImage.searchTiles = [];
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: [cocktailNoImage, getTestCocktailsList().filter((x) => x.id === 'adonis')[0]]
                         },

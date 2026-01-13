@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import CocktailsListPage from './CocktailsListPage';
-import { CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import LocalStorageService from '../../services/LocalStorageService';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
+const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
+    const items: CocktailModelOutput[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -19,11 +19,9 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
             descriptiveTitle: `The Alt ${name} ${i}`,
             searchTiles: [`https://cd-images-vec/cocktails/traditional-adonis-cocktail-${i}-300x300.webp`],
             ingredients: [],
-            ratingCount: 0,
             serves: 1,
             glassware: [],
             prepTimeMinutes: 10,
-            mainImages: [],
             rating: 0
         });
     }
@@ -44,10 +42,8 @@ describe('Cocktails List Page', () => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: getCocktailItems('Adonis', TAKE)
                         },

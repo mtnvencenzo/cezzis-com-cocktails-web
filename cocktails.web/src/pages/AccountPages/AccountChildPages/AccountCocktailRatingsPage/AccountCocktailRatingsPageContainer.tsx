@@ -7,13 +7,12 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
-import { DEFAULT_TAKE } from '../../../../services/CocktailsService';
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import startPageViewSpan from '../../../../services/Tracer';
-import { getCocktailsWithRatings } from '../../../../services/CocktailsAISearchService';
-import { CocktailModelOutput, CocktailDataIncludeModel } from '../../../../api/aisearchApi';
+import { getCocktailsWithRatings, DEFAULT_TAKE } from '../../../../services/CocktailsAISearchService';
+import { CocktailModelOutput } from '../../../../api/aisearchApi';
 
 const AccountCocktailRatingsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -34,7 +33,7 @@ const AccountCocktailRatingsPageContainer = () => {
             setIsFetching(true);
 
             const ratedCocktailIds = ownedAccountCocktailRatings?.ratings?.map((x) => x.cocktailId) ?? [];
-            const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ratedCocktailIds ?? [], true);
+            const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, ratedCocktailIds ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
 
             setSkip((s) => s + DEFAULT_TAKE);

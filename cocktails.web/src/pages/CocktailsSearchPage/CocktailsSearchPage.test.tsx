@@ -3,13 +3,14 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import CocktailsSearchPage from './CocktailsSearchPage';
-import { CocktailIngredientFiltersRs, CocktailsListModel, CocktailsListRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
+import { DEFAULT_TAKE } from '../../services/CocktailsAISearchService';
+import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
 
-const getCocktailItems = (name: string, count: number): CocktailsListModel[] => {
-    const items: CocktailsListModel[] = [];
+const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
+    const items: CocktailModelOutput[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -22,8 +23,7 @@ const getCocktailItems = (name: string, count: number): CocktailsListModel[] => 
             serves: 1,
             rating: 0,
             glassware: [],
-            prepTimeMinutes: 10,
-            mainImages: []
+            prepTimeMinutes: 10
         });
     }
 
@@ -40,10 +40,8 @@ describe('Cocktails Search Page', () => {
                     expect(url.searchParams.get('freetext')).toBe('');
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
-                    expect(url.searchParams.getAll('inc')).toContain('searchTiles');
-                    expect(url.searchParams.getAll('inc')).toContain('descriptiveTitle');
 
-                    return HttpResponse.json<CocktailsListRs>(
+                    return HttpResponse.json<CocktailsSearchRs>(
                         {
                             items: getCocktailItems('Adonis', DEFAULT_TAKE)
                         },

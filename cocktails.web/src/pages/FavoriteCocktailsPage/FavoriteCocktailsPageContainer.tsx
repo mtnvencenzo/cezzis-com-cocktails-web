@@ -4,7 +4,6 @@ import './FavoriteCocktailsPageContainer.css';
 import { Box, Grid } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
-import { DEFAULT_TAKE } from '../../services/CocktailsService';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
@@ -12,8 +11,8 @@ import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import startPageViewSpan from '../../services/Tracer';
-import { getCocktailFavorites } from '../../services/CocktailsAISearchService';
-import { CocktailModelOutput, CocktailDataIncludeModel } from '../../api/aisearchApi';
+import { DEFAULT_TAKE, getCocktailFavorites } from '../../services/CocktailsAISearchService';
+import { CocktailModelOutput } from '../../api/aisearchApi';
 
 const FavoriteCocktailsPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -32,7 +31,7 @@ const FavoriteCocktailsPageContainer = () => {
         try {
             setIsFetching(true);
 
-            const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, [CocktailDataIncludeModel.SearchTiles, CocktailDataIncludeModel.DescriptiveTitle], ownedAccount?.favoriteCocktails ?? [], true);
+            const rs = await getCocktailFavorites(skip, DEFAULT_TAKE, ownedAccount?.favoriteCocktails ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0);
 
             setSkip((s) => s + DEFAULT_TAKE);
