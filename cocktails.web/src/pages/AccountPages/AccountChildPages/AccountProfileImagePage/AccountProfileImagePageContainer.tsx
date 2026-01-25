@@ -17,7 +17,6 @@ import startPageViewSpan from '../../../../services/Tracer';
 
 const AccountProfileImagePageContainer = () => {
     const [editingAvatarFile, setEditingAvatarFile] = useState<File>();
-    const [editingAvatarName, setEditingAvatarName] = useState<string>('');
     const inputFileRef = useRef<HTMLInputElement>(null);
     const { ownedAccount } = useOwnedAccount();
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -51,7 +50,6 @@ const AccountProfileImagePageContainer = () => {
             const resizedImage = (await resizeFile(file)) as File;
 
             try {
-                setEditingAvatarName(resizedImage.name);
                 setEditingAvatarFile(resizedImage);
             } finally {
                 inputFileRef.current!.value = '';
@@ -63,11 +61,10 @@ const AccountProfileImagePageContainer = () => {
         if (htmlCanvas) {
             const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
 
-            await uploadProfileImage(blob, editingAvatarName);
+            await uploadProfileImage(blob);
             await getOwnedAccountProfile(true);
         }
 
-        setEditingAvatarName('');
         setEditingAvatarFile(undefined);
     };
 

@@ -1,4 +1,20 @@
-import { AccountCocktailRatingsRs, AccountOwnedProfileRs, ChangeAccountOwnedEmailRq, ChangeAccountOwnedPasswordRq, ChangeAccountOwnedUsernameRq, Configuration, ManageFavoriteCocktailsRq, ProblemDetails, RateCocktailRq, RateCocktailRs, UpdateAccountOwnedAccessibilitySettingsRq, UpdateAccountOwnedNotificationSettingsRq, UpdateAccountOwnedProfileRq, UploadProfileImageRs, AccountsApi } from '../api/accountsApi';
+import {
+    AccountCocktailRatingsRs,
+    AccountOwnedProfileRs,
+    ChangeAccountOwnedEmailRq,
+    ChangeAccountOwnedPasswordRq,
+    ChangeAccountOwnedUsernameRq,
+    Configuration,
+    ManageFavoriteCocktailsRq,
+    ProblemDetails,
+    RateCocktailRq,
+    RateCocktailRs,
+    UpdateAccountOwnedAccessibilitySettingsRq,
+    UpdateAccountOwnedNotificationSettingsRq,
+    UpdateAccountOwnedProfileRq,
+    UploadProfileImageRs,
+    AccountsApi
+} from '../api/accountsApi';
 import { createAuthMiddleware, AccountScopes } from '../api/accountsApi/accountsApiMiddleware';
 import { getWindowEnv } from '../utils/envConfig';
 import LocalStorageService from './LocalStorageService';
@@ -28,7 +44,7 @@ const getErrorMessage = (e: unknown): string => {
 const createAccountsApiClient = (scopes: string[]): AccountsApi => {
     const config = new Configuration({
         basePath: getWindowEnv().VITE_AISEARCH_API_URL,
-        middleware: [createAuthMiddleware(scopes)],
+        middleware: [createAuthMiddleware(scopes)]
     });
     return new AccountsApi(config);
 };
@@ -75,7 +91,7 @@ const loginOwnedAccountProfile = async (): Promise<AccountOwnedProfileRs | undef
     }
 };
 
-const uploadProfileImage = async (blob: Blob, fileName: string): Promise<UploadProfileImageRs | undefined> => {
+const uploadProfileImage = async (blob: Blob): Promise<UploadProfileImageRs | undefined> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
         const result = await accountsApiClient.uploadProfileImageV1AccountsOwnedProfileImagePost({ file: blob });
