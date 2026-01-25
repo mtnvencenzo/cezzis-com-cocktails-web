@@ -37,7 +37,7 @@ describe('Cocktail Recommendation Form', () => {
         auth0Tester.spyAuth0();
 
         server.use(
-            http.post('http://localhost:0/api/v1/accounts/owned/profile/cocktails/recommendations', async ({ request }) => {
+            http.post('http://localhost:2/v1/accounts/owned/profile/cocktails/recommendations', async ({ request }) => {
                 await expectProgress(true);
                 const body: CocktailRecommendationRq = (await request.json()) as CocktailRecommendationRq;
 

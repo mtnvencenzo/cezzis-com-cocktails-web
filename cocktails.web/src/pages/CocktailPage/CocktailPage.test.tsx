@@ -3,7 +3,15 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import CocktailPage from './CocktailPage';
-import { CocktailRs, GlasswareTypeModel, IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import {
+    CocktailRs,
+    GlasswareTypeModel,
+    IngredientApplicationModel,
+    IngredientRequirementTypeModel,
+    IngredientTypeModel,
+    PreparationTypeModel,
+    UofMTypeModel
+} from '../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 

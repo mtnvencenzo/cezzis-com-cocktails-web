@@ -57,10 +57,10 @@ export interface AccountCocktailRatingModel {
     totalStars: number;
     /**
      * The actual overall rating
-     * @type {string}
+     * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    rating: string;
+    rating: number;
     /**
      * The total number of ratings given
      * @type {number}

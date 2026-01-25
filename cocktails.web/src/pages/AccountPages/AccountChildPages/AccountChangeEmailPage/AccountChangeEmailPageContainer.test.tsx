@@ -139,7 +139,7 @@ describe('Account Change Email Page Container', () => {
         // Mock the API endpoint
         server.use(
             http.put(
-                'http://localhost:0/api/v1/accounts/owned/profile/email',
+                'http://localhost:2/v1/accounts/owned/profile/email',
                 async ({ request }) => {
                     // Verify the request body contains the expected data
                     const body = (await request.json()) as ChangeAccountOwnedEmailRq;

@@ -100,7 +100,7 @@ const AccountProfileImagePageContainer = () => {
                             <Divider />
                         </Grid>
                         <Grid size={12}>
-                            <AccountAvatar onAddImage={handleAddImage} image={ownedAccount?.avatarUri} />
+                            <AccountAvatar onAddImage={handleAddImage} image={ownedAccount?.avatarUri ?? undefined} />
                             <Form>
                                 <input
                                     type='file'

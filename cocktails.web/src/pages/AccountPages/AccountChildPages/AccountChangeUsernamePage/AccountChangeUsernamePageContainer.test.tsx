@@ -113,7 +113,7 @@ describe('Account Change Username Page Container', () => {
 
         // Mock the API endpoint for successful username change
         server.use(
-            http.put('http://localhost:0/api/v1/accounts/owned/profile/username', async ({ request }) => {
+            http.put('http://localhost:2/v1/accounts/owned/profile/username', async ({ request }) => {
                 const body = (await request.json()) as { username: string };
 
                 // Verify the request body contains the new username
@@ -172,7 +172,7 @@ describe('Account Change Username Page Container', () => {
 
         // Mock the API endpoint for failed username change
         server.use(
-            http.put('http://localhost:0/api/v1/accounts/owned/profile/username', async () =>
+            http.put('http://localhost:2/v1/accounts/owned/profile/username', async () =>
                 HttpResponse.json(
                     { errors: ['Username is already taken'] },
                     {

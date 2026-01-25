@@ -2,12 +2,12 @@ import { Button, Divider, FormControlLabel, Grid, Switch, Typography, useMediaQu
 import { useEffect, useState } from 'react';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountNotificationsSettings } from '../../../../services/AccountService';
-import { CocktailUpdatedNotificationModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import theme from '../../../../theme';
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import startPageViewSpan from '../../../../services/Tracer';
+import { CocktailUpdatedNotificationModel } from '../../../../api/accountsApi';
 
 interface FieldValueState<T> {
     value: T;

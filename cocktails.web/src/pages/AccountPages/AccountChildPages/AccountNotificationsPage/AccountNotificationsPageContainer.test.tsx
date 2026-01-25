@@ -47,7 +47,9 @@ describe('Account Notifications Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
+
+        if (profile?.notifications) profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
@@ -79,7 +81,9 @@ describe('Account Notifications Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
+
+        if (profile?.notifications) profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
@@ -108,11 +112,12 @@ describe('Account Notifications Page Container', () => {
 
     test('toggle > notify me when new cocktails are added > saves correctly', async () => {
         const savedProfile = getTestOwnedAccountProfile();
-        savedProfile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
+
+        if (savedProfile?.notifications) savedProfile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Never;
 
         server.use(
             http.put(
-                'http://localhost:0/api/v1/accounts/owned/profile/notifications',
+                'http://localhost:2/v1/accounts/owned/profile/notifications',
                 async ({ request }) => {
                     // Verify the request body contains the expected data
                     const body = (await request.json()) as UpdateAccountOwnedNotificationSettingsRq;
@@ -131,7 +136,9 @@ describe('Account Notifications Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
+
+        if (profile?.notifications) profile.notifications.onNewCocktailAdditions = CocktailUpdatedNotificationModel.Always;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 

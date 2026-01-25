@@ -13,7 +13,7 @@ Name | Type
 `fourStars` | number
 `fiveStars` | number
 `totalStars` | number
-`rating` | string
+`rating` | number
 `ratingCount` | number
 
 ## Example
