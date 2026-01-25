@@ -5,6 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Form } from 'react-router-dom';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
+import { toast } from 'react-toastify';
 import AccountAvatar from '../../../../molecules/AccountAvatar/AccountAvatar';
 import { getOwnedAccountProfile, uploadProfileImage } from '../../../../services/AccountService';
 import AccountProfileImageEditor from '../../../../organisims/AccountProfileImageEditor/AccountProfileImageEditor';
@@ -14,6 +15,7 @@ import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrow
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import startPageViewSpan from '../../../../services/Tracer';
+import logger from '../../../../services/Logger';
 
 const AccountProfileImagePageContainer = () => {
     const [editingAvatarFile, setEditingAvatarFile] = useState<File>();
@@ -59,10 +61,17 @@ const AccountProfileImagePageContainer = () => {
 
     const handleAvatarEditorClose = async (htmlCanvas: HTMLCanvasElement | undefined) => {
         if (htmlCanvas) {
-            const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
+            try {
+                const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
 
-            await uploadProfileImage(blob);
-            await getOwnedAccountProfile(true);
+                await uploadProfileImage(blob);
+                await getOwnedAccountProfile(true);
+
+                toast.success('Profile image updated!', { position: 'top-left' });
+            } catch (error) {
+                logger.logException('Failed to upload profile image', error as Error);
+                toast.error('Unable to upload image. Please try again.', { position: 'top-left' });
+            }
         }
 
         setEditingAvatarFile(undefined);

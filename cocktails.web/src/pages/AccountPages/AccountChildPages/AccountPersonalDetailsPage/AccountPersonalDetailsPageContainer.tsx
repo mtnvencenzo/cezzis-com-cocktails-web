@@ -1,5 +1,6 @@
 import { Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import CountrySelect from '../../../../atoms/CountrySelect/CountrySelect';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountProfile } from '../../../../services/AccountService';
@@ -8,6 +9,7 @@ import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrow
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import startPageViewSpan from '../../../../services/Tracer';
+import logger from '../../../../services/Logger';
 
 interface FieldValueState<T> {
     value: T;
@@ -86,20 +88,27 @@ const AccountPersonalDetailsPageContainer = () => {
     const handlePersonalDetailsSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        await updateOwnedAccountProfile({
-            givenName: givenName.value,
-            familyName: familyName.value,
-            displayName: displayName.value,
-            primaryAddress: {
-                addressLine1: address.value,
-                addressLine2: '',
-                city: city.value,
-                region: region.value,
-                subRegion: '',
-                country: country.value ?? '',
-                postalCode: postalCode.value ?? ''
-            }
-        });
+        try {
+            await updateOwnedAccountProfile({
+                givenName: givenName.value,
+                familyName: familyName.value,
+                displayName: displayName.value,
+                primaryAddress: {
+                    addressLine1: address.value,
+                    addressLine2: '',
+                    city: city.value,
+                    region: region.value,
+                    subRegion: '',
+                    country: country.value ?? '',
+                    postalCode: postalCode.value ?? ''
+                }
+            });
+
+            toast.success('Personal details saved!', { position: 'top-left' });
+        } catch (error) {
+            logger.logException('Failed to save personal details', error as Error);
+            toast.error('Unable to save details. Please try again.', { position: 'top-left' });
+        }
     };
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
+import { toast } from 'react-toastify';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
@@ -16,6 +17,7 @@ import startPageViewSpan from '../../../../services/Tracer';
 import { getCocktailFavorites, DEFAULT_TAKE } from '../../../../services/CocktailsAISearchService';
 import { CocktailModelOutput } from '../../../../api/aisearchApi';
 import { CocktailFavoritingActionModel } from '../../../../api/accountsApi';
+import logger from '../../../../services/Logger';
 
 const AccountFavoriteCocktailsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -71,20 +73,28 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
     const handleClearCocktailFavorites = async () => {
         if (ownedAccount && ownedAccount.favoriteCocktails && ownedAccount.favoriteCocktails.length > 0) {
-            await manageOwnedAccountFavoriteCocktails({
-                cocktailActions: ownedAccount.favoriteCocktails.map((x) => ({
-                    cocktailId: x,
-                    action: CocktailFavoritingActionModel.Remove
-                }))
-            });
+            try {
+                await manageOwnedAccountFavoriteCocktails({
+                    cocktailActions: ownedAccount.favoriteCocktails.map((x) => ({
+                        cocktailId: x,
+                        action: CocktailFavoritingActionModel.Remove
+                    }))
+                });
 
-            setLoading(true);
-            setIsFetching(false);
-            setApiCallFailed(false);
-            setCocktailListModels([]);
-            setHasMore(true);
-            setSkip(0);
-            setOpenConfirmation(false);
+                setLoading(true);
+                setIsFetching(false);
+                setApiCallFailed(false);
+                setCocktailListModels([]);
+                setHasMore(true);
+                setSkip(0);
+                setOpenConfirmation(false);
+
+                toast.success('Favorites cleared!', { position: 'top-left' });
+            } catch (error) {
+                logger.logException('Failed to clear favorites', error as Error);
+                toast.error('Unable to clear favorites. Please try again.', { position: 'top-left' });
+                setOpenConfirmation(false);
+            }
         }
     };
 

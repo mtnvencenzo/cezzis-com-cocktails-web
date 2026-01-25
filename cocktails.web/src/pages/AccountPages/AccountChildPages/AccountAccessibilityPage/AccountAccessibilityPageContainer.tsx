@@ -1,5 +1,6 @@
 import { Button, Divider, FormControlLabel, Grid, Switch, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import { updateOwnedAccountAccessibilitySettings } from '../../../../services/AccountService';
 import theme from '../../../../theme';
@@ -8,6 +9,7 @@ import { getWindowEnv } from '../../../../utils/envConfig';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
 import startPageViewSpan from '../../../../services/Tracer';
 import { DisplayThemeModel } from '../../../../api/accountsApi';
+import logger from '../../../../services/Logger';
 
 interface FieldValueState<T> {
     value: T;
@@ -32,9 +34,16 @@ const AccountAccessibilityPageContainer = () => {
     const handleAccessibilitySave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        await updateOwnedAccountAccessibilitySettings({
-            theme: displayTheme.value
-        });
+        try {
+            await updateOwnedAccountAccessibilitySettings({
+                theme: displayTheme.value
+            });
+
+            toast.success('Accessibility settings saved!', { position: 'top-left' });
+        } catch (error) {
+            logger.logException('Failed to save accessibility settings', error as Error);
+            toast.error('Unable to save settings. Please try again.', { position: 'top-left' });
+        }
     };
 
     useEffect(() => {
