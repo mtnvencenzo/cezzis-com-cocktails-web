@@ -8,12 +8,12 @@ import { ToastContainer } from 'react-toastify';
 import CocktailRecommendationForm from './CocktailRecommendationForm';
 import GlobalContext from '../../components/GlobalContexts';
 import { getTestOwnedAccountProfile, getTestUser, requestSpy, server } from '../../../tests/setup';
-import { CocktailRecommendationRq } from '../../api/cocktailsApi/cocktailsApiClient';
 import { executeRecaptcha, resetRecaptcha } from '../../services/RecaptchaService';
 import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
+import { CocktailRecommendationRq } from '../../api/accountsApi';
 
 vi.mock('../../services/RecaptchaService.ts');
 vi.mocked(resetRecaptcha).mockImplementation(() => vi.fn());

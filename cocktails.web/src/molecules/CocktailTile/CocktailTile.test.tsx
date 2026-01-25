@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailTile from './CocktailTile';
-import { IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
-import { CocktailModelOutput } from '../../api/aisearchApi';
+import { IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModelOutput, IngredientApplicationTypeModel } from '../../api/aisearchApi';
 
 describe('Cocktail List Tile', () => {
     test('renders with short title text', async () => {
@@ -74,7 +74,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Rum',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Base, IngredientApplicationModel.Additional],
+                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -112,7 +112,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Rum',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Base, IngredientApplicationModel.Additional],
+                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -124,7 +124,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Vodka',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Base],
+                    applications: [IngredientApplicationTypeModel.Base],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -163,7 +163,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Pimms',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Additional],
+                    applications: [IngredientApplicationTypeModel.Additional],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -175,7 +175,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Jamaican Rum',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Base],
+                    applications: [IngredientApplicationTypeModel.Base],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -187,7 +187,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Cognac',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationModel.Base],
+                    applications: [IngredientApplicationTypeModel.Base],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,
@@ -198,7 +198,7 @@ describe('Cocktail List Tile', () => {
                     name: 'Dry Oloroso Sherry',
                     uoM: UofMTypeModel.Ounces,
                     types: [IngredientTypeModel.Wine],
-                    applications: [IngredientApplicationModel.Base, IngredientApplicationModel.Additional],
+                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
                     preparation: PreparationTypeModel.None,
                     suggestions: '',
                     requirement: IngredientRequirementTypeModel.Required,

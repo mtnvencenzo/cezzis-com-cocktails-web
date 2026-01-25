@@ -37,7 +37,9 @@ vi.mock('../src/utils/envConfig', () => {
             VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY: '383hudiudhUJK984jdus7HDY',
             VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
 
-            VITE_AISEARCH_API_URL: 'http://localhost:0001'
+            VITE_AISEARCH_API_URL: 'http://localhost:0001',
+
+            VITE_ACCOUNTS_API_URL: 'http://localhost:0002'
         }))
     };
 });

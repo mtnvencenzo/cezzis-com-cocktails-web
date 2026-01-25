@@ -2,9 +2,9 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import React, { useRef, useState } from 'react';
 import { TooltipRefProps } from 'react-tooltip';
-import { CocktailFavoritingActionModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { manageOwnedAccountFavoriteCocktails } from '../../services/AccountService';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
+import { CocktailFavoritingActionModel } from '../../api/accountsApi';
 
 const Tooltip = React.lazy(() => import('react-tooltip').then((module) => ({ default: module.Tooltip })));
 

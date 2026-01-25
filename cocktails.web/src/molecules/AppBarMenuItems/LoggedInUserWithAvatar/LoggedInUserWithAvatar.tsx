@@ -24,7 +24,7 @@ const LoggedInUserWithAvatar = ({ setAnchorEl, testId }: LoggedInUserWithAvatarP
 
     return (
         <MenuItem onClick={handleCloseUserMenu} data-testid={testId}>
-            <Avatar sx={{ width: 35, height: 35 }} src={ownedAccount?.avatarUri} />
+            <Avatar sx={{ width: 35, height: 35 }} src={ownedAccount?.avatarUri ?? undefined} />
             <Typography textAlign='left' paddingLeft='10px'>
                 {`${getOwnedAccountName(ownedAccount, user)}`}
             </Typography>

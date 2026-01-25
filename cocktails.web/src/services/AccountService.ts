@@ -43,7 +43,7 @@ const getErrorMessage = (e: unknown): string => {
 
 const createAccountsApiClient = (scopes: string[]): AccountsApi => {
     const config = new Configuration({
-        basePath: getWindowEnv().VITE_AISEARCH_API_URL,
+        basePath: getWindowEnv().VITE_ACCOUNTS_API_URL,
         middleware: [createAuthMiddleware(scopes)]
     });
     return new AccountsApi(config);
@@ -241,7 +241,7 @@ const sendRecommendation = async (name: string, ingredients: string, directions:
                     ingredients,
                     directions
                 },
-                verification_code: token
+                verificationCode: token
             }
         });
     } catch (e: unknown) {
