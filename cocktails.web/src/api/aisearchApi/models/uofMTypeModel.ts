@@ -12,26 +12,25 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * The unit of measurment types for cocktail ingredients.
  * @export
+ * @enum {string}
  */
-export const UofMTypeModel = {
-    None: 'none',
-    Ounces: 'ounces',
-    Dashes: 'dashes',
-    Tablespoon: 'tablespoon',
-    Topoff: 'topoff',
-    Item: 'item',
-    Teaspoon: 'teaspoon',
-    ToTaste: 'toTaste',
-    Barspoon: 'barspoon',
-    Cups: 'cups',
-    Splash: 'splash',
-    Discretion: 'discretion'
-} as const;
-export type UofMTypeModel = typeof UofMTypeModel[keyof typeof UofMTypeModel];
+export enum UofMTypeModel {
+    None = 'none',
+    Ounces = 'ounces',
+    Dashes = 'dashes',
+    Tablespoon = 'tablespoon',
+    Topoff = 'topoff',
+    Item = 'item',
+    Teaspoon = 'teaspoon',
+    ToTaste = 'toTaste',
+    Barspoon = 'barspoon',
+    Cups = 'cups',
+    Splash = 'splash',
+    Discretion = 'discretion'
+}
 
 
 export function instanceOfUofMTypeModel(value: any): boolean {

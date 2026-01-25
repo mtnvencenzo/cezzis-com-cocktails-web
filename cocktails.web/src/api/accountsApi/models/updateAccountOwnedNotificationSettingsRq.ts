@@ -32,7 +32,7 @@ export interface UpdateAccountOwnedNotificationSettingsRq {
      * @type {CocktailUpdatedNotificationModel}
      * @memberof UpdateAccountOwnedNotificationSettingsRq
      */
-    on_new_cocktail_additions: CocktailUpdatedNotificationModel;
+    onNewCocktailAdditions: CocktailUpdatedNotificationModel;
 }
 
 
@@ -41,7 +41,7 @@ export interface UpdateAccountOwnedNotificationSettingsRq {
  * Check if a given object implements the UpdateAccountOwnedNotificationSettingsRq interface.
  */
 export function instanceOfUpdateAccountOwnedNotificationSettingsRq(value: object): value is UpdateAccountOwnedNotificationSettingsRq {
-    if (!('on_new_cocktail_additions' in value) || value['on_new_cocktail_additions'] === undefined) return false;
+    if (!('onNewCocktailAdditions' in value) || value['onNewCocktailAdditions'] === undefined) return false;
     return true;
 }
 
@@ -55,7 +55,7 @@ export function UpdateAccountOwnedNotificationSettingsRqFromJSONTyped(json: any,
     }
     return {
         
-        'on_new_cocktail_additions': CocktailUpdatedNotificationModelFromJSON(json['on_new_cocktail_additions']),
+        'onNewCocktailAdditions': CocktailUpdatedNotificationModelFromJSON(json['onNewCocktailAdditions']),
     };
 }
 
@@ -70,7 +70,7 @@ export function UpdateAccountOwnedNotificationSettingsRqToJSONTyped(value?: Upda
 
     return {
         
-        'on_new_cocktail_additions': CocktailUpdatedNotificationModelToJSON(value['on_new_cocktail_additions']),
+        'onNewCocktailAdditions': CocktailUpdatedNotificationModelToJSON(value['onNewCocktailAdditions']),
     };
 }
 

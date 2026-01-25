@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * The display themes available for profile accessibility settings.
  * @export
+ * @enum {string}
  */
-export const DisplayThemeModel = {
-    Light: 'light',
-    Dark: 'dark'
-} as const;
-export type DisplayThemeModel = typeof DisplayThemeModel[keyof typeof DisplayThemeModel];
+export enum DisplayThemeModel {
+    Light = 'light',
+    Dark = 'dark'
+}
 
 
 export function instanceOfDisplayThemeModel(value: any): boolean {

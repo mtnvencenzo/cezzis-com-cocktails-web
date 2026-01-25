@@ -32,14 +32,14 @@ export interface ManageFavoriteCocktailsRq {
      * @type {Array<CocktailFavoriteActionModel>}
      * @memberof ManageFavoriteCocktailsRq
      */
-    cocktail_actions: Array<CocktailFavoriteActionModel>;
+    cocktailActions: Array<CocktailFavoriteActionModel>;
 }
 
 /**
  * Check if a given object implements the ManageFavoriteCocktailsRq interface.
  */
 export function instanceOfManageFavoriteCocktailsRq(value: object): value is ManageFavoriteCocktailsRq {
-    if (!('cocktail_actions' in value) || value['cocktail_actions'] === undefined) return false;
+    if (!('cocktailActions' in value) || value['cocktailActions'] === undefined) return false;
     return true;
 }
 
@@ -53,7 +53,7 @@ export function ManageFavoriteCocktailsRqFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'cocktail_actions': ((json['cocktail_actions'] as Array<any>).map(CocktailFavoriteActionModelFromJSON)),
+        'cocktailActions': ((json['cocktailActions'] as Array<any>).map(CocktailFavoriteActionModelFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function ManageFavoriteCocktailsRqToJSONTyped(value?: ManageFavoriteCockt
 
     return {
         
-        'cocktail_actions': ((value['cocktail_actions'] as Array<any>).map(CocktailFavoriteActionModelToJSON)),
+        'cocktailActions': ((value['cocktailActions'] as Array<any>).map(CocktailFavoriteActionModelToJSON)),
     };
 }
 

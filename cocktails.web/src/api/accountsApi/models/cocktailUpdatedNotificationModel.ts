@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * Notification frequency for cocktail updates.
  * @export
+ * @enum {string}
  */
-export const CocktailUpdatedNotificationModel = {
-    Never: 'never',
-    Always: 'always'
-} as const;
-export type CocktailUpdatedNotificationModel = typeof CocktailUpdatedNotificationModel[keyof typeof CocktailUpdatedNotificationModel];
+export enum CocktailUpdatedNotificationModel {
+    Never = 'never',
+    Always = 'always'
+}
 
 
 export function instanceOfCocktailUpdatedNotificationModel(value: any): boolean {

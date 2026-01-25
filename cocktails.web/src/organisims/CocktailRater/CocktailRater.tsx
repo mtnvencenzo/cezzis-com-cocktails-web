@@ -2,9 +2,10 @@ import { useRef, useState } from 'react';
 import { IconButton, Typography } from '@mui/material';
 import { Tooltip, TooltipRefProps } from 'react-tooltip';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { CocktailModel, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import CocktailRatingDialog from '../../molecules/CocktailRatingDialog/CocktailRatingDialog';
 import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
+import { RateCocktailRs } from '../../api/accountsApi';
 
 interface CocktailRaterProps {
     cocktail: CocktailModel;

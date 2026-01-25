@@ -199,10 +199,10 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **freetext** | `string` | The free text search term to match against | [Optional] [Defaults to `undefined`] |
-| **skip** | `number` | The number of cocktail recipes to skip from the paged response | [Optional] [Defaults to `undefined`] |
-| **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `undefined`] |
+| **skip** | `number` | The number of cocktail recipes to skip from the paged response | [Optional] [Defaults to `0`] |
+| **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `10`] |
 | **m** | `Array<string>` | A list of cocktails that can be included in the list | [Optional] |
-| **m_ex** | `boolean` | Whether or not the supplied matches must be exclusively returned | [Optional] [Defaults to `undefined`] |
+| **m_ex** | `boolean` | Whether or not the supplied matches must be exclusively returned | [Optional] [Defaults to `false`] |
 | **inc** | `Array<CocktailDataIncludeModel>` | The list of extension objects to include for each cocktail recipe | [Optional] |
 | **fi** | `Array<string>` | An optional list of filters to use when quering the cocktail recipes | [Optional] |
 
@@ -279,8 +279,8 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **freetext** | `string` | The free text search term to match against | [Optional] [Defaults to `undefined`] |
-| **skip** | `number` | The number of cocktail recipes to skip from the paged response | [Optional] [Defaults to `undefined`] |
-| **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `undefined`] |
+| **skip** | `number` | The number of cocktail recipes to skip from the paged response | [Optional] [Defaults to `0`] |
+| **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `10`] |
 | **fi** | `Array<string>` | An optional list of filters to use when quering the cocktail recipes | [Optional] |
 
 ### Return type

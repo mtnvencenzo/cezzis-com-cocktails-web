@@ -24,37 +24,37 @@ export interface AccountCocktailRatingModel {
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    one_stars: number;
+    oneStars: number;
     /**
      * The number of two star ratings
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    two_stars: number;
+    twoStars: number;
     /**
      * The number of three star ratings
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    three_stars: number;
+    threeStars: number;
     /**
      * The number of four star ratings
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    four_stars: number;
+    fourStars: number;
     /**
      * The number of five star ratings
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    five_stars: number;
+    fiveStars: number;
     /**
      * The total number of stars given
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    total_stars: number;
+    totalStars: number;
     /**
      * The actual overall rating
      * @type {string}
@@ -66,21 +66,21 @@ export interface AccountCocktailRatingModel {
      * @type {number}
      * @memberof AccountCocktailRatingModel
      */
-    rating_count: number;
+    ratingCount: number;
 }
 
 /**
  * Check if a given object implements the AccountCocktailRatingModel interface.
  */
 export function instanceOfAccountCocktailRatingModel(value: object): value is AccountCocktailRatingModel {
-    if (!('one_stars' in value) || value['one_stars'] === undefined) return false;
-    if (!('two_stars' in value) || value['two_stars'] === undefined) return false;
-    if (!('three_stars' in value) || value['three_stars'] === undefined) return false;
-    if (!('four_stars' in value) || value['four_stars'] === undefined) return false;
-    if (!('five_stars' in value) || value['five_stars'] === undefined) return false;
-    if (!('total_stars' in value) || value['total_stars'] === undefined) return false;
+    if (!('oneStars' in value) || value['oneStars'] === undefined) return false;
+    if (!('twoStars' in value) || value['twoStars'] === undefined) return false;
+    if (!('threeStars' in value) || value['threeStars'] === undefined) return false;
+    if (!('fourStars' in value) || value['fourStars'] === undefined) return false;
+    if (!('fiveStars' in value) || value['fiveStars'] === undefined) return false;
+    if (!('totalStars' in value) || value['totalStars'] === undefined) return false;
     if (!('rating' in value) || value['rating'] === undefined) return false;
-    if (!('rating_count' in value) || value['rating_count'] === undefined) return false;
+    if (!('ratingCount' in value) || value['ratingCount'] === undefined) return false;
     return true;
 }
 
@@ -94,14 +94,14 @@ export function AccountCocktailRatingModelFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'one_stars': json['one_stars'],
-        'two_stars': json['two_stars'],
-        'three_stars': json['three_stars'],
-        'four_stars': json['four_stars'],
-        'five_stars': json['five_stars'],
-        'total_stars': json['total_stars'],
+        'oneStars': json['oneStars'],
+        'twoStars': json['twoStars'],
+        'threeStars': json['threeStars'],
+        'fourStars': json['fourStars'],
+        'fiveStars': json['fiveStars'],
+        'totalStars': json['totalStars'],
         'rating': json['rating'],
-        'rating_count': json['rating_count'],
+        'ratingCount': json['ratingCount'],
     };
 }
 
@@ -116,14 +116,14 @@ export function AccountCocktailRatingModelToJSONTyped(value?: AccountCocktailRat
 
     return {
         
-        'one_stars': value['one_stars'],
-        'two_stars': value['two_stars'],
-        'three_stars': value['three_stars'],
-        'four_stars': value['four_stars'],
-        'five_stars': value['five_stars'],
-        'total_stars': value['total_stars'],
+        'oneStars': value['oneStars'],
+        'twoStars': value['twoStars'],
+        'threeStars': value['threeStars'],
+        'fourStars': value['fourStars'],
+        'fiveStars': value['fiveStars'],
+        'totalStars': value['totalStars'],
         'rating': value['rating'],
-        'rating_count': value['rating_count'],
+        'ratingCount': value['ratingCount'],
     };
 }
 

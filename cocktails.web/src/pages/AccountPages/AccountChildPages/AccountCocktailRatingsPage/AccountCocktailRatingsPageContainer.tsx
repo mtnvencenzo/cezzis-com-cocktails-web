@@ -32,7 +32,7 @@ const AccountCocktailRatingsPageContainer = () => {
         try {
             setIsFetching(true);
 
-            const ratedCocktailIds = ownedAccountCocktailRatings?.ratings?.map((x) => x.cocktailId) ?? [];
+            const ratedCocktailIds = ownedAccountCocktailRatings?.ratings?.map((x) => x.cocktail_id.cocktailId) ?? [];
             const rs = await getCocktailsWithRatings(skip, DEFAULT_TAKE, ratedCocktailIds ?? [], true);
             const items = rs?.items?.filter((x) => x.searchTiles && x.searchTiles.length > 0) ?? [];
 

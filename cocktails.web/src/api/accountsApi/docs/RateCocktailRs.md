@@ -8,8 +8,8 @@ The cocktail rating response from an account supplied cocktail rating.
 Name | Type
 ------------ | -------------
 `ratings` | [Array&lt;AccountCocktailRatingsModel&gt;](AccountCocktailRatingsModel.md)
-`cocktail_id` | string
-`cocktail_rating` | [AccountCocktailRatingModel](AccountCocktailRatingModel.md)
+`cocktailId` | string
+`cocktailRating` | [AccountCocktailRatingModel](AccountCocktailRatingModel.md)
 
 ## Example
 
@@ -19,8 +19,8 @@ import type { RateCocktailRs } from ''
 // TODO: Update the object below with actual values
 const example = {
   "ratings": null,
-  "cocktail_id": null,
-  "cocktail_rating": null,
+  "cocktailId": null,
+  "cocktailRating": null,
 } satisfies RateCocktailRs
 
 console.log(example)

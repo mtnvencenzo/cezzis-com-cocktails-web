@@ -7,14 +7,14 @@ The cocktail user ratings.
 
 Name | Type
 ------------ | -------------
-`one_stars` | number
-`two_stars` | number
-`three_stars` | number
-`four_stars` | number
-`five_stars` | number
-`total_stars` | number
+`oneStars` | number
+`twoStars` | number
+`threeStars` | number
+`fourStars` | number
+`fiveStars` | number
+`totalStars` | number
 `rating` | string
-`rating_count` | number
+`ratingCount` | number
 
 ## Example
 
@@ -23,14 +23,14 @@ import type { AccountCocktailRatingModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "one_stars": 5,
-  "two_stars": 1,
-  "three_stars": 1,
-  "four_stars": 1,
-  "five_stars": 1,
-  "total_stars": 1,
+  "oneStars": 5,
+  "twoStars": 1,
+  "threeStars": 1,
+  "fourStars": 1,
+  "fiveStars": 1,
+  "totalStars": 1,
   "rating": 3.5,
-  "rating_count": 1,
+  "ratingCount": 1,
 } satisfies AccountCocktailRatingModel
 
 console.log(example)

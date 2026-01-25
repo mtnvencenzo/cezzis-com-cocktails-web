@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/accountsApi.ts
 apis/defaultApi.ts
 apis/index.ts

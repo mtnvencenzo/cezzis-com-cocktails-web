@@ -5,11 +5,11 @@ import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountAccessibilityPageContainer from './AccountAccessibilityPageContainer';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
-import { AccountOwnedProfileRs, DisplayThemeModel, UpdateAccountOwnedAccessibilitySettingsRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
+import { AccountOwnedProfileRs, DisplayThemeModel, UpdateAccountOwnedAccessibilitySettingsRq } from '../../../../api/accountsApi';
 
 describe('Account Accessibility Page Container', () => {
     let auth0Tester: Auth0ReactTester;

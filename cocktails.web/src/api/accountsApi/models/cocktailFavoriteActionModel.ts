@@ -32,7 +32,7 @@ export interface CocktailFavoriteActionModel {
      * @type {string}
      * @memberof CocktailFavoriteActionModel
      */
-    cocktail_id: string;
+    cocktailId: string;
     /**
      * 
      * @type {CocktailFavoritingActionModel}
@@ -47,7 +47,7 @@ export interface CocktailFavoriteActionModel {
  * Check if a given object implements the CocktailFavoriteActionModel interface.
  */
 export function instanceOfCocktailFavoriteActionModel(value: object): value is CocktailFavoriteActionModel {
-    if (!('cocktail_id' in value) || value['cocktail_id'] === undefined) return false;
+    if (!('cocktailId' in value) || value['cocktailId'] === undefined) return false;
     if (!('action' in value) || value['action'] === undefined) return false;
     return true;
 }
@@ -62,7 +62,7 @@ export function CocktailFavoriteActionModelFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'cocktail_id': json['cocktail_id'],
+        'cocktailId': json['cocktailId'],
         'action': CocktailFavoritingActionModelFromJSON(json['action']),
     };
 }
@@ -78,7 +78,7 @@ export function CocktailFavoriteActionModelToJSONTyped(value?: CocktailFavoriteA
 
     return {
         
-        'cocktail_id': value['cocktail_id'],
+        'cocktailId': value['cocktailId'],
         'action': CocktailFavoritingActionModelToJSON(value['action']),
     };
 }

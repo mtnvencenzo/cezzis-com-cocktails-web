@@ -102,7 +102,7 @@ export interface CocktailModelInput {
      */
     glassware: Array<GlasswareTypeModel>;
     /**
-     * Search statistics for the cocktail
+     * 
      * @type {CocktailSearchStatistics}
      * @memberof CocktailModelInput
      */

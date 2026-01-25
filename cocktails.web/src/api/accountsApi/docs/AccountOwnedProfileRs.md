@@ -7,16 +7,16 @@ The owned account profile response.
 
 Name | Type
 ------------ | -------------
-`subject_id` | string
-`login_email` | string
+`subjectId` | string
+`loginEmail` | string
 `email` | string
-`given_name` | string
-`family_name` | string
-`avatar_uri` | string
-`primary_address` | [AccountAddressModel](AccountAddressModel.md)
-`display_name` | string
+`givenName` | string
+`familyName` | string
+`avatarUri` | string
+`primaryAddress` | [AccountAddressModel](AccountAddressModel.md)
+`displayName` | string
 `accessibility` | [AccountAccessibilitySettingsModel](AccountAccessibilitySettingsModel.md)
-`favorite_cocktails` | Array&lt;string&gt;
+`favoriteCocktails` | Array&lt;string&gt;
 `notifications` | [AccountNotificationSettingsModel](AccountNotificationSettingsModel.md)
 
 ## Example
@@ -26,16 +26,16 @@ import type { AccountOwnedProfileRs } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "subject_id": 4493e636-6b1d-4t81-97b9-00d696c1g2f2,
-  "login_email": someone@cezzis.com,
+  "subjectId": 4493e636-6b1d-4t81-97b9-00d696c1g2f2,
+  "loginEmail": someone@cezzis.com,
   "email": someone@cezzis.com,
-  "given_name": John,
-  "family_name": Doe,
-  "avatar_uri": https://cdn.cezzis.com/account-avatars/b4114bb7-46cf-49ab-b29a-4b20dd69c47e/e878a3b1-ea2a-433c-ba5f-f85df23f03ae.webp,
-  "primary_address": null,
-  "display_name": Jamie Johns,
+  "givenName": John,
+  "familyName": Doe,
+  "avatarUri": https://cdn.cezzis.com/account-avatars/b4114bb7-46cf-49ab-b29a-4b20dd69c47e/e878a3b1-ea2a-433c-ba5f-f85df23f03ae.webp,
+  "primaryAddress": null,
+  "displayName": Jamie Johns,
   "accessibility": null,
-  "favorite_cocktails": null,
+  "favoriteCocktails": null,
   "notifications": null,
 } satisfies AccountOwnedProfileRs
 

@@ -7,7 +7,7 @@ The account owned profile notification settings.
 
 Name | Type
 ------------ | -------------
-`on_new_cocktail_additions` | [CocktailUpdatedNotificationModel](CocktailUpdatedNotificationModel.md)
+`onNewCocktailAdditions` | [CocktailUpdatedNotificationModel](CocktailUpdatedNotificationModel.md)
 
 ## Example
 
@@ -16,7 +16,7 @@ import type { UpdateAccountOwnedNotificationSettingsRq } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "on_new_cocktail_additions": null,
+  "onNewCocktailAdditions": null,
 } satisfies UpdateAccountOwnedNotificationSettingsRq
 
 console.log(example)

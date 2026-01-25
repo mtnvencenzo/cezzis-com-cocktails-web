@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * An action that can be taken on a cocktail in an owned account's favorites list.
  * @export
+ * @enum {string}
  */
-export const CocktailFavoritingActionModel = {
-    Add: 'add',
-    Remove: 'remove'
-} as const;
-export type CocktailFavoritingActionModel = typeof CocktailFavoritingActionModel[keyof typeof CocktailFavoritingActionModel];
+export enum CocktailFavoritingActionModel {
+    Add = 'add',
+    Remove = 'remove'
+}
 
 
 export function instanceOfCocktailFavoritingActionModel(value: any): boolean {

@@ -8,7 +8,7 @@ The cocktail recommendation request.
 Name | Type
 ------------ | -------------
 `recommendation` | [CocktailRecommendationModel](CocktailRecommendationModel.md)
-`verification_code` | string
+`verificationCode` | string
 
 ## Example
 
@@ -18,7 +18,7 @@ import type { CocktailRecommendationRq } from ''
 // TODO: Update the object below with actual values
 const example = {
   "recommendation": null,
-  "verification_code": 03AFcWeA4HedFMVgSEGAfbZXZdbLu0RXp,
+  "verificationCode": 03AFcWeA4HedFMVgSEGAfbZXZdbLu0RXp,
 } satisfies CocktailRecommendationRq
 
 console.log(example)

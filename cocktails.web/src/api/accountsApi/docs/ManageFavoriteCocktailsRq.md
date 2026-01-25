@@ -7,7 +7,7 @@ The request to manage an owned account\'s favorite cocktails.
 
 Name | Type
 ------------ | -------------
-`cocktail_actions` | [Array&lt;CocktailFavoriteActionModel&gt;](CocktailFavoriteActionModel.md)
+`cocktailActions` | [Array&lt;CocktailFavoriteActionModel&gt;](CocktailFavoriteActionModel.md)
 
 ## Example
 
@@ -16,7 +16,7 @@ import type { ManageFavoriteCocktailsRq } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "cocktail_actions": null,
+  "cocktailActions": null,
 } satisfies ManageFavoriteCocktailsRq
 
 console.log(example)

@@ -4,12 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountNotificationsPageContainer from './AccountNotificationsPageContainer';
-import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, UpdateAccountOwnedNotificationSettingsRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
+import { AccountOwnedProfileRs, CocktailUpdatedNotificationModel, UpdateAccountOwnedNotificationSettingsRq } from '../../../../api/accountsApi';
 
 describe('Account Notifications Page Container', () => {
     let auth0Tester: Auth0ReactTester;

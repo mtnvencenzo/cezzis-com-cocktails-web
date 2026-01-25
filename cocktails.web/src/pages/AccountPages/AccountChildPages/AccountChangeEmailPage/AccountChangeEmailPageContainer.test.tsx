@@ -8,8 +8,8 @@ import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
-import { AccountOwnedProfileRs, ChangeAccountOwnedEmailRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { AccountOwnedProfileRs, ChangeAccountOwnedEmailRq } from '../../../../api/accountsApi';
 
 describe('Account Change Email Page Container', () => {
     let auth0Tester: Auth0ReactTester;

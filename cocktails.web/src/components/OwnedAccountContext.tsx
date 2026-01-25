@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState, useContext, useEffect, useMemo } from 'react';
-import { AccountCocktailRatingsRs, AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../services/SessionStorageService';
+import { AccountCocktailRatingsRs, AccountOwnedProfileRs } from '../api/accountsApi';
 
 interface OwnedAccountContextProps {
     ownedAccount: AccountOwnedProfileRs | undefined;

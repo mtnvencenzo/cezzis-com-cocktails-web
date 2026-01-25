@@ -24,14 +24,14 @@ export interface UploadProfileImageRs {
      * @type {string}
      * @memberof UploadProfileImageRs
      */
-    image_uri: string;
+    imageUri: string;
 }
 
 /**
  * Check if a given object implements the UploadProfileImageRs interface.
  */
 export function instanceOfUploadProfileImageRs(value: object): value is UploadProfileImageRs {
-    if (!('image_uri' in value) || value['image_uri'] === undefined) return false;
+    if (!('imageUri' in value) || value['imageUri'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +45,7 @@ export function UploadProfileImageRsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'image_uri': json['image_uri'],
+        'imageUri': json['imageUri'],
     };
 }
 
@@ -60,7 +60,7 @@ export function UploadProfileImageRsToJSONTyped(value?: UploadProfileImageRs | n
 
     return {
         
-        'image_uri': value['image_uri'],
+        'imageUri': value['imageUri'],
     };
 }
 

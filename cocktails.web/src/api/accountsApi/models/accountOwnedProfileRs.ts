@@ -46,13 +46,13 @@ export interface AccountOwnedProfileRs {
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    subject_id: string;
+    subjectId: string;
     /**
      * The login email address for the account
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    login_email: string;
+    loginEmail: string;
     /**
      * The email address for the account
      * @type {string}
@@ -64,31 +64,31 @@ export interface AccountOwnedProfileRs {
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    given_name?: string | null;
+    givenName?: string | null;
     /**
      * The family name on the account
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    family_name?: string | null;
+    familyName?: string | null;
     /**
      * The avatar image uri for the account
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    avatar_uri?: string | null;
+    avatarUri?: string | null;
     /**
      * The optional primary address listed with the account
      * @type {AccountAddressModel}
      * @memberof AccountOwnedProfileRs
      */
-    primary_address?: AccountAddressModel | null;
+    primaryAddress?: AccountAddressModel | null;
     /**
      * The display name for the account visible to other users
      * @type {string}
      * @memberof AccountOwnedProfileRs
      */
-    display_name?: string | null;
+    displayName?: string | null;
     /**
      * The accessibility settings for the account
      * @type {AccountAccessibilitySettingsModel}
@@ -100,7 +100,7 @@ export interface AccountOwnedProfileRs {
      * @type {Array<string>}
      * @memberof AccountOwnedProfileRs
      */
-    favorite_cocktails?: Array<string> | null;
+    favoriteCocktails?: Array<string> | null;
     /**
      * The notification settings for the account
      * @type {AccountNotificationSettingsModel}
@@ -113,8 +113,8 @@ export interface AccountOwnedProfileRs {
  * Check if a given object implements the AccountOwnedProfileRs interface.
  */
 export function instanceOfAccountOwnedProfileRs(value: object): value is AccountOwnedProfileRs {
-    if (!('subject_id' in value) || value['subject_id'] === undefined) return false;
-    if (!('login_email' in value) || value['login_email'] === undefined) return false;
+    if (!('subjectId' in value) || value['subjectId'] === undefined) return false;
+    if (!('loginEmail' in value) || value['loginEmail'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
     return true;
 }
@@ -129,16 +129,16 @@ export function AccountOwnedProfileRsFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'subject_id': json['subject_id'],
-        'login_email': json['login_email'],
+        'subjectId': json['subjectId'],
+        'loginEmail': json['loginEmail'],
         'email': json['email'],
-        'given_name': json['given_name'] == null ? undefined : json['given_name'],
-        'family_name': json['family_name'] == null ? undefined : json['family_name'],
-        'avatar_uri': json['avatar_uri'] == null ? undefined : json['avatar_uri'],
-        'primary_address': json['primary_address'] == null ? undefined : AccountAddressModelFromJSON(json['primary_address']),
-        'display_name': json['display_name'] == null ? undefined : json['display_name'],
+        'givenName': json['givenName'] == null ? undefined : json['givenName'],
+        'familyName': json['familyName'] == null ? undefined : json['familyName'],
+        'avatarUri': json['avatarUri'] == null ? undefined : json['avatarUri'],
+        'primaryAddress': json['primaryAddress'] == null ? undefined : AccountAddressModelFromJSON(json['primaryAddress']),
+        'displayName': json['displayName'] == null ? undefined : json['displayName'],
         'accessibility': json['accessibility'] == null ? undefined : AccountAccessibilitySettingsModelFromJSON(json['accessibility']),
-        'favorite_cocktails': json['favorite_cocktails'] == null ? undefined : json['favorite_cocktails'],
+        'favoriteCocktails': json['favoriteCocktails'] == null ? undefined : json['favoriteCocktails'],
         'notifications': json['notifications'] == null ? undefined : AccountNotificationSettingsModelFromJSON(json['notifications']),
     };
 }
@@ -154,16 +154,16 @@ export function AccountOwnedProfileRsToJSONTyped(value?: AccountOwnedProfileRs |
 
     return {
         
-        'subject_id': value['subject_id'],
-        'login_email': value['login_email'],
+        'subjectId': value['subjectId'],
+        'loginEmail': value['loginEmail'],
         'email': value['email'],
-        'given_name': value['given_name'],
-        'family_name': value['family_name'],
-        'avatar_uri': value['avatar_uri'],
-        'primary_address': AccountAddressModelToJSON(value['primary_address']),
-        'display_name': value['display_name'],
+        'givenName': value['givenName'],
+        'familyName': value['familyName'],
+        'avatarUri': value['avatarUri'],
+        'primaryAddress': AccountAddressModelToJSON(value['primaryAddress']),
+        'displayName': value['displayName'],
         'accessibility': AccountAccessibilitySettingsModelToJSON(value['accessibility']),
-        'favorite_cocktails': value['favorite_cocktails'],
+        'favoriteCocktails': value['favoriteCocktails'],
         'notifications': AccountNotificationSettingsModelToJSON(value['notifications']),
     };
 }

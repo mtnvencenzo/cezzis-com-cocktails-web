@@ -32,7 +32,7 @@ export interface AccountNotificationSettingsModel {
      * @type {CocktailUpdatedNotificationModel}
      * @memberof AccountNotificationSettingsModel
      */
-    on_new_cocktail_additions: CocktailUpdatedNotificationModel;
+    onNewCocktailAdditions: CocktailUpdatedNotificationModel;
 }
 
 
@@ -41,7 +41,7 @@ export interface AccountNotificationSettingsModel {
  * Check if a given object implements the AccountNotificationSettingsModel interface.
  */
 export function instanceOfAccountNotificationSettingsModel(value: object): value is AccountNotificationSettingsModel {
-    if (!('on_new_cocktail_additions' in value) || value['on_new_cocktail_additions'] === undefined) return false;
+    if (!('onNewCocktailAdditions' in value) || value['onNewCocktailAdditions'] === undefined) return false;
     return true;
 }
 
@@ -55,7 +55,7 @@ export function AccountNotificationSettingsModelFromJSONTyped(json: any, ignoreD
     }
     return {
         
-        'on_new_cocktail_additions': CocktailUpdatedNotificationModelFromJSON(json['on_new_cocktail_additions']),
+        'onNewCocktailAdditions': CocktailUpdatedNotificationModelFromJSON(json['onNewCocktailAdditions']),
     };
 }
 
@@ -70,7 +70,7 @@ export function AccountNotificationSettingsModelToJSONTyped(value?: AccountNotif
 
     return {
         
-        'on_new_cocktail_additions': CocktailUpdatedNotificationModelToJSON(value['on_new_cocktail_additions']),
+        'onNewCocktailAdditions': CocktailUpdatedNotificationModelToJSON(value['onNewCocktailAdditions']),
     };
 }
 

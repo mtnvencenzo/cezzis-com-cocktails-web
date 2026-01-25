@@ -7,12 +7,12 @@ An owned account profile address.
 
 Name | Type
 ------------ | -------------
-`address_line1` | string
-`address_line2` | string
+`addressLine1` | string
+`addressLine2` | string
 `city` | string
 `region` | string
-`sub_region` | string
-`postal_code` | string
+`subRegion` | string
+`postalCode` | string
 `country` | string
 
 ## Example
@@ -22,12 +22,12 @@ import type { AccountAddressModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "address_line1": 123 Anytown Ln.,
-  "address_line2": Suite #300,
+  "addressLine1": 123 Anytown Ln.,
+  "addressLine2": Suite #300,
   "city": Royal Oak,
   "region": MI,
-  "sub_region": Oakland,
-  "postal_code": 48073,
+  "subRegion": Oakland,
+  "postalCode": 48073,
   "country": USA,
 } satisfies AccountAddressModel
 

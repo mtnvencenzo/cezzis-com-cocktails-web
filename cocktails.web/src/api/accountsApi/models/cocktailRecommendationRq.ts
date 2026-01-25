@@ -38,7 +38,7 @@ export interface CocktailRecommendationRq {
      * @type {string}
      * @memberof CocktailRecommendationRq
      */
-    verification_code: string;
+    verificationCode: string;
 }
 
 /**
@@ -46,7 +46,7 @@ export interface CocktailRecommendationRq {
  */
 export function instanceOfCocktailRecommendationRq(value: object): value is CocktailRecommendationRq {
     if (!('recommendation' in value) || value['recommendation'] === undefined) return false;
-    if (!('verification_code' in value) || value['verification_code'] === undefined) return false;
+    if (!('verificationCode' in value) || value['verificationCode'] === undefined) return false;
     return true;
 }
 
@@ -61,7 +61,7 @@ export function CocktailRecommendationRqFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'recommendation': CocktailRecommendationModelFromJSON(json['recommendation']),
-        'verification_code': json['verification_code'],
+        'verificationCode': json['verificationCode'],
     };
 }
 
@@ -77,7 +77,7 @@ export function CocktailRecommendationRqToJSONTyped(value?: CocktailRecommendati
     return {
         
         'recommendation': CocktailRecommendationModelToJSON(value['recommendation']),
-        'verification_code': value['verification_code'],
+        'verificationCode': value['verificationCode'],
     };
 }
 

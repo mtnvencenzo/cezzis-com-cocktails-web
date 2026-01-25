@@ -7,7 +7,7 @@ The profile image upload response.
 
 Name | Type
 ------------ | -------------
-`image_uri` | string
+`imageUri` | string
 
 ## Example
 
@@ -16,7 +16,7 @@ import type { UploadProfileImageRs } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "image_uri": 4493e636-6b1d-4t81-97b9-00d696c1g2f2,
+  "imageUri": 4493e636-6b1d-4t81-97b9-00d696c1g2f2,
 } satisfies UploadProfileImageRs
 
 console.log(example)

@@ -62,13 +62,13 @@ export interface IngredientModel {
      */
     name: string;
     /**
-     * Unit of Measure for the ingredient
+     * 
      * @type {UofMTypeModel}
      * @memberof IngredientModel
      */
     uoM: UofMTypeModel;
     /**
-     * Requirement type for the ingredient
+     * 
      * @type {IngredientRequirementTypeModel}
      * @memberof IngredientModel
      */
@@ -86,7 +86,7 @@ export interface IngredientModel {
      */
     units: number;
     /**
-     * Preparation type for the ingredient
+     * 
      * @type {PreparationTypeModel}
      * @memberof IngredientModel
      */

@@ -32,34 +32,34 @@ export interface UpdateAccountOwnedProfileRq {
      * @type {string}
      * @memberof UpdateAccountOwnedProfileRq
      */
-    given_name: string;
+    givenName: string;
     /**
      * The family name on the account
      * @type {string}
      * @memberof UpdateAccountOwnedProfileRq
      */
-    family_name: string;
+    familyName: string;
     /**
      * The display for the account visible to other users
      * @type {string}
      * @memberof UpdateAccountOwnedProfileRq
      */
-    display_name: string;
+    displayName: string;
     /**
      * The optional primary address listed with the account
      * @type {AccountAddressModel}
      * @memberof UpdateAccountOwnedProfileRq
      */
-    primary_address?: AccountAddressModel | null;
+    primaryAddress?: AccountAddressModel | null;
 }
 
 /**
  * Check if a given object implements the UpdateAccountOwnedProfileRq interface.
  */
 export function instanceOfUpdateAccountOwnedProfileRq(value: object): value is UpdateAccountOwnedProfileRq {
-    if (!('given_name' in value) || value['given_name'] === undefined) return false;
-    if (!('family_name' in value) || value['family_name'] === undefined) return false;
-    if (!('display_name' in value) || value['display_name'] === undefined) return false;
+    if (!('givenName' in value) || value['givenName'] === undefined) return false;
+    if (!('familyName' in value) || value['familyName'] === undefined) return false;
+    if (!('displayName' in value) || value['displayName'] === undefined) return false;
     return true;
 }
 
@@ -73,10 +73,10 @@ export function UpdateAccountOwnedProfileRqFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'given_name': json['given_name'],
-        'family_name': json['family_name'],
-        'display_name': json['display_name'],
-        'primary_address': json['primary_address'] == null ? undefined : AccountAddressModelFromJSON(json['primary_address']),
+        'givenName': json['givenName'],
+        'familyName': json['familyName'],
+        'displayName': json['displayName'],
+        'primaryAddress': json['primaryAddress'] == null ? undefined : AccountAddressModelFromJSON(json['primaryAddress']),
     };
 }
 
@@ -91,10 +91,10 @@ export function UpdateAccountOwnedProfileRqToJSONTyped(value?: UpdateAccountOwne
 
     return {
         
-        'given_name': value['given_name'],
-        'family_name': value['family_name'],
-        'display_name': value['display_name'],
-        'primary_address': AccountAddressModelToJSON(value['primary_address']),
+        'givenName': value['givenName'],
+        'familyName': value['familyName'],
+        'displayName': value['displayName'],
+        'primaryAddress': AccountAddressModelToJSON(value['primaryAddress']),
     };
 }
 

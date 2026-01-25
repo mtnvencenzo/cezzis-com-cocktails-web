@@ -24,7 +24,7 @@ export interface RateCocktailRq {
      * @type {string}
      * @memberof RateCocktailRq
      */
-    cocktail_id: string;
+    cocktailId: string;
     /**
      * The rating for the cocktail (1-5)
      * @type {number}
@@ -37,7 +37,7 @@ export interface RateCocktailRq {
  * Check if a given object implements the RateCocktailRq interface.
  */
 export function instanceOfRateCocktailRq(value: object): value is RateCocktailRq {
-    if (!('cocktail_id' in value) || value['cocktail_id'] === undefined) return false;
+    if (!('cocktailId' in value) || value['cocktailId'] === undefined) return false;
     if (!('stars' in value) || value['stars'] === undefined) return false;
     return true;
 }
@@ -52,7 +52,7 @@ export function RateCocktailRqFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'cocktail_id': json['cocktail_id'],
+        'cocktailId': json['cocktailId'],
         'stars': json['stars'],
     };
 }
@@ -68,7 +68,7 @@ export function RateCocktailRqToJSONTyped(value?: RateCocktailRq | null, ignoreD
 
     return {
         
-        'cocktail_id': value['cocktail_id'],
+        'cocktailId': value['cocktailId'],
         'stars': value['stars'],
     };
 }

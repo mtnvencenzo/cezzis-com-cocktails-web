@@ -7,7 +7,7 @@ A cocktail reference with user supplied rating.
 
 Name | Type
 ------------ | -------------
-`cocktail_id` | string
+`cocktailId` | string
 `stars` | number
 
 ## Example
@@ -17,7 +17,7 @@ import type { RateCocktailRq } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "cocktail_id": null,
+  "cocktailId": null,
   "stars": null,
 } satisfies RateCocktailRq
 

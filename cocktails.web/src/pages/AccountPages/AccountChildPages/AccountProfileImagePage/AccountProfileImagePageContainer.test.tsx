@@ -10,7 +10,7 @@ import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 import SessionStorageService from '../../../../services/SessionStorageService';
-import { UploadProfileImageRs, AccountOwnedProfileRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { AccountOwnedProfileRs, UploadProfileImageRs } from '../../../../api/accountsApi';
 
 // Mock the image resizer
 vi.mock('react-image-file-resizer', () => ({

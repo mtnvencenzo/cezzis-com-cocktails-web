@@ -45,13 +45,13 @@ export interface RateCocktailRs {
      * @type {string}
      * @memberof RateCocktailRs
      */
-    cocktail_id: string;
+    cocktailId: string;
     /**
      * 
      * @type {AccountCocktailRatingModel}
      * @memberof RateCocktailRs
      */
-    cocktail_rating: AccountCocktailRatingModel;
+    cocktailRating: AccountCocktailRatingModel;
 }
 
 /**
@@ -59,8 +59,8 @@ export interface RateCocktailRs {
  */
 export function instanceOfRateCocktailRs(value: object): value is RateCocktailRs {
     if (!('ratings' in value) || value['ratings'] === undefined) return false;
-    if (!('cocktail_id' in value) || value['cocktail_id'] === undefined) return false;
-    if (!('cocktail_rating' in value) || value['cocktail_rating'] === undefined) return false;
+    if (!('cocktailId' in value) || value['cocktailId'] === undefined) return false;
+    if (!('cocktailRating' in value) || value['cocktailRating'] === undefined) return false;
     return true;
 }
 
@@ -75,8 +75,8 @@ export function RateCocktailRsFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'ratings': ((json['ratings'] as Array<any>).map(AccountCocktailRatingsModelFromJSON)),
-        'cocktail_id': json['cocktail_id'],
-        'cocktail_rating': AccountCocktailRatingModelFromJSON(json['cocktail_rating']),
+        'cocktailId': json['cocktailId'],
+        'cocktailRating': AccountCocktailRatingModelFromJSON(json['cocktailRating']),
     };
 }
 
@@ -92,8 +92,8 @@ export function RateCocktailRsToJSONTyped(value?: RateCocktailRs | null, ignoreD
     return {
         
         'ratings': ((value['ratings'] as Array<any>).map(AccountCocktailRatingsModelToJSON)),
-        'cocktail_id': value['cocktail_id'],
-        'cocktail_rating': AccountCocktailRatingModelToJSON(value['cocktail_rating']),
+        'cocktailId': value['cocktailId'],
+        'cocktailRating': AccountCocktailRatingModelToJSON(value['cocktailRating']),
     };
 }
 

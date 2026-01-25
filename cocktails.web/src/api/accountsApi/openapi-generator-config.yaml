@@ -2,6 +2,7 @@ generatorName: typescript-fetch
 outputDir: ./src/api/accountsApi
 inputSpec: http://localhost:8015/openapi.json
 additionalProperties:
+  stringEnums: true
   ensureUniqueParams: true
   enumNameSuffix: Enum
   enumPropertyNaming: PascalCase

@@ -7,7 +7,7 @@ A cocktail reference with management action within an owned account favorites li
 
 Name | Type
 ------------ | -------------
-`cocktail_id` | string
+`cocktailId` | string
 `action` | [CocktailFavoritingActionModel](CocktailFavoritingActionModel.md)
 
 ## Example
@@ -17,7 +17,7 @@ import type { CocktailFavoriteActionModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "cocktail_id": null,
+  "cocktailId": null,
   "action": null,
 } satisfies CocktailFavoriteActionModel
 

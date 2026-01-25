@@ -41,7 +41,7 @@ export interface CocktailEmbeddingRq {
      */
     content_chunks: Array<CocktailDescriptionChunk>;
     /**
-     * Cocktail model associated with the chunks
+     * 
      * @type {CocktailModelInput}
      * @memberof CocktailEmbeddingRq
      */

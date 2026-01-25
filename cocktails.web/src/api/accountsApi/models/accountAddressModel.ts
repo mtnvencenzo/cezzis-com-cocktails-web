@@ -24,13 +24,13 @@ export interface AccountAddressModel {
      * @type {string}
      * @memberof AccountAddressModel
      */
-    address_line1: string;
+    addressLine1: string;
     /**
      * The secondary street address building sub divider
      * @type {string}
      * @memberof AccountAddressModel
      */
-    address_line2: string;
+    addressLine2: string;
     /**
      * The city the address is within
      * @type {string}
@@ -48,13 +48,13 @@ export interface AccountAddressModel {
      * @type {string}
      * @memberof AccountAddressModel
      */
-    sub_region: string;
+    subRegion: string;
     /**
      * The postal or zip code
      * @type {string}
      * @memberof AccountAddressModel
      */
-    postal_code: string;
+    postalCode: string;
     /**
      * The country
      * @type {string}
@@ -67,12 +67,12 @@ export interface AccountAddressModel {
  * Check if a given object implements the AccountAddressModel interface.
  */
 export function instanceOfAccountAddressModel(value: object): value is AccountAddressModel {
-    if (!('address_line1' in value) || value['address_line1'] === undefined) return false;
-    if (!('address_line2' in value) || value['address_line2'] === undefined) return false;
+    if (!('addressLine1' in value) || value['addressLine1'] === undefined) return false;
+    if (!('addressLine2' in value) || value['addressLine2'] === undefined) return false;
     if (!('city' in value) || value['city'] === undefined) return false;
     if (!('region' in value) || value['region'] === undefined) return false;
-    if (!('sub_region' in value) || value['sub_region'] === undefined) return false;
-    if (!('postal_code' in value) || value['postal_code'] === undefined) return false;
+    if (!('subRegion' in value) || value['subRegion'] === undefined) return false;
+    if (!('postalCode' in value) || value['postalCode'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     return true;
 }
@@ -87,12 +87,12 @@ export function AccountAddressModelFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'address_line1': json['address_line1'],
-        'address_line2': json['address_line2'],
+        'addressLine1': json['addressLine1'],
+        'addressLine2': json['addressLine2'],
         'city': json['city'],
         'region': json['region'],
-        'sub_region': json['sub_region'],
-        'postal_code': json['postal_code'],
+        'subRegion': json['subRegion'],
+        'postalCode': json['postalCode'],
         'country': json['country'],
     };
 }
@@ -108,12 +108,12 @@ export function AccountAddressModelToJSONTyped(value?: AccountAddressModel | nul
 
     return {
         
-        'address_line1': value['address_line1'],
-        'address_line2': value['address_line2'],
+        'addressLine1': value['addressLine1'],
+        'addressLine2': value['addressLine2'],
         'city': value['city'],
         'region': value['region'],
-        'sub_region': value['sub_region'],
-        'postal_code': value['postal_code'],
+        'subRegion': value['subRegion'],
+        'postalCode': value['postalCode'],
         'country': value['country'],
     };
 }

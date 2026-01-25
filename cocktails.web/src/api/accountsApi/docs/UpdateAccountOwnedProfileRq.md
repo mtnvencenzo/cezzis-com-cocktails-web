@@ -7,10 +7,10 @@ The account owned profile upload request information.
 
 Name | Type
 ------------ | -------------
-`given_name` | string
-`family_name` | string
-`display_name` | string
-`primary_address` | [AccountAddressModel](AccountAddressModel.md)
+`givenName` | string
+`familyName` | string
+`displayName` | string
+`primaryAddress` | [AccountAddressModel](AccountAddressModel.md)
 
 ## Example
 
@@ -19,10 +19,10 @@ import type { UpdateAccountOwnedProfileRq } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "given_name": John,
-  "family_name": Doe,
-  "display_name": Jamie Johns,
-  "primary_address": null,
+  "givenName": John,
+  "familyName": Doe,
+  "displayName": Jamie Johns,
+  "primaryAddress": null,
 } satisfies UpdateAccountOwnedProfileRq
 
 console.log(example)
