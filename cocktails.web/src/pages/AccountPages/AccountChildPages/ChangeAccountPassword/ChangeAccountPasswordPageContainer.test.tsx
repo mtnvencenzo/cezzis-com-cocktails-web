@@ -203,7 +203,9 @@ describe('Account Change Password Page Container', () => {
             http.put('http://localhost:2/v1/accounts/owned/profile/password', () =>
                 HttpResponse.json(
                     {
-                        errors: ['Failed to send password reset email']
+                        title: 'Server Error',
+                        status: 500,
+                        detail: 'Failed to send password reset email'
                     },
                     {
                         status: 500,

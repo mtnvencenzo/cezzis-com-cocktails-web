@@ -174,7 +174,11 @@ describe('Account Change Username Page Container', () => {
         server.use(
             http.put('http://localhost:2/v1/accounts/owned/profile/username', async () =>
                 HttpResponse.json(
-                    { errors: ['Username is already taken'] },
+                    {
+                        title: 'Validation Error',
+                        status: 400,
+                        detail: 'Username is already taken'
+                    },
                     {
                         status: 400,
                         statusText: 'Bad Request'

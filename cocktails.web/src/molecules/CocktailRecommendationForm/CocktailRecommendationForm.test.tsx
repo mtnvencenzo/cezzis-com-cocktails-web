@@ -43,7 +43,11 @@ describe('Cocktail Recommendation Form', () => {
 
                 if (body.recommendation.name === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Cocktail name is required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Cocktail name is required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'
@@ -53,7 +57,11 @@ describe('Cocktail Recommendation Form', () => {
 
                 if (body.recommendation.ingredients === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Ingredients are required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Ingredients are required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'
@@ -63,7 +71,11 @@ describe('Cocktail Recommendation Form', () => {
 
                 if (body.recommendation.directions === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Directions are required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Directions are required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'
