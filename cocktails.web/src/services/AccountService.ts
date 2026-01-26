@@ -91,10 +91,10 @@ const loginOwnedAccountProfile = async (): Promise<AccountOwnedProfileRs | undef
     }
 };
 
-const uploadProfileImage = async (blob: Blob): Promise<UploadProfileImageRs | undefined> => {
+const uploadProfileImage = async (file: File): Promise<UploadProfileImageRs | undefined> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const result = await accountsApiClient.uploadProfileImageV1AccountsOwnedProfileImagePost({ file: blob });
+        const result = await accountsApiClient.uploadProfileImageV1AccountsOwnedProfileImagePost({ file });
         return result as UploadProfileImageRs;
     } catch (e: unknown) {
         throw new Error(getErrorMessage(e));

@@ -63,8 +63,9 @@ const AccountProfileImagePageContainer = () => {
         if (htmlCanvas) {
             try {
                 const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
+                const file = new File([blob], 'profile-image.webp', { type: 'image/webp' });
 
-                await uploadProfileImage(blob);
+                await uploadProfileImage(file);
                 await getOwnedAccountProfile(true);
 
                 toast.success('Profile image updated!', { position: 'top-left' });
