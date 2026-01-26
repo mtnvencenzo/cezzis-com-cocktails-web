@@ -82,6 +82,10 @@ module "aca_cocktails_web" {
       value = var.auth0_cocktails_api_audience
     },
     {
+      name  = "VITE_AUTH0_ACCOUNTS_API_AUDIENCE"
+      value = var.auth0_accounts_api_audience
+    },
+    {
       name  = "VITE_COCKTAILS_API_URL"
       value = trimsuffix("https://${var.cocktails_api_hostname}/${data.azurerm_api_management_api.cocktails_api_version_v1.path}/${data.azurerm_api_management_api.cocktails_api_version_v1.version}", "/api/${data.azurerm_api_management_api.cocktails_api_version_v1.version}")
     },

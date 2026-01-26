@@ -81,6 +81,10 @@ variable "auth0_cocktails_api_audience" {
   type = string
 }
 
+variable "auth0_accounts_api_audience" {
+  type = string
+}
+
 variable "image_tag" {
   type = string
 }

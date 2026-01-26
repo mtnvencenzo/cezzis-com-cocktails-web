@@ -16,7 +16,12 @@ import { ProblemDetails, ProblemDetailsFromJSON } from './models';
 export const createAuthMiddleware = (scopes: string[]): Middleware => {
     return {
         pre: async (context: RequestContext): Promise<FetchParams> => {
-            const token = scopes.length > 0 ? await getAccessToken(scopes) : undefined;
+            const audience = getWindowEnv().VITE_AUTH0_ACCOUNTS_API_AUDIENCE;
+            const token = scopes.length > 0 ? await getAccessToken(scopes, audience) : undefined;
+
+            if (!token) {
+                logger.logWarning(`No token retrieved for accounts API. Audience: ${audience}, Scopes: ${scopes.join(', ')}`);
+            }
 
             const headers: Record<string, string> = {
                 ...context.init.headers as Record<string, string>,

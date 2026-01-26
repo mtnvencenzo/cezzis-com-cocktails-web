@@ -31,6 +31,7 @@ vi.mock('../src/utils/envConfig', () => {
             VITE_AUTH0_CLIENT_ID: '00000000000000000000000000000000',
             VITE_AUTH0_REDIRECT_URI: 'https://localhost:0000/iam/auth/redirect/',
             VITE_AUTH0_COCKTAILS_API_AUDIENCE: 'https://cezzis-cocktails-api',
+            VITE_AUTH0_ACCOUNTS_API_AUDIENCE: 'https://cezzis-accounts-api',
 
             VITE_COCKTAILS_API_URL: 'http://localhost:0000',
             VITE_COCKTAILS_IMAGE_URL: 'http://localhost:0000/images',
