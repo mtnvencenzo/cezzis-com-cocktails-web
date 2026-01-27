@@ -42,7 +42,7 @@ export const loginWithRedirectOptions = (): RedirectLoginOptions => ({
     appState: { targetUrl: window.location.href }
 });
 
-export const getAccessToken = async (requiredScopes: string[] = [], audience?: string): Promise<string | undefined> => {
+export const getAccessToken = async (requiredScopes: string[] = [], audience: string | undefined = undefined): Promise<string | undefined> => {
     let auth0Client: Auth0Client | null = null;
     auth0Client = new Auth0Client({
         domain: getWindowEnv().VITE_AUTH0_DOMAIN,

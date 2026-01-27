@@ -66,7 +66,8 @@ const CocktailRatingDialog = ({
                     stars
                 });
 
-                const newStars = rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
+                const newStars =
+                    rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
 
                 setStars(newStars);
             } catch (error) {
