@@ -12,18 +12,17 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * 
  * @export
+ * @enum {string}
  */
-export const IngredientApplicationTypeModel = {
-    Base: 'base',
-    Additional: 'additional',
-    Garnishment: 'garnishment',
-    Muddle: 'muddle'
-} as const;
-export type IngredientApplicationTypeModel = typeof IngredientApplicationTypeModel[keyof typeof IngredientApplicationTypeModel];
+export enum IngredientApplicationTypeModel {
+    Base = 'base',
+    Additional = 'additional',
+    Garnishment = 'garnishment',
+    Muddle = 'muddle'
+}
 
 
 export function instanceOfIngredientApplicationTypeModel(value: any): boolean {

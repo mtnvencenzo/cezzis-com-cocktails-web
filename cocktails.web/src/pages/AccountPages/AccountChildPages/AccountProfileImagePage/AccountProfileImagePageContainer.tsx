@@ -5,6 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Form } from 'react-router-dom';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
+import { toast } from 'react-toastify';
 import AccountAvatar from '../../../../molecules/AccountAvatar/AccountAvatar';
 import { getOwnedAccountProfile, uploadProfileImage } from '../../../../services/AccountService';
 import AccountProfileImageEditor from '../../../../organisims/AccountProfileImageEditor/AccountProfileImageEditor';
@@ -14,10 +15,10 @@ import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrow
 import trimWhack from '../../../../utils/trimWhack';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import startPageViewSpan from '../../../../services/Tracer';
+import logger from '../../../../services/Logger';
 
 const AccountProfileImagePageContainer = () => {
     const [editingAvatarFile, setEditingAvatarFile] = useState<File>();
-    const [editingAvatarName, setEditingAvatarName] = useState<string>('');
     const inputFileRef = useRef<HTMLInputElement>(null);
     const { ownedAccount } = useOwnedAccount();
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -51,7 +52,6 @@ const AccountProfileImagePageContainer = () => {
             const resizedImage = (await resizeFile(file)) as File;
 
             try {
-                setEditingAvatarName(resizedImage.name);
                 setEditingAvatarFile(resizedImage);
             } finally {
                 inputFileRef.current!.value = '';
@@ -61,13 +61,20 @@ const AccountProfileImagePageContainer = () => {
 
     const handleAvatarEditorClose = async (htmlCanvas: HTMLCanvasElement | undefined) => {
         if (htmlCanvas) {
-            const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
+            try {
+                const blob = await (await fetch(htmlCanvas.toDataURL('image/webp'))).blob();
+                const file = new File([blob], 'profile-image.webp', { type: 'image/webp' });
 
-            await uploadProfileImage(blob, editingAvatarName);
-            await getOwnedAccountProfile(true);
+                await uploadProfileImage(file);
+                await getOwnedAccountProfile(true);
+
+                toast.success('Profile image updated!', { position: 'top-left' });
+            } catch (error) {
+                logger.logException('Failed to upload profile image', error as Error);
+                toast.error('Unable to upload image. Please try again.', { position: 'top-left' });
+            }
         }
 
-        setEditingAvatarName('');
         setEditingAvatarFile(undefined);
     };
 
@@ -103,7 +110,7 @@ const AccountProfileImagePageContainer = () => {
                             <Divider />
                         </Grid>
                         <Grid size={12}>
-                            <AccountAvatar onAddImage={handleAddImage} image={ownedAccount?.avatarUri} />
+                            <AccountAvatar onAddImage={handleAddImage} image={ownedAccount?.avatarUri ?? undefined} />
                             <Form>
                                 <input
                                     type='file'

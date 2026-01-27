@@ -5,11 +5,11 @@ import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
 import AccountAccessibilityPageContainer from './AccountAccessibilityPageContainer';
 import { getTestOwnedAccountProfile, getTestUser, server } from '../../../../../tests/setup';
-import { AccountOwnedProfileRs, DisplayThemeModel, UpdateAccountOwnedAccessibilitySettingsRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
+import { AccountOwnedProfileRs, DisplayThemeModel, UpdateAccountOwnedAccessibilitySettingsRq } from '../../../../api/accountsApi';
 
 describe('Account Accessibility Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -48,7 +48,9 @@ describe('Account Accessibility Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.accessibility.theme = DisplayThemeModel.Light;
+
+        if (profile?.accessibility) profile.accessibility.theme = DisplayThemeModel.Light;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
@@ -82,7 +84,9 @@ describe('Account Accessibility Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.accessibility.theme = DisplayThemeModel.Dark;
+
+        if (profile?.accessibility) profile.accessibility.theme = DisplayThemeModel.Dark;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 
@@ -113,11 +117,12 @@ describe('Account Accessibility Page Container', () => {
 
     test('toggle > dark mode > saves correctly', async () => {
         const savedProfile = getTestOwnedAccountProfile();
-        savedProfile.accessibility.theme = DisplayThemeModel.Dark;
+
+        if (savedProfile?.accessibility) savedProfile.accessibility.theme = DisplayThemeModel.Dark;
 
         server.use(
             http.put(
-                'http://localhost:0/api/v1/accounts/owned/profile/accessibility',
+                'http://localhost:2/v1/accounts/owned/profile/accessibility',
                 async ({ request }) => {
                     // Verify the request body contains the expected data
                     const body = (await request.json()) as UpdateAccountOwnedAccessibilitySettingsRq;
@@ -136,7 +141,9 @@ describe('Account Accessibility Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.accessibility.theme = DisplayThemeModel.Light;
+
+        if (profile?.accessibility) profile.accessibility.theme = DisplayThemeModel.Light;
+
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 

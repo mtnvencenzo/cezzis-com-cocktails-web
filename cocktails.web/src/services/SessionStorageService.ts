@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { unset } from 'lodash';
-import { AccountCocktailRatingsRs, AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
 import StorageCache from './StorageCache';
+import { AccountCocktailRatingsRs, AccountOwnedProfileRs } from '../api/accountsApi';
 
 class SessionStorageService extends StorageCache {
     public static OwnedAccountProfileGroupCacheKey: string = 'account-profile-data-group';

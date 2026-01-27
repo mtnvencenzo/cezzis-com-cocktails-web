@@ -8,12 +8,12 @@ import { ToastContainer } from 'react-toastify';
 import CocktailRecommendationForm from './CocktailRecommendationForm';
 import GlobalContext from '../../components/GlobalContexts';
 import { getTestOwnedAccountProfile, getTestUser, requestSpy, server } from '../../../tests/setup';
-import { CocktailRecommendationRq } from '../../api/cocktailsApi/cocktailsApiClient';
 import { executeRecaptcha, resetRecaptcha } from '../../services/RecaptchaService';
 import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
+import { CocktailRecommendationRq } from '../../api/accountsApi';
 
 vi.mock('../../services/RecaptchaService.ts');
 vi.mocked(resetRecaptcha).mockImplementation(() => vi.fn());
@@ -37,13 +37,17 @@ describe('Cocktail Recommendation Form', () => {
         auth0Tester.spyAuth0();
 
         server.use(
-            http.post('http://localhost:0/api/v1/accounts/owned/profile/cocktails/recommendations', async ({ request }) => {
+            http.post('http://localhost:2/v1/accounts/owned/profile/cocktails/recommendations', async ({ request }) => {
                 await expectProgress(true);
                 const body: CocktailRecommendationRq = (await request.json()) as CocktailRecommendationRq;
 
                 if (body.recommendation.name === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Cocktail name is required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Cocktail name is required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'
@@ -53,7 +57,11 @@ describe('Cocktail Recommendation Form', () => {
 
                 if (body.recommendation.ingredients === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Ingredients are required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Ingredients are required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'
@@ -63,7 +71,11 @@ describe('Cocktail Recommendation Form', () => {
 
                 if (body.recommendation.directions === 'failed') {
                     return HttpResponse.json(
-                        { errors: ['Directions are required'] },
+                        {
+                            title: 'Validation Error',
+                            status: 400,
+                            detail: 'Directions are required'
+                        },
                         {
                             status: 400,
                             statusText: 'BadRequest'

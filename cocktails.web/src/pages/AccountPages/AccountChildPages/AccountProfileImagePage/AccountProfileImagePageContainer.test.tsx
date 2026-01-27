@@ -10,7 +10,7 @@ import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
 import SessionStorageService from '../../../../services/SessionStorageService';
-import { UploadProfileImageRs, AccountOwnedProfileRs } from '../../../../api/cocktailsApi/cocktailsApiClient';
+import { AccountOwnedProfileRs, UploadProfileImageRs } from '../../../../api/accountsApi';
 
 // Mock the image resizer
 vi.mock('react-image-file-resizer', () => ({
@@ -206,7 +206,7 @@ describe('Account Profile Image Page Container', () => {
         // Mock the upload profile image API using MSW
         server.use(
             http.post(
-                'http://localhost:0/api/v1/accounts/owned/profile/image',
+                'http://localhost:2/v1/accounts/owned/profile/image',
                 async ({ request }) => {
                     // Verify it's a FormData request
                     const body = await request.formData();
@@ -225,7 +225,7 @@ describe('Account Profile Image Page Container', () => {
                 { once: true }
             ),
             http.get(
-                'http://localhost:0/api/v1/accounts/owned/profile',
+                'http://localhost:2/v1/accounts/owned/profile',
                 async () => {
                     const updatedProfile = { ...profile, avatarUri: 'https://example.com/new-avatar.webp' };
                     return HttpResponse.json<AccountOwnedProfileRs>(updatedProfile, {
@@ -346,7 +346,7 @@ describe('Account Profile Image Page Container', () => {
         // Set up MSW to simulate API errors
         server.use(
             http.post(
-                'http://localhost:0/api/v1/accounts/owned/profile/image',
+                'http://localhost:2/v1/accounts/owned/profile/image',
                 async () => HttpResponse.json({ error: 'Upload failed', message: 'File too large' }, { status: 413, statusText: 'Payload Too Large' }),
                 { once: true }
             )

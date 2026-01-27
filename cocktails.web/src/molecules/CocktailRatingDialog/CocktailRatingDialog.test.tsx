@@ -7,10 +7,10 @@ import GlobalContext from '../../components/GlobalContexts';
 import { getTestCocktails, getTestOwnedAccountCocktailRatings, getTestOwnedAccountProfile, getTestUser, server } from '../../../tests/setup';
 import SessionStorageService from '../../services/SessionStorageService';
 import CocktailRatingDialog from './CocktailRatingDialog';
-import { AccountCocktailRatingsRs, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
+import { AccountCocktailRatingsRs, RateCocktailRs } from '../../api/accountsApi';
 
 describe('Cocktail Rating Dialog', () => {
     let auth0Tester: Auth0ReactTester;
@@ -265,7 +265,7 @@ describe('Cocktail Rating Dialog', () => {
         // For the initial save response
         server.use(
             http.post(
-                'http://localhost:0/api/v1/accounts/owned/profile/cocktails/ratings',
+                'http://localhost:2/v1/accounts/owned/profile/cocktails/ratings',
                 () =>
                     HttpResponse.json<RateCocktailRs>(serverRatingRs, {
                         status: 201,
@@ -278,7 +278,7 @@ describe('Cocktail Rating Dialog', () => {
         // For the subsequent reload of the account cocktail ratings
         server.use(
             http.get(
-                'http://localhost:0/api/v1/accounts/owned/profile/cocktails/ratings',
+                'http://localhost:2/v1/accounts/owned/profile/cocktails/ratings',
                 () =>
                     HttpResponse.json<AccountCocktailRatingsRs>(
                         {
@@ -286,7 +286,7 @@ describe('Cocktail Rating Dialog', () => {
                         },
                         {
                             status: 200,
-                            statusText: 'Ok'
+                            statusText: 'OK'
                         }
                     ),
                 { once: true }

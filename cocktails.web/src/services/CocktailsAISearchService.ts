@@ -168,7 +168,9 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutpu
         callBack(results);
     } catch (e: unknown) {
         logger.logException('Failed to retrieve cocktails search results', e as Error);
-        throw e;
+        // For typeahead/search, we gracefully handle errors by returning empty results
+        // rather than propagating the error to the UI component
+        callBack([]);
     }
 };
 

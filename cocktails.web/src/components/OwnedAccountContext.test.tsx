@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Box } from '@mui/material';
 import { OwnedAccountContextProvider, useOwnedAccount } from './OwnedAccountContext';
-import { CocktailUpdatedNotificationModel, DisplayThemeModel } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailUpdatedNotificationModel, DisplayThemeModel } from '../api/accountsApi';
 
 describe('Owned Account Context', () => {
     const TestComp = () => {

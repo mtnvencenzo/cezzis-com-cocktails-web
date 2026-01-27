@@ -12,21 +12,20 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * 
  * @export
+ * @enum {string}
  */
-export const PreparationTypeModel = {
-    None: 'none',
-    Chilled: 'chilled',
-    FreshlySqueezed: 'freshlySqueezed',
-    PeeledAndJuiced: 'peeledAndJuiced',
-    FreshlyGrated: 'freshlyGrated',
-    Quartered: 'quartered',
-    FreshPressed: 'freshPressed'
-} as const;
-export type PreparationTypeModel = typeof PreparationTypeModel[keyof typeof PreparationTypeModel];
+export enum PreparationTypeModel {
+    None = 'none',
+    Chilled = 'chilled',
+    FreshlySqueezed = 'freshlySqueezed',
+    PeeledAndJuiced = 'peeledAndJuiced',
+    FreshlyGrated = 'freshlyGrated',
+    Quartered = 'quartered',
+    FreshPressed = 'freshPressed'
+}
 
 
 export function instanceOfPreparationTypeModel(value: any): boolean {
