@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { AccountCocktailRatingModel } from './accountCocktailRatingModel';
+import {
+    AccountCocktailRatingModelFromJSON,
+    AccountCocktailRatingModelFromJSONTyped,
+    AccountCocktailRatingModelToJSON,
+    AccountCocktailRatingModelToJSONTyped,
+} from './accountCocktailRatingModel';
+
 /**
  * A cocktail reference with user supplied rating.
  * @export
@@ -31,6 +39,12 @@ export interface RateCocktailRq {
      * @memberof RateCocktailRq
      */
     stars: number;
+    /**
+     * 
+     * @type {AccountCocktailRatingModel}
+     * @memberof RateCocktailRq
+     */
+    currentRatings: AccountCocktailRatingModel;
 }
 
 /**
@@ -39,6 +53,7 @@ export interface RateCocktailRq {
 export function instanceOfRateCocktailRq(value: object): value is RateCocktailRq {
     if (!('cocktailId' in value) || value['cocktailId'] === undefined) return false;
     if (!('stars' in value) || value['stars'] === undefined) return false;
+    if (!('currentRatings' in value) || value['currentRatings'] === undefined) return false;
     return true;
 }
 
@@ -54,6 +69,7 @@ export function RateCocktailRqFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'cocktailId': json['cocktailId'],
         'stars': json['stars'],
+        'currentRatings': AccountCocktailRatingModelFromJSON(json['currentRatings']),
     };
 }
 
@@ -70,6 +86,7 @@ export function RateCocktailRqToJSONTyped(value?: RateCocktailRq | null, ignoreD
         
         'cocktailId': value['cocktailId'],
         'stars': value['stars'],
+        'currentRatings': AccountCocktailRatingModelToJSON(value['currentRatings']),
     };
 }
 

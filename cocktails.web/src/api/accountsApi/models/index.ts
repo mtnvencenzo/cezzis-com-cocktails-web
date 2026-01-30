@@ -1,5 +1,5 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './accountAccessibilitySettingsModel';
 export * from './accountAddressModel';
 export * from './accountCocktailRatingModel';

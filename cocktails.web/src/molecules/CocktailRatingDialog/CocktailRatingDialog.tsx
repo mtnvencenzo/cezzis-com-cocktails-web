@@ -63,6 +63,7 @@ const CocktailRatingDialog = ({
             try {
                 rateRs = await rateCocktail({
                     cocktailId: cocktail.id,
+                    currentRatings: cocktail.rating,
                     stars
                 });
 

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `cocktailId` | string
 `stars` | number
+`currentRatings` | [AccountCocktailRatingModel](AccountCocktailRatingModel.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { RateCocktailRq } from ''
 const example = {
   "cocktailId": null,
   "stars": null,
+  "currentRatings": null,
 } satisfies RateCocktailRq
 
 console.log(example)
