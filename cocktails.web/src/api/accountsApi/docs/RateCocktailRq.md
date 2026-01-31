@@ -1,7 +1,7 @@
 
 # RateCocktailRq
 
-A cocktail reference with user supplied rating.
+A cocktail reference with user-supplied rating.
 
 ## Properties
 
@@ -34,6 +34,6 @@ const exampleParsed = JSON.parse(exampleJSON) as RateCocktailRq
 console.log(exampleParsed)
 ```
 
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+[[Back to top]](`#ratecocktailrq`) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 

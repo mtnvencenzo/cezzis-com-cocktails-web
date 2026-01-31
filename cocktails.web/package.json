@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "loc": "chmod +x ./env.sh && ./env.sh .env.loc && google-chrome && vite --open",
+        "loc": "chmod +x ./env.sh && ./env.sh .env.loc && vite --open",
         "docker": "chmod +x ./env.sh && ./env.sh .env.docker && vite",
         "cy": "chmod +x ./env.sh && ./env.sh .env.cypress && vite",
         "test": "vitest",

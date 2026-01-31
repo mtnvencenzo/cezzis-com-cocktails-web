@@ -17,14 +17,22 @@ export const createAuthMiddleware = (scopes: string[]): Middleware => {
     return {
         pre: async (context: RequestContext): Promise<FetchParams> => {
             const audience = getWindowEnv().VITE_AUTH0_ACCOUNTS_API_AUDIENCE;
-            const token = scopes.length > 0 ? await getAccessToken(scopes, audience) : undefined;
+            const token = await getAccessToken(scopes, audience);
 
             if (!token) {
                 logger.logWarning(`No token retrieved for accounts API. Audience: ${audience}, Scopes: ${scopes.join(', ')}`);
             }
 
+            const baseHeadersInit = context.init.headers;
+            const baseHeaders: Record<string, string> =
+                baseHeadersInit instanceof Headers
+                    ? Object.fromEntries(baseHeadersInit.entries())
+                    : Array.isArray(baseHeadersInit)
+                        ? Object.fromEntries(baseHeadersInit)
+                        : (baseHeadersInit ?? {}) as Record<string, string>;
+
             const headers: Record<string, string> = {
-                ...context.init.headers as Record<string, string>,
+                ...baseHeaders,
                 'X-Key': getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY || '',
             };
 
