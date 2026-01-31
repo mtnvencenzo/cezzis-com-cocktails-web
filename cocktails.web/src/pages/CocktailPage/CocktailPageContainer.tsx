@@ -27,16 +27,11 @@ const CocktailPageContainer = () => {
     const { ownedAccount } = useOwnedAccount();
 
     const onCocktailRated = async (rs: RateCocktailRs | undefined) => {
-
-        console.log('onCocktailRated called with id:', cocktailRs?.item?.id);
         if (!ownedAccount || !cocktailRs?.item.id) {
             return;
         }
 
-        console.log('onCocktailRated called with stars:', rs?.cocktailRating?.totalStars);
-
         if (rs?.cocktailRating) {
-         console.log('onCocktailRated called with rating:', rs.cocktailRating);
             setCocktailRs({
                 ...cocktailRs,
                 item: {
