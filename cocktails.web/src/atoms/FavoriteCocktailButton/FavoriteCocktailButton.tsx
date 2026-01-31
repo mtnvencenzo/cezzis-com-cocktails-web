@@ -2,9 +2,11 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import React, { useRef, useState } from 'react';
 import { TooltipRefProps } from 'react-tooltip';
-import { CocktailFavoritingActionModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { toast } from 'react-toastify';
 import { manageOwnedAccountFavoriteCocktails } from '../../services/AccountService';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
+import { CocktailFavoritingActionModel } from '../../api/accountsApi';
+import logger from '../../services/Logger';
 
 const Tooltip = React.lazy(() => import('react-tooltip').then((module) => ({ default: module.Tooltip })));
 
@@ -21,16 +23,21 @@ const FavoriteCocktailButton = ({ cocktailId, isFav, testId }: FavoriteCocktailB
 
     const handleFavoriteClick = async () => {
         if (ownedAccount) {
-            manageOwnedAccountFavoriteCocktails({
-                cocktailActions: [
-                    {
-                        cocktailId,
-                        action: fav ? CocktailFavoritingActionModel.Remove : CocktailFavoritingActionModel.Add
-                    }
-                ]
-            });
+            try {
+                await manageOwnedAccountFavoriteCocktails({
+                    cocktailActions: [
+                        {
+                            cocktailId,
+                            action: fav ? CocktailFavoritingActionModel.Remove : CocktailFavoritingActionModel.Add
+                        }
+                    ]
+                });
 
-            setFav(!fav);
+                setFav(!fav);
+            } catch (error) {
+                logger.logException('Failed to update favorite status', error as Error);
+                toast.error('Unable to update favorite. Please try again.', { position: 'top-left' });
+            }
         } else if (tooltipRef.current?.isOpen ?? false) {
             tooltipRef.current?.close();
         } else {

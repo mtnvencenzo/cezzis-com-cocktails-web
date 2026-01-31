@@ -12,17 +12,16 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * 
  * @export
+ * @enum {string}
  */
-export const IngredientRequirementTypeModel = {
-    None: 'none',
-    Optional: 'optional',
-    Required: 'required'
-} as const;
-export type IngredientRequirementTypeModel = typeof IngredientRequirementTypeModel[keyof typeof IngredientRequirementTypeModel];
+export enum IngredientRequirementTypeModel {
+    None = 'none',
+    Optional = 'optional',
+    Required = 'required'
+}
 
 
 export function instanceOfIngredientRequirementTypeModel(value: any): boolean {

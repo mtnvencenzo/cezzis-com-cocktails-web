@@ -12,34 +12,33 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * 
  * @export
+ * @enum {string}
  */
-export const GlasswareTypeModel = {
-    None: 'none',
-    Rocks: 'rocks',
-    Highball: 'highball',
-    ShotGlass: 'shotGlass',
-    Coupe: 'coupe',
-    CopperMug: 'copperMug',
-    Collins: 'collins',
-    CocktailGlass: 'cocktailGlass',
-    WineGlass: 'wineGlass',
-    Flute: 'flute',
-    Lowball: 'lowball',
-    Fizz: 'fizz',
-    TikiMug: 'tikiMug',
-    PintGlass: 'pintGlass',
-    JulepTin: 'julepTin',
-    DoubleRocks: 'doubleRocks',
-    Hurricane: 'hurricane',
-    HollowedPineapple: 'hollowedPineapple',
-    Snifter: 'snifter',
-    ScorpionBowl: 'scorpionBowl'
-} as const;
-export type GlasswareTypeModel = typeof GlasswareTypeModel[keyof typeof GlasswareTypeModel];
+export enum GlasswareTypeModel {
+    None = 'none',
+    Rocks = 'rocks',
+    Highball = 'highball',
+    ShotGlass = 'shotGlass',
+    Coupe = 'coupe',
+    CopperMug = 'copperMug',
+    Collins = 'collins',
+    CocktailGlass = 'cocktailGlass',
+    WineGlass = 'wineGlass',
+    Flute = 'flute',
+    Lowball = 'lowball',
+    Fizz = 'fizz',
+    TikiMug = 'tikiMug',
+    PintGlass = 'pintGlass',
+    JulepTin = 'julepTin',
+    DoubleRocks = 'doubleRocks',
+    Hurricane = 'hurricane',
+    HollowedPineapple = 'hollowedPineapple',
+    Snifter = 'snifter',
+    ScorpionBowl = 'scorpionBowl'
+}
 
 
 export function instanceOfGlasswareTypeModel(value: any): boolean {

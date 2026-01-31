@@ -1,0 +1,39 @@
+
+# RateCocktailRq
+
+A cocktail reference with user-supplied rating.
+
+## Properties
+
+Name | Type
+------------ | -------------
+`cocktailId` | string
+`stars` | number
+`currentRatings` | [AccountCocktailRatingModel](AccountCocktailRatingModel.md)
+
+## Example
+
+```typescript
+import type { RateCocktailRq } from ''
+
+// TODO: Update the object below with actual values
+const example = {
+  "cocktailId": null,
+  "stars": null,
+  "currentRatings": null,
+} satisfies RateCocktailRq
+
+console.log(example)
+
+// Convert the instance to a JSON string
+const exampleJSON: string = JSON.stringify(example)
+console.log(exampleJSON)
+
+// Parse the JSON string back to an object
+const exampleParsed = JSON.parse(exampleJSON) as RateCocktailRq
+console.log(exampleParsed)
+```
+
+[[Back to top]](`#ratecocktailrq`) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

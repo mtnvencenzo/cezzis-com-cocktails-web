@@ -2,6 +2,7 @@ generatorName: typescript-fetch
 outputDir: ./src/api/aisearchApi
 inputSpec: http://localhost:8011/openapi.json
 additionalProperties:
+  stringEnums: true
   ensureUniqueParams: true
   enumNameSuffix: Enum
   enumPropertyNaming: PascalCase

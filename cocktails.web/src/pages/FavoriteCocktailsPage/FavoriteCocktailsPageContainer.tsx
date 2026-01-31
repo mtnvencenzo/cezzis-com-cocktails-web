@@ -41,7 +41,7 @@ const FavoriteCocktailsPageContainer = () => {
 
                 // Might seem redundant, but making sure item is in owned account favorites list.
                 // This fixes the issue when the user is already on the page and un-favoriting them
-                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
+                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails?.includes(x.id));
             });
             setHasMore(rs?.items?.length === DEFAULT_TAKE);
         } catch (e: unknown) {

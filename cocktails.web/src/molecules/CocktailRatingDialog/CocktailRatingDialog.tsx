@@ -1,10 +1,13 @@
 import { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import { toast } from 'react-toastify';
 import AlertDialog from '../AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { CocktailModel, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { rateCocktail } from '../../services/AccountService';
+import logger from '../../services/Logger';
+import { RateCocktailRs } from '../../api/accountsApi';
 
 interface CocktailRatingDialogProps {
     open: boolean;
@@ -57,14 +60,21 @@ const CocktailRatingDialog = ({
         let rateRs: RateCocktailRs | undefined;
 
         if (ownedAccount) {
-            rateRs = await rateCocktail({
-                cocktailId: cocktail.id,
-                stars
-            });
+            try {
+                rateRs = await rateCocktail({
+                    cocktailId: cocktail.id,
+                    currentRatings: cocktail.rating,
+                    stars
+                });
 
-            const newStars = rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
+                const newStars =
+                    rateRs?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? ownedAccountCocktailRatings?.ratings?.filter((x) => x.cocktailId === cocktail.id)[0]?.stars ?? 0;
 
-            setStars(newStars);
+                setStars(newStars);
+            } catch (error) {
+                logger.logException('Failed to rate cocktail', error as Error);
+                toast.error('Unable to submit rating. Please try again.', { position: 'top-left' });
+            }
         }
 
         if (onConfirm) {

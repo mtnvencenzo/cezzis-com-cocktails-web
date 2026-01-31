@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
+import { toast } from 'react-toastify';
 import { getWindowEnv } from '../../../../utils/envConfig';
 import trimWhack from '../../../../utils/trimWhack';
 import theme from '../../../../theme';
 import BackArrowLinkItem from '../../../../molecules/BackArrowLinkItem/BackArrowLinkItem';
-import { CocktailFavoritingActionModel } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import CocktailTile from '../../../../molecules/CocktailTile/CocktailTile';
 import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavoritesNoResultsView/CocktailFavoritesNoResultsView';
 import { manageOwnedAccountFavoriteCocktails } from '../../../../services/AccountService';
@@ -16,6 +16,8 @@ import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import startPageViewSpan from '../../../../services/Tracer';
 import { getCocktailFavorites, DEFAULT_TAKE } from '../../../../services/CocktailsAISearchService';
 import { CocktailModelOutput } from '../../../../api/aisearchApi';
+import { CocktailFavoritingActionModel } from '../../../../api/accountsApi';
+import logger from '../../../../services/Logger';
 
 const AccountFavoriteCocktailsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -45,7 +47,7 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
                 // Might seem redundant, but making sure item is in owned account favorites list.
                 // This fixes the issue when the user is already on the page and un-favoriting them
-                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails.includes(x.id));
+                return models.filter((x) => ownedAccount && ownedAccount.favoriteCocktails?.includes(x.id));
             });
             setHasMore((rs?.items && rs?.items.length === DEFAULT_TAKE) ?? false);
         } catch (e: unknown) {
@@ -71,20 +73,28 @@ const AccountFavoriteCocktailsPageContainer = () => {
 
     const handleClearCocktailFavorites = async () => {
         if (ownedAccount && ownedAccount.favoriteCocktails && ownedAccount.favoriteCocktails.length > 0) {
-            await manageOwnedAccountFavoriteCocktails({
-                cocktailActions: ownedAccount.favoriteCocktails.map((x) => ({
-                    cocktailId: x,
-                    action: CocktailFavoritingActionModel.Remove
-                }))
-            });
+            try {
+                await manageOwnedAccountFavoriteCocktails({
+                    cocktailActions: ownedAccount.favoriteCocktails.map((x) => ({
+                        cocktailId: x,
+                        action: CocktailFavoritingActionModel.Remove
+                    }))
+                });
 
-            setLoading(true);
-            setIsFetching(false);
-            setApiCallFailed(false);
-            setCocktailListModels([]);
-            setHasMore(true);
-            setSkip(0);
-            setOpenConfirmation(false);
+                setLoading(true);
+                setIsFetching(false);
+                setApiCallFailed(false);
+                setCocktailListModels([]);
+                setHasMore(true);
+                setSkip(0);
+                setOpenConfirmation(false);
+
+                toast.success('Favorites cleared!', { position: 'top-left' });
+            } catch (error) {
+                logger.logException('Failed to clear favorites', error as Error);
+                toast.error('Unable to clear favorites. Please try again.', { position: 'top-left' });
+                setOpenConfirmation(false);
+            }
         }
     };
 

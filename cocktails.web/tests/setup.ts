@@ -3,23 +3,19 @@ import { cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { setupServer } from 'msw/node';
 import 'vitest-location-mock';
+import { User } from '../src/components/Auth0Provider';
+import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
 import {
-    AccountCocktailRatingsModel,
-    AccountCocktailRatingsRs,
-    AccountOwnedProfileRs,
-    CocktailModel,
-    CocktailUpdatedNotificationModel,
-    DisplayThemeModel,
+    CocktailModelOutput,
     GlasswareTypeModel,
-    IngredientApplicationModel,
+    IngredientApplicationTypeModel,
     IngredientRequirementTypeModel,
     IngredientTypeModel,
     PreparationTypeModel,
     UofMTypeModel
-} from '../src/api/cocktailsApi/cocktailsApiClient';
-import { User } from '../src/components/Auth0Provider';
-import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
-import { CocktailModelOutput } from '../src/api/aisearchApi/models';
+} from '../src/api/aisearchApi/models';
+import { AccountCocktailRatingsModel, AccountCocktailRatingsRs, AccountOwnedProfileRs, CocktailUpdatedNotificationModel, DisplayThemeModel } from '../src/api/accountsApi';
+import { CocktailModel, IngredientApplicationModel } from '../src/api/cocktailsApi/cocktailsApiClient';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -35,13 +31,16 @@ vi.mock('../src/utils/envConfig', () => {
             VITE_AUTH0_CLIENT_ID: '00000000000000000000000000000000',
             VITE_AUTH0_REDIRECT_URI: 'https://localhost:0000/iam/auth/redirect/',
             VITE_AUTH0_COCKTAILS_API_AUDIENCE: 'https://cezzis-cocktails-api',
+            VITE_AUTH0_ACCOUNTS_API_AUDIENCE: 'https://cezzis-accounts-api',
 
             VITE_COCKTAILS_API_URL: 'http://localhost:0000',
             VITE_COCKTAILS_IMAGE_URL: 'http://localhost:0000/images',
             VITE_COCKTAILS_APIM_SUBSCRIPTION_KEY: '383hudiudhUJK984jdus7HDY',
             VITE_RECAPTCHA_SITE_KEY: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
 
-            VITE_AISEARCH_API_URL: 'http://localhost:0001'
+            VITE_AISEARCH_API_URL: 'http://localhost:0001',
+
+            VITE_ACCOUNTS_API_URL: 'http://localhost:0002'
         }))
     };
 });
@@ -196,7 +195,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Simple Syrup',
@@ -207,7 +206,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Water',
@@ -218,7 +217,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.Chilled,
                 suggestions: '',
                 types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Mint Sprig',
@@ -229,7 +228,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Herb],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -253,7 +252,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
@@ -264,7 +263,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Orange Bitters',
@@ -275,7 +274,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: "Preferably Regans'",
                 types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Peel',
@@ -286,7 +285,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -310,7 +309,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Preferably Appleton or ElDorado',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Lime Juice',
@@ -321,7 +320,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
                 types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Honey Syrup',
@@ -332,7 +331,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Champagne',
@@ -343,7 +342,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.Chilled,
                 suggestions: '',
                 types: [IngredientTypeModel.Champagne],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lime Peel',
@@ -354,7 +353,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -378,7 +377,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
@@ -389,7 +388,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Soda Water',
@@ -400,7 +399,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.Chilled,
                 suggestions: '',
                 types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Slice',
@@ -411,7 +410,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
@@ -435,7 +434,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry Prosecco',
@@ -446,7 +445,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Soda Water',
@@ -457,7 +456,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Slice',
@@ -468,7 +467,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -492,7 +491,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Maraschino Liqueur',
@@ -503,7 +502,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Crème de Violette',
@@ -514,7 +513,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Preferably Rothman & Winter',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Juice',
@@ -525,7 +524,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
                 types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Brandied Cherry',
@@ -536,7 +535,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
@@ -560,7 +559,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry Vermouth',
@@ -571,7 +570,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Rich Simple Syrup',
@@ -582,7 +581,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Angostura Bitters',
@@ -593,7 +592,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Bitters',
@@ -604,7 +603,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Twist',
@@ -615,7 +614,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -639,7 +638,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Lemon Juice',
@@ -650,7 +649,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
                 types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Honey Syrup',
@@ -661,7 +660,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Wheel',
@@ -672,7 +671,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
@@ -696,7 +695,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry White Wine',
@@ -707,7 +706,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Pinot Grigio or Sauvignon Blanc',
                 types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Soda Water',
@@ -718,7 +717,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.Chilled,
                 suggestions: '',
                 types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Wheels',
@@ -729,7 +728,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
@@ -753,7 +752,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
@@ -764,7 +763,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Base]
+                applications: [IngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Green Chartreuse',
@@ -775,7 +774,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Bitters',
@@ -786,7 +785,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: '',
                 types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationModel.Additional]
+                applications: [IngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Brandied Cherry',
@@ -797,7 +796,7 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
                 preparation: PreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
                 types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationModel.Garnishment]
+                applications: [IngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,

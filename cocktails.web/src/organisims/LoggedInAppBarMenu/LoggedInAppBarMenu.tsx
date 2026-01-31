@@ -34,7 +34,7 @@ const LoggedInAppBarMenu = ({ testId }: LoggedInAppBarMenuProps) => {
     return (
         <Box data-testid={testId} sx={{ flexGrow: 0, marginLeft: '5px' }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} data-testid='menu-avatar'>
-                <Avatar sx={{ width: 35, height: 35 }} src={ownedAccount?.avatarUri} />
+                <Avatar sx={{ width: 35, height: 35 }} src={ownedAccount?.avatarUri ?? undefined} />
             </IconButton>
             <Menu
                 id='loggedin-menu-appbar'

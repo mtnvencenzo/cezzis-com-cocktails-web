@@ -1,0 +1,17 @@
+generatorName: typescript-fetch
+outputDir: ./src/api/accountsApi
+inputSpec: http://localhost:8015/openapi.json
+additionalProperties:
+  stringEnums: true
+  ensureUniqueParams: true
+  enumNameSuffix: Enum
+  enumPropertyNaming: PascalCase
+  fileNaming: camelCase
+  modelPropertyNaming: original
+  paramNaming: original
+  prefixParameterInterfaces: false
+  prependFormOrBodyParameters: false
+  sortModelPropertiesByRequiredFlag: true
+  sortParamsByRequiredFlag: true
+  useSingleRequestParameter: true
+  withInterfaces: true

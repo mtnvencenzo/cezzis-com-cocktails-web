@@ -7,7 +7,7 @@ import './CocktailPageContainer.css';
 import { Box } from '@mui/material';
 import { SpanStatusCode } from '@opentelemetry/api';
 import { getCocktail } from '../../services/CocktailsService';
-import { CocktailRs, RateCocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './CocktailPageContainer.jsonld';
@@ -17,6 +17,7 @@ import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailBu
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import CocktailRater from '../../organisims/CocktailRater/CocktailRater';
 import startPageViewSpan from '../../services/Tracer';
+import { RateCocktailRs } from '../../api/accountsApi';
 
 const CocktailPageContainer = () => {
     const { id } = useParams();

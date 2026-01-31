@@ -41,25 +41,25 @@ export interface ProblemDetails {
      */
     type?: string;
     /**
-     * 
+     * A human-readable explanation specific to this occurrence of the problem
      * @type {string}
      * @memberof ProblemDetails
      */
     detail?: string | null;
     /**
-     * 
+     * A URI reference that identifies the specific occurrence of the problem
      * @type {string}
      * @memberof ProblemDetails
      */
     instance?: string | null;
     /**
-     * 
+     * A dictionary of validation errors, where keys are field names and values are lists of error messages
      * @type {{ [key: string]: Array<string>; }}
      * @memberof ProblemDetails
      */
     errors?: { [key: string]: Array<string>; } | null;
     /**
-     * 
+     * Additional extension members for problem-specific information
      * @type {{ [key: string]: any; }}
      * @memberof ProblemDetails
      */

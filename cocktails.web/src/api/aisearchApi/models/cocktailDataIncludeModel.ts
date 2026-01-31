@@ -12,17 +12,16 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * 
  * @export
+ * @enum {string}
  */
-export const CocktailDataIncludeModel = {
-    MainImages: 'mainImages',
-    SearchTiles: 'searchTiles',
-    DescriptiveTitle: 'descriptiveTitle'
-} as const;
-export type CocktailDataIncludeModel = typeof CocktailDataIncludeModel[keyof typeof CocktailDataIncludeModel];
+export enum CocktailDataIncludeModel {
+    MainImages = 'mainImages',
+    SearchTiles = 'searchTiles',
+    DescriptiveTitle = 'descriptiveTitle'
+}
 
 
 export function instanceOfCocktailDataIncludeModel(value: any): boolean {

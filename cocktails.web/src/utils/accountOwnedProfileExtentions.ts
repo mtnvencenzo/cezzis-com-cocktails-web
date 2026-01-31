@@ -1,4 +1,4 @@
-import { AccountOwnedProfileRs } from '../api/cocktailsApi/cocktailsApiClient';
+import { AccountOwnedProfileRs } from '../api/accountsApi';
 import { User } from '../components/Auth0Provider';
 
 export const getGivenName = (user: User): string => {

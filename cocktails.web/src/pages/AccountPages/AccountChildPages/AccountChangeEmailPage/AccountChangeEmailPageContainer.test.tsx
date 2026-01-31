@@ -8,8 +8,8 @@ import { Auth0ReactTester } from '../../../../auth0Mocks';
 import { Auth0Provider } from '../../../../components/Auth0Provider';
 import { getTestUser, getTestOwnedAccountProfile, server } from '../../../../../tests/setup';
 import { auth0TestProviderOptions } from '../../../../auth0Mocks/testerConstants';
-import { AccountOwnedProfileRs, ChangeAccountOwnedEmailRq } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import SessionStorageService from '../../../../services/SessionStorageService';
+import { AccountOwnedProfileRs, ChangeAccountOwnedEmailRq } from '../../../../api/accountsApi';
 
 describe('Account Change Email Page Container', () => {
     let auth0Tester: Auth0ReactTester;
@@ -139,7 +139,7 @@ describe('Account Change Email Page Container', () => {
         // Mock the API endpoint
         server.use(
             http.put(
-                'http://localhost:0/api/v1/accounts/owned/profile/email',
+                'http://localhost:2/v1/accounts/owned/profile/email',
                 async ({ request }) => {
                     // Verify the request body contains the expected data
                     const body = (await request.json()) as ChangeAccountOwnedEmailRq;
