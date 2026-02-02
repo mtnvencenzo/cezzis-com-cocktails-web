@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailTile from './CocktailTile';
-import { IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { CocktailModelOutput, IngredientApplicationTypeModel } from '../../api/aisearchApi';
+import { IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi';
 
 describe('Cocktail List Tile', () => {
     test('renders with short title text', async () => {

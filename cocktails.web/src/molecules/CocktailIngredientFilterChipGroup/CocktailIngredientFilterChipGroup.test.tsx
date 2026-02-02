@@ -2,7 +2,7 @@ import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailIngredientFilterChipGroup from './CocktailIngredientFilterChipGroup';
-import { IngredientFilterModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { IngredientFilterModel } from '../../api/cocktailsApi';
 
 describe('Cocktail Ingredient Filter Chip Group', () => {
     beforeEach(() => {

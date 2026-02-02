@@ -4,10 +4,18 @@ import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import userEvent from '@testing-library/user-event';
 import SearchBox from './SearchBox';
-import { GlasswareTypeModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { CocktailModelOutput, CocktailsSearchRs, IngredientApplicationTypeModel } from '../../api/aisearchApi';
+import {
+    CocktailModelOutput,
+    CocktailsSearchRs,
+    GlasswareTypeModel,
+    IngredientApplicationTypeModel,
+    IngredientRequirementTypeModel,
+    IngredientTypeModel,
+    PreparationTypeModel,
+    UofMTypeModel
+} from '../../api/aisearchApi';
 
 const defaultSearchRs = (): CocktailsSearchRs => ({
     items: [

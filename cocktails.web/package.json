@@ -13,7 +13,7 @@
         "build:prod": "tsc -p tsconfig.prod.json && vite build --mode prod",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "gen-cocktails-api": "dotnet exec node_modules/nswag/bin/binaries/Net100/dotnet-nswag.dll run src/api/cocktailsApi/nswagConfig.json /variables:SpecUrl=http://localhost:7179/scalar/v1/openapi.json,Class=CocktailsApiClient,ExceptionClass=CocktailsApiClientException,BaseClass=CocktailsApiClientBase,Folder=.,ExtensionFile=cocktailsApiClientExtensions.ts,OutputFile=cocktailsApiClient.ts",
+        "gen-cocktails-api": "openapi-generator-cli generate -c ./src/api/cocktailsApi/openapi-generator-config.yaml",
         "gen-aisearch-api": "openapi-generator-cli generate -c ./src/api/aisearchApi/openapi-generator-config.yaml",
         "gen-accounts-api": "openapi-generator-cli generate -c ./src/api/accountsApi/openapi-generator-config.yaml",
         "analyze": "vite-bundle-visualizer --template=treemap --open"

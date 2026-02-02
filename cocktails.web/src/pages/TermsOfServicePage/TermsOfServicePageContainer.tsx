@@ -6,7 +6,7 @@ import rehypeRaw from 'rehype-raw';
 import { LoadingSkeleton } from '@mtnvencenzo/kelso-component-library';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getTermsOfService } from '../../services/LegalService';
-import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { LegalDocumentRs } from '../../api/cocktailsApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';

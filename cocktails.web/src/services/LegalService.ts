@@ -1,12 +1,19 @@
-import { LegalDocumentRs, CocktailsApiClient } from '../api/cocktailsApi/cocktailsApiClient';
+import { Configuration, LegalDocumentRs, LegalApi } from '../api/cocktailsApi';
+import { getWindowEnv } from '../utils/envConfig';
 import logger from './Logger';
 
 const getPrivacyPolicy = async (): Promise<LegalDocumentRs | undefined> => {
     let result: LegalDocumentRs | undefined;
 
     try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        result = await cocktailsApiClient.getPrivacyPolicy(undefined);
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_COCKTAILS_API_URL
+        });
+
+        const legalApiClient = new LegalApi(config);
+        result = await legalApiClient.getPrivacyPolicy({
+            X_Key: getWindowEnv().VITE_COCKTAILS_API_SUBSCRIPTION_KEY
+        });
     } catch (e: unknown) {
         logger.logException('Failed to retrieve privacy policy', e as Error);
         throw e;
@@ -19,8 +26,14 @@ const getTermsOfService = async (): Promise<LegalDocumentRs | undefined> => {
     let result: LegalDocumentRs | undefined;
 
     try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        result = await cocktailsApiClient.getTermsOfService(undefined);
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_COCKTAILS_API_URL
+        });
+
+        const legalApiClient = new LegalApi(config);
+        result = await legalApiClient.getTermsOfService({
+            X_Key: getWindowEnv().VITE_COCKTAILS_API_SUBSCRIPTION_KEY
+        });
     } catch (e: unknown) {
         logger.logException('Failed to retrieve terms of service', e as Error);
         throw e;

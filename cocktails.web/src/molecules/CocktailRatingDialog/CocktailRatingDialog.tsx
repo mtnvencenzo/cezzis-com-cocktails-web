@@ -4,10 +4,10 @@ import Rating from '@mui/material/Rating';
 import { toast } from 'react-toastify';
 import AlertDialog from '../AlertDialog/AlertDialog';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
-import { CocktailModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import { rateCocktail } from '../../services/AccountService';
 import logger from '../../services/Logger';
 import { RateCocktailRs } from '../../api/accountsApi';
+import { CocktailModel } from '../../api/cocktailsApi';
 
 interface CocktailRatingDialogProps {
     open: boolean;

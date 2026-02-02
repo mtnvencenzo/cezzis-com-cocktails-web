@@ -1,4 +1,5 @@
-import { CocktailRs, CocktailsApiClient, CocktailIngredientFiltersRs } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailRs, CocktailIngredientFiltersRs, Configuration, CocktailsApi } from '../api/cocktailsApi';
+import { getWindowEnv } from '../utils/envConfig';
 import LocalStorageService from './LocalStorageService';
 import logger from './Logger';
 
@@ -6,8 +7,18 @@ const getCocktail = async (id: string): Promise<CocktailRs | undefined> => {
     let result: CocktailRs | undefined;
 
     try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        result = await cocktailsApiClient.getCocktail(id, undefined);
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_COCKTAILS_API_URL
+        });
+
+        const cocktailsApiClient = new CocktailsApi(config);
+        result = await cocktailsApiClient.getCocktail(
+            {
+                id,
+                X_Key: getWindowEnv().VITE_COCKTAILS_API_SUBSCRIPTION_KEY
+            },
+            undefined
+        );
         return result;
     } catch (e: unknown) {
         logger.logException('Failed to retrieve cocktail', e as Error);
@@ -24,8 +35,14 @@ const getCocktailsSearchFilters = async (): Promise<CocktailIngredientFiltersRs 
     }
 
     try {
-        const cocktailsApiClient = new CocktailsApiClient();
-        const results = await cocktailsApiClient.getCocktailIngredientFilters(undefined);
+        const config = new Configuration({
+            basePath: getWindowEnv().VITE_COCKTAILS_API_URL
+        });
+
+        const cocktailsApiClient = new CocktailsApi(config);
+        const results = await cocktailsApiClient.getCocktailIngredientFilters({
+            X_Key: getWindowEnv().VITE_COCKTAILS_API_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             localStorageService.SetCocktailsSearchFilters(results);

@@ -12,10 +12,6 @@ const searchCocktails = async (freeText: string, skip: number, take: number): Pr
     const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
 
     try {
-        const config = new Configuration({
-            basePath: getWindowEnv().VITE_AISEARCH_API_URL
-        });
-
         const requestParameters: SearchV1CocktailsSearchGetRequest = {
             freetext: freeText,
             skip,
@@ -26,8 +22,13 @@ const searchCocktails = async (freeText: string, skip: number, take: number): Pr
             m_ex: false
         };
 
-        const cocktailsApiClient = new DefaultApi(config);
-        const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
+        const aisearchApiClient = new DefaultApi(
+            new Configuration({
+                basePath: getWindowEnv().VITE_AISEARCH_API_URL
+            })
+        );
+
+        const results = await aisearchApiClient.searchV1CocktailsSearchGet(requestParameters);
 
         return results;
     } catch (e: unknown) {
@@ -46,11 +47,11 @@ const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSe
     }
 
     try {
-        const config = new Configuration({
-            basePath: getWindowEnv().VITE_AISEARCH_API_URL
-        });
-
-        const cocktailsApiClient = new DefaultApi(config);
+        const aisearchApiClient = new DefaultApi(
+            new Configuration({
+                basePath: getWindowEnv().VITE_AISEARCH_API_URL
+            })
+        );
 
         const requestParameters = {
             freetext: '',
@@ -62,7 +63,7 @@ const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSe
             m_ex: false
         };
 
-        const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
+        const results = await aisearchApiClient.searchV1CocktailsSearchGet(requestParameters);
 
         if (results) {
             localStorageService.SetCocktailListRequestData(results, skip, take);
@@ -77,11 +78,11 @@ const getCocktailsList = async (skip: number, take: number): Promise<CocktailsSe
 
 const getCocktailFavorites = async (skip: number, take: number, matches: string[] | undefined, matchExclusive: boolean = false): Promise<CocktailsSearchRs | undefined> => {
     try {
-        const config = new Configuration({
-            basePath: getWindowEnv().VITE_AISEARCH_API_URL
-        });
-
-        const cocktailsApiClient = new DefaultApi(config);
+        const aisearchApiClient = new DefaultApi(
+            new Configuration({
+                basePath: getWindowEnv().VITE_AISEARCH_API_URL
+            })
+        );
 
         const requestParameters = {
             freetext: '',
@@ -93,7 +94,7 @@ const getCocktailFavorites = async (skip: number, take: number, matches: string[
             m_ex: matchExclusive
         };
 
-        const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
+        const results = await aisearchApiClient.searchV1CocktailsSearchGet(requestParameters);
         return results;
     } catch (e: unknown) {
         logger.logException('Failed to retrieve cocktail favorites', e as Error);
@@ -103,11 +104,11 @@ const getCocktailFavorites = async (skip: number, take: number, matches: string[
 
 const getCocktailsWithRatings = async (skip: number, take: number, matches: string[] | undefined, matchExclusive: boolean = false): Promise<CocktailsSearchRs | undefined> => {
     try {
-        const config = new Configuration({
-            basePath: getWindowEnv().VITE_AISEARCH_API_URL
-        });
-
-        const cocktailsApiClient = new DefaultApi(config);
+        const aisearchApiClient = new DefaultApi(
+            new Configuration({
+                basePath: getWindowEnv().VITE_AISEARCH_API_URL
+            })
+        );
 
         const requestParameters = {
             freetext: '',
@@ -119,7 +120,7 @@ const getCocktailsWithRatings = async (skip: number, take: number, matches: stri
             m_ex: matchExclusive
         };
 
-        const results = await cocktailsApiClient.searchV1CocktailsSearchGet(requestParameters);
+        const results = await aisearchApiClient.searchV1CocktailsSearchGet(requestParameters);
         return results;
     } catch (e: unknown) {
         logger.logException('Failed to retrieve cocktails with ratings', e as Error);
@@ -144,11 +145,11 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutpu
     let results: CocktailModelOutput[] = [];
 
     try {
-        const config = new Configuration({
-            basePath: getWindowEnv().VITE_AISEARCH_API_URL
-        });
-
-        const cocktailsApiClient = new DefaultApi(config);
+        const aisearchApiClient = new DefaultApi(
+            new Configuration({
+                basePath: getWindowEnv().VITE_AISEARCH_API_URL
+            })
+        );
 
         const requestParameters = {
             freetext: freeText,
@@ -157,7 +158,7 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutpu
             fi: []
         };
 
-        const rs = await cocktailsApiClient.typeaheadV1CocktailsTypeaheadGet(requestParameters);
+        const rs = await aisearchApiClient.typeaheadV1CocktailsTypeaheadGet(requestParameters);
         results = rs.items ?? [];
 
         // Only caching the initial , unfiltered search results for now

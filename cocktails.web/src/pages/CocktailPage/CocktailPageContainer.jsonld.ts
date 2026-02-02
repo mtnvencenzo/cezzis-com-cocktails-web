@@ -1,4 +1,4 @@
-import { CocktailModel } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailModel } from '../../api/cocktailsApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 

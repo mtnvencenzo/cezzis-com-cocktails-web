@@ -1,5 +1,5 @@
 import { CocktailsSearchRs, CocktailModelOutput } from '../api/aisearchApi';
-import { CocktailIngredientFiltersRs } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailIngredientFiltersRs } from '../api/cocktailsApi';
 import StorageCache from './StorageCache';
 
 /* eslint-disable class-methods-use-this */

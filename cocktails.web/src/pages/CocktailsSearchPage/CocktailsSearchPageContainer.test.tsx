@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import CocktailsSearchPageContainer from './CocktailsSearchPageContainer';
-import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';

@@ -6,7 +6,7 @@ import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { getPrivacyPolicy } from '../../services/LegalService';
-import { LegalDocumentRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { LegalDocumentRs } from '../../api/cocktailsApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import { setMetaItemProp } from '../../utils/headUtil';

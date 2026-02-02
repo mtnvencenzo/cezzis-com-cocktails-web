@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import AccountPrivacyPolicyPage from './AccountPrivacyPolicyPage';
-import { LegalDocumentRs, DocumentFormat } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../../../tests/setup';
 import GlobalContext from '../../../../components/GlobalContexts';
+import { DocumentFormat, LegalDocumentRs } from '../../../../api/cocktailsApi';
 
 describe('Account Privacy Policy Page', () => {
     test('renders account privacy policy page with text', async () => {

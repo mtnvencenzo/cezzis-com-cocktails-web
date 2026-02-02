@@ -1,0 +1,17 @@
+generatorName: typescript-fetch
+outputDir: ./src/api/cocktailsApi
+inputSpec: http://localhost:7177/scalar/v1/openapi.json
+additionalProperties:
+  stringEnums: true
+  ensureUniqueParams: true
+  enumNameSuffix: Enum
+  enumPropertyNaming: PascalCase
+  fileNaming: camelCase
+  modelPropertyNaming: original
+  paramNaming: original
+  prefixParameterInterfaces: false
+  prependFormOrBodyParameters: false
+  sortModelPropertiesByRequiredFlag: true
+  sortParamsByRequiredFlag: true
+  useSingleRequestParameter: true
+  withInterfaces: true

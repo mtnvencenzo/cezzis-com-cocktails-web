@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import PrivacyPolicyPageContainer from './PrivacyPolicyPageContainer';
-import { LegalDocumentRs, DocumentFormat } from '../../api/cocktailsApi/cocktailsApiClient';
+import { LegalDocumentRs, DocumentFormat } from '../../api/cocktailsApi';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
 

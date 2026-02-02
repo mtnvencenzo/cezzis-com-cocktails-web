@@ -12,13 +12,13 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import { getCocktailsSearchFilters } from '../../services/CocktailsService';
-import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import CocktailFiltersLocalStorageService from '../../services/CocktailFiltersLocalStorageService';
 import CocktailIngredientFilterChipGroup from '../../molecules/CocktailIngredientFilterChipGroup/CocktailIngredientFilterChipGroup';
 import './CocktailFiltersDialog.css';
 import { useCocktailSearch } from '../../components/CocktailSearchContext';
 import { useCocktailFiltering } from '../../components/CocktailFilterContext';
 import CocktailFiltersResetButton from '../../atoms/CocktailFiltersResetButton/CocktailFiltersResetButton';
+import { CocktailIngredientFiltersRs } from '../../api/cocktailsApi';
 
 interface CocktailFiltersDialogProps {
     testId: string;
