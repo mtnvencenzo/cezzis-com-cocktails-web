@@ -7,7 +7,7 @@ import './CocktailPageContainer.css';
 import { Box } from '@mui/material';
 import { SpanStatusCode } from '@opentelemetry/api';
 import { getCocktail } from '../../services/CocktailsService';
-import { CocktailRs } from '../../api/cocktailsApi/cocktailsApiClient';
+import { CocktailRs } from '../../api/cocktailsApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import jsonld from './CocktailPageContainer.jsonld';

@@ -7,10 +7,10 @@ import { http, HttpResponse } from 'msw';
 import CocktailFiltersDialog from './CocktailFiltersDialog';
 import { useCocktailSearch } from '../../components/CocktailSearchContext';
 import { server } from '../../../tests/setup';
-import { IngredientFilterModel, CocktailIngredientFiltersRs } from '../../api/cocktailsApi/cocktailsApiClient';
 import { useCocktailFiltering } from '../../components/CocktailFilterContext';
 import CocktailFiltersLocalStorageService from '../../services/CocktailFiltersLocalStorageService';
 import GlobalContext from '../../components/GlobalContexts';
+import { CocktailIngredientFiltersRs, IngredientFilterModel } from '../../api/cocktailsApi';
 
 describe('Cocktail Filters Dialog', () => {
     beforeEach(() => {

@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import AccountTermsOfServicePage from './AccountTermsOfServicePage';
-import { LegalDocumentRs, DocumentFormat } from '../../../../api/cocktailsApi/cocktailsApiClient';
 import { server } from '../../../../../tests/setup';
 import GlobalContext from '../../../../components/GlobalContexts';
+import { DocumentFormat, LegalDocumentRs } from '../../../../api/cocktailsApi';
 
 describe('Account Terms Of Service Page', () => {
     test('renders account terms of service page with text', async () => {

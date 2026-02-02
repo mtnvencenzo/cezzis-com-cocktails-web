@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { IngredientFilterModel } from '../../api/cocktailsApi/cocktailsApiClient';
 import CocktailIngredientFilterChip from '../../atoms/CocktailIngredientFilterChip/CocktailIngredientFilterChip';
 import CocktailFiltersLocalStorageService from '../../services/CocktailFiltersLocalStorageService';
+import { IngredientFilterModel } from '../../api/cocktailsApi';
 
 interface CocktailIngredientFilterChipGroupProps {
     title: string;

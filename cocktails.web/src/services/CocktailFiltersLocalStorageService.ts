@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Dictionary } from 'lodash';
-import { CocktailIngredientFiltersRs } from '../api/cocktailsApi/cocktailsApiClient';
+import { CocktailIngredientFiltersRs } from '../api/cocktailsApi';
 import LocalStorageService from './LocalStorageService';
 
 export interface CocktailFiltersStorageItem {

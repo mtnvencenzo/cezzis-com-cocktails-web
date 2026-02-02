@@ -15,7 +15,7 @@ import {
     UofMTypeModel
 } from '../src/api/aisearchApi/models';
 import { AccountCocktailRatingsModel, AccountCocktailRatingsRs, AccountOwnedProfileRs, CocktailUpdatedNotificationModel, DisplayThemeModel } from '../src/api/accountsApi';
-import { CocktailModel, IngredientApplicationModel } from '../src/api/cocktailsApi/cocktailsApiClient';
+import { CocktailModel, IngredientApplicationModel } from '../src/api/cocktailsApi';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
