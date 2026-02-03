@@ -1,5 +1,7 @@
 apis/defaultApi.ts
+apis/embeddingsApi.ts
 apis/index.ts
+apis/semanticSearchApi.ts
 docs/CocktailDataIncludeModel.md
 docs/CocktailDescriptionChunk.md
 docs/CocktailEmbeddingRq.md
@@ -9,6 +11,7 @@ docs/CocktailSearchStatistics.md
 docs/CocktailVectorSearchResult.md
 docs/CocktailsSearchRs.md
 docs/DefaultApi.md
+docs/EmbeddingsApi.md
 docs/GlasswareTypeModel.md
 docs/HealthCheckRs.md
 docs/IngredientApplicationTypeModel.md
@@ -17,6 +20,7 @@ docs/IngredientRequirementTypeModel.md
 docs/IngredientTypeModel.md
 docs/PreparationTypeModel.md
 docs/ProblemDetails.md
+docs/SemanticSearchApi.md
 docs/UofMTypeModel.md
 index.ts
 models/cocktailDataIncludeModel.ts

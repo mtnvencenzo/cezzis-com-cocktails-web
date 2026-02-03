@@ -62,7 +62,9 @@ const getOwnedAccountProfile = async (reload: boolean = false): Promise<AccountO
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read]);
-        const results = await accountsApiClient.loginAccountOwnedProfileV1AccountsOwnedProfilePost();
+        const results = await accountsApiClient.getV1AccountsOwnedProfile({
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -79,7 +81,9 @@ const loginOwnedAccountProfile = async (): Promise<AccountOwnedProfileRs | undef
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.loginAccountOwnedProfileV1AccountsOwnedProfilePost();
+        const results = await accountsApiClient.postV1AccountsOwnedProfile({
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -94,7 +98,10 @@ const loginOwnedAccountProfile = async (): Promise<AccountOwnedProfileRs | undef
 const uploadProfileImage = async (file: File): Promise<UploadProfileImageRs | undefined> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const result = await accountsApiClient.uploadProfileImageV1AccountsOwnedProfileImagePost({ file });
+        const result = await accountsApiClient.postV1AccountsOwnedProfileImage({
+            file,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
         return result as UploadProfileImageRs;
     } catch (e: unknown) {
         throw new Error(getErrorMessage(e));
@@ -106,7 +113,10 @@ const updateOwnedAccountProfile = async (request: UpdateAccountOwnedProfileRq): 
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.updateAccountOwnedProfileV1AccountsOwnedProfilePut({ UpdateAccountOwnedProfileRq: request });
+        const results = await accountsApiClient.putV1AccountsOwnedProfile({
+            UpdateAccountOwnedProfileRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -123,7 +133,10 @@ const changeOwnedAccountProfileEmail = async (request: ChangeAccountOwnedEmailRq
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.changeAccountOwnedEmailV1AccountsOwnedProfileEmailPut({ ChangeAccountOwnedEmailRq: request });
+        const results = await accountsApiClient.putV1AccountsOwnedProfileEmail({
+            ChangeAccountOwnedEmailRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -138,7 +151,10 @@ const changeOwnedAccountProfileEmail = async (request: ChangeAccountOwnedEmailRq
 const changeOwnedAccountProfileUsername = async (request: ChangeAccountOwnedUsernameRq): Promise<void> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        await accountsApiClient.changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePut({ ChangeAccountOwnedUsernameRq: request });
+        await accountsApiClient.putV1AccountsOwnedProfileUsername({
+            ChangeAccountOwnedUsernameRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
     } catch (e: unknown) {
         throw new Error(getErrorMessage(e));
     }
@@ -147,7 +163,10 @@ const changeOwnedAccountProfileUsername = async (request: ChangeAccountOwnedUser
 const changeOwnedAccountProfilePassword = async (request: ChangeAccountOwnedPasswordRq): Promise<void> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        await accountsApiClient.changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPut({ ChangeAccountOwnedPasswordRq: request });
+        await accountsApiClient.putV1AccountsOwnedProfilePassword({
+            ChangeAccountOwnedPasswordRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
     } catch (e: unknown) {
         throw new Error(getErrorMessage(e));
     }
@@ -158,7 +177,10 @@ const updateOwnedAccountAccessibilitySettings = async (request: UpdateAccountOwn
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPut({ UpdateAccountOwnedAccessibilitySettingsRq: request });
+        const results = await accountsApiClient.putV1AccountsOwnedProfileAccessibility({
+            UpdateAccountOwnedAccessibilitySettingsRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -175,7 +197,10 @@ const manageOwnedAccountFavoriteCocktails = async (request: ManageFavoriteCockta
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPut({ ManageFavoriteCocktailsRq: request });
+        const results = await accountsApiClient.putV1AccountsOwnedProfileCocktailsFavorites({
+            ManageFavoriteCocktailsRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);
@@ -200,7 +225,9 @@ const getAccountCocktailRatings = async (reload: boolean = false): Promise<Accou
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read]);
-        const results = await accountsApiClient.getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGet();
+        const results = await accountsApiClient.getV1AccountsOwnedProfileCocktailsRatings({
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountCocktailRatingsRequestData(results);
@@ -215,7 +242,10 @@ const getAccountCocktailRatings = async (reload: boolean = false): Promise<Accou
 const rateCocktail = async (request: RateCocktailRq): Promise<RateCocktailRs | undefined> => {
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const rs = await accountsApiClient.rateCocktailV1AccountsOwnedProfileCocktailsRatingsPost({ RateCocktailRq: request });
+        const rs = await accountsApiClient.postV1AccountsOwnedProfileCocktailsRatings({
+            RateCocktailRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         // reload the account cocktail ratings
         await getAccountCocktailRatings(true);
@@ -234,7 +264,7 @@ const sendRecommendation = async (name: string, ingredients: string, directions:
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
 
-        await accountsApiClient.sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPost({
+        await accountsApiClient.postV1AccountsOwnedProfileCocktailsRecommendations({
             CocktailRecommendationRq: {
                 recommendation: {
                     name,
@@ -242,7 +272,8 @@ const sendRecommendation = async (name: string, ingredients: string, directions:
                     directions
                 },
                 verificationCode: token
-            }
+            },
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
         });
     } catch (e: unknown) {
         throw new Error(getErrorMessage(e));
@@ -254,7 +285,10 @@ const updateOwnedAccountNotificationsSettings = async (request: UpdateAccountOwn
 
     try {
         const accountsApiClient = createAccountsApiClient([AccountScopes.read, AccountScopes.write]);
-        const results = await accountsApiClient.updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPut({ UpdateAccountOwnedNotificationSettingsRq: request });
+        const results = await accountsApiClient.putV1AccountsOwnedProfileNotifications({
+            UpdateAccountOwnedNotificationSettingsRq: request,
+            X_Key: getWindowEnv().VITE_ACCOUNTS_APIM_SUBSCRIPTION_KEY
+        });
 
         if (results) {
             sessionStorageService.SetOwnedAccountProfileRequestData(results);

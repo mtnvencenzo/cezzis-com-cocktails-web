@@ -15,45 +15,15 @@
 
 import * as runtime from '../runtime';
 import type {
-  CocktailDataIncludeModel,
-  CocktailEmbeddingRq,
-  CocktailsSearchRs,
   HealthCheckRs,
   ProblemDetails,
 } from '../models/index';
 import {
-    CocktailDataIncludeModelFromJSON,
-    CocktailDataIncludeModelToJSON,
-    CocktailEmbeddingRqFromJSON,
-    CocktailEmbeddingRqToJSON,
-    CocktailsSearchRsFromJSON,
-    CocktailsSearchRsToJSON,
     HealthCheckRsFromJSON,
     HealthCheckRsToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
 } from '../models/index';
-
-export interface EmbedV1CocktailsEmbeddingsPutRequest {
-    CocktailEmbeddingRq: CocktailEmbeddingRq;
-}
-
-export interface SearchV1CocktailsSearchGetRequest {
-    freetext?: string | null;
-    skip?: number | null;
-    take?: number | null;
-    m?: Array<string> | null;
-    m_ex?: boolean | null;
-    inc?: Array<CocktailDataIncludeModel> | null;
-    fi?: Array<string> | null;
-}
-
-export interface TypeaheadV1CocktailsTypeaheadGetRequest {
-    freetext?: string | null;
-    skip?: number | null;
-    take?: number | null;
-    fi?: Array<string> | null;
-}
 
 /**
  * DefaultApi - interface
@@ -62,22 +32,6 @@ export interface TypeaheadV1CocktailsTypeaheadGetRequest {
  * @interface DefaultApiInterface
  */
 export interface DefaultApiInterface {
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * @summary Embed
-     * @param {CocktailEmbeddingRq} CocktailEmbeddingRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    embedV1CocktailsEmbeddingsPutRaw(requestParameters: EmbedV1CocktailsEmbeddingsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Embed
-     */
-    embedV1CocktailsEmbeddingsPut(requestParameters: EmbedV1CocktailsEmbeddingsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
-
     /**
      * Performs a health check of the API.
      * @summary Health Check
@@ -93,98 +47,12 @@ export interface DefaultApiInterface {
      */
     healthCheckV1HealthGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HealthCheckRs>;
 
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * @summary Search
-     * @param {string} [freetext] The free text search term to match against
-     * @param {number} [skip] The number of cocktail recipes to skip from the paged response
-     * @param {number} [take] The number of cocktail recipes to take for pagination
-     * @param {Array<string>} [m] A list of cocktails that can be included in the list
-     * @param {boolean} [m_ex] Whether or not the supplied matches must be exclusively returned
-     * @param {Array<CocktailDataIncludeModel>} [inc] The list of extension objects to include for each cocktail recipe
-     * @param {Array<string>} [fi] An optional list of filters to use when quering the cocktail recipes
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    searchV1CocktailsSearchGetRaw(requestParameters: SearchV1CocktailsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>>;
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Search
-     */
-    searchV1CocktailsSearchGet(requestParameters: SearchV1CocktailsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs>;
-
-    /**
-     * Performs a typeahead search for cocktails based on a free text query.
-     * @summary Typeahead
-     * @param {string} [freetext] The free text search term to match against
-     * @param {number} [skip] The number of cocktail recipes to skip from the paged response
-     * @param {number} [take] The number of cocktail recipes to take for pagination
-     * @param {Array<string>} [fi] An optional list of filters to use when quering the cocktail recipes
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    typeaheadV1CocktailsTypeaheadGetRaw(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>>;
-
-    /**
-     * Performs a typeahead search for cocktails based on a free text query.
-     * Typeahead
-     */
-    typeaheadV1CocktailsTypeaheadGet(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs>;
-
 }
 
 /**
  * 
  */
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Embed
-     */
-    async embedV1CocktailsEmbeddingsPutRaw(requestParameters: EmbedV1CocktailsEmbeddingsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['CocktailEmbeddingRq'] == null) {
-            throw new runtime.RequiredError(
-                'CocktailEmbeddingRq',
-                'Required parameter "CocktailEmbeddingRq" was null or undefined when calling embedV1CocktailsEmbeddingsPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("auth0", ["write:embeddings"]);
-        }
-
-
-        let urlPath = `/v1/cocktails/embeddings`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: CocktailEmbeddingRqToJSON(requestParameters['CocktailEmbeddingRq']),
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Embed
-     */
-    async embedV1CocktailsEmbeddingsPut(requestParameters: EmbedV1CocktailsEmbeddingsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.embedV1CocktailsEmbeddingsPutRaw(requestParameters, initOverrides);
-    }
 
     /**
      * Performs a health check of the API.
@@ -214,112 +82,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async healthCheckV1HealthGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HealthCheckRs> {
         const response = await this.healthCheckV1HealthGetRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Search
-     */
-    async searchV1CocktailsSearchGetRaw(requestParameters: SearchV1CocktailsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>> {
-        const queryParameters: any = {};
-
-        if (requestParameters['freetext'] != null) {
-            queryParameters['freetext'] = requestParameters['freetext'];
-        }
-
-        if (requestParameters['skip'] != null) {
-            queryParameters['skip'] = requestParameters['skip'];
-        }
-
-        if (requestParameters['take'] != null) {
-            queryParameters['take'] = requestParameters['take'];
-        }
-
-        if (requestParameters['m'] != null) {
-            queryParameters['m'] = requestParameters['m'];
-        }
-
-        if (requestParameters['m_ex'] != null) {
-            queryParameters['m_ex'] = requestParameters['m_ex'];
-        }
-
-        if (requestParameters['inc'] != null) {
-            queryParameters['inc'] = requestParameters['inc'];
-        }
-
-        if (requestParameters['fi'] != null) {
-            queryParameters['fi'] = requestParameters['fi'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        let urlPath = `/v1/cocktails/search`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CocktailsSearchRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Performs a semantic search for cocktails based on a free text query.
-     * Search
-     */
-    async searchV1CocktailsSearchGet(requestParameters: SearchV1CocktailsSearchGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs> {
-        const response = await this.searchV1CocktailsSearchGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Performs a typeahead search for cocktails based on a free text query.
-     * Typeahead
-     */
-    async typeaheadV1CocktailsTypeaheadGetRaw(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CocktailsSearchRs>> {
-        const queryParameters: any = {};
-
-        if (requestParameters['freetext'] != null) {
-            queryParameters['freetext'] = requestParameters['freetext'];
-        }
-
-        if (requestParameters['skip'] != null) {
-            queryParameters['skip'] = requestParameters['skip'];
-        }
-
-        if (requestParameters['take'] != null) {
-            queryParameters['take'] = requestParameters['take'];
-        }
-
-        if (requestParameters['fi'] != null) {
-            queryParameters['fi'] = requestParameters['fi'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        let urlPath = `/v1/cocktails/typeahead`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CocktailsSearchRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Performs a typeahead search for cocktails based on a free text query.
-     * Typeahead
-     */
-    async typeaheadV1CocktailsTypeaheadGet(requestParameters: TypeaheadV1CocktailsTypeaheadGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CocktailsSearchRs> {
-        const response = await this.typeaheadV1CocktailsTypeaheadGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

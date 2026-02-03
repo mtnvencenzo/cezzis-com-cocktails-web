@@ -61,44 +61,66 @@ import {
     UploadProfileImageRsToJSON,
 } from '../models/index';
 
-export interface ChangeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRequest {
-    ChangeAccountOwnedEmailRq: ChangeAccountOwnedEmailRq;
+export interface GetV1AccountsOwnedProfileRequest {
+    X_Key: string;
 }
 
-export interface ChangeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRequest {
-    ChangeAccountOwnedPasswordRq: ChangeAccountOwnedPasswordRq;
+export interface GetV1AccountsOwnedProfileCocktailsRatingsRequest {
+    X_Key: string;
 }
 
-export interface ChangeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRequest {
-    ChangeAccountOwnedUsernameRq: ChangeAccountOwnedUsernameRq;
+export interface PostV1AccountsOwnedProfileRequest {
+    X_Key: string;
 }
 
-export interface ManageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRequest {
-    ManageFavoriteCocktailsRq: ManageFavoriteCocktailsRq;
-}
-
-export interface RateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRequest {
+export interface PostV1AccountsOwnedProfileCocktailsRatingsRequest {
+    X_Key: string;
     RateCocktailRq: RateCocktailRq;
 }
 
-export interface SendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRequest {
+export interface PostV1AccountsOwnedProfileCocktailsRecommendationsRequest {
+    X_Key: string;
     CocktailRecommendationRq: CocktailRecommendationRq;
 }
 
-export interface UpdateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRequest {
-    UpdateAccountOwnedAccessibilitySettingsRq: UpdateAccountOwnedAccessibilitySettingsRq;
+export interface PostV1AccountsOwnedProfileImageRequest {
+    X_Key: string;
+    file: Blob;
 }
 
-export interface UpdateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRequest {
-    UpdateAccountOwnedNotificationSettingsRq: UpdateAccountOwnedNotificationSettingsRq;
-}
-
-export interface UpdateAccountOwnedProfileV1AccountsOwnedProfilePutRequest {
+export interface PutV1AccountsOwnedProfileRequest {
+    X_Key: string;
     UpdateAccountOwnedProfileRq: UpdateAccountOwnedProfileRq;
 }
 
-export interface UploadProfileImageV1AccountsOwnedProfileImagePostRequest {
-    file: Blob;
+export interface PutV1AccountsOwnedProfileAccessibilityRequest {
+    X_Key: string;
+    UpdateAccountOwnedAccessibilitySettingsRq: UpdateAccountOwnedAccessibilitySettingsRq;
+}
+
+export interface PutV1AccountsOwnedProfileCocktailsFavoritesRequest {
+    X_Key: string;
+    ManageFavoriteCocktailsRq: ManageFavoriteCocktailsRq;
+}
+
+export interface PutV1AccountsOwnedProfileEmailRequest {
+    X_Key: string;
+    ChangeAccountOwnedEmailRq: ChangeAccountOwnedEmailRq;
+}
+
+export interface PutV1AccountsOwnedProfileNotificationsRequest {
+    X_Key: string;
+    UpdateAccountOwnedNotificationSettingsRq: UpdateAccountOwnedNotificationSettingsRq;
+}
+
+export interface PutV1AccountsOwnedProfilePasswordRequest {
+    X_Key: string;
+    ChangeAccountOwnedPasswordRq: ChangeAccountOwnedPasswordRq;
+}
+
+export interface PutV1AccountsOwnedProfileUsernameRequest {
+    X_Key: string;
+    ChangeAccountOwnedUsernameRq: ChangeAccountOwnedUsernameRq;
 }
 
 /**
@@ -109,209 +131,222 @@ export interface UploadProfileImageV1AccountsOwnedProfileImagePostRequest {
  */
 export interface AccountsApiInterface {
     /**
-     * Updates the account profile email address for the user represented within the authenticated bearer token
-     * @summary Change Account Owned Email
-     * @param {ChangeAccountOwnedEmailRq} ChangeAccountOwnedEmailRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    changeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRaw(requestParameters: ChangeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
-
-    /**
-     * Updates the account profile email address for the user represented within the authenticated bearer token
-     * Change Account Owned Email
-     */
-    changeAccountOwnedEmailV1AccountsOwnedProfileEmailPut(requestParameters: ChangeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
-
-    /**
-     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
-     * @summary Change Account Owned Password
-     * @param {ChangeAccountOwnedPasswordRq} ChangeAccountOwnedPasswordRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRaw(requestParameters: ChangeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
-
-    /**
-     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Password
-     */
-    changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPut(requestParameters: ChangeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
-
-    /**
-     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
-     * @summary Change Account Owned Username
-     * @param {ChangeAccountOwnedUsernameRq} ChangeAccountOwnedUsernameRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRaw(requestParameters: ChangeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
-
-    /**
-     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Username
-     */
-    changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePut(requestParameters: ChangeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
-
-    /**
      * Gets the account profile for the user represented within the authenticated bearer token
      * @summary Get Account Owned Profile
+     * @param {string} X_Key The API gateway subscription key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getAccountOwnedProfileV1AccountsOwnedProfileGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+    getV1AccountsOwnedProfileRaw(requestParameters: GetV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
 
     /**
      * Gets the account profile for the user represented within the authenticated bearer token
      * Get Account Owned Profile
      */
-    getAccountOwnedProfileV1AccountsOwnedProfileGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+    getV1AccountsOwnedProfile(requestParameters: GetV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
 
     /**
      * Gets the account cocktail ratings for the account profile user represented within the authenticated bearer token
      * @summary Get Cocktail Ratings
+     * @param {string} X_Key The API gateway subscription key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountCocktailRatingsRs>>;
+    getV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters: GetV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountCocktailRatingsRs>>;
 
     /**
      * Gets the account cocktail ratings for the account profile user represented within the authenticated bearer token
      * Get Cocktail Ratings
      */
-    getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountCocktailRatingsRs>;
+    getV1AccountsOwnedProfileCocktailsRatings(requestParameters: GetV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountCocktailRatingsRs>;
 
     /**
      * Logs in the account profile for the user represented within the authenticated bearer token
      * @summary Login Account Owned Profile
+     * @param {string} X_Key The API gateway subscription key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    loginAccountOwnedProfileV1AccountsOwnedProfilePostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+    postV1AccountsOwnedProfileRaw(requestParameters: PostV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
 
     /**
      * Logs in the account profile for the user represented within the authenticated bearer token
      * Login Account Owned Profile
      */
-    loginAccountOwnedProfileV1AccountsOwnedProfilePost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
-
-    /**
-     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
-     * @summary Manage Favorite Cocktails
-     * @param {ManageFavoriteCocktailsRq} ManageFavoriteCocktailsRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRaw(requestParameters: ManageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
-
-    /**
-     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
-     * Manage Favorite Cocktails
-     */
-    manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPut(requestParameters: ManageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+    postV1AccountsOwnedProfile(requestParameters: PostV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
 
     /**
      * Rates a cocktail for the account profile user represented within the authenticated bearer token
      * @summary Rate Cocktail
+     * @param {string} X_Key The API gateway subscription key
      * @param {RateCocktailRq} RateCocktailRq 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    rateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRaw(requestParameters: RateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+    postV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters: PostV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
 
     /**
      * Rates a cocktail for the account profile user represented within the authenticated bearer token
      * Rate Cocktail
      */
-    rateCocktailV1AccountsOwnedProfileCocktailsRatingsPost(requestParameters: RateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
+    postV1AccountsOwnedProfileCocktailsRatings(requestParameters: PostV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
 
     /**
      * Sends a cocktail recommendation for review
      * @summary Send Cocktail Recommendation
+     * @param {string} X_Key The API gateway subscription key
      * @param {CocktailRecommendationRq} CocktailRecommendationRq 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRaw(requestParameters: SendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+    postV1AccountsOwnedProfileCocktailsRecommendationsRaw(requestParameters: PostV1AccountsOwnedProfileCocktailsRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
 
     /**
      * Sends a cocktail recommendation for review
      * Send Cocktail Recommendation
      */
-    sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPost(requestParameters: SendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
-
-    /**
-     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
-     * @summary Update Account Owned Accessibility Settings
-     * @param {UpdateAccountOwnedAccessibilitySettingsRq} UpdateAccountOwnedAccessibilitySettingsRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRaw(requestParameters: UpdateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
-
-    /**
-     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
-     * Update Account Owned Accessibility Settings
-     */
-    updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPut(requestParameters: UpdateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
-
-    /**
-     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
-     * @summary Update Account Owned Notification Settings
-     * @param {UpdateAccountOwnedNotificationSettingsRq} UpdateAccountOwnedNotificationSettingsRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRaw(requestParameters: UpdateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
-
-    /**
-     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
-     * Update Account Owned Notification Settings
-     */
-    updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPut(requestParameters: UpdateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
-
-    /**
-     * Updates the account profile for the user represented within the authenticated bearer token
-     * @summary Update Account Owned Profile
-     * @param {UpdateAccountOwnedProfileRq} UpdateAccountOwnedProfileRq 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    updateAccountOwnedProfileV1AccountsOwnedProfilePutRaw(requestParameters: UpdateAccountOwnedProfileV1AccountsOwnedProfilePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
-
-    /**
-     * Updates the account profile for the user represented within the authenticated bearer token
-     * Update Account Owned Profile
-     */
-    updateAccountOwnedProfileV1AccountsOwnedProfilePut(requestParameters: UpdateAccountOwnedProfileV1AccountsOwnedProfilePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+    postV1AccountsOwnedProfileCocktailsRecommendations(requestParameters: PostV1AccountsOwnedProfileCocktailsRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
 
     /**
      * Uploads an account profile image for the user represented within the authenticated bearer token
      * @summary Upload Profile Image
+     * @param {string} X_Key The API gateway subscription key
      * @param {Blob} file The profile image file to upload
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    uploadProfileImageV1AccountsOwnedProfileImagePostRaw(requestParameters: UploadProfileImageV1AccountsOwnedProfileImagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+    postV1AccountsOwnedProfileImageRaw(requestParameters: PostV1AccountsOwnedProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
 
     /**
      * Uploads an account profile image for the user represented within the authenticated bearer token
      * Upload Profile Image
      */
-    uploadProfileImageV1AccountsOwnedProfileImagePost(requestParameters: UploadProfileImageV1AccountsOwnedProfileImagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
+    postV1AccountsOwnedProfileImage(requestParameters: PostV1AccountsOwnedProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
+
+    /**
+     * Updates the account profile for the user represented within the authenticated bearer token
+     * @summary Update Account Owned Profile
+     * @param {string} X_Key The API gateway subscription key
+     * @param {UpdateAccountOwnedProfileRq} UpdateAccountOwnedProfileRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileRaw(requestParameters: PutV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+
+    /**
+     * Updates the account profile for the user represented within the authenticated bearer token
+     * Update Account Owned Profile
+     */
+    putV1AccountsOwnedProfile(requestParameters: PutV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+
+    /**
+     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
+     * @summary Update Account Owned Accessibility Settings
+     * @param {string} X_Key The API gateway subscription key
+     * @param {UpdateAccountOwnedAccessibilitySettingsRq} UpdateAccountOwnedAccessibilitySettingsRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileAccessibilityRaw(requestParameters: PutV1AccountsOwnedProfileAccessibilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+
+    /**
+     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
+     * Update Account Owned Accessibility Settings
+     */
+    putV1AccountsOwnedProfileAccessibility(requestParameters: PutV1AccountsOwnedProfileAccessibilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+
+    /**
+     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
+     * @summary Manage Favorite Cocktails
+     * @param {string} X_Key The API gateway subscription key
+     * @param {ManageFavoriteCocktailsRq} ManageFavoriteCocktailsRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileCocktailsFavoritesRaw(requestParameters: PutV1AccountsOwnedProfileCocktailsFavoritesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+
+    /**
+     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
+     * Manage Favorite Cocktails
+     */
+    putV1AccountsOwnedProfileCocktailsFavorites(requestParameters: PutV1AccountsOwnedProfileCocktailsFavoritesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+
+    /**
+     * Updates the account profile email address for the user represented within the authenticated bearer token
+     * @summary Change Account Owned Email
+     * @param {string} X_Key The API gateway subscription key
+     * @param {ChangeAccountOwnedEmailRq} ChangeAccountOwnedEmailRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileEmailRaw(requestParameters: PutV1AccountsOwnedProfileEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+
+    /**
+     * Updates the account profile email address for the user represented within the authenticated bearer token
+     * Change Account Owned Email
+     */
+    putV1AccountsOwnedProfileEmail(requestParameters: PutV1AccountsOwnedProfileEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+
+    /**
+     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
+     * @summary Update Account Owned Notification Settings
+     * @param {string} X_Key The API gateway subscription key
+     * @param {UpdateAccountOwnedNotificationSettingsRq} UpdateAccountOwnedNotificationSettingsRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileNotificationsRaw(requestParameters: PutV1AccountsOwnedProfileNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>>;
+
+    /**
+     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
+     * Update Account Owned Notification Settings
+     */
+    putV1AccountsOwnedProfileNotifications(requestParameters: PutV1AccountsOwnedProfileNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs>;
+
+    /**
+     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
+     * @summary Change Account Owned Password
+     * @param {string} X_Key The API gateway subscription key
+     * @param {ChangeAccountOwnedPasswordRq} ChangeAccountOwnedPasswordRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfilePasswordRaw(requestParameters: PutV1AccountsOwnedProfilePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+
+    /**
+     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Password
+     */
+    putV1AccountsOwnedProfilePassword(requestParameters: PutV1AccountsOwnedProfilePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
+
+    /**
+     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
+     * @summary Change Account Owned Username
+     * @param {string} X_Key The API gateway subscription key
+     * @param {ChangeAccountOwnedUsernameRq} ChangeAccountOwnedUsernameRq 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    putV1AccountsOwnedProfileUsernameRaw(requestParameters: PutV1AccountsOwnedProfileUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+
+    /**
+     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Username
+     */
+    putV1AccountsOwnedProfileUsername(requestParameters: PutV1AccountsOwnedProfileUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined >;
 
 }
 
@@ -321,158 +356,24 @@ export interface AccountsApiInterface {
 export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface {
 
     /**
-     * Updates the account profile email address for the user represented within the authenticated bearer token
-     * Change Account Owned Email
-     */
-    async changeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRaw(requestParameters: ChangeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
-        if (requestParameters['ChangeAccountOwnedEmailRq'] == null) {
-            throw new runtime.RequiredError(
-                'ChangeAccountOwnedEmailRq',
-                'Required parameter "ChangeAccountOwnedEmailRq" was null or undefined when calling changeAccountOwnedEmailV1AccountsOwnedProfileEmailPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/email`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: ChangeAccountOwnedEmailRqToJSON(requestParameters['ChangeAccountOwnedEmailRq']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Updates the account profile email address for the user represented within the authenticated bearer token
-     * Change Account Owned Email
-     */
-    async changeAccountOwnedEmailV1AccountsOwnedProfileEmailPut(requestParameters: ChangeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.changeAccountOwnedEmailV1AccountsOwnedProfileEmailPutRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Password
-     */
-    async changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRaw(requestParameters: ChangeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['ChangeAccountOwnedPasswordRq'] == null) {
-            throw new runtime.RequiredError(
-                'ChangeAccountOwnedPasswordRq',
-                'Required parameter "ChangeAccountOwnedPasswordRq" was null or undefined when calling changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/password`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: ChangeAccountOwnedPasswordRqToJSON(requestParameters['ChangeAccountOwnedPasswordRq']),
-        }, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Password
-     */
-    async changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPut(requestParameters: ChangeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
-        const response = await this.changeAccountOwnedPasswordV1AccountsOwnedProfilePasswordPutRaw(requestParameters, initOverrides);
-        switch (response.raw.status) {
-            case 200:
-                return await response.value();
-            case 204:
-                return null;
-            default:
-                return await response.value();
-        }
-    }
-
-    /**
-     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Username
-     */
-    async changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRaw(requestParameters: ChangeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['ChangeAccountOwnedUsernameRq'] == null) {
-            throw new runtime.RequiredError(
-                'ChangeAccountOwnedUsernameRq',
-                'Required parameter "ChangeAccountOwnedUsernameRq" was null or undefined when calling changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/username`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: ChangeAccountOwnedUsernameRqToJSON(requestParameters['ChangeAccountOwnedUsernameRq']),
-        }, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
-     * Change Account Owned Username
-     */
-    async changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePut(requestParameters: ChangeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
-        const response = await this.changeAccountOwnedUsernameV1AccountsOwnedProfileUsernamePutRaw(requestParameters, initOverrides);
-        switch (response.raw.status) {
-            case 200:
-                return await response.value();
-            case 204:
-                return null;
-            default:
-                return await response.value();
-        }
-    }
-
-    /**
      * Gets the account profile for the user represented within the authenticated bearer token
      * Get Account Owned Profile
      */
-    async getAccountOwnedProfileV1AccountsOwnedProfileGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+    async getV1AccountsOwnedProfileRaw(requestParameters: GetV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling getV1AccountsOwnedProfile().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
 
         let urlPath = `/v1/accounts/owned/profile`;
@@ -491,8 +392,8 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Gets the account profile for the user represented within the authenticated bearer token
      * Get Account Owned Profile
      */
-    async getAccountOwnedProfileV1AccountsOwnedProfileGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.getAccountOwnedProfileV1AccountsOwnedProfileGetRaw(initOverrides);
+    async getV1AccountsOwnedProfile(requestParameters: GetV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.getV1AccountsOwnedProfileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -500,10 +401,21 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Gets the account cocktail ratings for the account profile user represented within the authenticated bearer token
      * Get Cocktail Ratings
      */
-    async getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountCocktailRatingsRs>> {
+    async getV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters: GetV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountCocktailRatingsRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling getV1AccountsOwnedProfileCocktailsRatings().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
 
         let urlPath = `/v1/accounts/owned/profile/cocktails/ratings`;
@@ -522,8 +434,8 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Gets the account cocktail ratings for the account profile user represented within the authenticated bearer token
      * Get Cocktail Ratings
      */
-    async getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountCocktailRatingsRs> {
-        const response = await this.getCocktailRatingsV1AccountsOwnedProfileCocktailsRatingsGetRaw(initOverrides);
+    async getV1AccountsOwnedProfileCocktailsRatings(requestParameters: GetV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountCocktailRatingsRs> {
+        const response = await this.getV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -531,10 +443,21 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Logs in the account profile for the user represented within the authenticated bearer token
      * Login Account Owned Profile
      */
-    async loginAccountOwnedProfileV1AccountsOwnedProfilePostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+    async postV1AccountsOwnedProfileRaw(requestParameters: PostV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling postV1AccountsOwnedProfile().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
 
         let urlPath = `/v1/accounts/owned/profile`;
@@ -553,49 +476,8 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Logs in the account profile for the user represented within the authenticated bearer token
      * Login Account Owned Profile
      */
-    async loginAccountOwnedProfileV1AccountsOwnedProfilePost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.loginAccountOwnedProfileV1AccountsOwnedProfilePostRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
-     * Manage Favorite Cocktails
-     */
-    async manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRaw(requestParameters: ManageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
-        if (requestParameters['ManageFavoriteCocktailsRq'] == null) {
-            throw new runtime.RequiredError(
-                'ManageFavoriteCocktailsRq',
-                'Required parameter "ManageFavoriteCocktailsRq" was null or undefined when calling manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/cocktails/favorites`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: ManageFavoriteCocktailsRqToJSON(requestParameters['ManageFavoriteCocktailsRq']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
-     * Manage Favorite Cocktails
-     */
-    async manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPut(requestParameters: ManageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.manageFavoriteCocktailsV1AccountsOwnedProfileCocktailsFavoritesPutRaw(requestParameters, initOverrides);
+    async postV1AccountsOwnedProfile(requestParameters: PostV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.postV1AccountsOwnedProfileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -603,11 +485,18 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Rates a cocktail for the account profile user represented within the authenticated bearer token
      * Rate Cocktail
      */
-    async rateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRaw(requestParameters: RateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async postV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters: PostV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling postV1AccountsOwnedProfileCocktailsRatings().'
+            );
+        }
+
         if (requestParameters['RateCocktailRq'] == null) {
             throw new runtime.RequiredError(
                 'RateCocktailRq',
-                'Required parameter "RateCocktailRq" was null or undefined when calling rateCocktailV1AccountsOwnedProfileCocktailsRatingsPost().'
+                'Required parameter "RateCocktailRq" was null or undefined when calling postV1AccountsOwnedProfileCocktailsRatings().'
             );
         }
 
@@ -616,6 +505,10 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
 
         let urlPath = `/v1/accounts/owned/profile/cocktails/ratings`;
@@ -639,8 +532,8 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Rates a cocktail for the account profile user represented within the authenticated bearer token
      * Rate Cocktail
      */
-    async rateCocktailV1AccountsOwnedProfileCocktailsRatingsPost(requestParameters: RateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.rateCocktailV1AccountsOwnedProfileCocktailsRatingsPostRaw(requestParameters, initOverrides);
+    async postV1AccountsOwnedProfileCocktailsRatings(requestParameters: PostV1AccountsOwnedProfileCocktailsRatingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postV1AccountsOwnedProfileCocktailsRatingsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -648,11 +541,18 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Sends a cocktail recommendation for review
      * Send Cocktail Recommendation
      */
-    async sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRaw(requestParameters: SendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async postV1AccountsOwnedProfileCocktailsRecommendationsRaw(requestParameters: PostV1AccountsOwnedProfileCocktailsRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling postV1AccountsOwnedProfileCocktailsRecommendations().'
+            );
+        }
+
         if (requestParameters['CocktailRecommendationRq'] == null) {
             throw new runtime.RequiredError(
                 'CocktailRecommendationRq',
-                'Required parameter "CocktailRecommendationRq" was null or undefined when calling sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPost().'
+                'Required parameter "CocktailRecommendationRq" was null or undefined when calling postV1AccountsOwnedProfileCocktailsRecommendations().'
             );
         }
 
@@ -661,6 +561,10 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
 
         let urlPath = `/v1/accounts/owned/profile/cocktails/recommendations`;
@@ -684,8 +588,8 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Sends a cocktail recommendation for review
      * Send Cocktail Recommendation
      */
-    async sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPost(requestParameters: SendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
-        const response = await this.sendCocktailRecommendationV1AccountsOwnedProfileCocktailsRecommendationsPostRaw(requestParameters, initOverrides);
+    async postV1AccountsOwnedProfileCocktailsRecommendations(requestParameters: PostV1AccountsOwnedProfileCocktailsRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
+        const response = await this.postV1AccountsOwnedProfileCocktailsRecommendationsRaw(requestParameters, initOverrides);
         switch (response.raw.status) {
             case 200:
                 return await response.value();
@@ -697,143 +601,31 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     }
 
     /**
-     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
-     * Update Account Owned Accessibility Settings
-     */
-    async updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRaw(requestParameters: UpdateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
-        if (requestParameters['UpdateAccountOwnedAccessibilitySettingsRq'] == null) {
-            throw new runtime.RequiredError(
-                'UpdateAccountOwnedAccessibilitySettingsRq',
-                'Required parameter "UpdateAccountOwnedAccessibilitySettingsRq" was null or undefined when calling updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/accessibility`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: UpdateAccountOwnedAccessibilitySettingsRqToJSON(requestParameters['UpdateAccountOwnedAccessibilitySettingsRq']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
-     * Update Account Owned Accessibility Settings
-     */
-    async updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPut(requestParameters: UpdateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.updateAccountOwnedAccessibilitySettingsV1AccountsOwnedProfileAccessibilityPutRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
-     * Update Account Owned Notification Settings
-     */
-    async updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRaw(requestParameters: UpdateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
-        if (requestParameters['UpdateAccountOwnedNotificationSettingsRq'] == null) {
-            throw new runtime.RequiredError(
-                'UpdateAccountOwnedNotificationSettingsRq',
-                'Required parameter "UpdateAccountOwnedNotificationSettingsRq" was null or undefined when calling updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile/notifications`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: UpdateAccountOwnedNotificationSettingsRqToJSON(requestParameters['UpdateAccountOwnedNotificationSettingsRq']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
-     * Update Account Owned Notification Settings
-     */
-    async updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPut(requestParameters: UpdateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.updateAccountOwnedNotificationSettingsV1AccountsOwnedProfileNotificationsPutRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Updates the account profile for the user represented within the authenticated bearer token
-     * Update Account Owned Profile
-     */
-    async updateAccountOwnedProfileV1AccountsOwnedProfilePutRaw(requestParameters: UpdateAccountOwnedProfileV1AccountsOwnedProfilePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
-        if (requestParameters['UpdateAccountOwnedProfileRq'] == null) {
-            throw new runtime.RequiredError(
-                'UpdateAccountOwnedProfileRq',
-                'Required parameter "UpdateAccountOwnedProfileRq" was null or undefined when calling updateAccountOwnedProfileV1AccountsOwnedProfilePut().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/v1/accounts/owned/profile`;
-
-        const response = await this.request({
-            path: urlPath,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: UpdateAccountOwnedProfileRqToJSON(requestParameters['UpdateAccountOwnedProfileRq']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
-    }
-
-    /**
-     * Updates the account profile for the user represented within the authenticated bearer token
-     * Update Account Owned Profile
-     */
-    async updateAccountOwnedProfileV1AccountsOwnedProfilePut(requestParameters: UpdateAccountOwnedProfileV1AccountsOwnedProfilePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
-        const response = await this.updateAccountOwnedProfileV1AccountsOwnedProfilePutRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Uploads an account profile image for the user represented within the authenticated bearer token
      * Upload Profile Image
      */
-    async uploadProfileImageV1AccountsOwnedProfileImagePostRaw(requestParameters: UploadProfileImageV1AccountsOwnedProfileImagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async postV1AccountsOwnedProfileImageRaw(requestParameters: PostV1AccountsOwnedProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling postV1AccountsOwnedProfileImage().'
+            );
+        }
+
         if (requestParameters['file'] == null) {
             throw new runtime.RequiredError(
                 'file',
-                'Required parameter "file" was null or undefined when calling uploadProfileImageV1AccountsOwnedProfileImagePost().'
+                'Required parameter "file" was null or undefined when calling postV1AccountsOwnedProfileImage().'
             );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
 
         const consumes: runtime.Consume[] = [
             { contentType: 'multipart/form-data' },
@@ -877,9 +669,395 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      * Uploads an account profile image for the user represented within the authenticated bearer token
      * Upload Profile Image
      */
-    async uploadProfileImageV1AccountsOwnedProfileImagePost(requestParameters: UploadProfileImageV1AccountsOwnedProfileImagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.uploadProfileImageV1AccountsOwnedProfileImagePostRaw(requestParameters, initOverrides);
+    async postV1AccountsOwnedProfileImage(requestParameters: PostV1AccountsOwnedProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postV1AccountsOwnedProfileImageRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Updates the account profile for the user represented within the authenticated bearer token
+     * Update Account Owned Profile
+     */
+    async putV1AccountsOwnedProfileRaw(requestParameters: PutV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfile().'
+            );
+        }
+
+        if (requestParameters['UpdateAccountOwnedProfileRq'] == null) {
+            throw new runtime.RequiredError(
+                'UpdateAccountOwnedProfileRq',
+                'Required parameter "UpdateAccountOwnedProfileRq" was null or undefined when calling putV1AccountsOwnedProfile().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAccountOwnedProfileRqToJSON(requestParameters['UpdateAccountOwnedProfileRq']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates the account profile for the user represented within the authenticated bearer token
+     * Update Account Owned Profile
+     */
+    async putV1AccountsOwnedProfile(requestParameters: PutV1AccountsOwnedProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.putV1AccountsOwnedProfileRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
+     * Update Account Owned Accessibility Settings
+     */
+    async putV1AccountsOwnedProfileAccessibilityRaw(requestParameters: PutV1AccountsOwnedProfileAccessibilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfileAccessibility().'
+            );
+        }
+
+        if (requestParameters['UpdateAccountOwnedAccessibilitySettingsRq'] == null) {
+            throw new runtime.RequiredError(
+                'UpdateAccountOwnedAccessibilitySettingsRq',
+                'Required parameter "UpdateAccountOwnedAccessibilitySettingsRq" was null or undefined when calling putV1AccountsOwnedProfileAccessibility().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/accessibility`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAccountOwnedAccessibilitySettingsRqToJSON(requestParameters['UpdateAccountOwnedAccessibilitySettingsRq']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates the account profile accessibility settings for the user represented within the authenticated bearer token
+     * Update Account Owned Accessibility Settings
+     */
+    async putV1AccountsOwnedProfileAccessibility(requestParameters: PutV1AccountsOwnedProfileAccessibilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.putV1AccountsOwnedProfileAccessibilityRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
+     * Manage Favorite Cocktails
+     */
+    async putV1AccountsOwnedProfileCocktailsFavoritesRaw(requestParameters: PutV1AccountsOwnedProfileCocktailsFavoritesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfileCocktailsFavorites().'
+            );
+        }
+
+        if (requestParameters['ManageFavoriteCocktailsRq'] == null) {
+            throw new runtime.RequiredError(
+                'ManageFavoriteCocktailsRq',
+                'Required parameter "ManageFavoriteCocktailsRq" was null or undefined when calling putV1AccountsOwnedProfileCocktailsFavorites().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/cocktails/favorites`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ManageFavoriteCocktailsRqToJSON(requestParameters['ManageFavoriteCocktailsRq']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Manages the account profile favorite cocktails list for the user represented within the authenticated bearer token
+     * Manage Favorite Cocktails
+     */
+    async putV1AccountsOwnedProfileCocktailsFavorites(requestParameters: PutV1AccountsOwnedProfileCocktailsFavoritesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.putV1AccountsOwnedProfileCocktailsFavoritesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the account profile email address for the user represented within the authenticated bearer token
+     * Change Account Owned Email
+     */
+    async putV1AccountsOwnedProfileEmailRaw(requestParameters: PutV1AccountsOwnedProfileEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfileEmail().'
+            );
+        }
+
+        if (requestParameters['ChangeAccountOwnedEmailRq'] == null) {
+            throw new runtime.RequiredError(
+                'ChangeAccountOwnedEmailRq',
+                'Required parameter "ChangeAccountOwnedEmailRq" was null or undefined when calling putV1AccountsOwnedProfileEmail().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/email`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ChangeAccountOwnedEmailRqToJSON(requestParameters['ChangeAccountOwnedEmailRq']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates the account profile email address for the user represented within the authenticated bearer token
+     * Change Account Owned Email
+     */
+    async putV1AccountsOwnedProfileEmail(requestParameters: PutV1AccountsOwnedProfileEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.putV1AccountsOwnedProfileEmailRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
+     * Update Account Owned Notification Settings
+     */
+    async putV1AccountsOwnedProfileNotificationsRaw(requestParameters: PutV1AccountsOwnedProfileNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountOwnedProfileRs>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfileNotifications().'
+            );
+        }
+
+        if (requestParameters['UpdateAccountOwnedNotificationSettingsRq'] == null) {
+            throw new runtime.RequiredError(
+                'UpdateAccountOwnedNotificationSettingsRq',
+                'Required parameter "UpdateAccountOwnedNotificationSettingsRq" was null or undefined when calling putV1AccountsOwnedProfileNotifications().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/notifications`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAccountOwnedNotificationSettingsRqToJSON(requestParameters['UpdateAccountOwnedNotificationSettingsRq']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountOwnedProfileRsFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates the account profile notifications settings for the user represented within the authenticated bearer token
+     * Update Account Owned Notification Settings
+     */
+    async putV1AccountsOwnedProfileNotifications(requestParameters: PutV1AccountsOwnedProfileNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountOwnedProfileRs> {
+        const response = await this.putV1AccountsOwnedProfileNotificationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Password
+     */
+    async putV1AccountsOwnedProfilePasswordRaw(requestParameters: PutV1AccountsOwnedProfilePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfilePassword().'
+            );
+        }
+
+        if (requestParameters['ChangeAccountOwnedPasswordRq'] == null) {
+            throw new runtime.RequiredError(
+                'ChangeAccountOwnedPasswordRq',
+                'Required parameter "ChangeAccountOwnedPasswordRq" was null or undefined when calling putV1AccountsOwnedProfilePassword().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/password`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ChangeAccountOwnedPasswordRqToJSON(requestParameters['ChangeAccountOwnedPasswordRq']),
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Initiates the change password authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Password
+     */
+    async putV1AccountsOwnedProfilePassword(requestParameters: PutV1AccountsOwnedProfilePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
+        const response = await this.putV1AccountsOwnedProfilePasswordRaw(requestParameters, initOverrides);
+        switch (response.raw.status) {
+            case 200:
+                return await response.value();
+            case 204:
+                return null;
+            default:
+                return await response.value();
+        }
+    }
+
+    /**
+     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Username
+     */
+    async putV1AccountsOwnedProfileUsernameRaw(requestParameters: PutV1AccountsOwnedProfileUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['X_Key'] == null) {
+            throw new runtime.RequiredError(
+                'X_Key',
+                'Required parameter "X_Key" was null or undefined when calling putV1AccountsOwnedProfileUsername().'
+            );
+        }
+
+        if (requestParameters['ChangeAccountOwnedUsernameRq'] == null) {
+            throw new runtime.RequiredError(
+                'ChangeAccountOwnedUsernameRq',
+                'Required parameter "ChangeAccountOwnedUsernameRq" was null or undefined when calling putV1AccountsOwnedProfileUsername().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['X_Key'] != null) {
+            headerParameters['X-Key'] = String(requestParameters['X_Key']);
+        }
+
+
+        let urlPath = `/v1/accounts/owned/profile/username`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ChangeAccountOwnedUsernameRqToJSON(requestParameters['ChangeAccountOwnedUsernameRq']),
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Initiates the change username authentication flow for the user represented within the authenticated bearer token
+     * Change Account Owned Username
+     */
+    async putV1AccountsOwnedProfileUsername(requestParameters: PutV1AccountsOwnedProfileUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any | null | undefined > {
+        const response = await this.putV1AccountsOwnedProfileUsernameRaw(requestParameters, initOverrides);
+        switch (response.raw.status) {
+            case 200:
+                return await response.value();
+            case 204:
+                return null;
+            default:
+                return await response.value();
+        }
     }
 
 }
