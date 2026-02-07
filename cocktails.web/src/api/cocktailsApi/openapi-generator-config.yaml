@@ -1,6 +1,6 @@
 generatorName: typescript-fetch
 outputDir: ./src/api/cocktailsApi
-inputSpec: http://localhost:7177/scalar/v1/openapi.json
+inputSpec: http://localhost:7179/scalar/v1/openapi.json
 additionalProperties:
   stringEnums: true
   ensureUniqueParams: true

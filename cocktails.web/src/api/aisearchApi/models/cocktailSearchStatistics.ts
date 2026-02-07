@@ -28,11 +28,35 @@ import {
  */
 export interface CocktailSearchStatistics {
     /**
-     * Total score of the search result
+     * Sum of all hit scores
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
     total_score: number;
+    /**
+     * Highest individual chunk score
+     * @type {number}
+     * @memberof CocktailSearchStatistics
+     */
+    max_score?: number;
+    /**
+     * Average score across all hits
+     * @type {number}
+     * @memberof CocktailSearchStatistics
+     */
+    avg_score?: number;
+    /**
+     * Weighted score combining avg with hit count boost
+     * @type {number}
+     * @memberof CocktailSearchStatistics
+     */
+    weighted_score?: number;
+    /**
+     * Number of matching chunks
+     * @type {number}
+     * @memberof CocktailSearchStatistics
+     */
+    hit_count?: number;
     /**
      * List of hit results with their scores
      * @type {Array<CocktailVectorSearchResult>}
@@ -60,6 +84,10 @@ export function CocktailSearchStatisticsFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'total_score': json['total_score'],
+        'max_score': json['max_score'] == null ? undefined : json['max_score'],
+        'avg_score': json['avg_score'] == null ? undefined : json['avg_score'],
+        'weighted_score': json['weighted_score'] == null ? undefined : json['weighted_score'],
+        'hit_count': json['hit_count'] == null ? undefined : json['hit_count'],
         'hit_results': json['hit_results'] == null ? undefined : ((json['hit_results'] as Array<any>).map(CocktailVectorSearchResultFromJSON)),
     };
 }
@@ -76,6 +104,10 @@ export function CocktailSearchStatisticsToJSONTyped(value?: CocktailSearchStatis
     return {
         
         'total_score': value['total_score'],
+        'max_score': value['max_score'],
+        'avg_score': value['avg_score'],
+        'weighted_score': value['weighted_score'],
+        'hit_count': value['hit_count'],
         'hit_results': value['hit_results'] == null ? undefined : ((value['hit_results'] as Array<any>).map(CocktailVectorSearchResultToJSON)),
     };
 }

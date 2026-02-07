@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './cocktailImageModel';
-export * from './cocktailImageModel2';
 export * from './cocktailIngredientFiltersRs';
+export * from './cocktailKeywordsModel';
 export * from './cocktailModel';
 export * from './cocktailRatingModel';
 export * from './cocktailRs';

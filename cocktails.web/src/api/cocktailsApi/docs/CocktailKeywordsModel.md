@@ -1,0 +1,55 @@
+
+# CocktailKeywordsModel
+
+The keywords associated with the cocktail recipe
+
+## Properties
+
+Name | Type
+------------ | -------------
+`keywordsBaseSpirit` | Array&lt;string&gt;
+`keywordsSpiritSubtype` | Array&lt;string&gt;
+`keywordsFlavorProfile` | Array&lt;string&gt;
+`keywordsCocktailFamily` | Array&lt;string&gt;
+`keywordsTechnique` | Array&lt;string&gt;
+`keywordsStrength` | string
+`keywordsTemperature` | string
+`keywordsSeason` | Array&lt;string&gt;
+`keywordsOccasion` | Array&lt;string&gt;
+`keywordsMood` | Array&lt;string&gt;
+`keywordsSearchTerms` | Array&lt;string&gt;
+
+## Example
+
+```typescript
+import type { CocktailKeywordsModel } from ''
+
+// TODO: Update the object below with actual values
+const example = {
+  "keywordsBaseSpirit": null,
+  "keywordsSpiritSubtype": null,
+  "keywordsFlavorProfile": null,
+  "keywordsCocktailFamily": null,
+  "keywordsTechnique": null,
+  "keywordsStrength": null,
+  "keywordsTemperature": null,
+  "keywordsSeason": null,
+  "keywordsOccasion": null,
+  "keywordsMood": null,
+  "keywordsSearchTerms": null,
+} satisfies CocktailKeywordsModel
+
+console.log(example)
+
+// Convert the instance to a JSON string
+const exampleJSON: string = JSON.stringify(example)
+console.log(exampleJSON)
+
+// Parse the JSON string back to an object
+const exampleParsed = JSON.parse(exampleJSON) as CocktailKeywordsModel
+console.log(exampleParsed)
+```
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

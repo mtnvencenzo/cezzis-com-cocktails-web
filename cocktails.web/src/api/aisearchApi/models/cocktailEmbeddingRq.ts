@@ -27,6 +27,13 @@ import {
     CocktailModelInputToJSON,
     CocktailModelInputToJSONTyped,
 } from './cocktailModelInput';
+import type { CocktailKeywords } from './cocktailKeywords';
+import {
+    CocktailKeywordsFromJSON,
+    CocktailKeywordsFromJSONTyped,
+    CocktailKeywordsToJSON,
+    CocktailKeywordsToJSONTyped,
+} from './cocktailKeywords';
 
 /**
  * Request model for embedding cocktail description chunks into the vector database.
@@ -46,6 +53,12 @@ export interface CocktailEmbeddingRq {
      * @memberof CocktailEmbeddingRq
      */
     cocktail_model: CocktailModelInput;
+    /**
+     * 
+     * @type {CocktailKeywords}
+     * @memberof CocktailEmbeddingRq
+     */
+    cocktail_keywords?: CocktailKeywords;
 }
 
 /**
@@ -69,6 +82,7 @@ export function CocktailEmbeddingRqFromJSONTyped(json: any, ignoreDiscriminator:
         
         'content_chunks': ((json['content_chunks'] as Array<any>).map(CocktailDescriptionChunkFromJSON)),
         'cocktail_model': CocktailModelInputFromJSON(json['cocktail_model']),
+        'cocktail_keywords': json['cocktail_keywords'] == null ? undefined : CocktailKeywordsFromJSON(json['cocktail_keywords']),
     };
 }
 
@@ -85,6 +99,7 @@ export function CocktailEmbeddingRqToJSONTyped(value?: CocktailEmbeddingRq | nul
         
         'content_chunks': ((value['content_chunks'] as Array<any>).map(CocktailDescriptionChunkToJSON)),
         'cocktail_model': CocktailModelInputToJSON(value['cocktail_model']),
+        'cocktail_keywords': CocktailKeywordsToJSON(value['cocktail_keywords']),
     };
 }
 

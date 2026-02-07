@@ -18,13 +18,14 @@ Name | Type
 `prepTimeMinutes` | number
 `isIba` | boolean
 `mainImages` | [Array&lt;CocktailImageModel&gt;](CocktailImageModel.md)
-`searchTiles` | [Array&lt;CocktailImageModel2&gt;](CocktailImageModel2.md)
+`searchTiles` | Array&lt;any&gt;
 `glassware` | [Array&lt;GlasswareTypeModel&gt;](GlasswareTypeModel.md)
 `rating` | [CocktailRatingModel](CocktailRatingModel.md)
 `searchableTitles` | Array&lt;string&gt;
 `tags` | Array&lt;string&gt;
 `ingredients` | [Array&lt;IngredientModel&gt;](IngredientModel.md)
 `instructions` | [Array&lt;InstructionStepModel&gt;](InstructionStepModel.md)
+`keywords` | [CocktailKeywordsModel](CocktailKeywordsModel.md)
 
 ## Example
 
@@ -51,6 +52,7 @@ const example = {
   "tags": ["Traditional"],
   "ingredients": null,
   "instructions": null,
+  "keywords": null,
 } satisfies CocktailModel
 
 console.log(example)

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `content_chunks` | [Array&lt;CocktailDescriptionChunk&gt;](CocktailDescriptionChunk.md)
 `cocktail_model` | [CocktailModelInput](CocktailModelInput.md)
+`cocktail_keywords` | [CocktailKeywords](CocktailKeywords.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { CocktailEmbeddingRq } from ''
 const example = {
   "content_chunks": null,
   "cocktail_model": null,
+  "cocktail_keywords": null,
 } satisfies CocktailEmbeddingRq
 
 console.log(example)

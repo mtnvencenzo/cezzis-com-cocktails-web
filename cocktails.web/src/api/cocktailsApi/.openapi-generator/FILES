@@ -1,12 +1,11 @@
-.openapi-generator-ignore
 apis/cocktailsAdminApi.ts
 apis/cocktailsApi.ts
 apis/index.ts
 apis/jobsApi.ts
 apis/legalApi.ts
 docs/CocktailImageModel.md
-docs/CocktailImageModel2.md
 docs/CocktailIngredientFiltersRs.md
+docs/CocktailKeywordsModel.md
 docs/CocktailModel.md
 docs/CocktailRatingModel.md
 docs/CocktailRs.md
@@ -29,8 +28,8 @@ docs/PublishCocktailsRq.md
 docs/UofMTypeModel.md
 index.ts
 models/cocktailImageModel.ts
-models/cocktailImageModel2.ts
 models/cocktailIngredientFiltersRs.ts
+models/cocktailKeywordsModel.ts
 models/cocktailModel.ts
 models/cocktailRatingModel.ts
 models/cocktailRs.ts

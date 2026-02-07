@@ -7,6 +7,10 @@
 Name | Type
 ------------ | -------------
 `total_score` | number
+`max_score` | number
+`avg_score` | number
+`weighted_score` | number
+`hit_count` | number
 `hit_results` | [Array&lt;CocktailVectorSearchResult&gt;](CocktailVectorSearchResult.md)
 
 ## Example
@@ -17,6 +21,10 @@ import type { CocktailSearchStatistics } from ''
 // TODO: Update the object below with actual values
 const example = {
   "total_score": null,
+  "max_score": null,
+  "avg_score": null,
+  "weighted_score": null,
+  "hit_count": null,
   "hit_results": null,
 } satisfies CocktailSearchStatistics
 

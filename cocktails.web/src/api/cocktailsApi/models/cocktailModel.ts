@@ -34,6 +34,13 @@ import {
     CocktailRatingModelToJSON,
     CocktailRatingModelToJSONTyped,
 } from './cocktailRatingModel';
+import type { CocktailKeywordsModel } from './cocktailKeywordsModel';
+import {
+    CocktailKeywordsModelFromJSON,
+    CocktailKeywordsModelFromJSONTyped,
+    CocktailKeywordsModelToJSON,
+    CocktailKeywordsModelToJSONTyped,
+} from './cocktailKeywordsModel';
 import type { IngredientModel } from './ingredientModel';
 import {
     IngredientModelFromJSON,
@@ -41,13 +48,6 @@ import {
     IngredientModelToJSON,
     IngredientModelToJSONTyped,
 } from './ingredientModel';
-import type { CocktailImageModel2 } from './cocktailImageModel2';
-import {
-    CocktailImageModel2FromJSON,
-    CocktailImageModel2FromJSONTyped,
-    CocktailImageModel2ToJSON,
-    CocktailImageModel2ToJSONTyped,
-} from './cocktailImageModel2';
 import type { InstructionStepModel } from './instructionStepModel';
 import {
     InstructionStepModelFromJSON,
@@ -130,10 +130,10 @@ export interface CocktailModel {
     mainImages: Array<CocktailImageModel>;
     /**
      * A list of secondary, smaller sized images for the cocktail recipe
-     * @type {Array<CocktailImageModel2>}
+     * @type {Array<any>}
      * @memberof CocktailModel
      */
-    searchTiles: Array<CocktailImageModel2>;
+    searchTiles: Array<any>;
     /**
      * The recommended glassware to use when serving the cocktail
      * @type {Array<GlasswareTypeModel>}
@@ -170,6 +170,12 @@ export interface CocktailModel {
      * @memberof CocktailModel
      */
     instructions: Array<InstructionStepModel>;
+    /**
+     * 
+     * @type {CocktailKeywordsModel}
+     * @memberof CocktailModel
+     */
+    keywords: CocktailKeywordsModel;
 }
 
 /**
@@ -194,6 +200,7 @@ export function instanceOfCocktailModel(value: object): value is CocktailModel {
     if (!('tags' in value) || value['tags'] === undefined) return false;
     if (!('ingredients' in value) || value['ingredients'] === undefined) return false;
     if (!('instructions' in value) || value['instructions'] === undefined) return false;
+    if (!('keywords' in value) || value['keywords'] === undefined) return false;
     return true;
 }
 
@@ -218,13 +225,14 @@ export function CocktailModelFromJSONTyped(json: any, ignoreDiscriminator: boole
         'prepTimeMinutes': json['prepTimeMinutes'],
         'isIba': json['isIba'],
         'mainImages': ((json['mainImages'] as Array<any>).map(CocktailImageModelFromJSON)),
-        'searchTiles': ((json['searchTiles'] as Array<any>).map(CocktailImageModel2FromJSON)),
+        'searchTiles': json['searchTiles'],
         'glassware': ((json['glassware'] as Array<any>).map(GlasswareTypeModelFromJSON)),
         'rating': CocktailRatingModelFromJSON(json['rating']),
         'searchableTitles': json['searchableTitles'],
         'tags': json['tags'],
         'ingredients': ((json['ingredients'] as Array<any>).map(IngredientModelFromJSON)),
         'instructions': ((json['instructions'] as Array<any>).map(InstructionStepModelFromJSON)),
+        'keywords': CocktailKeywordsModelFromJSON(json['keywords']),
     };
 }
 
@@ -250,13 +258,14 @@ export function CocktailModelToJSONTyped(value?: CocktailModel | null, ignoreDis
         'prepTimeMinutes': value['prepTimeMinutes'],
         'isIba': value['isIba'],
         'mainImages': ((value['mainImages'] as Array<any>).map(CocktailImageModelToJSON)),
-        'searchTiles': ((value['searchTiles'] as Array<any>).map(CocktailImageModel2ToJSON)),
+        'searchTiles': value['searchTiles'],
         'glassware': ((value['glassware'] as Array<any>).map(GlasswareTypeModelToJSON)),
         'rating': CocktailRatingModelToJSON(value['rating']),
         'searchableTitles': value['searchableTitles'],
         'tags': value['tags'],
         'ingredients': ((value['ingredients'] as Array<any>).map(IngredientModelToJSON)),
         'instructions': ((value['instructions'] as Array<any>).map(InstructionStepModelToJSON)),
+        'keywords': CocktailKeywordsModelToJSON(value['keywords']),
     };
 }
 
