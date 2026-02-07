@@ -6,7 +6,7 @@
 
 Name | Type
 ------------ | -------------
-`items` | [Array&lt;CocktailModelOutput&gt;](CocktailModelOutput.md)
+`items` | [Array&lt;CocktailModel&gt;](CocktailModel.md)
 
 ## Example
 

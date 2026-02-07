@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { CocktailModelOutput } from './cocktailModelOutput';
+import type { CocktailModel } from './cocktailModel';
 import {
-    CocktailModelOutputFromJSON,
-    CocktailModelOutputFromJSONTyped,
-    CocktailModelOutputToJSON,
-    CocktailModelOutputToJSONTyped,
-} from './cocktailModelOutput';
+    CocktailModelFromJSON,
+    CocktailModelFromJSONTyped,
+    CocktailModelToJSON,
+    CocktailModelToJSONTyped,
+} from './cocktailModel';
 
 /**
  * 
@@ -29,10 +29,10 @@ import {
 export interface CocktailsSearchRs {
     /**
      * List of cocktails returned from the search
-     * @type {Array<CocktailModelOutput>}
+     * @type {Array<CocktailModel>}
      * @memberof CocktailsSearchRs
      */
-    items: Array<CocktailModelOutput>;
+    items: Array<CocktailModel>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function CocktailsSearchRsFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'items': ((json['items'] as Array<any>).map(CocktailModelOutputFromJSON)),
+        'items': ((json['items'] as Array<any>).map(CocktailModelFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function CocktailsSearchRsToJSONTyped(value?: CocktailsSearchRs | null, i
 
     return {
         
-        'items': ((value['items'] as Array<any>).map(CocktailModelOutputToJSON)),
+        'items': ((value['items'] as Array<any>).map(CocktailModelToJSON)),
     };
 }
 

@@ -20,13 +20,13 @@ import {
     CocktailDescriptionChunkToJSON,
     CocktailDescriptionChunkToJSONTyped,
 } from './cocktailDescriptionChunk';
-import type { CocktailModelInput } from './cocktailModelInput';
+import type { CocktailEmbeddingModel } from './cocktailEmbeddingModel';
 import {
-    CocktailModelInputFromJSON,
-    CocktailModelInputFromJSONTyped,
-    CocktailModelInputToJSON,
-    CocktailModelInputToJSONTyped,
-} from './cocktailModelInput';
+    CocktailEmbeddingModelFromJSON,
+    CocktailEmbeddingModelFromJSONTyped,
+    CocktailEmbeddingModelToJSON,
+    CocktailEmbeddingModelToJSONTyped,
+} from './cocktailEmbeddingModel';
 import type { CocktailKeywords } from './cocktailKeywords';
 import {
     CocktailKeywordsFromJSON,
@@ -49,10 +49,10 @@ export interface CocktailEmbeddingRq {
     content_chunks: Array<CocktailDescriptionChunk>;
     /**
      * 
-     * @type {CocktailModelInput}
+     * @type {CocktailEmbeddingModel}
      * @memberof CocktailEmbeddingRq
      */
-    cocktail_model: CocktailModelInput;
+    cocktail_embedding_model: CocktailEmbeddingModel;
     /**
      * 
      * @type {CocktailKeywords}
@@ -66,7 +66,7 @@ export interface CocktailEmbeddingRq {
  */
 export function instanceOfCocktailEmbeddingRq(value: object): value is CocktailEmbeddingRq {
     if (!('content_chunks' in value) || value['content_chunks'] === undefined) return false;
-    if (!('cocktail_model' in value) || value['cocktail_model'] === undefined) return false;
+    if (!('cocktail_embedding_model' in value) || value['cocktail_embedding_model'] === undefined) return false;
     return true;
 }
 
@@ -81,7 +81,7 @@ export function CocktailEmbeddingRqFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'content_chunks': ((json['content_chunks'] as Array<any>).map(CocktailDescriptionChunkFromJSON)),
-        'cocktail_model': CocktailModelInputFromJSON(json['cocktail_model']),
+        'cocktail_embedding_model': CocktailEmbeddingModelFromJSON(json['cocktail_embedding_model']),
         'cocktail_keywords': json['cocktail_keywords'] == null ? undefined : CocktailKeywordsFromJSON(json['cocktail_keywords']),
     };
 }
@@ -98,7 +98,7 @@ export function CocktailEmbeddingRqToJSONTyped(value?: CocktailEmbeddingRq | nul
     return {
         
         'content_chunks': ((value['content_chunks'] as Array<any>).map(CocktailDescriptionChunkToJSON)),
-        'cocktail_model': CocktailModelInputToJSON(value['cocktail_model']),
+        'cocktail_embedding_model': CocktailEmbeddingModelToJSON(value['cocktail_embedding_model']),
         'cocktail_keywords': CocktailKeywordsToJSON(value['cocktail_keywords']),
     };
 }

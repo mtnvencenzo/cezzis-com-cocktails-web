@@ -4,10 +4,10 @@ apis/index.ts
 apis/semanticSearchApi.ts
 docs/CocktailDataIncludeModel.md
 docs/CocktailDescriptionChunk.md
+docs/CocktailEmbeddingModel.md
 docs/CocktailEmbeddingRq.md
 docs/CocktailKeywords.md
-docs/CocktailModelInput.md
-docs/CocktailModelOutput.md
+docs/CocktailModel.md
 docs/CocktailSearchStatistics.md
 docs/CocktailVectorSearchResult.md
 docs/CocktailsSearchRs.md
@@ -26,10 +26,10 @@ docs/UofMTypeModel.md
 index.ts
 models/cocktailDataIncludeModel.ts
 models/cocktailDescriptionChunk.ts
+models/cocktailEmbeddingModel.ts
 models/cocktailEmbeddingRq.ts
 models/cocktailKeywords.ts
-models/cocktailModelInput.ts
-models/cocktailModelOutput.ts
+models/cocktailModel.ts
 models/cocktailSearchStatistics.ts
 models/cocktailVectorSearchResult.ts
 models/cocktailsSearchRs.ts

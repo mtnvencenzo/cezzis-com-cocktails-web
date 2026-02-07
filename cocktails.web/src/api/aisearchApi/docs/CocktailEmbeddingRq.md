@@ -8,7 +8,7 @@ Request model for embedding cocktail description chunks into the vector database
 Name | Type
 ------------ | -------------
 `content_chunks` | [Array&lt;CocktailDescriptionChunk&gt;](CocktailDescriptionChunk.md)
-`cocktail_model` | [CocktailModelInput](CocktailModelInput.md)
+`cocktail_embedding_model` | [CocktailEmbeddingModel](CocktailEmbeddingModel.md)
 `cocktail_keywords` | [CocktailKeywords](CocktailKeywords.md)
 
 ## Example
@@ -19,7 +19,7 @@ import type { CocktailEmbeddingRq } from ''
 // TODO: Update the object below with actual values
 const example = {
   "content_chunks": null,
-  "cocktail_model": null,
+  "cocktail_embedding_model": null,
   "cocktail_keywords": null,
 } satisfies CocktailEmbeddingRq
 

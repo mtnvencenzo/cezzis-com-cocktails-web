@@ -2,10 +2,10 @@
 /* eslint-disable */
 export * from './cocktailDataIncludeModel';
 export * from './cocktailDescriptionChunk';
+export * from './cocktailEmbeddingModel';
 export * from './cocktailEmbeddingRq';
 export * from './cocktailKeywords';
-export * from './cocktailModelInput';
-export * from './cocktailModelOutput';
+export * from './cocktailModel';
 export * from './cocktailSearchStatistics';
 export * from './cocktailVectorSearchResult';
 export * from './cocktailsSearchRs';
