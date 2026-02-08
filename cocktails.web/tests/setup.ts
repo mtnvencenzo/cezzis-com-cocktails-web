@@ -18,6 +18,14 @@ import { AccountCocktailRatingsModel, AccountCocktailRatingsRs, AccountOwnedProf
 import { CocktailModel, GlasswareTypeModel, IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../src/api/cocktailsApi';
 
 /* eslint-disable arrow-body-style */
+vi.mock('../src/utils/authConfig', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('../src/utils/authConfig')>();
+    return {
+        ...actual,
+        getAccessToken: async () => 'test-access-token'
+    };
+});
+
 vi.mock('../src/utils/envConfig', () => {
     return {
         getWindowEnv: vi.fn(() => ({

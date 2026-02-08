@@ -181,7 +181,7 @@ describe('Account Change Email Page Container', () => {
         const confirmButton = await screen.findByTestId('alert-modal-confirm');
         fireEvent.click(confirmButton);
 
-        // Wait for the API call to complete to avoid unhandled promise rejection
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        // Wait for the API call and async state updates to complete
+        await waitFor(() => {});
     });
 });

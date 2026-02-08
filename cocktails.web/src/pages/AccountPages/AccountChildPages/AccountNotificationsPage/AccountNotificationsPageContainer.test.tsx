@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import GlobalContext from '../../../../components/GlobalContexts';
@@ -173,8 +173,7 @@ describe('Account Notifications Page Container', () => {
         const btn = await screen.findByTestId('btnSubmitNotifications');
         fireEvent.click(btn);
 
-        // Wait for the API call to complete to avoid unhandled promise rejection
-        // You can adjust this wait condition based on what your component shows after successful save
-        await new Promise((resolve) => setTimeout(resolve, 100)); // Small delay to let async operation complete
+        // Wait for the API call and async state updates to complete
+        await waitFor(() => {});
     });
 });

@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainFooterBar from './MainFooterBar';
 import { Auth0ReactTester } from '../../auth0Mocks';
@@ -262,5 +262,8 @@ describe('Main Footer Bar', () => {
         expect(el.textContent).toBe('Signin');
 
         fireEvent.click(el);
+
+        // Wait for the API call and async state updates to complete
+        await waitFor(() => {});
     });
 });
