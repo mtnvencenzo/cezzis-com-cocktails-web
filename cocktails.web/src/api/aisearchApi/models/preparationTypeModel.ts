@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The preparation types for cocktail ingredients.
  * @export
  * @enum {string}
  */

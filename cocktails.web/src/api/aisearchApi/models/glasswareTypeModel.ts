@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The types of glassware used for serving cocktails.
  * @export
  * @enum {string}
  */

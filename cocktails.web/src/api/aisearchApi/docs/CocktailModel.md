@@ -1,6 +1,7 @@
 
 # CocktailModel
 
+Model representing the cocktail data structure used for vector search and storage.
 
 ## Properties
 
@@ -16,7 +17,7 @@ Name | Type
 `prepTimeMinutes` | number
 `searchTiles` | Array&lt;string&gt;
 `glassware` | [Array&lt;GlasswareTypeModel&gt;](GlasswareTypeModel.md)
-`search_statistics` | [CocktailSearchStatistics](CocktailSearchStatistics.md)
+`searchStatistics` | [CocktailSearchStatistics](CocktailSearchStatistics.md)
 
 ## Example
 
@@ -25,17 +26,17 @@ import type { CocktailModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": null,
-  "title": null,
-  "descriptiveTitle": null,
-  "rating": null,
+  "id": old-fashioned,
+  "title": Old Fashioned,
+  "descriptiveTitle": The Old Fashioned: A Timeless Whiskey Cocktail,
+  "rating": 4.5,
   "ingredients": null,
-  "isIba": null,
-  "serves": null,
-  "prepTimeMinutes": null,
-  "searchTiles": null,
-  "glassware": null,
-  "search_statistics": null,
+  "isIba": true,
+  "serves": 1,
+  "prepTimeMinutes": 5,
+  "searchTiles": http://localhost:7179/api/v1/images/old-fashioned-cocktail-300x300.webp,
+  "glassware": rocks,
+  "searchStatistics": null,
 } satisfies CocktailModel
 
 console.log(example)

@@ -6,10 +6,10 @@ import CocktailsListPageContainer from './CocktailsListPageContainer';
 import LocalStorageService from '../../services/LocalStorageService';
 import { server } from '../../../tests/setup';
 import GlobalContext from '../../components/GlobalContexts';
-import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi/models';
+import { CocktailSearchModel, CocktailsSearchRs } from '../../api/aisearchApi/models';
 
-const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
-    const items: CocktailModelOutput[] = [];
+const getCocktailItems = (name: string, count: number): CocktailSearchModel[] => {
+    const items: CocktailSearchModel[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({

@@ -12,14 +12,14 @@ import CocktailFavoritesNoResultsView from '../../../../molecules/CocktailFavori
 import { useOwnedAccount } from '../../../../components/OwnedAccountContext';
 import startPageViewSpan from '../../../../services/Tracer';
 import { getCocktailsWithRatings, DEFAULT_TAKE } from '../../../../services/CocktailsAISearchService';
-import { CocktailModelOutput } from '../../../../api/aisearchApi';
+import { CocktailSearchModel } from '../../../../api/aisearchApi';
 
 const AccountCocktailRatingsPageContainer = () => {
     const isSmOrXs = useMediaQuery(theme.breakpoints.down('md'));
     const [loading, setLoading] = useState<boolean>(true);
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [apiCallFailed, setApiCallFailed] = useState<boolean>(false);
-    const [cocktailListModels, setCocktailListModels] = useState<CocktailModelOutput[]>([]);
+    const [cocktailListModels, setCocktailListModels] = useState<CocktailSearchModel[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();

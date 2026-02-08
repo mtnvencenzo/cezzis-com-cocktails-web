@@ -1,6 +1,7 @@
 
 # IngredientTypeModel
 
+The types of ingredients used in cocktails.
 
 ## Properties
 

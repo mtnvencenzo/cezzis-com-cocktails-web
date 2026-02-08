@@ -1,17 +1,18 @@
 
 # CocktailSearchStatistics
 
+Model representing the search statistics for a cocktail search operation, including score metrics and hit details.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`total_score` | number
-`max_score` | number
-`avg_score` | number
-`weighted_score` | number
-`hit_count` | number
-`hit_results` | [Array&lt;CocktailVectorSearchResult&gt;](CocktailVectorSearchResult.md)
+`totalScore` | number
+`maxScore` | number
+`avgScore` | number
+`weightedScore` | number
+`hitCount` | number
+`hitResults` | [Array&lt;CocktailVectorSearchResult&gt;](CocktailVectorSearchResult.md)
 
 ## Example
 
@@ -20,12 +21,12 @@ import type { CocktailSearchStatistics } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "total_score": null,
-  "max_score": null,
-  "avg_score": null,
-  "weighted_score": null,
-  "hit_count": null,
-  "hit_results": null,
+  "totalScore": 3.72682033,
+  "maxScore": 0.5158496,
+  "avgScore": 0.4815899,
+  "weightedScore": 0.6260669,
+  "hitCount": 3,
+  "hitResults": {"score":0.5158496},
 } satisfies CocktailSearchStatistics
 
 console.log(example)

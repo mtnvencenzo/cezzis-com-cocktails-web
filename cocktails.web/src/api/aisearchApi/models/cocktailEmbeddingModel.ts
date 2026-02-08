@@ -13,23 +13,23 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GlasswareTypeModel } from './glasswareTypeModel';
+import type { CocktailSearchIngredientModel } from './cocktailSearchIngredientModel';
 import {
-    GlasswareTypeModelFromJSON,
-    GlasswareTypeModelFromJSONTyped,
-    GlasswareTypeModelToJSON,
-    GlasswareTypeModelToJSONTyped,
-} from './glasswareTypeModel';
-import type { IngredientModel } from './ingredientModel';
+    CocktailSearchIngredientModelFromJSON,
+    CocktailSearchIngredientModelFromJSONTyped,
+    CocktailSearchIngredientModelToJSON,
+    CocktailSearchIngredientModelToJSONTyped,
+} from './cocktailSearchIngredientModel';
+import type { CocktailSearchGlasswareTypeModel } from './cocktailSearchGlasswareTypeModel';
 import {
-    IngredientModelFromJSON,
-    IngredientModelFromJSONTyped,
-    IngredientModelToJSON,
-    IngredientModelToJSONTyped,
-} from './ingredientModel';
+    CocktailSearchGlasswareTypeModelFromJSON,
+    CocktailSearchGlasswareTypeModelFromJSONTyped,
+    CocktailSearchGlasswareTypeModelToJSON,
+    CocktailSearchGlasswareTypeModelToJSONTyped,
+} from './cocktailSearchGlasswareTypeModel';
 
 /**
- * 
+ * Model representing the cocktail embedding data structure used for vector search and storage.
  * @export
  * @interface CocktailEmbeddingModel
  */
@@ -60,10 +60,10 @@ export interface CocktailEmbeddingModel {
     rating: number;
     /**
      * List of ingredients in the cocktail
-     * @type {Array<IngredientModel>}
+     * @type {Array<CocktailSearchIngredientModel>}
      * @memberof CocktailEmbeddingModel
      */
-    ingredients: Array<IngredientModel>;
+    ingredients: Array<CocktailSearchIngredientModel>;
     /**
      * Indicates if the cocktail is an IBA official cocktail
      * @type {boolean}
@@ -90,10 +90,10 @@ export interface CocktailEmbeddingModel {
     searchTiles: Array<string>;
     /**
      * List of glassware types used for the cocktail
-     * @type {Array<GlasswareTypeModel>}
+     * @type {Array<CocktailSearchGlasswareTypeModel>}
      * @memberof CocktailEmbeddingModel
      */
-    glassware: Array<GlasswareTypeModel>;
+    glassware: Array<CocktailSearchGlasswareTypeModel>;
 }
 
 /**
@@ -127,12 +127,12 @@ export function CocktailEmbeddingModelFromJSONTyped(json: any, ignoreDiscriminat
         'title': json['title'],
         'descriptiveTitle': json['descriptiveTitle'],
         'rating': json['rating'],
-        'ingredients': ((json['ingredients'] as Array<any>).map(IngredientModelFromJSON)),
+        'ingredients': ((json['ingredients'] as Array<any>).map(CocktailSearchIngredientModelFromJSON)),
         'isIba': json['isIba'],
         'serves': json['serves'],
         'prepTimeMinutes': json['prepTimeMinutes'],
         'searchTiles': json['searchTiles'],
-        'glassware': ((json['glassware'] as Array<any>).map(GlasswareTypeModelFromJSON)),
+        'glassware': ((json['glassware'] as Array<any>).map(CocktailSearchGlasswareTypeModelFromJSON)),
     };
 }
 
@@ -151,12 +151,12 @@ export function CocktailEmbeddingModelToJSONTyped(value?: CocktailEmbeddingModel
         'title': value['title'],
         'descriptiveTitle': value['descriptiveTitle'],
         'rating': value['rating'],
-        'ingredients': ((value['ingredients'] as Array<any>).map(IngredientModelToJSON)),
+        'ingredients': ((value['ingredients'] as Array<any>).map(CocktailSearchIngredientModelToJSON)),
         'isIba': value['isIba'],
         'serves': value['serves'],
         'prepTimeMinutes': value['prepTimeMinutes'],
         'searchTiles': value['searchTiles'],
-        'glassware': ((value['glassware'] as Array<any>).map(GlasswareTypeModelToJSON)),
+        'glassware': ((value['glassware'] as Array<any>).map(CocktailSearchGlasswareTypeModelToJSON)),
     };
 }
 

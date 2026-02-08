@@ -36,7 +36,7 @@ import {
 } from './ingredientModel';
 
 /**
- * 
+ * Model representing the cocktail data structure used for vector search and storage.
  * @export
  * @interface CocktailModel
  */
@@ -106,7 +106,7 @@ export interface CocktailModel {
      * @type {CocktailSearchStatistics}
      * @memberof CocktailModel
      */
-    search_statistics?: CocktailSearchStatistics;
+    searchStatistics?: CocktailSearchStatistics;
 }
 
 /**
@@ -146,7 +146,7 @@ export function CocktailModelFromJSONTyped(json: any, ignoreDiscriminator: boole
         'prepTimeMinutes': json['prepTimeMinutes'],
         'searchTiles': json['searchTiles'],
         'glassware': ((json['glassware'] as Array<any>).map(GlasswareTypeModelFromJSON)),
-        'search_statistics': json['search_statistics'] == null ? undefined : CocktailSearchStatisticsFromJSON(json['search_statistics']),
+        'searchStatistics': json['searchStatistics'] == null ? undefined : CocktailSearchStatisticsFromJSON(json['searchStatistics']),
     };
 }
 
@@ -171,7 +171,7 @@ export function CocktailModelToJSONTyped(value?: CocktailModel | null, ignoreDis
         'prepTimeMinutes': value['prepTimeMinutes'],
         'searchTiles': value['searchTiles'],
         'glassware': ((value['glassware'] as Array<any>).map(GlasswareTypeModelToJSON)),
-        'search_statistics': CocktailSearchStatisticsToJSON(value['search_statistics']),
+        'searchStatistics': CocktailSearchStatisticsToJSON(value['searchStatistics']),
     };
 }
 

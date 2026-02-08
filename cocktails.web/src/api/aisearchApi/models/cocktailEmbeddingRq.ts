@@ -27,13 +27,13 @@ import {
     CocktailEmbeddingModelToJSON,
     CocktailEmbeddingModelToJSONTyped,
 } from './cocktailEmbeddingModel';
-import type { CocktailKeywords } from './cocktailKeywords';
+import type { CocktailSearchKeywords } from './cocktailSearchKeywords';
 import {
-    CocktailKeywordsFromJSON,
-    CocktailKeywordsFromJSONTyped,
-    CocktailKeywordsToJSON,
-    CocktailKeywordsToJSONTyped,
-} from './cocktailKeywords';
+    CocktailSearchKeywordsFromJSON,
+    CocktailSearchKeywordsFromJSONTyped,
+    CocktailSearchKeywordsToJSON,
+    CocktailSearchKeywordsToJSONTyped,
+} from './cocktailSearchKeywords';
 
 /**
  * Request model for embedding cocktail description chunks into the vector database.
@@ -46,27 +46,27 @@ export interface CocktailEmbeddingRq {
      * @type {Array<CocktailDescriptionChunk>}
      * @memberof CocktailEmbeddingRq
      */
-    content_chunks: Array<CocktailDescriptionChunk>;
+    contentChunks: Array<CocktailDescriptionChunk>;
     /**
      * 
      * @type {CocktailEmbeddingModel}
      * @memberof CocktailEmbeddingRq
      */
-    cocktail_embedding_model: CocktailEmbeddingModel;
+    cocktailEmbeddingModel: CocktailEmbeddingModel;
     /**
      * 
-     * @type {CocktailKeywords}
+     * @type {CocktailSearchKeywords}
      * @memberof CocktailEmbeddingRq
      */
-    cocktail_keywords?: CocktailKeywords;
+    cocktailKeywords?: CocktailSearchKeywords;
 }
 
 /**
  * Check if a given object implements the CocktailEmbeddingRq interface.
  */
 export function instanceOfCocktailEmbeddingRq(value: object): value is CocktailEmbeddingRq {
-    if (!('content_chunks' in value) || value['content_chunks'] === undefined) return false;
-    if (!('cocktail_embedding_model' in value) || value['cocktail_embedding_model'] === undefined) return false;
+    if (!('contentChunks' in value) || value['contentChunks'] === undefined) return false;
+    if (!('cocktailEmbeddingModel' in value) || value['cocktailEmbeddingModel'] === undefined) return false;
     return true;
 }
 
@@ -80,9 +80,9 @@ export function CocktailEmbeddingRqFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'content_chunks': ((json['content_chunks'] as Array<any>).map(CocktailDescriptionChunkFromJSON)),
-        'cocktail_embedding_model': CocktailEmbeddingModelFromJSON(json['cocktail_embedding_model']),
-        'cocktail_keywords': json['cocktail_keywords'] == null ? undefined : CocktailKeywordsFromJSON(json['cocktail_keywords']),
+        'contentChunks': ((json['contentChunks'] as Array<any>).map(CocktailDescriptionChunkFromJSON)),
+        'cocktailEmbeddingModel': CocktailEmbeddingModelFromJSON(json['cocktailEmbeddingModel']),
+        'cocktailKeywords': json['cocktailKeywords'] == null ? undefined : CocktailSearchKeywordsFromJSON(json['cocktailKeywords']),
     };
 }
 
@@ -97,9 +97,9 @@ export function CocktailEmbeddingRqToJSONTyped(value?: CocktailEmbeddingRq | nul
 
     return {
         
-        'content_chunks': ((value['content_chunks'] as Array<any>).map(CocktailDescriptionChunkToJSON)),
-        'cocktail_embedding_model': CocktailEmbeddingModelToJSON(value['cocktail_embedding_model']),
-        'cocktail_keywords': CocktailKeywordsToJSON(value['cocktail_keywords']),
+        'contentChunks': ((value['contentChunks'] as Array<any>).map(CocktailDescriptionChunkToJSON)),
+        'cocktailEmbeddingModel': CocktailEmbeddingModelToJSON(value['cocktailEmbeddingModel']),
+        'cocktailKeywords': CocktailSearchKeywordsToJSON(value['cocktailKeywords']),
     };
 }
 

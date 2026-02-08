@@ -15,13 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
-  CocktailDataIncludeModel,
+  CocktailSearchDataIncludeModel,
   CocktailsSearchRs,
   ProblemDetails,
 } from '../models/index';
 import {
-    CocktailDataIncludeModelFromJSON,
-    CocktailDataIncludeModelToJSON,
+    CocktailSearchDataIncludeModelFromJSON,
+    CocktailSearchDataIncludeModelToJSON,
     CocktailsSearchRsFromJSON,
     CocktailsSearchRsToJSON,
     ProblemDetailsFromJSON,
@@ -35,7 +35,7 @@ export interface GetV1CocktailsSearchRequest {
     take?: number | null;
     m?: Array<string> | null;
     m_ex?: boolean | null;
-    inc?: Array<CocktailDataIncludeModel> | null;
+    inc?: Array<CocktailSearchDataIncludeModel> | null;
     fi?: Array<string> | null;
 }
 
@@ -63,7 +63,7 @@ export interface SemanticSearchApiInterface {
      * @param {number} [take] The number of cocktail recipes to take for pagination
      * @param {Array<string>} [m] A list of cocktails that can be included in the list
      * @param {boolean} [m_ex] Whether or not the supplied matches must be exclusively returned
-     * @param {Array<CocktailDataIncludeModel>} [inc] The list of extension objects to include for each cocktail recipe
+     * @param {Array<CocktailSearchDataIncludeModel>} [inc] The list of extension objects to include for each cocktail recipe
      * @param {Array<string>} [fi] An optional list of filters to use when quering the cocktail recipes
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

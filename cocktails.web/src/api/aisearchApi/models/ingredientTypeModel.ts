@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The types of ingredients used in cocktails.
  * @export
  * @enum {string}
  */

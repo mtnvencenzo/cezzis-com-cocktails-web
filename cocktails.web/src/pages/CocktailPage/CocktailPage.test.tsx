@@ -84,7 +84,20 @@ describe('Cocktail Page', () => {
                                         display: 'instruction 2',
                                         order: 1
                                     }
-                                ]
+                                ],
+                                keywords: {
+                                    keywordsBaseSpirit: ['Spirit'],
+                                    keywordsFlavorProfile: ['Fruity'],
+                                    keywordsOccasion: ['Occasion1'],
+                                    keywordsTechnique: ['Technique1'],
+                                    keywordsCocktailFamily: ['Family1'],
+                                    keywordsMood: ['Mood1'],
+                                    keywordsSearchTerms: ['SearchTerm1', 'SearchTerm2'],
+                                    keywordsSeason: ['Season1'],
+                                    keywordsSpiritSubtype: ['SpiritSubtype1'],
+                                    keywordsStrength: 'Medium',
+                                    keywordsTemperature: 'Cold'
+                                }
                             }
                         },
                         {

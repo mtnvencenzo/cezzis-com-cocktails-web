@@ -6,16 +6,16 @@ import 'vitest-location-mock';
 import { User } from '../src/components/Auth0Provider';
 import { Auth0ReactTesterPlugin } from '../src/auth0Mocks/Auth0ReactTesterPlugin';
 import {
-    CocktailModelOutput,
-    GlasswareTypeModel,
-    IngredientApplicationTypeModel,
-    IngredientRequirementTypeModel,
-    IngredientTypeModel,
-    PreparationTypeModel,
-    UofMTypeModel
+    CocktailSearchModel,
+    CocktailSearchGlasswareTypeModel,
+    CocktailSearchIngredientApplicationTypeModel,
+    CocktailSearchIngredientRequirementTypeModel,
+    CocktailSearchIngredientTypeModel,
+    CocktailSearchPreparationTypeModel,
+    CocktailSearchUofMTypeModel
 } from '../src/api/aisearchApi/models';
 import { AccountCocktailRatingsModel, AccountCocktailRatingsRs, AccountOwnedProfileRs, CocktailUpdatedNotificationModel, DisplayThemeModel } from '../src/api/accountsApi';
-import { CocktailModel, IngredientApplicationModel } from '../src/api/cocktailsApi';
+import { CocktailModel, GlasswareTypeModel, IngredientApplicationModel, IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../src/api/cocktailsApi';
 
 /* eslint-disable arrow-body-style */
 vi.mock('../src/utils/envConfig', () => {
@@ -177,11 +177,24 @@ export const getTestCocktails = (): CocktailModel[] => [
                 display: 'instruction 2',
                 order: 1
             }
-        ]
+        ],
+        keywords: {
+            keywordsBaseSpirit: ['Spirit'],
+            keywordsFlavorProfile: ['Fruity'],
+            keywordsOccasion: ['Occasion1'],
+            keywordsTechnique: ['Technique1'],
+            keywordsCocktailFamily: ['Family1'],
+            keywordsMood: ['Mood1'],
+            keywordsSearchTerms: ['SearchTerm1', 'SearchTerm2'],
+            keywordsSeason: ['Season1'],
+            keywordsSpiritSubtype: ['SpiritSubtype1'],
+            keywordsStrength: 'Medium',
+            keywordsTemperature: 'Cold'
+        }
     }
 ];
 
-export const getTestCocktailsList = (): CocktailModelOutput[] => [
+export const getTestCocktailsList = (): CocktailSearchModel[] => [
     {
         id: 'absinthe-frappe',
         title: 'Absinthe Frappé',
@@ -190,54 +203,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Absinthe',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Absinthe',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Simple Syrup',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1/2 oz Simple Syrup',
                 units: 0.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Syrup],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Water',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 oz Water',
                 units: 2,
-                preparation: PreparationTypeModel.Chilled,
+                preparation: CocktailSearchPreparationTypeModel.Chilled,
                 suggestions: '',
-                types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Dilution],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Mint Sprig',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Optional,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Optional,
                 display: 'Mint Sprig for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Herb],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Herb],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-absinthe-frappe-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Rocks, GlasswareTypeModel.Collins]
+        glassware: [CocktailSearchGlasswareTypeModel.Rocks, CocktailSearchGlasswareTypeModel.Collins]
     },
     {
         id: 'adonis',
@@ -247,54 +260,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Fino Sherry',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 oz Fino Sherry',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Wine],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Sweet Vermouth',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Orange Bitters',
-                uoM: UofMTypeModel.Dashes,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Dashes,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 dashes Orange Bitters',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: "Preferably Regans'",
-                types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Bitters],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Peel',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Orange Peel for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-adonis-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.Coupe, CocktailSearchGlasswareTypeModel.CocktailGlass]
     },
     {
         id: 'airmail',
@@ -304,65 +317,65 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Gold Rum',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Gold Rum',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Preferably Appleton or ElDorado',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Lime Juice',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '3/4 oz Lime Juice',
                 units: 0.75,
-                preparation: PreparationTypeModel.FreshlySqueezed,
+                preparation: CocktailSearchPreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
-                types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Juice],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Honey Syrup',
-                uoM: UofMTypeModel.None,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.None,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Honey Syrup',
                 units: 0.75,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Syrup],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Champagne',
-                uoM: UofMTypeModel.Topoff,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Topoff,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Champagne (top off)',
                 units: 0,
-                preparation: PreparationTypeModel.Chilled,
+                preparation: CocktailSearchPreparationTypeModel.Chilled,
                 suggestions: '',
-                types: [IngredientTypeModel.Champagne],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Champagne],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lime Peel',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Lime Peel for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-airmail-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Collins]
+        glassware: [CocktailSearchGlasswareTypeModel.Collins]
     },
     {
         id: 'americano',
@@ -372,54 +385,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Campari',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Campari',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Sweet Vermouth',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Soda Water',
-                uoM: UofMTypeModel.Topoff,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Topoff,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Soda Water (top off)',
                 units: 0,
-                preparation: PreparationTypeModel.Chilled,
+                preparation: CocktailSearchPreparationTypeModel.Chilled,
                 suggestions: '',
-                types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Dilution],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Slice',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Orange Slice for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-americano-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Rocks, GlasswareTypeModel.Collins]
+        glassware: [CocktailSearchGlasswareTypeModel.Rocks, CocktailSearchGlasswareTypeModel.Collins]
     },
     {
         id: 'aperol-spritz',
@@ -429,54 +442,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Aperol',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Aperol',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry Prosecco',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 oz Dry Prosecco',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Wine],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Soda Water',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Soda Water',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Dilution],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Slice',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Orange Slice for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-aperol-spritz-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.WineGlass, GlasswareTypeModel.Collins]
+        glassware: [CocktailSearchGlasswareTypeModel.WineGlass, CocktailSearchGlasswareTypeModel.Collins]
     },
     {
         id: 'aviation',
@@ -486,65 +499,65 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Gin',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 oz Gin',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Maraschino Liqueur',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1/4 oz Maraschino Liqueur',
                 units: 0.25,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Crème de Violette',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1/4 oz Crème de Violette',
                 units: 0.25,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Preferably Rothman & Winter',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Juice',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1/2 oz Lemon Juice',
                 units: 0.5,
-                preparation: PreparationTypeModel.FreshlySqueezed,
+                preparation: CocktailSearchPreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
-                types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Juice],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Brandied Cherry',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Brandied Cherry for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-aviation-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.Coupe, CocktailSearchGlasswareTypeModel.CocktailGlass]
     },
     {
         id: 'bamboo',
@@ -554,76 +567,76 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Fino Sherry',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Fino Sherry',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Wine],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry Vermouth',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Dry Vermouth',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Rich Simple Syrup',
-                uoM: UofMTypeModel.Teaspoon,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Teaspoon,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 tsp Rich Simple Syrup',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Syrup],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Angostura Bitters',
-                uoM: UofMTypeModel.Dashes,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Dashes,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 dashes Angostura Bitters',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Bitters],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Bitters',
-                uoM: UofMTypeModel.Dashes,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Dashes,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 dashes Orange Bitters',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Bitters],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Twist',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Lemon Twist for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bamboo-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.Coupe, CocktailSearchGlasswareTypeModel.CocktailGlass]
     },
     {
         id: 'bees-knees',
@@ -633,54 +646,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Gin',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 1/2 oz Gin',
                 units: 1.5,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Lemon Juice',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '3/4 oz Lemon Juice',
                 units: 0.75,
-                preparation: PreparationTypeModel.FreshlySqueezed,
+                preparation: CocktailSearchPreparationTypeModel.FreshlySqueezed,
                 suggestions: '',
-                types: [IngredientTypeModel.Juice],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Juice],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Honey Syrup',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '3/4 oz Honey Syrup',
                 units: 0.75,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Syrup],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Syrup],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Lemon Wheel',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Lemon Wheel for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: true,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bees-knees-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.Coupe, CocktailSearchGlasswareTypeModel.CocktailGlass]
     },
     {
         id: 'bicicletta',
@@ -690,54 +703,54 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Campari',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '2 oz Campari',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Dry White Wine',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '3 oz Dry White Wine',
                 units: 3,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Pinot Grigio or Sauvignon Blanc',
-                types: [IngredientTypeModel.Wine],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Wine],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Soda Water',
-                uoM: UofMTypeModel.Topoff,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Topoff,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Soda Water (top off)',
                 units: 0,
-                preparation: PreparationTypeModel.Chilled,
+                preparation: CocktailSearchPreparationTypeModel.Chilled,
                 suggestions: '',
-                types: [IngredientTypeModel.Dilution],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Dilution],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Wheels',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Orange Wheels for garnishment',
                 units: 2,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bicicletta-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.WineGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.WineGlass]
     },
     {
         id: 'bijou',
@@ -747,64 +760,64 @@ export const getTestCocktailsList = (): CocktailModelOutput[] => [
         ingredients: [
             {
                 name: 'Gin',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Gin',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Spirit],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Spirit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Sweet Vermouth',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 oz Sweet Vermouth',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Base]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Base]
             },
             {
                 name: 'Green Chartreuse',
-                uoM: UofMTypeModel.Ounces,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Ounces,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '3/4 oz Green Chartreuse',
                 units: 0.75,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Liqueur],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Liqueur],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Orange Bitters',
-                uoM: UofMTypeModel.Dashes,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Dashes,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: '1 dash Orange Bitters',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: '',
-                types: [IngredientTypeModel.Bitters],
-                applications: [IngredientApplicationTypeModel.Additional]
+                types: [CocktailSearchIngredientTypeModel.Bitters],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Additional]
             },
             {
                 name: 'Brandied Cherry',
-                uoM: UofMTypeModel.Item,
-                requirement: IngredientRequirementTypeModel.Required,
+                uoM: CocktailSearchUofMTypeModel.Item,
+                requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                 display: 'Brandied Cherry for garnishment',
                 units: 1,
-                preparation: PreparationTypeModel.None,
+                preparation: CocktailSearchPreparationTypeModel.None,
                 suggestions: 'Preferably Luxardo',
-                types: [IngredientTypeModel.Fruit],
-                applications: [IngredientApplicationTypeModel.Garnishment]
+                types: [CocktailSearchIngredientTypeModel.Fruit],
+                applications: [CocktailSearchIngredientApplicationTypeModel.Garnishment]
             }
         ],
         isIba: false,
         serves: 1,
         prepTimeMinutes: 10,
         searchTiles: ['https://cdn.cezzis.com/cocktails/traditional-bijou-cocktail-300x300.webp'],
-        glassware: [GlasswareTypeModel.Coupe, GlasswareTypeModel.CocktailGlass]
+        glassware: [CocktailSearchGlasswareTypeModel.Coupe, CocktailSearchGlasswareTypeModel.CocktailGlass]
     }
 ];

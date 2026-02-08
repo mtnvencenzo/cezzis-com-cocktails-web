@@ -8,11 +8,11 @@ import { getTestOwnedAccountProfile, getTestUser, server } from '../../../tests/
 import GlobalContext from '../../components/GlobalContexts';
 import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0ReactTester } from '../../auth0Mocks';
-import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
+import { CocktailSearchModel, CocktailsSearchRs } from '../../api/aisearchApi';
 import { DEFAULT_TAKE } from '../../services/CocktailsAISearchService';
 
-const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
-    const items: CocktailModelOutput[] = [];
+const getCocktailItems = (name: string, count: number): CocktailSearchModel[] => {
+    const items: CocktailSearchModel[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -49,7 +49,7 @@ describe('Favorite Cocktails List Page', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);
+        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails?.push(`adonis-${i}`);
 
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);

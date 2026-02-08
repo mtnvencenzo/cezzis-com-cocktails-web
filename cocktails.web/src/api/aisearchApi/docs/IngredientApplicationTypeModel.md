@@ -1,6 +1,7 @@
 
 # IngredientApplicationTypeModel
 
+The application types for cocktail ingredients.
 
 ## Properties
 

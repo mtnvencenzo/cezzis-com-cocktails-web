@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Model representing a chunk of cocktail description text, categorized for embedding and vector search.
  * @export
  * @interface CocktailDescriptionChunk
  */

@@ -1,6 +1,7 @@
 
 # CocktailDataIncludeModel
 
+The types of cocktail data to include in the search results.
 
 ## Properties
 

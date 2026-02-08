@@ -1,6 +1,7 @@
 
 # GlasswareTypeModel
 
+The types of glassware used for serving cocktails.
 
 ## Properties
 

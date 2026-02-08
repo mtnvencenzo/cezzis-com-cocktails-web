@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The application types for cocktail ingredients.
  * @export
  * @enum {string}
  */

@@ -1,6 +1,7 @@
 
 # CocktailDescriptionChunk
 
+Model representing a chunk of cocktail description text, categorized for embedding and vector search.
 
 ## Properties
 
@@ -16,8 +17,8 @@ import type { CocktailDescriptionChunk } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "category": null,
-  "content": null,
+  "category": desc,
+  "content": A refreshing cocktail made with rum, lime juice, and mint leaves.,
 } satisfies CocktailDescriptionChunk
 
 console.log(example)

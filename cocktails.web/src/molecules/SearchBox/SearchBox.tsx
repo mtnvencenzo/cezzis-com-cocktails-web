@@ -25,7 +25,7 @@ import SearchBoxAutocompletePaper from './SearchBoxAutocompletePaper';
 import CocktailFiltersDialog from '../../organisims/CocktailFiltersDialog/CocktailFiltersDialog';
 import { useCocktailSearch } from '../../components/CocktailSearchContext';
 import { useCocktailFiltering } from '../../components/CocktailFilterContext';
-import { CocktailModelOutput } from '../../api/aisearchApi';
+import { CocktailSearchModel } from '../../api/aisearchApi';
 import { DEFAULT_TAKE, getCocktailsSearchResults } from '../../services/CocktailsAISearchService';
 
 interface SearchBoxProps {
@@ -37,9 +37,9 @@ interface SearchBoxProps {
 }
 
 interface SearchState {
-    value: NonNullable<string | CocktailModelOutput> | null;
+    value: NonNullable<string | CocktailSearchModel> | null;
     inputValue: string;
-    options: readonly CocktailModelOutput[];
+    options: readonly CocktailSearchModel[];
     open: boolean;
     focused: boolean;
     hasRetrieved: boolean;
@@ -92,7 +92,7 @@ const GetCustomPopper = (props: PopperProps) => {
     );
 };
 
-const filter = createFilterOptions<NonNullable<string | CocktailModelOutput> | null>();
+const filter = createFilterOptions<NonNullable<string | CocktailSearchModel> | null>();
 const retrievingOptionsText = 'Retrieving Cocktails List...';
 const noOptionsText = 'No matches found. Try reducing your search filters and search term';
 
@@ -222,7 +222,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
         }));
     };
 
-    const handleOnChange = (_: React.SyntheticEvent<Element, Event>, v: string | CocktailModelOutput | null) => {
+    const handleOnChange = (_: React.SyntheticEvent<Element, Event>, v: string | CocktailSearchModel | null) => {
         setSearchState((prevState) => ({
             ...prevState,
             value: v
@@ -246,7 +246,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
     /* eslint-disable react-hooks/exhaustive-deps */
     const fetchSearchResults = React.useMemo(
         () =>
-            debounce((freeText: string, skip: number, take: number, callback: (results?: readonly CocktailModelOutput[]) => void) => {
+            debounce((freeText: string, skip: number, take: number, callback: (results?: readonly CocktailSearchModel[]) => void) => {
                 getCocktailsSearchResults(callback, freeText, skip, take);
             }, 400),
         [filtersRevision]
@@ -269,7 +269,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
         let active = true;
 
         if (!isNavigating) {
-            fetchSearchResults(searchState.inputValue, 0, DEFAULT_TAKE, (results?: readonly CocktailModelOutput[]) => {
+            fetchSearchResults(searchState.inputValue, 0, DEFAULT_TAKE, (results?: readonly CocktailSearchModel[]) => {
                 if (active) {
                     if (results) {
                         setNoItems(results.length === 0);
@@ -290,7 +290,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
         };
     }, [searchState.value, searchState.inputValue, fetchSearchResults, enableFiltering, setNoItems, searchState.preventOpen, isNavigating]);
 
-    const isEqualValue = (option: NonNullable<string | CocktailModelOutput> | null, value: NonNullable<string | CocktailModelOutput> | null): boolean =>
+    const isEqualValue = (option: NonNullable<string | CocktailSearchModel> | null, value: NonNullable<string | CocktailSearchModel> | null): boolean =>
         /* eslint-disable no-nested-ternary */
         typeof option === 'string' && typeof value === 'string'
             ? option === value
@@ -393,7 +393,7 @@ const SearchBox = ({ testId, enableFiltering = false, bannerEmbeded = false, rep
                 }}
                 onInputChange={handleInputChange}
                 // no-nested-ternary
-                renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: NonNullable<string | CocktailModelOutput> | null) => {
+                renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: NonNullable<string | CocktailSearchModel> | null) => {
                     if (typeof option === 'string') {
                         if (option === retrievingOptionsText) {
                             return (

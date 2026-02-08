@@ -10,10 +10,10 @@ import React from 'react';
 import FavoriteCocktailButton from '../../atoms/FavoriteCocktailButton/FavoriteCocktailButton';
 import ShareCocktailButton from '../../atoms/ShareCocktailButton/ShareCocktailButton';
 import RatingExtended from '../../atoms/RatingExtended/RatingExtended';
-import { CocktailModelOutput, IngredientApplicationTypeModel } from '../../api/aisearchApi';
+import { CocktailSearchModel, CocktailSearchIngredientApplicationTypeModel } from '../../api/aisearchApi';
 
 interface CocktailTileProps {
-    cocktail: CocktailModelOutput;
+    cocktail: CocktailSearchModel;
     isFavorite: boolean;
     indicatorValue?: number;
     testId: string;
@@ -43,7 +43,7 @@ const CocktailTile = React.memo(({ cocktail, isFavorite, testId, indicatorValue,
                 <Typography noWrap gutterBottom className='baseIngredientLink'>
                     BASE:{' '}
                     {cocktail.ingredients
-                        .filter((i) => i.applications.includes(IngredientApplicationTypeModel.Base))
+                        .filter((i) => i.applications.includes(CocktailSearchIngredientApplicationTypeModel.Base))
                         .map((i) => i.name)
                         .join(', ')}
                 </Typography>

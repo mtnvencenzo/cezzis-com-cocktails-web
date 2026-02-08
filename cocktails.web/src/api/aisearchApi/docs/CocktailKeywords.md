@@ -26,17 +26,17 @@ import type { CocktailKeywords } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "keywordsBaseSpirit": null,
-  "keywordsSpiritSubtype": null,
-  "keywordsFlavorProfile": null,
-  "keywordsCocktailFamily": null,
-  "keywordsTechnique": null,
-  "keywordsStrength": null,
-  "keywordsTemperature": null,
-  "keywordsSeason": null,
-  "keywordsOccasion": null,
-  "keywordsMood": null,
-  "keywordsSearchTerms": null,
+  "keywordsBaseSpirit": ["gin"],
+  "keywordsSpiritSubtype": ["aged-rum"],
+  "keywordsFlavorProfile": ["bitter"],
+  "keywordsCocktailFamily": ["sour"],
+  "keywordsTechnique": ["shaken"],
+  "keywordsStrength": light,
+  "keywordsTemperature": cold,
+  "keywordsSeason": ["summer"],
+  "keywordsOccasion": ["aperitif"],
+  "keywordsMood": ["sophisticated"],
+  "keywordsSearchTerms": ["classic"],
 } satisfies CocktailKeywords
 
 console.log(example)

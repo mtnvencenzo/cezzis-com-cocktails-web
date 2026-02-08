@@ -50,7 +50,7 @@ import {
 } from './ingredientApplicationTypeModel';
 
 /**
- * 
+ * Model representing an ingredient used in a cocktail, including its name, unit of measure, requirement type, preparation, and suggestions.
  * @export
  * @interface IngredientModel
  */

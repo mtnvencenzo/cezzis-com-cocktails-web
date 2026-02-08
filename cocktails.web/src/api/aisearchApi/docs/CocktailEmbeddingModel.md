@@ -1,6 +1,7 @@
 
 # CocktailEmbeddingModel
 
+Model representing the cocktail embedding data structure used for vector search and storage.
 
 ## Properties
 
@@ -10,12 +11,12 @@ Name | Type
 `title` | string
 `descriptiveTitle` | string
 `rating` | number
-`ingredients` | [Array&lt;IngredientModel&gt;](IngredientModel.md)
+`ingredients` | [Array&lt;CocktailSearchIngredientModel&gt;](CocktailSearchIngredientModel.md)
 `isIba` | boolean
 `serves` | number
 `prepTimeMinutes` | number
 `searchTiles` | Array&lt;string&gt;
-`glassware` | [Array&lt;GlasswareTypeModel&gt;](GlasswareTypeModel.md)
+`glassware` | [Array&lt;CocktailSearchGlasswareTypeModel&gt;](CocktailSearchGlasswareTypeModel.md)
 
 ## Example
 
@@ -24,16 +25,16 @@ import type { CocktailEmbeddingModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": null,
-  "title": null,
-  "descriptiveTitle": null,
-  "rating": null,
+  "id": old-fashioned,
+  "title": Old Fashioned,
+  "descriptiveTitle": The Old Fashioned: A Timeless Whiskey Cocktail,
+  "rating": 4.5,
   "ingredients": null,
-  "isIba": null,
-  "serves": null,
-  "prepTimeMinutes": null,
-  "searchTiles": null,
-  "glassware": null,
+  "isIba": true,
+  "serves": 1,
+  "prepTimeMinutes": 5,
+  "searchTiles": http://localhost:7179/api/v1/images/old-fashioned-cocktail-300x300.webp,
+  "glassware": rocks,
 } satisfies CocktailEmbeddingModel
 
 console.log(example)

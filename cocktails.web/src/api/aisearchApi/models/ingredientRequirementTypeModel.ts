@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The requirement types for cocktail ingredients.
  * @export
  * @enum {string}
  */

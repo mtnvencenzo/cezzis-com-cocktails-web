@@ -1,6 +1,7 @@
 
 # PreparationTypeModel
 
+The preparation types for cocktail ingredients.
 
 ## Properties
 

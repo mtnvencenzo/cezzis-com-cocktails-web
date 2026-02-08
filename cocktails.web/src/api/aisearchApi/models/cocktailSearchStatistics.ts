@@ -22,7 +22,7 @@ import {
 } from './cocktailVectorSearchResult';
 
 /**
- * 
+ * Model representing the search statistics for a cocktail search operation, including score metrics and hit details.
  * @export
  * @interface CocktailSearchStatistics
  */
@@ -32,44 +32,44 @@ export interface CocktailSearchStatistics {
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
-    total_score: number;
+    totalScore: number;
     /**
      * Highest individual chunk score
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
-    max_score?: number;
+    maxScore?: number;
     /**
      * Average score across all hits
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
-    avg_score?: number;
+    avgScore?: number;
     /**
      * Weighted score combining avg with hit count boost
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
-    weighted_score?: number;
+    weightedScore?: number;
     /**
      * Number of matching chunks
      * @type {number}
      * @memberof CocktailSearchStatistics
      */
-    hit_count?: number;
+    hitCount?: number;
     /**
      * List of hit results with their scores
      * @type {Array<CocktailVectorSearchResult>}
      * @memberof CocktailSearchStatistics
      */
-    hit_results?: Array<CocktailVectorSearchResult>;
+    hitResults?: Array<CocktailVectorSearchResult>;
 }
 
 /**
  * Check if a given object implements the CocktailSearchStatistics interface.
  */
 export function instanceOfCocktailSearchStatistics(value: object): value is CocktailSearchStatistics {
-    if (!('total_score' in value) || value['total_score'] === undefined) return false;
+    if (!('totalScore' in value) || value['totalScore'] === undefined) return false;
     return true;
 }
 
@@ -83,12 +83,12 @@ export function CocktailSearchStatisticsFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'total_score': json['total_score'],
-        'max_score': json['max_score'] == null ? undefined : json['max_score'],
-        'avg_score': json['avg_score'] == null ? undefined : json['avg_score'],
-        'weighted_score': json['weighted_score'] == null ? undefined : json['weighted_score'],
-        'hit_count': json['hit_count'] == null ? undefined : json['hit_count'],
-        'hit_results': json['hit_results'] == null ? undefined : ((json['hit_results'] as Array<any>).map(CocktailVectorSearchResultFromJSON)),
+        'totalScore': json['totalScore'],
+        'maxScore': json['maxScore'] == null ? undefined : json['maxScore'],
+        'avgScore': json['avgScore'] == null ? undefined : json['avgScore'],
+        'weightedScore': json['weightedScore'] == null ? undefined : json['weightedScore'],
+        'hitCount': json['hitCount'] == null ? undefined : json['hitCount'],
+        'hitResults': json['hitResults'] == null ? undefined : ((json['hitResults'] as Array<any>).map(CocktailVectorSearchResultFromJSON)),
     };
 }
 
@@ -103,12 +103,12 @@ export function CocktailSearchStatisticsToJSONTyped(value?: CocktailSearchStatis
 
     return {
         
-        'total_score': value['total_score'],
-        'max_score': value['max_score'],
-        'avg_score': value['avg_score'],
-        'weighted_score': value['weighted_score'],
-        'hit_count': value['hit_count'],
-        'hit_results': value['hit_results'] == null ? undefined : ((value['hit_results'] as Array<any>).map(CocktailVectorSearchResultToJSON)),
+        'totalScore': value['totalScore'],
+        'maxScore': value['maxScore'],
+        'avgScore': value['avgScore'],
+        'weightedScore': value['weightedScore'],
+        'hitCount': value['hitCount'],
+        'hitResults': value['hitResults'] == null ? undefined : ((value['hitResults'] as Array<any>).map(CocktailVectorSearchResultToJSON)),
     };
 }
 

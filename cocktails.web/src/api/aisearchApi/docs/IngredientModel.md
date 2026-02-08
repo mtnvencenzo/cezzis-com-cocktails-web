@@ -1,6 +1,7 @@
 
 # IngredientModel
 
+Model representing an ingredient used in a cocktail, including its name, unit of measure, requirement type, preparation, and suggestions.
 
 ## Properties
 
@@ -23,15 +24,15 @@ import type { IngredientModel } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "name": null,
+  "name": Blanco Tequila,
   "uoM": null,
   "requirement": null,
-  "display": null,
-  "units": null,
+  "display": 1 1/2 oz Blanco Tequila,
+  "units": 1.5,
   "preparation": null,
-  "suggestions": null,
-  "types": null,
-  "applications": null,
+  "suggestions": Use a good quality Blanco Tequila for the best flavor,
+  "types": ["spirit"],
+  "applications": ["base"],
 } satisfies IngredientModel
 
 console.log(example)

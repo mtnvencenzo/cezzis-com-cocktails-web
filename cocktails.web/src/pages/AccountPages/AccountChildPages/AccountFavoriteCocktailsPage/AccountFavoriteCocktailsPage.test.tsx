@@ -35,11 +35,12 @@ describe('Account Interactions Favorite Cocktails Page', () => {
 
         server.use(
             http.get(
-                'http://localhost:0/api/v1/cocktails',
+                'http://localhost:1/v1/cocktails/search',
                 ({ request }) => {
                     const url = new URL(request.url);
                     expect(url.searchParams.get('skip')).toBe('0');
                     expect(url.searchParams.get('take')).toBe(`${DEFAULT_TAKE}`);
+                    expect(url.searchParams.get('m_ex')).toBe(`true`);
 
                     return HttpResponse.json<CocktailsSearchRs>(
                         {

@@ -1,5 +1,5 @@
 import { Configuration, GetV1CocktailsSearchRequest, GetV1CocktailsTypeaheadRequest, SemanticSearchApi } from '../api/aisearchApi';
-import { CocktailsSearchRs, CocktailModelOutput } from '../api/aisearchApi/models';
+import { CocktailSearchModel, CocktailsSearchRs } from '../api/aisearchApi/models';
 import { getWindowEnv } from '../utils/envConfig';
 import CocktailFiltersLocalStorageService from './CocktailFiltersLocalStorageService';
 import LocalStorageService from './LocalStorageService';
@@ -132,7 +132,7 @@ const getCocktailsWithRatings = async (skip: number, take: number, matches: stri
     }
 };
 
-const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutput[]) => void, freeText: string, skip: number, take: number): Promise<void> => {
+const getCocktailsSearchResults = async (callBack: (results?: CocktailSearchModel[]) => void, freeText: string, skip: number, take: number): Promise<void> => {
     const localStorageService = new LocalStorageService();
     const searchFilters = cocktailFilterService.GetAllSelectedFilterIds();
 
@@ -146,7 +146,7 @@ const getCocktailsSearchResults = async (callBack: (results?: CocktailModelOutpu
         }
     }
 
-    let results: CocktailModelOutput[] = [];
+    let results: CocktailSearchModel[] = [];
 
     try {
         const aisearchApiClient = new SemanticSearchApi(

@@ -1,6 +1,7 @@
 
 # CocktailVectorSearchResult
 
+Model representing an individual search result from a cocktail vector search, including the score and associated metadata.
 
 ## Properties
 
@@ -15,7 +16,7 @@ import type { CocktailVectorSearchResult } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "score": null,
+  "score": 0.5158496,
 } satisfies CocktailVectorSearchResult
 
 console.log(example)

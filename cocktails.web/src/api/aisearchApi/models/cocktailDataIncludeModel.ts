@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ * The types of cocktail data to include in the search results.
  * @export
  * @enum {string}
  */

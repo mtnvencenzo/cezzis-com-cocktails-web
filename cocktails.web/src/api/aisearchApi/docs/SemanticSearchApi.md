@@ -43,7 +43,7 @@ async function example() {
     m: ...,
     // boolean | Whether or not the supplied matches must be exclusively returned (optional)
     m_ex: true,
-    // Array<CocktailDataIncludeModel> | The list of extension objects to include for each cocktail recipe (optional)
+    // Array<CocktailSearchDataIncludeModel> | The list of extension objects to include for each cocktail recipe (optional)
     inc: ...,
     // Array<string> | An optional list of filters to use when quering the cocktail recipes (optional)
     fi: ...,
@@ -72,7 +72,7 @@ example().catch(console.error);
 | **take** | `number` | The number of cocktail recipes to take for pagination | [Optional] [Defaults to `10`] |
 | **m** | `Array<string>` | A list of cocktails that can be included in the list | [Optional] |
 | **m_ex** | `boolean` | Whether or not the supplied matches must be exclusively returned | [Optional] [Defaults to `false`] |
-| **inc** | `Array<CocktailDataIncludeModel>` | The list of extension objects to include for each cocktail recipe | [Optional] |
+| **inc** | `Array<CocktailSearchDataIncludeModel>` | The list of extension objects to include for each cocktail recipe | [Optional] |
 | **fi** | `Array<string>` | An optional list of filters to use when quering the cocktail recipes | [Optional] |
 
 ### Return type

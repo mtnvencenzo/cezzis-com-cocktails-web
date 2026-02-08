@@ -12,13 +12,13 @@ import theme from '../../theme';
 import { setMetaItemProp } from '../../utils/headUtil';
 import { useOwnedAccount } from '../../components/OwnedAccountContext';
 import startPageViewSpan from '../../services/Tracer';
-import { CocktailModelOutput } from '../../api/aisearchApi';
+import { CocktailSearchModel } from '../../api/aisearchApi';
 
 const CocktailsListPageContainer = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [apiCallFailed, setApiCallFailed] = useState<boolean>(false);
-    const [cocktailListModels, setCocktailListModels] = useState<CocktailModelOutput[]>([]);
+    const [cocktailListModels, setCocktailListModels] = useState<CocktailSearchModel[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [skip, setSkip] = useState<number>(0);
     const { ownedAccount, ownedAccountCocktailRatings } = useOwnedAccount();

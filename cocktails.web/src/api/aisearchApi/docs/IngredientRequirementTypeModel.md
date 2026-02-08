@@ -1,6 +1,7 @@
 
 # IngredientRequirementTypeModel
 
+The requirement types for cocktail ingredients.
 
 ## Properties
 

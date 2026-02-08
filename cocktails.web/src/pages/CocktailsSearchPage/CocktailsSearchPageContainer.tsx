@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 import { Span, SpanStatusCode } from '@opentelemetry/api';
 import { DEFAULT_TAKE, searchCocktails } from '../../services/CocktailsAISearchService';
-import { CocktailModelOutput } from '../../api/aisearchApi';
+import { CocktailSearchModel } from '../../api/aisearchApi';
 import { getWindowEnv } from '../../utils/envConfig';
 import trimWhack from '../../utils/trimWhack';
 import CocktailTile from '../../molecules/CocktailTile/CocktailTile';
@@ -23,7 +23,7 @@ interface CocktailsSearchPageContainerState {
     loading: boolean;
     isFetching: boolean;
     apiCallFailed: boolean;
-    cocktailSearchModels: CocktailModelOutput[];
+    cocktailSearchModels: CocktailSearchModel[];
     hasMore: boolean;
     skip: number;
 }

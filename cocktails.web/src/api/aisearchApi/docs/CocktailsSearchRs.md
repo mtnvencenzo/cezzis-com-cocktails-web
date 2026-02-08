@@ -1,12 +1,13 @@
 
 # CocktailsSearchRs
 
+Model representing the response structure for a cocktail search operation, containing a list of matching cocktails.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`items` | [Array&lt;CocktailModel&gt;](CocktailModel.md)
+`items` | [Array&lt;CocktailSearchModel&gt;](CocktailSearchModel.md)
 
 ## Example
 

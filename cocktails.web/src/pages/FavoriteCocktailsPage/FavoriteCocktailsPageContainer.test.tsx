@@ -10,11 +10,11 @@ import SessionStorageService from '../../services/SessionStorageService';
 import { Auth0Provider } from '../../components/Auth0Provider';
 import { Auth0ReactTester } from '../../auth0Mocks';
 import { auth0TestProviderOptions } from '../../auth0Mocks/testerConstants';
-import { CocktailModelOutput, CocktailsSearchRs } from '../../api/aisearchApi';
+import { CocktailSearchModel, CocktailsSearchRs } from '../../api/aisearchApi';
 import { DEFAULT_TAKE } from '../../services/CocktailsAISearchService';
 
-const getCocktailItems = (name: string, count: number): CocktailModelOutput[] => {
-    const items: CocktailModelOutput[] = [];
+const getCocktailItems = (name: string, count: number): CocktailSearchModel[] => {
+    const items: CocktailSearchModel[] = [];
 
     for (let i = 0; i < count; i += 1) {
         items.push({
@@ -52,7 +52,7 @@ describe('Favorite Cocktails Page Container', () => {
 
         const profile = getTestOwnedAccountProfile();
 
-        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails.push(`adonis-${i}`);
+        for (let i = 0; i < DEFAULT_TAKE; i += 1) profile.favoriteCocktails?.push(`adonis-${i}`);
 
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
@@ -105,8 +105,8 @@ describe('Favorite Cocktails Page Container', () => {
         auth0Tester.user = getTestUser();
 
         const profile = getTestOwnedAccountProfile();
-        profile.favoriteCocktails.push('Test-1');
-        profile.favoriteCocktails.push('Test-2');
+        profile.favoriteCocktails?.push('Test-1');
+        profile.favoriteCocktails?.push('Test-2');
         const sessionStorageService = new SessionStorageService();
         sessionStorageService.SetOwnedAccountProfileRequestData(profile);
 

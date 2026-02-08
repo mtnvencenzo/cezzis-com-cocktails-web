@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Model representing an individual search result from a cocktail vector search, including the score and associated metadata.
  * @export
  * @interface CocktailVectorSearchResult
  */

@@ -3,8 +3,14 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import CocktailTile from './CocktailTile';
-import { CocktailModelOutput, IngredientApplicationTypeModel } from '../../api/aisearchApi';
-import { IngredientRequirementTypeModel, IngredientTypeModel, PreparationTypeModel, UofMTypeModel } from '../../api/cocktailsApi';
+import {
+    CocktailSearchModel,
+    CocktailSearchIngredientApplicationTypeModel,
+    CocktailSearchPreparationTypeModel,
+    CocktailSearchIngredientRequirementTypeModel,
+    CocktailSearchIngredientTypeModel,
+    CocktailSearchUofMTypeModel
+} from '../../api/aisearchApi';
 
 describe('Cocktail List Tile', () => {
     test('renders with short title text', async () => {
@@ -20,7 +26,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -46,7 +52,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -72,12 +78,12 @@ describe('Cocktail List Tile', () => {
             ingredients: [
                 {
                     name: 'Rum',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base, CocktailSearchIngredientApplicationTypeModel.Additional],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Rum',
                     units: 1
                 }
@@ -87,7 +93,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -110,24 +116,24 @@ describe('Cocktail List Tile', () => {
             ingredients: [
                 {
                     name: 'Rum',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base, CocktailSearchIngredientApplicationTypeModel.Additional],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Rum',
                     units: 1
                 },
                 {
                     id: 'Vodka',
                     name: 'Vodka',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Base],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Vodka',
                     units: 1
                 }
@@ -137,7 +143,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -161,47 +167,47 @@ describe('Cocktail List Tile', () => {
                 {
                     id: 'Pimms',
                     name: 'Pimms',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Additional],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Additional],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Pimms',
                     units: 1
                 },
                 {
                     id: 'Jamaican-Rum',
                     name: 'Jamaican Rum',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Base],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Jamaican Rum',
                     units: 1
                 },
                 {
                     id: 'Cognac',
                     name: 'Cognac',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Spirit],
-                    applications: [IngredientApplicationTypeModel.Base],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Spirit],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Cognac',
                     units: 1
                 },
                 {
                     name: 'Dry Oloroso Sherry',
-                    uoM: UofMTypeModel.Ounces,
-                    types: [IngredientTypeModel.Wine],
-                    applications: [IngredientApplicationTypeModel.Base, IngredientApplicationTypeModel.Additional],
-                    preparation: PreparationTypeModel.None,
+                    uoM: CocktailSearchUofMTypeModel.Ounces,
+                    types: [CocktailSearchIngredientTypeModel.Wine],
+                    applications: [CocktailSearchIngredientApplicationTypeModel.Base, CocktailSearchIngredientApplicationTypeModel.Additional],
+                    preparation: CocktailSearchPreparationTypeModel.None,
                     suggestions: '',
-                    requirement: IngredientRequirementTypeModel.Required,
+                    requirement: CocktailSearchIngredientRequirementTypeModel.Required,
                     display: 'Dry Oloroso Sherry',
                     units: 1
                 }
@@ -211,7 +217,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -240,7 +246,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -265,7 +271,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -295,7 +301,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -322,7 +328,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -353,7 +359,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 1,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
@@ -384,7 +390,7 @@ describe('Cocktail List Tile', () => {
             mainImages: [],
             rating: 3,
             serves: 1
-        } as CocktailModelOutput;
+        } as CocktailSearchModel;
 
         render(
             <MemoryRouter>
