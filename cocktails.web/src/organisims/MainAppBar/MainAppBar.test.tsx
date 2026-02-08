@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import MainAppBar from './MainAppBar';
@@ -23,7 +23,7 @@ describe('Main App Bar', () => {
     test.each([
         [true], // xs
         [false] // xs
-    ])('renders correctly for xs:%s', (isXs) => {
+    ])('renders correctly for xs:%s', async (isXs) => {
         render(
             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
@@ -32,7 +32,7 @@ describe('Main App Bar', () => {
             </Auth0Provider>
         );
 
-        const el = screen.getByTestId('app-bar');
+        const el = await screen.findByTestId('app-bar');
         expect(el).toBeDefined();
     });
 
@@ -62,7 +62,7 @@ describe('Main App Bar', () => {
         [true, false, false], // xs and un-authed
         [false, true, true], // not xs and authed
         [false, false, true] // not xs and un-authed
-    ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', (isXs, authed, expected) => {
+    ])('renders logged in avatar menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
@@ -76,14 +76,16 @@ describe('Main App Bar', () => {
             </Auth0Provider>
         );
 
-        const menu = screen.queryByTestId('loggedin-app-bar-menu');
+        await waitFor(() => {
+            const menu = screen.queryByTestId('loggedin-app-bar-menu');
 
-        if (expected) {
-            expect(menu).toBeDefined();
-            expect(menu).toBeVisible();
-        } else {
-            expect(menu).toBeNull();
-        }
+            if (expected) {
+                expect(menu).toBeDefined();
+                expect(menu).toBeVisible();
+            } else {
+                expect(menu).toBeNull();
+            }
+        });
     });
 
     test.each([
@@ -91,7 +93,7 @@ describe('Main App Bar', () => {
         [true, false, true], // xs and un-authed
         [false, true, true], // not xs and authed
         [false, false, true] // not xs and un-authed
-    ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', (isXs, authed, expected) => {
+    ])('renders main menu correctly for xs:%s and authed:%s => expected (%s)', async (isXs, authed, expected) => {
         if (authed) {
             auth0Tester.isLogged();
             auth0Tester.user = getTestUser();
@@ -105,13 +107,15 @@ describe('Main App Bar', () => {
             </Auth0Provider>
         );
 
-        const menu = screen.queryByTestId('main-app-bar-menu');
+        await waitFor(() => {
+            const menu = screen.queryByTestId('main-app-bar-menu');
 
-        if (expected) {
-            expect(menu).toBeDefined();
-            expect(menu).toBeVisible();
-        } else {
-            expect(menu).toBeNull();
-        }
+            if (expected) {
+                expect(menu).toBeDefined();
+                expect(menu).toBeVisible();
+            } else {
+                expect(menu).toBeNull();
+            }
+        });
     });
 });

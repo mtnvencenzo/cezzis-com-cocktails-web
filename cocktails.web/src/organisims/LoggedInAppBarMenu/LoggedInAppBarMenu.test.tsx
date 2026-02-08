@@ -23,13 +23,15 @@ describe('LoggedIn App Bar Menu', () => {
         auth0Tester.resetSpyAuth0();
     });
 
-    test('renders correctly', () => {
-        render(
-            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                <MemoryRouter>
-                    <LoggedInAppBarMenu testId='loggedin-app-bar-menu' />
-                </MemoryRouter>
-            </Auth0Provider>
+    test('renders correctly', async () => {
+        await act(async () =>
+            render(
+                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                    <MemoryRouter>
+                        <LoggedInAppBarMenu testId='loggedin-app-bar-menu' />
+                    </MemoryRouter>
+                </Auth0Provider>
+            )
         );
 
         const el = screen.getByTestId('loggedin-app-bar-menu');

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
@@ -167,6 +167,8 @@ describe('Account Change Username Page Container', () => {
     });
 
     test('displays error message when username change fails', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
         auth0Tester.isLogged();
         auth0Tester.user = getTestUser();
 
@@ -220,5 +222,7 @@ describe('Account Change Username Page Container', () => {
         await waitFor(() => {
             expect(screen.getByText('We were unable to change your username. Please try again.')).toBeInTheDocument();
         });
+
+        consoleSpy.mockRestore();
     });
 });

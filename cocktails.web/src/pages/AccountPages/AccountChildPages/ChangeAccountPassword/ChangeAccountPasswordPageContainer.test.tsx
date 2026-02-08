@@ -199,6 +199,8 @@ describe('Account Change Password Page Container', () => {
     });
 
     test('shows error message when API call fails', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
         server.use(
             http.put('http://localhost:2/v1/accounts/owned/profile/password', () =>
                 HttpResponse.json(
@@ -254,5 +256,7 @@ describe('Account Change Password Page Container', () => {
             },
             { timeout: 3000 }
         );
+
+        consoleSpy.mockRestore();
     });
 });

@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainFooterBar from './MainFooterBar';
 import { Auth0ReactTester } from '../../auth0Mocks';
@@ -18,7 +18,7 @@ describe('Main Footer Bar', () => {
         auth0Tester.resetSpyAuth0();
     });
 
-    test('renders correctly', () => {
+    test('renders correctly', async () => {
         render(
             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
                 <MemoryRouter>
@@ -27,118 +27,104 @@ describe('Main Footer Bar', () => {
             </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-bar');
+        const el = await screen.findByTestId('footer-bar');
         expect(el).toBeDefined();
     });
 
     test('renders cocktails search link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-cocktail-search');
+        const el = await screen.findByTestId('footer-cocktail-search');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Cocktail Search');
     });
 
     test('renders cocktails list link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-cocktail-list');
+        const el = await screen.findByTestId('footer-cocktail-list');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Cocktail List');
     });
 
     test('renders about us link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-about-us');
+        const el = await screen.findByTestId('footer-about-us');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('About Us');
     });
 
     test('renders contact link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-contact');
+        const el = await screen.findByTestId('footer-contact');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Contact');
     });
 
     test('renders terms of service link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-terms');
+        const el = await screen.findByTestId('footer-terms');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Terms of Service');
     });
 
     test('renders privacy link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-privacy');
+        const el = await screen.findByTestId('footer-privacy');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Privacy Policy');
     });
 
     // Disabled test('renders cookies link', async () => {
-    //     await act(async () =>
-    //         render(
-    //             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-    //                 <MemoryRouter>
-    //                     <MainFooterBar testId='footer-bar' />
-    //                 </MemoryRouter>
-    //             </Auth0Provider>
-    //         )
+    //     render(
+    //         <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+    //             <MemoryRouter>
+    //                 <MainFooterBar testId='footer-bar' />
+    //             </MemoryRouter>
+    //         </Auth0Provider>
     //     );
 
-    //     const el = screen.getByTestId('footer-cookies');
+    //     const el = await screen.findByTestId('footer-cookies');
     //     expect(el).toBeDefined();
     //     expect(el.textContent).toBe('Cookie Preferences');
     // });
@@ -146,17 +132,15 @@ describe('Main Footer Bar', () => {
     test('renders myaccount link when not authd', async () => {
         auth0Tester.isNotLogged();
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-myaccount');
+        const el = await screen.findByTestId('footer-myaccount');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Signin');
     });
@@ -164,82 +148,76 @@ describe('Main Footer Bar', () => {
     test('doesnt render myaccount link when authd', async () => {
         auth0Tester.isLogged();
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.queryByTestId('footer-myaccount');
-        expect(el).toBeNull();
+        await waitFor(() => {
+            const el = screen.queryByTestId('footer-myaccount');
+            expect(el).toBeNull();
+        });
     });
 
     test('does not render logout link when not authd', async () => {
         auth0Tester.isNotLogged();
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.queryByTestId('footer-logout');
-        expect(el).toBeNull();
+        await waitFor(() => {
+            const el = screen.queryByTestId('footer-logout');
+            expect(el).toBeNull();
+        });
     });
 
     test('renders logout link when authd', async () => {
         auth0Tester.isLogged();
 
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-logout');
+        const el = await screen.findByTestId('footer-logout');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Logout');
     });
 
     test('renders copywrite with current year', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByText(`© ${new Date().getFullYear()} Cezzis.com | All rights reserved.`);
+        const el = await screen.findByText(`© ${new Date().getFullYear()} Cezzis.com | All rights reserved.`);
         expect(el).toBeDefined();
     });
 
     // Disabled test('clicks cookies link', async () => {
-    //     await act(async () =>
-    //         render(
-    //             <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-    //                 <MemoryRouter>
-    //                     <MainFooterBar testId='footer-bar' />
-    //                 </MemoryRouter>
-    //             </Auth0Provider>
-    //         )
+    //     render(
+    //         <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+    //             <MemoryRouter>
+    //                 <MainFooterBar testId='footer-bar' />
+    //             </MemoryRouter>
+    //         </Auth0Provider>
     //     );
 
-    //     const el = screen.getByTestId('footer-cookies');
+    //     const el = await screen.findByTestId('footer-cookies');
     //     expect(el).toBeDefined();
     //     expect(el.textContent).toBe('Cookie Preferences');
 
@@ -247,17 +225,15 @@ describe('Main Footer Bar', () => {
     // });
 
     test('clicks myaccount link', async () => {
-        await act(async () =>
-            render(
-                <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
-                    <MemoryRouter>
-                        <MainFooterBar testId='footer-bar' />
-                    </MemoryRouter>
-                </Auth0Provider>
-            )
+        render(
+            <Auth0Provider {...auth0TestProviderOptions} onClientCreated={() => auth0Tester.client}>
+                <MemoryRouter>
+                    <MainFooterBar testId='footer-bar' />
+                </MemoryRouter>
+            </Auth0Provider>
         );
 
-        const el = screen.getByTestId('footer-myaccount');
+        const el = await screen.findByTestId('footer-myaccount');
         expect(el).toBeDefined();
         expect(el.textContent).toBe('Signin');
 
