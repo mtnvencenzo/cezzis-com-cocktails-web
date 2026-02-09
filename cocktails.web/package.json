@@ -41,7 +41,7 @@
         "@opentelemetry/sdk-trace-web": "^2.2.0",
         "@opentelemetry/semantic-conventions": "^1.38.0",
         "countries-list": "^3.2.2",
-        "lodash-es": "^4.17.21",
+        "lodash-es": "^4.17.23",
         "react": "^19.2.1",
         "react-avatar-editor": "^14.0.0",
         "react-dom": "^19.2.1",
